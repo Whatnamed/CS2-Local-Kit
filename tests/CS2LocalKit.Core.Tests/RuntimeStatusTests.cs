@@ -92,13 +92,30 @@ public sealed class RuntimeStatusTests : IDisposable
         Assert.Equal("25537370", status.BuildId);
         Assert.Equal("match", status.TestedBuildMatch);
         Assert.True(status.GameinfoHasMetamod);
-        Assert.True(status.MetaModNativePresent);
-        Assert.True(status.CounterStrikeSharpNativePresent);
+        // Presence only - there is no reliable version/hash verification for the
+        // framework builds, so the status must not claim a version match.
+        Assert.Equal("present-unverified", status.MetaModNativeStatus);
+        Assert.Equal("present-unverified", status.CounterStrikeSharpNativeStatus);
         Assert.True(status.InventorySimulatorPluginPresent);
         Assert.Equal("match", status.PatchedDllMatch);
         Assert.True(status.FixtureInstalled);
         Assert.Null(status.ActivePreset);
         Assert.Null(status.LatestApply);
+    }
+
+    [Fact]
+    public void Status_MissingFrameworkComponents_AreReportedAsMissing()
+    {
+        File.Delete(Path.Combine(_csgoDir, "addons", "metamod", "bin", "win64", "metamod.2.cs2.dll"));
+        Directory.Delete(Path.Combine(_csgoDir, "addons", "counterstrikesharp", "bin", "win64"));
+        var status = new RuntimeStatusService(new RuntimeStatusService.Options
+        {
+            Cs2Root = _cs2Root,
+            LockPath = WriteLock(LockWithDllSha()),
+            BackupsRoot = _backupsRoot,
+        }).GetStatus();
+        Assert.Equal("missing", status.MetaModNativeStatus);
+        Assert.Equal("missing", status.CounterStrikeSharpNativeStatus);
     }
 
     [Fact]
@@ -135,6 +152,7 @@ public sealed class RuntimeStatusTests : IDisposable
         File.WriteAllText(Path.Combine(presetsRoot, "personal-default.v1.json"), "{}");
         new ActivePresetState(Path.Combine(_work, "active-preset.json")).SetActive("personal-default.v1.json");
 
+        var installedFixturePath = Path.Combine(_csgoDir, "addons", "counterstrikesharp", "configs", "plugins", "InventorySimulator", "inventories.json");
         var applyDir = Path.Combine(_backupsRoot, "20260101-000000-preset-apply");
         Directory.CreateDirectory(applyDir);
         var backupFile = Path.Combine(applyDir, "inventories.json");
@@ -145,7 +163,7 @@ public sealed class RuntimeStatusTests : IDisposable
             createdAt = "2026-01-01T00:00:00+08:00",
             presetPath = "personal-default.v1.json",
             projectedSha256 = "abc",
-            installedPath = Path.Combine(_csgoDir, "addons", "counterstrikesharp", "configs", "plugins", "InventorySimulator", "inventories.json"),
+            installedPath = installedFixturePath,
             installed = new { previousSha256 = "p", newSha256 = "n" },
             backupPath = backupFile,
             backupSha256 = "p",
@@ -153,6 +171,17 @@ public sealed class RuntimeStatusTests : IDisposable
         };
         File.WriteAllText(Path.Combine(applyDir, "apply-record.json"),
             JsonSerializer.Serialize(record));
+
+        // A NEWER record for a DIFFERENT install path must be ignored: it is not
+        // restorable for the current fixture, so it must not surface as LatestApply.
+        var otherDir = Path.Combine(_backupsRoot, "20260102-000000-preset-apply");
+        Directory.CreateDirectory(otherDir);
+        File.WriteAllText(Path.Combine(otherDir, "apply-record.json"),
+            JsonSerializer.Serialize(record with
+            {
+                createdAt = "2026-01-02T00:00:00+08:00",
+                installedPath = @"D:\elsewhere\game\csgo\addons\counterstrikesharp\configs\plugins\InventorySimulator\inventories.json",
+            }));
 
         var status = new RuntimeStatusService(new RuntimeStatusService.Options
         {
@@ -166,6 +195,8 @@ public sealed class RuntimeStatusTests : IDisposable
         Assert.Equal("personal-default.v1.json", status.ActivePreset);
         Assert.True(status.ActivePresetExists);
         Assert.NotNull(status.LatestApply);
-        Assert.True(status.LatestApply!.RollbackAvailable);
+        Assert.Equal(installedFixturePath, status.LatestApply!.InstalledPath); // the matching record, not the newer unrelated one
+        Assert.Equal("2026-01-01T00:00:00+08:00", status.LatestApply.CreatedAt);
+        Assert.True(status.LatestApply.RollbackAvailable);
     }
 }

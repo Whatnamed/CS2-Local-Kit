@@ -85,6 +85,7 @@ runtime status）+ `src/CS2LocalKit.Controller`（薄 CLI）。关键结果：
 
 ## Still deferred (explicitly)
 
-Quick knife cycling (`\`), knife rotation, M4A1-S/M4A4 and USP-S/P2000 identity
-override, Panel/UI, agents/stickers/charms. C3+ work must not reopen C1/C1.1 or
+Quick knife cycling (`\`), knife rotation, Panel/UI, agents/stickers/charms.
+(M4A1-S/M4A4 and USP-S/P2000 identity override is an explicit non-goal, not a
+deferred task - see PRODUCT-SCOPE §3.1/3.2.) C3+ work must not reopen C1/C1.1 or
 modify the accepted runtime patch.

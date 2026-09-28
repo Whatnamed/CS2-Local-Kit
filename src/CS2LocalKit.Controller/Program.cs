@@ -69,7 +69,20 @@ public static class Program
             case "validate":
             {
                 var preset = store.Load(GetArg(args, 1) ?? throw new ArgumentException("validate requires a preset name"));
-                Console.WriteLine($"valid HumanPreset v1: weapons ct={preset.Ct.Weapons.Count} t={preset.T.Weapons.Count}, " +
+                // Full gate: JSON parse already ran in Load; now domain + pinned-catalog
+                // membership (same checks FixtureApplier.Apply will run).
+                CatalogIndex? catalog = null;
+                try { catalog = CatalogSnapshot.LoadCachedIndex(); }
+                catch (CatalogCacheException) { /* reported as a validation failure below */ }
+                var problems = HumanPresetValidator.Validate(preset, catalog);
+                if (problems.Count > 0)
+                {
+                    Console.Error.WriteLine("invalid HumanPreset:");
+                    foreach (var p in problems) Console.Error.WriteLine($"  {p}");
+                    return 1;
+                }
+                Console.WriteLine($"valid HumanPreset v1 (domain + pinned catalog {catalog!.Commit[..12]}): " +
+                                  $"weapons ct={preset.Ct.Weapons.Count} t={preset.T.Weapons.Count}, " +
                                   $"knife ct={preset.Ct.Knife.Selected} t={preset.T.Knife.Selected}, musicKit={preset.MusicKitId?.ToString() ?? "none"}");
                 return 0;
             }
@@ -109,7 +122,7 @@ public static class Program
 
     private static int RunApply(string[] args)
     {
-        var presetName = "personal-default.v1.json";
+        string? presetName = null;
         string? steamId = null;
         var presetIdx = Array.IndexOf(args, "--preset");
         if (presetIdx >= 0 && presetIdx + 1 < args.Length) presetName = args[presetIdx + 1];
@@ -117,9 +130,17 @@ public static class Program
         if (sidIdx >= 0 && sidIdx + 1 < args.Length) steamId = args[sidIdx + 1];
 
         var store = new PresetStore();
+        // Resolve the target explicitly: --preset wins, otherwise the active pointer.
+        // No silent fallback to a default file name. An explicit --preset never changes
+        // the active pointer.
+        presetName = ApplyPresetResolver.Resolve(presetName, new ActivePresetState());
         var preset = store.Load(presetName);
         steamId ??= PlayerState.GetSteamId64();
-        var applier = new FixtureApplier();
+
+        var applier = new FixtureApplier(new FixtureApplierOptions
+        {
+            Catalog = CatalogSnapshot.LoadCachedIndex(),
+        });
         var record = applier.Apply(preset, steamId, Path.GetFileName(store.ResolvePath(presetName)));
         Console.WriteLine($"applied preset '{presetName}'");
         Console.WriteLine($"  projection sha256: {record.ProjectedSha256}");
@@ -154,8 +175,8 @@ public static class Program
         Console.WriteLine($"build             : patch={status.PatchVersion ?? "?"} client={status.ClientVersion ?? "?"} buildid={status.BuildId ?? "?"}");
         Console.WriteLine($"tested build match: {status.TestedBuildMatch}");
         Console.WriteLine($"gameinfo metamod  : {status.GameinfoHasMetamod}");
-        Console.WriteLine($"metamod native    : {status.MetaModNativePresent}{(status.Lock is null ? "" : $" (expected {status.Lock.MetaModVersion})")}");
-        Console.WriteLine($"cssharp native    : {status.CounterStrikeSharpNativePresent}{(status.Lock is null ? "" : $" (expected {status.Lock.CounterStrikeSharpVersion})")}");
+        Console.WriteLine($"metamod native    : {status.MetaModNativeStatus} (presence only, no version verification){(status.Lock is null ? "" : $" (lock expects {status.Lock.MetaModVersion})")}");
+        Console.WriteLine($"cssharp native    : {status.CounterStrikeSharpNativeStatus} (presence only, no version verification){(status.Lock is null ? "" : $" (lock expects {status.Lock.CounterStrikeSharpVersion})")}");
         Console.WriteLine($"invsim plugin     : {status.InventorySimulatorPluginPresent}, patched dll hash: {status.PatchedDllMatch}");
         Console.WriteLine($"fixture installed : {status.FixtureInstalled}, sha256: {status.FixtureSha256 ?? "-"}");
         Console.WriteLine($"active preset     : {status.ActivePreset ?? "(none set)"}{(status.ActivePreset is null || status.ActivePresetExists ? "" : " (MISSING FILE)")}");

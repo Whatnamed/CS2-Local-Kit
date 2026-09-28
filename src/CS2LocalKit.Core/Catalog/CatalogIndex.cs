@@ -25,6 +25,28 @@ public static class CatalogSnapshot
         if (!File.Exists(music)) File.WriteAllBytes(music, http.GetByteArrayAsync($"{RawBase}/music_kits.json").GetAwaiter().GetResult());
         return (skins, music);
     }
+
+    /// <summary>
+    /// Loads the locally cached pinned snapshot (default: E:\CS2MOD\app-data\cosmetics-lab\catalog\&lt;commit&gt;).
+    /// Never fetches from the network. Throws CatalogCacheException when the cache is absent -
+    /// callers that need catalog validation must fail closed, not skip validation.
+    /// </summary>
+    public static CatalogIndex LoadCachedIndex(string? cacheRoot = null)
+    {
+        var root = cacheRoot ?? CatalogSnapshot.DefaultCacheRoot(CorePaths.Cs2ModRoot);
+        var skins = Path.Combine(root, "skins.json");
+        var music = Path.Combine(root, "music_kits.json");
+        if (!File.Exists(skins) || !File.Exists(music))
+            throw new CatalogCacheException(
+                $"Pinned catalog cache not found under {root} (expected skins.json + music_kits.json). " +
+                "Run the C2 catalog sync or point CatalogSnapshot.EnsureCached at the pinned commit.");
+        return CatalogIndex.Load(root);
+    }
+}
+
+public sealed class CatalogCacheException : Exception
+{
+    public CatalogCacheException(string message) : base(message) { }
 }
 
 /// <summary>

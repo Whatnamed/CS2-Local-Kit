@@ -82,8 +82,15 @@ public sealed partial class RuntimeStatusService
 
             status.GameinfoHasMetamod = File.Exists(Path.Combine(csgoDir, "gameinfo.gi"))
                 && File.ReadAllText(Path.Combine(csgoDir, "gameinfo.gi")).Contains("csgo/addons/metamod");
-            status.MetaModNativePresent = File.Exists(Path.Combine(csgoDir, "addons", "metamod", "bin", "win64", "metamod.2.cs2.dll"));
-            status.CounterStrikeSharpNativePresent = Directory.Exists(Path.Combine(csgoDir, "addons", "counterstrikesharp", "bin", "win64"));
+            // Presence only: there is no reliable installed manifest/hash source for the
+            // framework builds in this phase, so "present-unverified" must never be read
+            // as "version matches the lock".
+            status.MetaModNativeStatus = File.Exists(Path.Combine(csgoDir, "addons", "metamod", "bin", "win64", "metamod.2.cs2.dll"))
+                ? "present-unverified"
+                : "missing";
+            status.CounterStrikeSharpNativeStatus = Directory.Exists(Path.Combine(csgoDir, "addons", "counterstrikesharp", "bin", "win64"))
+                ? "present-unverified"
+                : "missing";
 
             var isDll = Path.Combine(csgoDir, "addons", "counterstrikesharp", "plugins", "InventorySimulator", "InventorySimulator.dll");
             status.InventorySimulatorPluginPresent = File.Exists(isDll);
@@ -103,6 +110,11 @@ public sealed partial class RuntimeStatusService
                 using var fs = File.OpenRead(fixture);
                 status.FixtureSha256 = Convert.ToHexString(SHA256.HashData(fs)).ToLowerInvariant();
             }
+
+            // Only records for the CURRENT installed fixture path are rollback-relevant;
+            // a record left over from a different install location cannot be RestoreLatest'd.
+            status.LatestApply = FindLatestApply(
+                _options.BackupsRoot ?? CorePaths.FixtureBackupRoot, Path.GetFullPath(fixture));
         }
 
         var presetsRoot = _options.PresetsRoot ?? CorePaths.PresetsHumanRoot;
@@ -110,11 +122,10 @@ public sealed partial class RuntimeStatusService
         status.ActivePreset = active;
         status.ActivePresetExists = active is not null && File.Exists(Path.Combine(presetsRoot, active));
 
-        status.LatestApply = FindLatestApply(_options.BackupsRoot ?? CorePaths.FixtureBackupRoot);
         return status;
     }
 
-    private static LatestApplyInfo? FindLatestApply(string backupsRoot)
+    private static LatestApplyInfo? FindLatestApply(string backupsRoot, string installedFixturePath)
     {
         if (!Directory.Exists(backupsRoot)) return null;
         LatestApplyInfo? latest = null;
@@ -124,16 +135,22 @@ public sealed partial class RuntimeStatusService
             {
                 using var doc = JsonDocument.Parse(File.ReadAllText(recordPath));
                 var r = doc.RootElement;
+                var installedPath = r.TryGetProperty("installedPath", out var i) ? i.GetString() ?? "" : "";
+                if (!installedPath.Equals(installedFixturePath, StringComparison.OrdinalIgnoreCase))
+                    continue;
                 var info = new LatestApplyInfo
                 {
                     RecordPath = recordPath,
                     CreatedAt = r.TryGetProperty("createdAt", out var c) ? c.GetString() ?? "" : "",
                     PresetPath = r.TryGetProperty("presetPath", out var p) ? p.GetString() ?? "" : "",
                     ProjectedSha256 = r.TryGetProperty("projectedSha256", out var s) ? s.GetString() ?? "" : "",
-                    InstalledPath = r.TryGetProperty("installedPath", out var i) ? i.GetString() ?? "" : "",
+                    InstalledPath = installedPath,
                     RollbackAvailable = r.TryGetProperty("backupPath", out var b) && File.Exists(b.GetString() ?? ""),
                 };
-                if (latest is null || string.CompareOrdinal(info.CreatedAt, latest.CreatedAt) > 0) latest = info;
+                if (latest is null
+                    || string.CompareOrdinal(info.CreatedAt, latest.CreatedAt) > 0
+                    || (info.CreatedAt == latest.CreatedAt && string.CompareOrdinal(recordPath, latest.RecordPath) > 0))
+                    latest = info;
             }
             catch (JsonException) { /* skip unreadable records */ }
         }
@@ -152,8 +169,11 @@ public sealed class RuntimeStatus
     /// <summary>"match" | "changed" | "unknown" against the lock's tested build.</summary>
     public string TestedBuildMatch { get; set; } = "unknown";
     public bool GameinfoHasMetamod { get; set; }
-    public bool MetaModNativePresent { get; set; }
-    public bool CounterStrikeSharpNativePresent { get; set; }
+    /// <summary>"present-unverified" | "missing". Presence is not a version match - no
+    /// reliable installed-manifest/hash source exists for framework builds in this phase.</summary>
+    public string MetaModNativeStatus { get; set; } = "missing";
+    /// <summary>"present-unverified" | "missing" - same semantics as MetaModNativeStatus.</summary>
+    public string CounterStrikeSharpNativeStatus { get; set; } = "missing";
     public bool InventorySimulatorPluginPresent { get; set; }
     public string? InventorySimulatorDllSha256 { get; set; }
     /// <summary>"match" | "mismatch" | "unknown" against the lock's patched DLL hash.</summary>
@@ -162,6 +182,7 @@ public sealed class RuntimeStatus
     public string? FixtureSha256 { get; set; }
     public string? ActivePreset { get; set; }
     public bool ActivePresetExists { get; set; }
+    /// <summary>Latest apply record whose InstalledPath equals the CURRENT installed fixture path.</summary>
     public LatestApplyInfo? LatestApply { get; set; }
     public InventorySimulatorLock? Lock { get; set; }
 }

@@ -51,9 +51,15 @@ public sealed class PresetStore
     /// <summary>Parses and validates the stored preset. Throws HumanPresetFormatException on invalid content.</summary>
     public HumanPreset Load(string name) => HumanPresetJson.Parse(File.ReadAllText(ResolvePath(name)));
 
-    /// <summary>Writes the preset in canonical form. Atomic (temp file + move within the root).</summary>
+    /// <summary>
+    /// Writes the preset in canonical form. Atomic (temp file + move within the root).
+    /// Mutation boundary: re-validates the in-memory object (domain rules) because C4 UI
+    /// constructs HumanPreset instances that never went through JSON parsing. Catalog
+    /// membership is checked at apply time, not here - see FixtureApplier.
+    /// </summary>
     public void Save(string name, HumanPreset preset)
     {
+        HumanPresets.HumanPresetValidator.EnsureDomainValid(preset);
         var path = ResolvePath(name);
         Directory.CreateDirectory(Root);
         var temp = path + ".tmp";

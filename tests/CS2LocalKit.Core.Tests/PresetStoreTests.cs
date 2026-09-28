@@ -1,3 +1,4 @@
+using CS2LocalKit.Core.HumanPresets;
 using CS2LocalKit.Core.Store;
 using Xunit;
 
@@ -102,5 +103,41 @@ public sealed class PresetStoreTests : IDisposable
         Assert.Null(state.GetActive());
         state.SetActive("personal-default.v1.json");
         Assert.Equal("personal-default.v1.json", state.GetActive());
+    }
+
+    [Fact]
+    public void Save_IsAMutationBoundary_RejectsInvalidInMemoryPreset()
+    {
+        // A C4 UI can construct HumanPreset objects that never went through JSON
+        // parsing - Save must re-validate the object, not just serialize it.
+        var preset = TestFixtures.PersonalShapedPreset();
+        var broken = new HumanPreset
+        {
+            Kind = preset.Kind,
+            SchemaVersion = preset.SchemaVersion,
+            Ct = preset.Ct,
+            T = new TeamPreset
+            {
+                Weapons =
+                [
+                    new DefIndexPreset
+                    {
+                        DefIndex = 7,
+                        Preset = new CosmeticPreset { Paint = 316, Seed = 0, Wear = 9.9 },
+                    },
+                ],
+                Knife = preset.T.Knife,
+                Gloves = preset.T.Gloves,
+            },
+            MusicKitId = preset.MusicKitId,
+        };
+
+        Assert.Throws<HumanPresetValidationException>(() => _store.Save("bad.v1.json", broken));
+        Assert.False(_store.Exists("bad.v1.json"));
+        Assert.Empty(_store.ListNames());
+
+        // The accepted preset still saves.
+        _store.Save("good.v1.json", preset);
+        Assert.True(_store.Exists("good.v1.json"));
     }
 }
