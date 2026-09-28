@@ -333,42 +333,60 @@ This artifact is for local testing of CS2 Local Kit only.
 "@
 
 Set-Content (Join-Path $releaseDir 'MANUAL-TEST.txt') -Encoding UTF8 -Value @"
-bot-baseline Lane A — manual in-game test (user executes; the agent does NOT launch CS2)
-========================================================================================
+bot-baseline Lane A 手动实机测试说明(用户执行;Agent 不会自动启动 CS2)
+MANUAL in-game test for bot-baseline Lane A
+====================================================================
 
-Target: local/offline bot match on the current CS2 install (detected at build time:
-$targetCs2Build).
+重要:这个 release 目录不是可执行程序。运行时文件(payload\)已经/将由
+Install-BotBaseline.ps1 安装进你的 CS2 game\csgo。你只需要按下面步骤启动游戏。
+IMPORTANT: this release directory is not an executable. The runtime payload is
+installed into your CS2 game\csgo by Install-BotBaseline.ps1; just launch the game.
 
-Prerequisites (manual): launch CS2 with local-test options such as -insecure so that
-the test never touches VAC-enabled online play. Do not verify file integrity in Steam
-while this baseline is installed.
+测试目标 CS2 build(构建时检测): $targetCs2Build
 
-Test with docs/MANUAL-ACCEPTANCE.md section 2 as the source of truth and observe:
-- expected Bot count for the match settings;
-- Bot aim / combat / movement / grenade behaviour;
-- TAB scoreboard rendering;
-- score accumulation across rounds;
-- normal round transitions; halftime / side switch without unexpected
-  mp_restartgame or score reset;
-- death / respawn behaviour;
-- several consecutive rounds without a stable crash;
-- Bot profile / name / avatar behaviour (BotRandomizer, candidate profiles;
-  default difficulty = Medium);
-- Bot cosmetics where BotRandomizer enables them;
-- FPS and frame pacing (no new sustained stutter or abnormal long frames).
+一、启动准备
+1. Steam → 库 → Counter-Strike 2 → 右键属性 → 启动选项,填入: -insecure
+   (本地插件测试必须;-insecure 状态下无法进入 VAC 官方服务器,属预期安全行为)
+2. 测试期间不要在 Steam 里执行"验证文件完整性"(会把插件文件剥离)。
+3. 可选:设置 → 游戏 → 启用开发者控制台(~),便于观察。
 
-Report observations per item rather than as a single pass/fail.
+二、开始测试
+1. 正常从 Steam 启动 CS2。
+2. 可选自检:控制台输入 meta list,应能看到 CounterStrikeSharp;日志位于
+   game\csgo\addons\counterstrikesharp\logs\。
+3. 主菜单 → 开始游戏 → 与电脑玩家练习比赛(离线 Bot 局,任选地图)。
+   Bot 数量与难度跟随你自己的设置(如 game\csgo\ServerConfig.vdf 中的
+   bot_quota / bot_difficulty),请按你的设置预期观察。
 
-SEPARATE OPTIONAL HIGH-RISK PROBE — only after ordinary match stability is
-established: upstream has recent knife/drop-related crash reports, so any deliberate
-knife-drop/generation test must not be mixed into the first minutes of baseline
-observation.
+三、观察清单(逐项记录,不要只总结成"能用/不能用")
+- Bot 人数是否符合上述设置;
+- Bot AI、瞄准、移动、投掷物行为;
+- TAB 计分板显示;
+- 比分是否正常累计;
+- 回合正常切换;半场换边时没有意外的 mp_restartgame / 比分清零;
+- 死亡、重生正常;
+- 连续若干回合没有稳定崩溃;
+- Bot 头像 / 名字 / 档案行为(BotRandomizer,默认难度 Medium);
+- Bot 饰品(BotRandomizer 启用的范围内);
+- FPS 与帧节奏(没有新增的持续卡顿或异常长帧)。
+验收标准以 docs/MANUAL-ACCEPTANCE.md 第 2 节为准。
 
-Restore command (from the repo worktree):
-    pwsh -File scripts\bot-baseline\Restore-BotBaseline.ps1 -Apply
+四、单独的可选高危探针
+上游近期有 knife/drop 相关崩溃报告:任何故意的下刀/生成刀测试必须放在
+普通比赛稳定性确认之后单独进行,不要混在前几分钟的常规观察里。
 
-Diagnostics after the test:
-    pwsh -File scripts\bot-baseline\Collect-BotBaselineDiagnostics.ps1
+五、测试后
+1. 收集现场诊断(只读,不会启动游戏):
+   pwsh -File scripts\bot-baseline\Collect-BotBaselineDiagnostics.ps1
+2. 如需完全恢复到安装前状态:
+   pwsh -File scripts\bot-baseline\Restore-BotBaseline.ps1 -Apply
+
+IN-GAME ACCEPTANCE ITEMS (docs/MANUAL-ACCEPTANCE.md section 2): bot count,
+bot AI/aim/movement/nades, TAB scoreboard, score accumulation, round
+transitions and halftime without unexpected mp_restartgame, death/respawn,
+several consecutive stable rounds, bot profile/name/avatar behaviour, bot
+cosmetics where enabled, FPS and frame pacing. Knife-drop probing is a
+separate optional high-risk step after ordinary stability is established.
 "@
 
 $zipPath = Join-Path $ReleasesRoot "$laneId-$stamp.zip"
