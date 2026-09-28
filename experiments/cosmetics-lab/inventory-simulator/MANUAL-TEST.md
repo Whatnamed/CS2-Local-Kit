@@ -1,4 +1,19 @@
-# CosmeticsLab C1 — 实机测试步骤（由你手动执行）
+# CosmeticsLab C1/C1.1 — 实机测试步骤（由你手动执行）
+
+> **当前安装状态 = C1.1 patched probe**（patch 说明见 `c1_1-startup-lifecycle-patch/README.md`）：
+> C1 exact-upstream 已判定 startup FAIL，本轮装的是只改一行 lifecycle 的 patched 构建
+> （MetaMod 2.0 build 1469、CSS 1.0.376 不变）。
+
+## C1.1 startup gate（第一次启动只看这四项，通过前不要做皮肤验收）
+
+1. CS2 能正常启动、进入主菜单（不闪退）；
+2. InventorySimulator 正常加载，CSS 日志里**不再出现** `Global Variables not initialized yet`；
+3. 能进入本地离线对局；
+4. 没有立即崩溃。
+
+四项全过 → 继续下面的完整皮肤验收。任一项失败 → 停下，把现象告诉 Agent，不要继续。
+
+---
 
 安装已完成，**你不需要在游戏或 Steam 库存里预先设置任何皮肤**——所有测试用的皮肤数据（P250 皮肤、CT/T 刀、CT/T 手套、Music Kit 28）已经写进本地配置文件，由 InventorySimulator 在游戏内自动投影到你身上。
 

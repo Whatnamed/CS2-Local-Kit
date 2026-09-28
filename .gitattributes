@@ -1,0 +1,3 @@
+# Patch files must not undergo EOL translation: git apply against a fresh upstream
+# checkout fails if CRLF/LF get rewritten in the working tree.
+experiments/**/*.patch -text

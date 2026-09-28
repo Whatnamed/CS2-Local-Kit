@@ -1,0 +1,13 @@
+diff --git a/source/InventorySimulator/InventorySimulator.cs b/source/InventorySimulator/InventorySimulator.cs
+index 4e927d9..ccdec9f 100644
+--- a/source/InventorySimulator/InventorySimulator.cs
++++ b/source/InventorySimulator/InventorySimulator.cs
+@@ -39,7 +39,7 @@ public partial class InventorySimulator : BasePlugin
+         ConVars.IsPublicApiStatTrakIncrement.ValueChanged += OnApiSuspensionConVarChanged;
+         ConVars.IsPublicApiSprayConsume.ValueChanged += OnApiSuspensionConVarChanged;
+         _lastUrl = ConVars.Url.Value;
+-        OnFileChanged(null, ConVars.File.Value);
++        Inventories.Load(ConVars.File.Value);
+         OnIsRequireInventoryChanged(null, ConVars.IsRequireInventory.Value);
+         OnIsSprayOnUseChanged(null, ConVars.IsSprayOnUse.Value);
+     }
