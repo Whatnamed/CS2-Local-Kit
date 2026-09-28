@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>CS2LocalKit.App</RootNamespace>
+    <AssemblyName>CS2LocalKit.App</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\runtime\*.lock.json" Link="runtime\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\CS2LocalKit.Core\CS2LocalKit.Core.csproj" />
+  </ItemGroup>
+
+</Project>

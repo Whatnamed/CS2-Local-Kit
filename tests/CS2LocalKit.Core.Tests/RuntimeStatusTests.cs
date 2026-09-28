@@ -32,7 +32,7 @@ public sealed class RuntimeStatusTests : IDisposable
     public RuntimeStatusTests()
     {
         _work = Path.Combine(Path.GetTempPath(), "cs2localkit-statustests-" + Guid.NewGuid().ToString("N"));
-        _cs2Root = Path.Combine(_work, "CS2 Root");
+        _cs2Root = Path.Combine(_work, "steamapps", "common", "Counter-Strike Global Offensive");
         _csgoDir = Path.Combine(_cs2Root, "game", "csgo");
         _backupsRoot = Path.Combine(_work, "backups");
         Directory.CreateDirectory(_csgoDir);

@@ -51,8 +51,8 @@ public sealed class CatalogCacheException : Exception
 
 /// <summary>
 /// Read-only index over a pinned catalog snapshot: weapon definitions with paint-kit
-/// membership, and music kits. Catalog-driven classification (knife/gloves) is display
-/// metadata only - preset validation never depends on it.
+/// membership, and music kits. Knife and glove classification participates in
+/// HumanPreset catalog validation and UI enumeration.
 /// </summary>
 public sealed class CatalogIndex
 {
@@ -117,6 +117,60 @@ public sealed class CatalogIndex
         => _byWeapon.TryGetValue(defIndex, out var def) && def.Paints.ContainsKey(paint);
 
     public bool TryGetMusicKit(int id, out string name) => _musicById.TryGetValue(id, out name!);
+    /// <summary>Returns ordinary weapon definitions (excluding knives and gloves), ordered by name.</summary>
+    public IReadOnlyList<WeaponDef> GetOrdinaryWeapons()
+        => _byWeapon.Values.Where(w => w.IsOrdinaryWeapon).OrderBy(w => w.Name, StringComparer.OrdinalIgnoreCase).ToList();
+
+    /// <summary>Returns knife definitions, ordered by name.</summary>
+    public IReadOnlyList<WeaponDef> GetKnives()
+        => _byWeapon.Values.Where(w => w.IsKnife).OrderBy(w => w.Name, StringComparer.OrdinalIgnoreCase).ToList();
+
+    /// <summary>Returns glove definitions, ordered by name.</summary>
+    public IReadOnlyList<WeaponDef> GetGloves()
+        => _byWeapon.Values.Where(w => w.IsGloves).OrderBy(w => w.Name, StringComparer.OrdinalIgnoreCase).ToList();
+
+    /// <summary>Returns paint kits available for the specified weapon/knife/gloves defIndex, ordered by name.</summary>
+    public IReadOnlyList<CatalogPaint> GetPaintsForWeapon(int defIndex)
+    {
+        if (_byWeapon.TryGetValue(defIndex, out var def))
+        {
+            return def.Paints
+                .Select(kv => new CatalogPaint(kv.Key, kv.Value))
+                .OrderBy(p => p.Name, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+        return Array.Empty<CatalogPaint>();
+    }
+
+    /// <summary>Returns all music kits in the catalog, ordered by name.</summary>
+    public IReadOnlyList<CatalogMusicKit> GetMusicKits()
+        => _musicById.Select(kv => new CatalogMusicKit(kv.Key, kv.Value)).OrderBy(m => m.Name, StringComparer.OrdinalIgnoreCase).ToList();
+
+    /// <summary>Filters ordinary weapons by display name.</summary>
+    public IReadOnlyList<WeaponDef> SearchOrdinaryWeapons(string? query)
+    {
+        var items = GetOrdinaryWeapons();
+        if (string.IsNullOrWhiteSpace(query)) return items;
+        return items.Where(w => w.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
+
+    /// <summary>Filters paints for a given defIndex by paint name or numeric paint index.</summary>
+    public IReadOnlyList<CatalogPaint> SearchPaints(int defIndex, string? query)
+    {
+        var items = GetPaintsForWeapon(defIndex);
+        if (string.IsNullOrWhiteSpace(query)) return items;
+        var q = query.Trim();
+        return items.Where(p => p.Name.Contains(q, StringComparison.OrdinalIgnoreCase) || p.PaintIndex.ToString().Contains(q, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
+
+    /// <summary>Filters music kits by name or numeric ID.</summary>
+    public IReadOnlyList<CatalogMusicKit> SearchMusicKits(string? query)
+    {
+        var items = GetMusicKits();
+        if (string.IsNullOrWhiteSpace(query)) return items;
+        var q = query.Trim();
+        return items.Where(m => m.Name.Contains(q, StringComparison.OrdinalIgnoreCase) || m.Id.ToString().Contains(q, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
 
     public sealed class WeaponDef(int defIndex, string name, string categoryId, Dictionary<int, string> paints)
     {
@@ -127,5 +181,9 @@ public sealed class CatalogIndex
         public IReadOnlyDictionary<int, string> Paints => _paints;
         public bool IsKnife => CategoryId.Contains("melee", StringComparison.OrdinalIgnoreCase) || CategoryId.Contains("knife", StringComparison.OrdinalIgnoreCase);
         public bool IsGloves => CategoryId.Contains("gloves", StringComparison.OrdinalIgnoreCase);
+        public bool IsOrdinaryWeapon => !IsKnife && !IsGloves;
     }
 }
+
+public sealed record CatalogPaint(int PaintIndex, string Name);
+public sealed record CatalogMusicKit(int Id, string Name);

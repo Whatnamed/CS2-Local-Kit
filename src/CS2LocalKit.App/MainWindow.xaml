@@ -1,0 +1,128 @@
+<Window x:Class="CS2LocalKit.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:CS2LocalKit.App.Views"
+        Title="CS2 Local Kit"
+        Height="760"
+        Width="1100"
+        MinHeight="600"
+        MinWidth="850"
+        Background="{StaticResource BrushBgWindow}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Header Bar -->
+        <Border Grid.Row="0"
+                Background="{StaticResource BrushBgSidebar}"
+                BorderBrush="{StaticResource BrushBorder}"
+                BorderThickness="0,0,0,1"
+                Padding="16,0">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left: App Brand -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="CS2 LOCAL KIT"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource BrushTextPrimary}"
+                               Margin="0,0,16,0"/>
+                </StackPanel>
+
+                <!-- Center: Working Preset Badge -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
+                    <TextBlock Text="当前预设:"
+                               Foreground="{StaticResource BrushTextMuted}"
+                               FontSize="12"
+                               Margin="0,0,6,0"
+                               VerticalAlignment="Center"/>
+                    <Border Background="#1f2937" CornerRadius="4" Padding="8,4" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Header.DisplayPresetName}"
+                                   Foreground="{StaticResource BrushTextPrimary}"
+                                   FontWeight="SemiBold"
+                                   FontSize="12"/>
+                    </Border>
+                </StackPanel>
+
+                <!-- Right: CS2 Status & Health Summary -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <!-- CS2 Status Pill -->
+                    <Border Visibility="{Binding Header.Cs2Running, Converter={StaticResource BoolToVis}}"
+                            Background="#422006" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                        <TextBlock Text="CS2 运行中" Foreground="#f59e0b" FontWeight="Bold" FontSize="11"/>
+                    </Border>
+                    <Border Visibility="{Binding Header.Cs2Running, Converter={StaticResource InvBoolToVis}}"
+                            Background="#14532d" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                        <TextBlock Text="CS2 已关闭" Foreground="#4ade80" FontWeight="Bold" FontSize="11"/>
+                    </Border>
+
+                    <!-- Runtime Health Pill -->
+                    <Border Background="{Binding Header.HealthLevel, Converter={StaticResource HealthBrush}}"
+                            CornerRadius="4"
+                            Padding="8,4">
+                        <TextBlock Text="{Binding Header.HealthLevel, Converter={StaticResource HealthBadge}}"
+                                   Foreground="#ffffff"
+                                   FontWeight="Bold"
+                                   FontSize="11"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Body: Navigation Sidebar + View Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Navigation Sidebar -->
+            <Border Grid.Column="0"
+                    Background="{StaticResource BrushBgSidebar}"
+                    BorderBrush="{StaticResource BrushBorder}"
+                    BorderThickness="0,0,1,0"
+                    Padding="10,16">
+                <StackPanel>
+                    <TextBlock Text="主功能" FontSize="11" FontWeight="Bold" Foreground="{StaticResource BrushTextMuted}" Margin="12,0,0,8"/>
+
+                    <Button Content="饰品配置"
+                            Command="{Binding Navigation.NavigateCosmeticsCommand}"
+                            Style="{StaticResource NavButtonStyle}"
+                            Margin="0,0,0,4">
+                        <Button.Triggers>
+                        </Button.Triggers>
+                    </Button>
+
+                    <Button Content="预设管理"
+                            Command="{Binding Navigation.NavigatePresetsCommand}"
+                            Style="{StaticResource NavButtonStyle}"
+                            Margin="0,0,0,4"/>
+
+                    <Button Content="运行状态"
+                            Command="{Binding Navigation.NavigateRuntimeStatusCommand}"
+                            Style="{StaticResource NavButtonStyle}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Right Content Area: Views -->
+            <Grid Grid.Column="1" Background="{StaticResource BrushBgWindow}">
+                <views:CosmeticsView DataContext="{Binding Cosmetics}"
+                                     Visibility="{Binding Navigation.IsCosmeticsSelected, Converter={StaticResource BoolToVis}}"/>
+
+                <views:PresetsView DataContext="{Binding Presets}"
+                                   Visibility="{Binding Navigation.IsPresetsSelected, Converter={StaticResource BoolToVis}}"/>
+
+                <views:RuntimeStatusView DataContext="{Binding RuntimeStatus}"
+                                         Visibility="{Binding Navigation.IsRuntimeStatusSelected, Converter={StaticResource BoolToVis}}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

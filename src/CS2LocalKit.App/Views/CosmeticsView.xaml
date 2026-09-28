@@ -1,0 +1,493 @@
+<UserControl x:Class="CS2LocalKit.App.Views.CosmeticsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewmodels="clr-namespace:CS2LocalKit.App.ViewModels"
+             Background="Transparent">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Controls: Team Selector + Category Tabs -->
+        <Border Grid.Row="0" Style="{StaticResource CardPanelStyle}" Padding="10,8" Margin="0,0,0,12">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Team Selector (CT / T) -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="阵营:" VerticalAlignment="Center" Margin="0,0,8,0" Foreground="{StaticResource BrushTextMuted}" FontWeight="SemiBold"/>
+                    <RadioButton Content="反恐精英 (CT)"
+                                 IsChecked="{Binding IsCt}"
+                                 Style="{StaticResource SegmentButtonStyle}"
+                                 Margin="0,0,4,0"/>
+                    <RadioButton Content="恐怖分子 (T)"
+                                 IsChecked="{Binding IsT}"
+                                 Style="{StaticResource SegmentButtonStyle}"/>
+                </StackPanel>
+
+                <!-- Category Sub-Tabs -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <RadioButton Content="枪械"
+                                 IsChecked="{Binding IsWeaponsTab, Mode=OneWay}"
+                                 Command="{Binding CurrentSubTab}"
+                                 Click="OnWeaponsTabClick"
+                                 Style="{StaticResource SegmentButtonStyle}"
+                                 Margin="0,0,4,0"/>
+                    <RadioButton Content="刀型"
+                                 IsChecked="{Binding IsKnifeTab, Mode=OneWay}"
+                                 Click="OnKnifeTabClick"
+                                 Style="{StaticResource SegmentButtonStyle}"
+                                 Margin="0,0,4,0"/>
+                    <RadioButton Content="手套"
+                                 IsChecked="{Binding IsGlovesTab, Mode=OneWay}"
+                                 Click="OnGlovesTabClick"
+                                 Style="{StaticResource SegmentButtonStyle}"
+                                 Margin="0,0,4,0"/>
+                    <RadioButton Content="音乐盒"
+                                 IsChecked="{Binding IsMusicKitTab, Mode=OneWay}"
+                                 Click="OnMusicKitTabClick"
+                                 Style="{StaticResource SegmentButtonStyle}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Grid Grid.Row="1">
+
+            <!-- 1. Ordinary Weapons Section -->
+            <Grid Visibility="{Binding IsWeaponsTab, Converter={StaticResource BoolToVis}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left: Weapons List -->
+                <Border Grid.Column="0" Style="{StaticResource CardPanelStyle}" Margin="0,0,12,0" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBox Grid.Row="0"
+                                 Text="{Binding WeaponSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,0,8"
+                                 Padding="8,5"/>
+
+                        <ListBox Grid.Row="1"
+                                 ItemsSource="{Binding FilteredWeapons}"
+                                 SelectedItem="{Binding SelectedWeapon}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2,1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Medium"/>
+                                        <Border Grid.Column="1"
+                                                Visibility="{Binding HasCosmetic, Converter={StaticResource BoolToVis}}"
+                                                Background="#1e3a5f"
+                                                CornerRadius="3"
+                                                Padding="5,1">
+                                            <TextBlock Text="已配" FontSize="10" Foreground="#60a5fa" FontWeight="Bold"/>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+
+                <!-- Right: Weapon Cosmetic Editor -->
+                <Border Grid.Column="1" Style="{StaticResource CardPanelStyle}" Margin="0" Padding="16">
+                    <Grid>
+                        <!-- When cosmetic is configured -->
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      Visibility="{Binding CurrentWeaponDraft, Converter={StaticResource NullToVis}}">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,14">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="{Binding SelectedWeapon.Name}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource BrushTextPrimary}"/>
+                                        <TextBlock Text="{Binding CurrentWeaponDraft.DefIndex, StringFormat='武器 DefIndex: {0}'}" Foreground="{StaticResource BrushTextMuted}" FontSize="11" Margin="0,2,0,0"/>
+                                    </StackPanel>
+                                    <Button Grid.Column="1"
+                                            Content="移除配置"
+                                            Command="{Binding RemoveWeaponCosmeticCommand}"
+                                            Style="{StaticResource DangerButtonStyle}"
+                                            VerticalAlignment="Center"/>
+                                </Grid>
+
+                                <!-- Skin Selector -->
+                                <TextBlock Text="皮肤涂装 (Paint Kit)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                <TextBox Text="{Binding PaintSearchText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,6"/>
+                                <ListBox ItemsSource="{Binding FilteredPaints}"
+                                         SelectedItem="{Binding SelectedPaint}"
+                                         Height="160"
+                                         Margin="0,0,0,14">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="2,1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Medium"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding PaintIndex, StringFormat='#{0}'}" Foreground="{StaticResource BrushTextMuted}" FontSize="11"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+                                <!-- Wear Slider + Input -->
+                                <TextBlock Text="磨损度 (Wear: 0.0000 - 1.0000)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                <Grid Margin="0,0,0,14">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="90"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Slider Grid.Column="0"
+                                            Minimum="0.0"
+                                            Maximum="1.0"
+                                            SmallChange="0.001"
+                                            LargeChange="0.05"
+                                            Value="{Binding CurrentWeaponDraft.Wear, UpdateSourceTrigger=PropertyChanged}"
+                                            Margin="0,0,12,0"/>
+                                    <TextBox Grid.Column="1"
+                                             Text="{Binding CurrentWeaponDraft.Wear, Converter={StaticResource DoubleFormat}, UpdateSourceTrigger=LostFocus}"/>
+                                </Grid>
+
+                                <!-- Seed -->
+                                <TextBlock Text="图案模板 (Seed)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                <TextBox Text="{Binding CurrentWeaponDraft.Seed, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,14"/>
+
+                                <!-- Name Tag -->
+                                <TextBlock Text="名称标签 (Name Tag)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                                <TextBox Text="{Binding CurrentWeaponDraft.NameTag, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,14"/>
+
+                                <!-- StatTrak -->
+                                <CheckBox Content="启用 StatTrak™"
+                                          IsChecked="{Binding CurrentWeaponDraft.StatTrakEnabled}"
+                                          Margin="0,0,0,8"
+                                          FontWeight="SemiBold"/>
+                                <StackPanel Visibility="{Binding CurrentWeaponDraft.StatTrakEnabled, Converter={StaticResource BoolToVis}}" Margin="0,0,0,14">
+                                    <TextBlock Text="StatTrak 计数器数值" FontSize="11" Foreground="{StaticResource BrushTextMuted}" Margin="0,0,0,4"/>
+                                    <TextBox Text="{Binding CurrentWeaponDraft.StatTrakCount, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <!-- When weapon has no cosmetic -->
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    Visibility="{Binding CurrentWeaponDraft, Converter={StaticResource NotNullToVis}}">
+                            <TextBlock Text="{Binding SelectedWeapon.Name}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,8"/>
+                            <TextBlock Text="当前阵营此武器尚未配置饰品预设" Foreground="{StaticResource BrushTextMuted}" HorizontalAlignment="Center" Margin="0,0,0,16"/>
+                            <Button Content="为此武器配置饰品"
+                                    Command="{Binding AddOrConfigureWeaponCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Padding="20,8"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- 2. Knives Section -->
+            <Grid Visibility="{Binding IsKnifeTab, Converter={StaticResource BoolToVis}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Left: Knife Presets List -->
+                <Border Grid.Column="0" Style="{StaticResource CardPanelStyle}" Margin="0,0,12,0" Padding="12">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="已配置刀型列表" FontWeight="SemiBold" Margin="0,0,0,8"/>
+
+                        <ListBox Grid.Row="1"
+                                 ItemsSource="{Binding ConfiguredKnives}"
+                                 SelectedItem="{Binding SelectedKnifePreset}"
+                                 Margin="0,0,0,10">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding KnifeName}" FontWeight="Medium"/>
+                                            <TextBlock Text="{Binding PaintName}" FontSize="11" Foreground="{StaticResource BrushTextMuted}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <StackPanel Grid.Row="2">
+                            <Button Content="设为当前默认刀"
+                                    Command="{Binding SetCurrentKnifeCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Margin="0,0,0,8"/>
+
+                            <TextBlock Text="添加新刀型预设:" FontSize="11" Foreground="{StaticResource BrushTextMuted}" Margin="0,0,0,4"/>
+                            <Grid Margin="0,0,0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ComboBox Grid.Column="0"
+                                          ItemsSource="{Binding AvailableCatalogKnives}"
+                                          SelectedItem="{Binding KnifeToAdd}"
+                                          DisplayMemberPath="Name"
+                                          Margin="0,0,6,0"/>
+                                <Button Grid.Column="1"
+                                        Content="添加"
+                                        Command="{Binding AddKnifePresetCommand}"
+                                        Padding="14,5"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Right: Knife Preset Editor -->
+                <Border Grid.Column="1" Style="{StaticResource CardPanelStyle}" Margin="0" Padding="16">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  Visibility="{Binding SelectedKnifePreset, Converter={StaticResource NullToVis}}">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding SelectedKnifePreset.KnifeName}" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding SelectedKnifePreset.DefIndex, StringFormat='刀型 DefIndex: {0}'}" Foreground="{StaticResource BrushTextMuted}" FontSize="11" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <Border Visibility="{Binding IsSelectedKnifeCurrent, Converter={StaticResource BoolToVis}}"
+                                            Background="#14532d" CornerRadius="4" Padding="8,4" Margin="0,0,8,0">
+                                        <TextBlock Text="当前激活刀型" Foreground="#4ade80" FontSize="11" FontWeight="Bold"/>
+                                    </Border>
+                                    <Button Content="删除刀型预设"
+                                            Command="{Binding DeleteKnifePresetCommand}"
+                                            Style="{StaticResource DangerButtonStyle}"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Skin Selector -->
+                            <TextBlock Text="皮肤涂装 (Paint Kit)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding KnifePaintSearchText, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,6"/>
+                            <ListBox ItemsSource="{Binding FilteredKnifePaints}"
+                                     SelectedItem="{Binding SelectedKnifePaint}"
+                                     Height="160"
+                                     Margin="0,0,0,14">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2,1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Medium"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding PaintIndex, StringFormat='#{0}'}" Foreground="{StaticResource BrushTextMuted}" FontSize="11"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <!-- Wear Slider + Input -->
+                            <TextBlock Text="磨损度 (Wear: 0.0000 - 1.0000)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <Grid Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Slider Grid.Column="0"
+                                        Minimum="0.0"
+                                        Maximum="1.0"
+                                        SmallChange="0.001"
+                                        LargeChange="0.05"
+                                        Value="{Binding SelectedKnifePreset.Wear, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="0,0,12,0"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding SelectedKnifePreset.Wear, Converter={StaticResource DoubleFormat}, UpdateSourceTrigger=LostFocus}"/>
+                            </Grid>
+
+                            <!-- Seed -->
+                            <TextBlock Text="图案模板 (Seed)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding SelectedKnifePreset.Seed, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,14"/>
+
+                            <!-- Name Tag -->
+                            <TextBlock Text="名称标签 (Name Tag)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding SelectedKnifePreset.NameTag, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,14"/>
+
+                            <!-- StatTrak -->
+                            <CheckBox Content="启用 StatTrak™"
+                                      IsChecked="{Binding SelectedKnifePreset.StatTrakEnabled}"
+                                      Margin="0,0,0,8"
+                                      FontWeight="SemiBold"/>
+                            <StackPanel Visibility="{Binding SelectedKnifePreset.StatTrakEnabled, Converter={StaticResource BoolToVis}}" Margin="0,0,0,14">
+                                <TextBlock Text="StatTrak 计数器数值" FontSize="11" Foreground="{StaticResource BrushTextMuted}" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding SelectedKnifePreset.StatTrakCount, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <!-- 3. Gloves Section -->
+            <Grid Visibility="{Binding IsGlovesTab, Converter={StaticResource BoolToVis}}">
+                <Border Style="{StaticResource CardPanelStyle}" Margin="0" Padding="20">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel MaxWidth="600" HorizontalAlignment="Left">
+                            <TextBlock Text="手套配置" FontSize="18" FontWeight="Bold" Margin="0,0,0,14"/>
+
+                            <CheckBox Content="在此阵营启用手套投影 (Enabled)"
+                                      IsChecked="{Binding CurrentGloves.Enabled}"
+                                      FontSize="14"
+                                      FontWeight="SemiBold"
+                                      Margin="0,0,0,16"/>
+
+                            <TextBlock Text="关闭手套时，手套不会被投影到游戏实机，但保留当前各项设置值以便重新启用。"
+                                       Foreground="{StaticResource BrushTextMuted}"
+                                       FontSize="12"
+                                       Margin="0,0,0,16"/>
+
+                            <!-- Glove Model -->
+                            <TextBlock Text="手套型号 (Glove Model)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <ComboBox ItemsSource="{Binding AvailableGloves}"
+                                      SelectedItem="{Binding SelectedGloveDef}"
+                                      DisplayMemberPath="Name"
+                                      Margin="0,0,0,14"/>
+
+                            <!-- Glove Paint -->
+                            <TextBlock Text="手套涂装 (Glove Paint)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <ComboBox ItemsSource="{Binding AvailableGlovePaints}"
+                                      SelectedItem="{Binding SelectedGlovePaint}"
+                                      DisplayMemberPath="Name"
+                                      Margin="0,0,0,14"/>
+
+                            <!-- Wear -->
+                            <TextBlock Text="磨损度 (Wear: 0.0000 - 1.0000)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <Grid Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="90"/>
+                                </Grid.ColumnDefinitions>
+                                <Slider Grid.Column="0"
+                                        Minimum="0.0"
+                                        Maximum="1.0"
+                                        SmallChange="0.001"
+                                        LargeChange="0.05"
+                                        Value="{Binding CurrentGloves.Wear, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="0,0,12,0"/>
+                                <TextBox Grid.Column="1"
+                                         Text="{Binding CurrentGloves.Wear, Converter={StaticResource DoubleFormat}, UpdateSourceTrigger=LostFocus}"/>
+                            </Grid>
+
+                            <!-- Seed -->
+                            <TextBlock Text="图案模板 (Seed)" FontWeight="SemiBold" Margin="0,0,0,6"/>
+                            <TextBox Text="{Binding CurrentGloves.Seed, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,14"/>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+
+            <!-- 4. Music Kit Section -->
+            <Grid Visibility="{Binding IsMusicKitTab, Converter={StaticResource BoolToVis}}">
+                <Border Style="{StaticResource CardPanelStyle}" Margin="0" Padding="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                            <TextBlock Text="全局音乐盒配置 (Music Kit)" FontSize="18" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="音乐盒为全游戏全局配置，不分阵营。" Foreground="{StaticResource BrushTextMuted}" FontSize="12"/>
+                        </StackPanel>
+
+                        <Grid Grid.Row="1" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Grid.Column="0"
+                                     Text="{Binding MusicKitSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                     Margin="0,0,8,0"/>
+                            <Button Grid.Column="1"
+                                    Content="清除 / 不配置音乐盒"
+                                    Command="{Binding ClearMusicKitCommand}"/>
+                        </Grid>
+
+                        <ListBox Grid.Row="2"
+                                 ItemsSource="{Binding FilteredMusicKits}"
+                                 SelectedItem="{Binding SelectedMusicKit}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="Medium"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Id, StringFormat='ID: {0}'}" Foreground="{StaticResource BrushTextMuted}" FontSize="11"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!-- Bottom Action Bar & Status Feedback -->
+        <Border Grid.Row="2" Style="{StaticResource CardPanelStyle}" Margin="0,12,0,0" Padding="12,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Inline Feedback Message -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0"
+                            Visibility="{Binding IsStatusVisible, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="{Binding StatusMessage}"
+                               Foreground="{Binding IsStatusSuccess, Converter={StaticResource HealthBrush}}"
+                               FontWeight="Medium"
+                               TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <!-- Save & Apply Buttons -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="保存预设"
+                            Command="{Binding SaveCommand}"
+                            Padding="16,7"
+                            Margin="0,0,8,0"/>
+                    <Button Content="应用到 CS2"
+                            Command="{Binding ApplyCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Padding="20,7"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
