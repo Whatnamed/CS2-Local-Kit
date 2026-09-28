@@ -1,0 +1,21 @@
+# Task-local / machine-local
+temp/
+local/
+artifacts/
+
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Rust / Node / frontend
+**/target/
+**/node_modules/
+**/dist/
+
+# IDE / OS
+.vs/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "component": "CS2-Bot-Improver",
+  "repository": "ed0ard/CS2-Bot-Improver",
+  "ref": "abb2c0fc34e48183048134cfca0d2021db6b8d45",
+  "status": "candidate",
+  "testedCs2Build": null,
+  "artifact": null,
+  "license": "AGPL-3.0",
+  "notes": "Candidate current-main pin selected for isolated bot-baseline validation. Do not treat as accepted until real in-game testing passes."
+}
