@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "component": "InventorySimulator",
+  "repository": "ianlucas/cs2-css-inventory-simulator",
+  "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+  "tag": "3.3.0",
+  "status": "candidate",
+  "testedCs2Build": null,
+  "artifact": {
+    "asset": "InventorySimulator-v3.3.0.zip",
+    "url": "https://github.com/ianlucas/cs2-css-inventory-simulator/releases/download/3.3.0/InventorySimulator-v3.3.0.zip",
+    "sha256": "d9426992ef5b9df37edd034019c4f88777ccf6d66093a9a9eb9c5f8e17548d0c"
+  },
+  "framework": {
+    "metamod": {
+      "version": "2.0.0-git1469",
+      "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1469-windows.zip",
+      "sha256": "e1b3daa232b492f19922f260deac2a2caa50dbf975a9907a4e69684ce8dfa3e8"
+    },
+    "counterstrikesharp": {
+      "version": "v1.0.376",
+      "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+      "url": "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v1.0.376/counterstrikesharp-with-runtime-windows-1.0.376.zip",
+      "sha256": "4f2777545a0940351450440288e7487509d539f770e66cf1c30cc2419084c5f8"
+    }
+  },
+  "license": "MIT",
+  "notes": "Candidate Human cosmetics runtime pin for the CosmeticsLab C1 exact-upstream static baseline experiment. Do not treat as accepted or architectural until the real-game gate passes. Verified against CS2 build 25537370 (PatchVersion 1.41.8.5) at pin time only; see experiments/cosmetics-lab/."
+}

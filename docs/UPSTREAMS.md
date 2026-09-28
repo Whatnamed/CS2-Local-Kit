@@ -22,6 +22,19 @@
 
 许可证当前为 AGPL-3.0。未来如果 package 分发其二进制或修改版本，必须保留适用的许可证、来源和相应义务；不要因为本项目是个人工具就删除 attribution。
 
+### ianlucas/cs2-css-inventory-simulator
+
+角色：**candidate** Human cosmetics runtime（CosmeticsLab 实验候选），不是已接受的 production dependency。
+
+当前状态：
+
+- 以 exact upstream release 二进制形式在 `experiments/cosmetics-lab` 中验证；
+- 不 fork、不修改其 DLL / gamedata，不 vendor 源码；
+- Human cosmetics 的故障域必须与 Bot runtime 隔离，本组件只服务 Human 玩家自己；
+- 只有真实游戏验收（C1/C2 gate）通过后，才考虑从 candidate 升级为架构依赖并改写本文档。
+
+许可证当前为 MIT；分发其原样二进制时保留 attribution。
+
 ## 2. Framework dependencies
 
 ### MetaMod:Source

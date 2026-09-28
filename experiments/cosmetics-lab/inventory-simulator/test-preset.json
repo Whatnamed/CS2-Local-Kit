@@ -1,0 +1,109 @@
+{
+  "kind": "cosmetics-lab-c1-test-preset",
+  "schemaVersion": 1,
+  "description": "Non-private item selections for the CosmeticsLab C1 InventorySimulator static baseline. The private inventories.json is generated from this file by Prepare-CosmeticsLab.ps1 (-SteamId64) and stored only under E:\\CS2MOD\\app-data. No SteamID or personal data may be committed or bundled into a generic release ZIP.",
+  "upstream": {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "tag": "3.3.0",
+    "commit": "fade4449aaa6d5153261c855d0cc12d7dacfefdd"
+  },
+  "fileSchema": {
+    "type": "InventorySimulator EquippedV5 (System.Text.Json Dictionary<ulong, EquippedV5Response>)",
+    "verifiedFrom": "source/InventorySimulator/Services/Inventories.cs + Models/EquippedV5Response.cs @ fade4449",
+    "notes": "Top-level object keyed by SteamID64 string. ctWeapons/tWeapons keyed by weapon defindex string. knives/gloves keyed by CsTeam byte string (T=2, CT=3). musicKit uses musicId, not def. stattrak -1 means disabled. hash must be stable/unique per item (plugin equality + econ cache key)."
+  },
+  "catalog": {
+    "source": "ByMykel/CSGO-API",
+    "license": "MIT",
+    "commit": "8a71e35c0489ac3093661af713525f2f0ebe1ad7",
+    "files": ["public/api/en/skins.json", "public/api/en/music_kits.json"],
+    "notes": "Every defindex/paint_index below was resolved and verified against this pinned catalog snapshot on 2026-09-28."
+  },
+  "teamKeys": {
+    "T": 2,
+    "CT": 3,
+    "verifiedFrom": "CounterStrikeSharp.API v1.0.376 CsTeam enum (None=0, Spectator=1, Terrorist=2, CounterTerrorist=3), ref 653d651f1ac09ac1ddb423d588f871b891038860"
+  },
+  "player": {
+    "ctWeapons": {
+      "36": {
+        "def": 36,
+        "paint": 551,
+        "seed": 387,
+        "wear": 0.15,
+        "stattrak": -1,
+        "uid": 1,
+        "hash": "c1-ct-p250-asiimov",
+        "_catalogRef": "P250 | Asiimov (weapon_id 36, paint_index 551, float 0.10-1.00), team both"
+      }
+    },
+    "tWeapons": {
+      "36": {
+        "def": 36,
+        "paint": 678,
+        "seed": 42,
+        "wear": 0.10,
+        "stattrak": -1,
+        "uid": 2,
+        "hash": "c1-t-p250-seeyalater",
+        "_catalogRef": "P250 | See Ya Later (weapon_id 36, paint_index 678, float 0.00-0.70), team both"
+      }
+    },
+    "knives": {
+      "3": {
+        "def": 507,
+        "paint": 38,
+        "seed": 387,
+        "wear": 0.01,
+        "stattrak": -1,
+        "uid": 3,
+        "hash": "c1-ct-karambit-fade",
+        "_catalogRef": "★ Karambit | Fade (weapon_id 507, paint_index 38, float 0.00-0.08)"
+      },
+      "2": {
+        "def": 515,
+        "paint": 409,
+        "seed": 555,
+        "wear": 0.01,
+        "stattrak": -1,
+        "uid": 4,
+        "hash": "c1-t-butterfly-tigertooth",
+        "_catalogRef": "★ Butterfly Knife | Tiger Tooth (weapon_id 515, paint_index 409, float 0.00-0.08)"
+      }
+    },
+    "gloves": {
+      "3": {
+        "def": 5030,
+        "paint": 10037,
+        "seed": 111,
+        "wear": 0.1,
+        "uid": 5,
+        "hash": "c1-ct-sport-pandoras-box",
+        "_catalogRef": "★ Sport Gloves | Pandora's Box (weapon_id 5030, paint_index 10037, float 0.06-0.80)"
+      },
+      "2": {
+        "def": 5031,
+        "paint": 10016,
+        "seed": 222,
+        "wear": 0.12,
+        "uid": 6,
+        "hash": "c1-t-driver-crimson-weave",
+        "_catalogRef": "★ Driver Gloves | Crimson Weave (weapon_id 5031, paint_index 10016, float 0.06-0.80)"
+      }
+    },
+    "musicKit": {
+      "musicId": 28,
+      "uid": 7,
+      "hash": "c1-music-kit-28",
+      "_catalogRef": "Music Kit | New Beat Fund, Sponge Fingerz (music_kits.json def_index 28)"
+    }
+  },
+  "intentionallyExcluded": [
+    "agents",
+    "stickers",
+    "keychains (charms)",
+    "graffiti",
+    "nametags",
+    "StatTrak (disabled)"
+  ]
+}
