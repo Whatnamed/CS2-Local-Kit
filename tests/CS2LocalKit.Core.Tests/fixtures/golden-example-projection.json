@@ -1,0 +1,66 @@
+{
+  "76561190000000000": {
+    "ctWeapons": {
+      "36": {
+        "def": 36,
+        "paint": 258,
+        "seed": 0,
+        "wear": 0.06,
+        "nametag": "",
+        "stattrak": -1,
+        "uid": 1,
+        "hash": "hp1-adfcc066961b2120"
+      }
+    },
+    "tWeapons": {
+      "7": {
+        "def": 7,
+        "paint": 316,
+        "seed": 0,
+        "wear": 0.07,
+        "nametag": "",
+        "stattrak": -1,
+        "uid": 4,
+        "hash": "hp1-e04527304c77c5aa"
+      }
+    },
+    "knives": {
+      "3": {
+        "def": 507,
+        "paint": 38,
+        "seed": 0,
+        "wear": 0.01,
+        "nametag": "",
+        "stattrak": -1,
+        "uid": 2,
+        "hash": "hp1-09cad01165ed63ec"
+      },
+      "2": {
+        "def": 515,
+        "paint": 409,
+        "seed": 0,
+        "wear": 0.01,
+        "nametag": "",
+        "stattrak": -1,
+        "uid": 5,
+        "hash": "hp1-63393511629b0905"
+      }
+    },
+    "gloves": {
+      "3": {
+        "def": 5030,
+        "paint": 10037,
+        "seed": 0,
+        "wear": 0.06,
+        "uid": 3,
+        "hash": "hp1-ec531c175996f59f"
+      }
+    },
+    "musicKit": {
+      "musicId": 78,
+      "stattrak": -1,
+      "uid": 6,
+      "hash": "hp1-b83d9327d4d5a318"
+    }
+  }
+}

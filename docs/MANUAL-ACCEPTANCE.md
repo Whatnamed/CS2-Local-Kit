@@ -45,14 +45,14 @@
 - P250；
 - 一把普通 rifle。
 
-## 4. Loadout identity
+## 4. 普通枪械 identity（非目标验证）
 
-验证：
+普通枪械 identity 由 CS2 自己的 loadout 决定，cosmetics 层不参与。验证的是"cosmetics 没有改变 identity"这一否定性事实：
 
-- 选择 USP-S 时实际获得 USP-S；
-- 选择 P2000 时实际获得 P2000；
+- 玩家在 loadout 选择 USP-S 时实际获得 USP-S（原生行为），其皮肤/cosmetic 按该真实 defIndex 呈现；
+- 选择 P2000 时实际获得 P2000，同理；
 - M4A1-S / M4A4 同理；
-- cosmetic layer 不负责“把错误武器改成正确武器”；
+- cosmetic layer 不负责"把错误武器改成正确武器"，也不得重写普通枪械 defIndex；
 - 换边和重生后保持正确。
 
 ## 5. Knife
@@ -95,8 +95,7 @@ CT/T 分别验证：
 
 验证：
 
-- 配置 ID 正确呈现；
-- 默认个人目标 ID 28 可正常使用；
+- 配置 ID 正确呈现（具体 ID 由用户 preset 决定）；
 - MVP / scoreboard 等相关显示按实际游戏行为检查；
 - 不影响其他 cosmetics 生命周期。
 

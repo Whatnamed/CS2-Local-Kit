@@ -65,6 +65,24 @@ explicit `-SteamId64`. Projection (pure) and installation
 backup, atomic replace, hash verify, auto-rollback, rollback metadata) are
 separate entrypoints; future Panel/UI must reuse the apply entrypoint.
 
+## C3 — Human Cosmetics Controller Foundation（2026-09-29，无 runtime 变化）
+
+产品层建立：`src/CS2LocalKit.Core`（HumanPreset v1 domain、serialization、validator、
+pinned catalog service、preset store、deterministic projection、apply/rollback、
+runtime status）+ `src/CS2LocalKit.Controller`（薄 CLI）。关键结果：
+
+- .NET projector 与 C2 accepted PowerShell projector **byte-identical**（example golden
+  在测试套件中锁定；真实 personal preset + verified SteamID 本机复算 = 安装 fixture
+  sha256 `01a8a749…` 完全一致）；
+- apply/rollback fake-tree 验证通过（备份、原子替换、hash 校验、失败自动回滚、restore
+  latest）；
+- runtime/compatibility status 只读建模（build match、patched dll hash match、fixture
+  hash、active preset、latest apply/rollback 可用性）；
+- canonical docs 同步修正普通枪械 identity 定义：identity 永远由 CS2 自己的 loadout
+  决定，USP-S/P2000、M4A1-S/M4A4 identity override 为明确非目标（PRODUCT-SCOPE §3.1/3.2、
+  ARCHITECTURE §3/§6、MANUAL-ACCEPTANCE §4、COMPATIBILITY-WATCH §6）；
+- 真实 CS2 安装的 runtime/fixture 在本阶段未被修改（.NET golden 与已安装 fixture 一致）。
+
 ## Still deferred (explicitly)
 
 Quick knife cycling (`\`), knife rotation, M4A1-S/M4A4 and USP-S/P2000 identity

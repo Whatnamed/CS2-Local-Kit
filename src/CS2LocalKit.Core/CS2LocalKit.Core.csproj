@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <ImplicitlyExpandNETStandardFacades>true</ImplicitlyExpandNETStandardFacades>
+    <Description>CS2 Local Kit product layer: HumanPreset domain, pinned catalog, InventorySimulator projection, apply/rollback, runtime status. Windows-only by product boundary.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="CS2LocalKit.Core.Tests" />
+  </ItemGroup>
+
+</Project>

@@ -41,43 +41,22 @@ Human cosmetics 只作用于本地真人玩家，并与 Bot runtime 独立。
 ### 3.1 枪械
 
 - CT / T 可分别配置。
-- 对玩家真实拥有/获得的枪械应用对应 preset。
-- cosmetic apply 不得把一种枪械 identity 伪装成另一种枪械。
-- P2000 / USP-S、M4A4 / M4A1-S 等 loadout identity 是独立问题，不能靠修改 skin writer 的 ItemDefinitionIndex 假装解决。
+- 普通枪械 identity 永远由 CS2 自己的 loadout / equipment 决定：游戏实际生成哪把武器，cosmetics 就按该武器真实 defIndex 查询并应用 cosmetic preset。
+- 不修改普通枪械 defIndex；cosmetic apply 不得把一种枪械 identity 伪装成另一种枪械。
+- P2000 / USP-S、M4A4 / M4A1-S 的 identity override 不是 deferred 功能，而是明确非目标。
 - 目标支持 PaintKit、Wear、Seed 等个人 preset 所需核心数据；额外字段只有在有实际需求时再扩展。
 
-### 3.2 Loadout identity
+### 3.2 Loadout identity（非目标）
 
-至少需要可靠支持 CT 侧常见互斥 loadout 的真实武器选择，例如：
+USP-S / P2000、M4A1-S / M4A4 等互斥 loadout 的武器选择完全由玩家在游戏内自己的装备配置决定，本项目的 Human Cosmetics 不拥有、不模拟、不修复这一层：
 
-- USP-S / P2000；
-- M4A1-S / M4A4。
+- 玩家在 loadout 里选 USP-S 就拿到 USP-S，选 P2000 就拿到 P2000（CS2 原生行为）；
+- cosmetic layer 不负责"把错误武器改成正确武器"；
+- canonical preset 中不存在任何 loadout identity / CT-T 共享字段。
 
-这层只决定玩家实际拿到哪一种武器，不承担 cosmetic projection。
+### 3.3 快捷换刀（延后）
 
-### 3.3 快捷换刀
-
-默认轮换顺序固定为：
-
-1. Karambit — 507
-2. Butterfly Knife — 515
-3. M9 Bayonet — 508
-4. Bayonet — 500
-5. Skeleton Knife — 525
-6. Falchion Knife — 512
-
-默认候选按键为 `\`。
-
-要求：
-
-- 一次按键只推进一个位置；
-- 循环结束后回到第一把；
-- 每个刀型使用自己的 preset；
-- model、animation、skin 必须同时正确；
-- 失败不能造成无限刷刀、HUD 抖动、持续音效、永久丢刀或 crash；
-- 不把某个尚未实机验证的 `ChangeSubclass` / Kill-Give / drop-pickup 技术方案写成产品要求。
-
-具体 knife replacement / creation mechanism 由最小实验和实机证据决定。
+快捷换刀是未来功能，也是 knife identity 作为特殊情况的唯一原因：它可能主动改变 knife identity，这与普通枪械 identity 的不变规则不同。本阶段不实现。
 
 ### 3.4 手套
 
@@ -88,7 +67,7 @@ Human cosmetics 只作用于本地真人玩家，并与 Bot runtime 独立。
 ### 3.5 音乐盒
 
 - 支持本地玩家音乐盒 preset；
-- 默认个人 preset 目标为 Music Kit ID 28；
+- 具体使用哪个 Music Kit 由用户 preset 决定（数值 ID 持久化）；
 - 不把音乐盒和刀/枪生命周期耦合。
 
 ## 4. Preset 与导入导出

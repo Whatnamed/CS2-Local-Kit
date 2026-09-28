@@ -76,11 +76,12 @@ Bot baseline 必须独立于 HumanCosmetics 测试，避免跨域归因。
 典型 probe：
 
 - existing gun paint；
-- loadout identity；
-- knife identity/model/animation；
+- knife identity/model/animation（仅未来快捷换刀场景，延后）；
 - knife paint；
 - glove；
 - music kit。
+
+普通枪械 identity 不是 probe 对象：它由 CS2 自己的 loadout 决定，不属于 cosmetics 的更新敏感面。
 
 每个 probe 应尽量只验证一个技术假设。
 

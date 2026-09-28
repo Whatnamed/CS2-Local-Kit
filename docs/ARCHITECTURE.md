@@ -42,20 +42,20 @@ Bot runtime 是外部组件，不是本仓库的主源码树。
 
 ## 3. HumanCosmetics
 
-HumanCosmetics 是本项目拥有的独立插件。
+HumanCosmetics 是本项目拥有的独立能力层。当前已验证的实现形态是：pinned 外部 runtime（InventorySimulator，exact upstream + 项目最小 lifecycle patch）负责 engine 侧 projection，项目拥有 HumanPreset domain、catalog、projection 与 apply/rollback（见 `src/CS2LocalKit.Core`）。
 
-它可以拥有：
+未来如果自建插件，它可以拥有：
 
 - human preset domain；
 - gun cosmetic projection；
-- loadout identity adapter；
-- knife rotation orchestration；
+- knife rotation orchestration（快捷换刀，延后功能）；
 - glove；
 - music kit；
 - Human cosmetics 所需的 compatibility bindings。
 
 它 **不能拥有**：
 
+- 普通枪械 identity override（identity 由 CS2 自己的 loadout 决定，见 §6）；
 - Bot AI；
 - Bot quota；
 - Bot profile；
@@ -97,21 +97,24 @@ HumanCosmetics 是本项目拥有的独立插件。
 
 具体机制必须通过 `experiments/` 的最小 probe 和真实 CS2 验证后再进入 production plugin。
 
-## 6. Gun loadout identity 与 skin 分离
+## 6. Gun identity 与 skin 分离
 
-枪械同样分两层：
+普通枪械 identity 不存在独立的 "LoadoutIdentity" 层：
 
 ```text
-LoadoutIdentity
+CS2 自己的 loadout / equipment
     ↓
-实际 USP-S / P2000 / M4A1-S / M4A4 entity
+实际生成的 weapon entity（真实 defIndex）
     ↓
 GunCosmetics
     ↓
-只修改该真实 weapon 的 cosmetic state
+按真实 defIndex 查询并应用 cosmetic preset（不改 defIndex）
 ```
 
-GunCosmetics 不得通过改 defindex 来修复错误 loadout。
+- 游戏生成 USP-S 就读取 USP-S defIndex 的 preset；生成 P2000 就读取 P2000 的 preset；M4A1-S / M4A4 同理。
+- GunCosmetics 不得通过改 defindex 来修复、伪装或"选择"任何普通枪械 identity。
+- USP-S / P2000、M4A1-S / M4A4 的 identity override 是明确非目标，不是 deferred 功能。
+- knife identity 是唯一例外：未来快捷换刀（延后功能）可能主动改变 knife identity，但那属于独立的、需单独实机验证的机制。
 
 ## 7. Installer / ownership
 
