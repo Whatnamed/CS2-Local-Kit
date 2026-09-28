@@ -50,6 +50,7 @@ foreach ($team in 'ct', 't') {
     foreach ($p in 'enabled', 'defindex', 'paint', 'seed', 'wear') { [void]$known.Add("/config/loadouts/$team/glove/$p") }
 }
 $tracked = New-Object System.Collections.Generic.HashSet[string]
+$script:sharedWeaponLinksValues = $null
 function Track { param([string]$Path) [void]$script:tracked.Add($Path) }
 
 function Convert-LegacyItem {
@@ -108,7 +109,8 @@ foreach ($team in 'ct', 't') {
     }
     $reportMapped.Add([pscustomobject]@{ item = "$team.gloves"; from = "/config/loadouts/$team/glove"; detail = "enabled $($g.enabled), defindex $($g.defindex), paint $($g.paint)" })
 
-    # loadout identity (preserved verbatim, not executed by the v1 projector)
+    # legacy shared cosmetics links: report-only (NOT part of HumanPreset v1 -
+    # weapon identity is decided by CS2's own loadout; see HUMAN-PRESET-V1.md)
     $links = $legacy.config.shared_weapon_links
     if ($links) {
         $swl = [ordered]@{}
@@ -117,7 +119,7 @@ foreach ($team in 'ct', 't') {
             [void]$script:known.Add("/config/shared_weapon_links/$($p.Name)")
             $swl[$p.Name] = [bool]$p.Value
         }
-        $t.loadoutIdentity = [ordered]@{ sharedWeaponLinks = $swl }
+        $script:sharedWeaponLinksValues = $swl
     }
 
     # ignored legacy team fields
@@ -176,6 +178,7 @@ foreach ($team in 'ct', 't') {
     foreach ($p in $o.knife.presets.PSObject.Properties) {
         $wid = [int]$p.Name
         if (-not $index.byWeapon.ContainsKey($wid)) { $unresolved.Add([pscustomobject]@{ item = "$team.knife[$($p.Name)]"; problem = "defindex $wid not in catalog" }) }
+        elseif (-not $index.byWeapon[$wid].paints.ContainsKey([string]$p.Value.paint)) { $unresolved.Add([pscustomobject]@{ item = "$team.knife[$($p.Name)]"; problem = "paint $($p.Value.paint) not listed for knife $($index.byWeapon[$wid].name)" }) }
     }
     if ($o.gloves.enabled) {
         if (-not $index.byWeapon.ContainsKey([int]$o.gloves.defindex)) { $unresolved.Add([pscustomobject]@{ item = "$team.gloves"; problem = "glove defindex $($o.gloves.defindex) not in catalog" }) }
@@ -217,7 +220,12 @@ $report = [pscustomobject]@{
         ignoredWithReason = $reportIgnored.Count
     }
     mapped = $reportMapped
-    preservedButNotApplied = @([pscustomobject]@{ item = 'loadoutIdentity.sharedWeaponLinks (ct+t)'; from = '/config/shared_weapon_links'; detail = 'legacy same-cosmetic-both-teams links; every linked defindex already carries identical ct/t presets in source; the v1 projector does NOT execute identity overrides' })
+    preservedButNotApplied = @([pscustomobject]@{
+        item = '/config/shared_weapon_links (legacy CT/T cosmetics-sharing links)'
+        from = '/config/shared_weapon_links'
+        value = $script:sharedWeaponLinksValues
+        detail = 'recorded here only, NOT carried into HumanPreset v1: ordinary weapon identity is decided by the CS2 loadout; the v1 schema has no CT/T cosmetic-sharing model (HUMAN-PRESET-V1.md)'
+    })
     unsupported = @()
     unknown = $unknown
     ignoredWithReason = $reportIgnored

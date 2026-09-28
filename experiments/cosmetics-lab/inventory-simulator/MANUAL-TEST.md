@@ -3,9 +3,9 @@
 > **当前安装状态**：C1.1 patched InventorySimulator（实机已验收）+ **你的个人皮肤配置**。
 > 皮肤数据不再是 C1 的测试组合，而是从你自己的 `E:\CS2MOD\1.json` 迁移生成
 > （链路：`1.json` → HumanPreset v1 → 投影 → 运行时；迁移报告见
-> `E:\CS2MOD\diagnostics\cosmetics-lab\20260928-235446-preset-migration\migration-report.json`）。
+> `E:\CS2MOD\diagnostics\cosmetics-lab\20260929-004716-preset-migration\migration-report.json`）。
 > MetaMod 2.0 build 1469 / CSS 1.0.376 / patched DLL / gameinfo.gi / 实验专用 cfg 全部未动，
-> 本轮只替换了皮肤数据文件。
+> 本轮只替换了皮肤数据文件。C2 实机验收已 PASS（见 `../ACCEPTANCE.md`）。
 
 ## 启动（与之前完全相同）
 

@@ -30,7 +30,7 @@ function Test-HumanPresetV1 {
         if ($o.PSObject.Properties['weapons']) {
             foreach ($p in $o.weapons.PSObject.Properties) {
                 if ($p.Name -notmatch '^\d+$') { $errors.Add("$team.weapons key '$($p.Name)' is not a numeric defindex") }
-                $errors += (Test-HumanPresetItemEntry -Entry $p.Value -Path "$team.weapons[$($p.Name)]")
+                $errors.AddRange([string[]](Test-HumanPresetItemEntry -Entry $p.Value -Path "$team.weapons[$($p.Name)]"))
             }
         }
 
@@ -45,7 +45,7 @@ function Test-HumanPresetV1 {
                 $keys = @($k.presets.PSObject.Properties | ForEach-Object Name)
                 foreach ($key in $keys) {
                     if ($key -notmatch '^\d+$') { $errors.Add("$team.knife.presets key '$key' is not a numeric defindex") }
-                    $errors += (Test-HumanPresetItemEntry -Entry $k.presets.$key -Path "$team.knife.presets[$key]")
+                    $errors.AddRange([string[]](Test-HumanPresetItemEntry -Entry $k.presets.$key -Path "$team.knife.presets[$key]"))
                 }
                 if ($k.PSObject.Properties['selected'] -and $k.selected -match '^\d+$' -and ($keys -notcontains $k.selected)) {
                     $errors.Add("$team.knife.selected ($($k.selected)) has no preset in $team.knife.presets")
@@ -66,18 +66,11 @@ function Test-HumanPresetV1 {
             }
         }
 
-        if ($o.PSObject.Properties['loadoutIdentity'] -and $null -ne $o.loadoutIdentity) {
-            foreach ($p in $o.loadoutIdentity.PSObject.Properties) {
-                if ($p.Name -eq 'sharedWeaponLinks') {
-                    foreach ($l in $p.Value.PSObject.Properties) {
-                        if ($l.Name -notmatch '^\d+$' -or $l.Value -ne $true) {
-                            $errors.Add("$team.loadoutIdentity.sharedWeaponLinks entry '$($l.Name)' must be a numeric defindex mapped to true")
-                        }
-                    }
-                } else {
-                    $errors.Add("$team.loadoutIdentity.$($p.Name) is not a known v1 loadoutIdentity field")
-                }
-            }
+        if ($o.PSObject.Properties['loadoutIdentity']) {
+            # Removed from v1: legacy shared_weapon_links is cosmetic-sharing state,
+            # not weapon identity. Weapon identity is decided by CS2's own loadout.
+            # It belongs in migration reports only, never in the canonical preset.
+            $errors.Add("$team.loadoutIdentity is not part of HumanPreset v1 (weapon identity is decided by the CS2 loadout; legacy sharing info belongs in the migration report)")
         }
     }
 
@@ -107,7 +100,7 @@ function Test-HumanPresetItemEntry {
     if ($Entry.PSObject.Properties['statTrak'] -and $null -ne $Entry.statTrak -and $Entry.statTrak -notmatch '^\d+$') {
         $errors.Add("$Path.statTrak must be null or a non-negative integer")
     }
-    return $errors
+    return ,$errors
 }
 
 # Ensure the pinned catalog snapshot exists locally (no floating latest, no per-run web

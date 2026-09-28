@@ -17,9 +17,6 @@
       "paint": 10037,
       "seed": 0,
       "wear": 0.06
-    },
-    "loadoutIdentity": {
-      "sharedWeaponLinks": { "36": true }
     }
   },
   "t": {
@@ -38,9 +35,6 @@
       "paint": 10016,
       "seed": 0,
       "wear": 0.1
-    },
-    "loadoutIdentity": {
-      "sharedWeaponLinks": { "36": true }
     }
   },
   "musicKitId": 78

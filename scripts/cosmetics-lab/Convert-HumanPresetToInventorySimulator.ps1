@@ -1,23 +1,23 @@
 # Convert-HumanPresetToInventorySimulator.ps1 — deterministic projection from the canonical
-# HumanPreset v1 to the private InventorySimulator EquippedV5 file.
+# HumanPreset v1 to the InventorySimulator EquippedV5 text. PURE projection: it writes the
+# projected JSON to -OutPath and does nothing else (no game-directory writes, no install).
+# Installing is Apply-HumanCosmeticsPreset.ps1's job.
 #
 # The projector is a pure mapping: CT -> team 3, T -> team 2, weapons by defindex, the
 # selected knife identity per team, gloves only when enabled, music kit id. loadoutIdentity
-# is intentionally NOT executed (see migration report: preserved-but-not-applied).
-# uid/hash are derived deterministically from preset coordinates (no random, no clock).
+# does not exist in v1 (weapon identity is decided by CS2's own loadout). uid/hash are
+# derived deterministically from preset coordinates (no random, no clock).
 #
 # Usage:
-#   pwsh -NoProfile -File scripts\cosmetics-lab\Convert-HumanPresetToInventorySimulator.ps1
+#   pwsh -NoProfile -File scripts\cosmetics-lab\Convert-HumanPresetToInventorySimulator.ps1 [-OutPath <file>]
 #
-# Writes E:\CS2MOD\app-data\cosmetics-lab\inventory-simulator\inventories.json
-# (backing up the previous fixture first). Refuses while cs2.exe is running.
+# SteamID source: private player state (E:\CS2MOD\app-data\cosmetics-lab\player-state.json)
+# or explicit -SteamId64. Never from the preset, never from Git.
 
 param(
     [string]$PresetPath = '',
     [string]$OutPath = '',
-    # Defaults to the machine-verified SteamID64 recorded by the C1 install record.
-    [string]$SteamId64 = '',
-    [switch]$NoBackup
+    [string]$SteamId64 = ''
 )
 
 . (Join-Path $PSScriptRoot 'CosmeticsLab.Common.ps1')
@@ -26,8 +26,12 @@ param(
 if (-not $PresetPath) { $PresetPath = Join-Path $script:Cs2ModRoot 'presets\human\personal-default.v1.json' }
 if (-not $OutPath) { $OutPath = Join-Path $script:Cs2ModRoot 'app-data\cosmetics-lab\inventory-simulator\inventories.json' }
 if (-not $SteamId64) {
-    $c1Record = Read-C1Json -Path (Join-Path $script:Cs2ModRoot 'backups\cosmetics-lab\20260928-213555-inventory-simulator-c1\install-record.json')
-    $SteamId64 = [string]$c1Record.fixture.steamId64
+    $playerStatePath = Join-Path $script:Cs2ModRoot 'app-data\cosmetics-lab\player-state.json'
+    if (-not (Test-Path -LiteralPath $playerStatePath -PathType Leaf)) {
+        throw "No player state found at $playerStatePath - pass -SteamId64 explicitly (the apply workflow does this)."
+    }
+    $playerState = Read-C1Json -Path $playerStatePath
+    $SteamId64 = [string]$playerState.steamId64
 }
 if ($SteamId64 -notmatch '^\d{17}$') { throw "SteamID64 '$SteamId64' is not a 17-digit id." }
 
@@ -46,7 +50,9 @@ foreach ($team in 'ct', 't') {
         if (-not $index.byWeapon[$wid].paints.ContainsKey([string]$p.Value.paint)) { $unresolved.Add("$team.weapon[$($p.Name)]: paint $($p.Value.paint) unknown for $($index.byWeapon[$wid].name)") }
     }
     foreach ($p in $o.knife.presets.PSObject.Properties) {
-        if (-not $index.byWeapon.ContainsKey([int]$p.Name)) { $unresolved.Add("$team.knife[$($p.Name)]: unknown defindex") }
+        $wid = [int]$p.Name
+        if (-not $index.byWeapon.ContainsKey($wid)) { $unresolved.Add("$team.knife[$($p.Name)]: unknown defindex") }
+        elseif (-not $index.byWeapon[$wid].paints.ContainsKey([string]$p.Value.paint)) { $unresolved.Add("$team.knife[$($p.Name)]: paint $($p.Value.paint) unknown for knife $($index.byWeapon[$wid].name)") }
     }
     if ($o.gloves.enabled) {
         if (-not $index.byWeapon.ContainsKey([int]$o.gloves.defindex)) { $unresolved.Add("$team.gloves: unknown defindex $($o.gloves.defindex)") }
@@ -129,30 +135,10 @@ $fixture[$SteamId64] = [ordered]@{
 }
 $json = ($fixture | ConvertTo-Json -Depth 12) + "`r`n"
 
-Write-C1Step 'Installing (cs2 must be closed)'
-if (Test-C1Cs2Running) { throw 'cs2.exe is running. Close CS2, then re-run.' }
+Write-C1Step 'Writing projection'
 $outParent = Split-Path $OutPath -Parent
-New-Item -ItemType Directory -Force -Path $outParent | Out-Null
-$previousSha = $null
-if (Test-Path -LiteralPath $OutPath -PathType Leaf) {
-    $previousSha = Get-C1FileSha256Hex -Path $OutPath
-    if (-not $NoBackup) {
-        $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-        $backupDir = Join-Path $script:Cs2ModRoot "backups\cosmetics-lab\$stamp-c2-fixture"
-        New-Item -ItemType Directory -Force -Path $backupDir | Out-Null
-        Copy-Item -LiteralPath $OutPath -Destination (Join-Path $backupDir 'inventories.json')
-        [pscustomobject]@{
-            kind = 'cosmetics-lab-c2-fixture-backup'
-            createdAt = (Get-Date -Format 'o')
-            previousFixture = [pscustomobject]@{ path = $OutPath; sha256 = $previousSha }
-            backupPath = (Join-Path $backupDir 'inventories.json')
-            presetSource = $PresetPath
-            rollback = "Copy-Item -LiteralPath '$(Join-Path $backupDir 'inventories.json')' -Destination '$OutPath'"
-        } | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $backupDir 'fixture-backup-record.json') -Encoding utf8NoBOM
-        Write-C1Ok "previous fixture backed up -> $backupDir (sha256 $previousSha)"
-    }
-}
+if (-not (Test-Path -LiteralPath $outParent)) { New-Item -ItemType Directory -Force -Path $outParent | Out-Null }
 [IO.File]::WriteAllText($OutPath, $json, [Text.UTF8Encoding]::new($false))
 $outSha = Get-C1FileSha256Hex -Path $OutPath
-Write-C1Ok "projected fixture written: $OutPath (sha256 $outSha)"
-Write-Host ("   items: ctWeapons {0}, tWeapons {1}, knives {2}, gloves {3}, musicKit {4}" -f $ctWeapons.Count, $tWeapons.Count, $knives.Count, $gloves.Count, ($(if ($musicKit) { 1 } else { 0 })))
+Write-C1Ok "projected EquippedV5 written: $OutPath (sha256 $outSha)"
+Write-Host ("   steamId64 {0}; items: ctWeapons {1}, tWeapons {2}, knives {3}, gloves {4}, musicKit {5}" -f $SteamId64, $ctWeapons.Count, $tWeapons.Count, $knives.Count, $gloves.Count, ($(if ($musicKit) { 1 } else { 0 })))
