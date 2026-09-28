@@ -1,0 +1,47 @@
+{
+  "kind": "cs2-local-kit/human-preset",
+  "schemaVersion": 1,
+  "ct": {
+    "weapons": {
+      "36": { "paint": 258, "seed": 0, "wear": 0.06, "nameTag": "", "statTrak": null }
+    },
+    "knife": {
+      "selected": 507,
+      "presets": {
+        "507": { "paint": 38, "seed": 0, "wear": 0.01, "nameTag": "", "statTrak": null }
+      }
+    },
+    "gloves": {
+      "enabled": true,
+      "defindex": 5030,
+      "paint": 10037,
+      "seed": 0,
+      "wear": 0.06
+    },
+    "loadoutIdentity": {
+      "sharedWeaponLinks": { "36": true }
+    }
+  },
+  "t": {
+    "weapons": {
+      "7": { "paint": 3, "seed": 0, "wear": 0.07, "nameTag": "", "statTrak": null }
+    },
+    "knife": {
+      "selected": 515,
+      "presets": {
+        "515": { "paint": 409, "seed": 0, "wear": 0.01, "nameTag": "", "statTrak": null }
+      }
+    },
+    "gloves": {
+      "enabled": false,
+      "defindex": 5031,
+      "paint": 10016,
+      "seed": 0,
+      "wear": 0.1
+    },
+    "loadoutIdentity": {
+      "sharedWeaponLinks": { "36": true }
+    }
+  },
+  "musicKitId": 78
+}

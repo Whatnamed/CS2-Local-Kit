@@ -4,12 +4,33 @@
   "repository": "ianlucas/cs2-css-inventory-simulator",
   "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
   "tag": "3.3.0",
-  "status": "candidate",
-  "testedCs2Build": null,
-  "artifact": {
-    "asset": "InventorySimulator-v3.3.0.zip",
-    "url": "https://github.com/ianlucas/cs2-css-inventory-simulator/releases/download/3.3.0/InventorySimulator-v3.3.0.zip",
-    "sha256": "d9426992ef5b9df37edd034019c4f88777ccf6d66093a9a9eb9c5f8e17548d0c"
+  "license": "MIT",
+  "status": "accepted-as-patched",
+  "testedCs2Build": {
+    "patchVersion": "1.41.8.5",
+    "clientVersion": "2000918",
+    "buildId": "25537370"
+  },
+  "exactUpstreamStatus": {
+    "state": "startup-fail",
+    "detail": "Unmodified upstream 3.3.0 (C1) crashes cs2.exe during listen-server startup on the tested build: managed NativeException 'Global Variables not initialized yet' from Utilities.GetPlayers() reached via Load() -> OnFileChanged(); process dies in coreclr.dll (0x80131623). Exact-upstream 3.3.0 is NOT accepted.",
+    "evidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20260928-221018-posttest"
+  },
+  "acceptedRuntime": {
+    "definition": "upstream commit fade4449aaa6d5153261c855d0cc12d7dacfefdd + experiments/cosmetics-lab/inventory-simulator/c1_1-startup-lifecycle-patch/c1_1-startup-lifecycle.patch (single line: Load() uses Inventories.Load(file) instead of OnFileChanged(null, file); OnFileChanged itself unchanged)",
+    "patchedDllSha256": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+    "build": {
+      "targetFramework": "net10.0",
+      "counterStrikeSharpApiReference": "1.0.375",
+      "script": "scripts/cosmetics-lab/Build-InventorySimulatorPatch.ps1"
+    },
+    "acceptanceEvidence": {
+      "date": "2026-09-28",
+      "result": "startup PASS + full C1 cosmetic acceptance PASS on CS2 1.41.8.5 (CT/T gun cosmetics, knife identity/model/animation/finish, gloves across spawns and side change, Music Kit shown as ID 28 - display correct, injection causality not separately isolated)",
+      "evidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20260928-234052-posttest",
+      "cssLog": "23:06:46 'Finished loading plugin InventorySimulator', no errors in session window"
+    },
+    "release": "E:\\CS2MOD\\releases\\cosmetics-lab\\inventory-simulator-c1_1-patched-20260928-225604"
   },
   "framework": {
     "metamod": {
@@ -24,6 +45,5 @@
       "sha256": "4f2777545a0940351450440288e7487509d539f770e66cf1c30cc2419084c5f8"
     }
   },
-  "license": "MIT",
-  "notes": "Candidate Human cosmetics runtime pin for the CosmeticsLab C1 exact-upstream static baseline experiment. Do not treat as accepted or architectural until the real-game gate passes. Verified against CS2 build 25537370 (PatchVersion 1.41.8.5) at pin time only; see experiments/cosmetics-lab/."
+  "notes": "status 'accepted-as-patched' means: the patched build listed under acceptedRuntime passed real-game acceptance on the testedCs2Build; it does NOT mark unpatched upstream 3.3.0 as accepted. Any upstream update must re-run the C1/C1.1 gate (see docs/COMPATIBILITY-WATCH.md) before changing this status."
 }
