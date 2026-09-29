@@ -33,8 +33,18 @@ public static class LazyImage
         var slot = Slots.GetValue(image, _ => new Slot());
         if (!slot.Hooked)
         {
-            image.Loaded += (_, _) => { slot.Revision++; Request(image, slot); };
-            image.Unloaded += (_, _) => { slot.Revision++; slot.Cancellation?.Cancel(); };
+            // WPF raises Loaded again for an element it merely re-attaches, so a second Loaded must
+            // not invalidate the fetch already running for the same URL: bumping the revision here is
+            // what used to throw away a decoded image and leave the element blank until something else
+            // changed the URL. Only a real detach may discard an in-flight result.
+            image.Loaded += (_, _) => Request(image, slot);
+            image.Unloaded += (_, _) =>
+            {
+                slot.Revision++;
+                slot.Cancellation?.Cancel();
+                slot.Cancellation = null;
+                slot.Running = false;
+            };
             slot.Hooked = true;
         }
 

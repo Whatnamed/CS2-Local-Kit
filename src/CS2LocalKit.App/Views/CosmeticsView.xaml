@@ -513,10 +513,18 @@
                         <Image x:Name="MusicDetailArt" Margin="12" Stretch="Uniform"
                                common:LazyImage.Url="{Binding MusicKitImageUrl}"
                                common:LazyImage.PixelWidth="512"/>
+                        <!-- A missing preview is not the same fact as no music kit selected. -->
                         <TextBlock Text="未选择音乐盒" FontSize="11.5"
                                    Foreground="{StaticResource BrushTextDisabled}"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Visibility="{Binding Source, ElementName=MusicDetailArt, Converter={StaticResource NullToVis}}"/>
+                                   Visibility="{Binding IsMusicKitConfigured, Converter={StaticResource InvBoolToVis}}"/>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Visibility="{Binding IsMusicKitConfigured, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="暂无预览" FontSize="11.5"
+                                       Foreground="{StaticResource BrushTextDisabled}"
+                                       HorizontalAlignment="Center"
+                                       Visibility="{Binding Source, ElementName=MusicDetailArt, Converter={StaticResource NullToVis}}"/>
+                        </StackPanel>
                     </Grid>
                 </Border>
                 <TextBlock Text="{Binding MusicKitName}" Style="{StaticResource SectionTitle}"
