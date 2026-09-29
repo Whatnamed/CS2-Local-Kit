@@ -11,6 +11,8 @@ public static class CorePaths
 
     public static string PresetsHumanRoot => Path.Combine(Cs2ModRoot, "presets", "human");
     public static string AppDataRoot => Path.Combine(Cs2ModRoot, "app-data", "cosmetics-lab");
+    public static string CatalogCacheRoot => Catalog.CatalogSnapshot.DefaultCacheRoot(Cs2ModRoot);
+    public static string ImageCacheRoot => Path.Combine(AppDataRoot, "image-cache");
     public static string PlayerStatePath => Path.Combine(AppDataRoot, "player-state.json");
     public static string ActivePresetPath => Path.Combine(AppDataRoot, "active-preset.json");
     public static string FixtureBackupRoot => Path.Combine(Cs2ModRoot, "backups", "cosmetics-lab");

@@ -3,112 +3,212 @@ using System.Text.Json;
 namespace CS2LocalKit.Core.Catalog;
 
 /// <summary>
-/// Pinned ByMykel/CSGO-API snapshot access. The catalog commit is pinned (same provenance
-/// as the accepted C2 migration); normal operation reads the local cache and never floats
-/// to latest. The snapshot only provides definitions/membership/display metadata.
-/// </summary>
-public static class CatalogSnapshot
-{
-    public const string PinnedCommit = "8a71e35c0489ac3093661af713525f2f0ebe1ad7";
-    public const string RawBase = "https://raw.githubusercontent.com/ByMykel/CSGO-API/" + PinnedCommit + "/public/api/en";
-
-    public static string DefaultCacheRoot(string cs2ModRoot)
-        => Path.Combine(cs2ModRoot, "app-data", "cosmetics-lab", "catalog", PinnedCommit);
-
-    public static (string Skins, string MusicKits) EnsureCached(string cacheRoot)
-    {
-        Directory.CreateDirectory(cacheRoot);
-        var skins = Path.Combine(cacheRoot, "skins.json");
-        var music = Path.Combine(cacheRoot, "music_kits.json");
-        using var http = new HttpClient();
-        if (!File.Exists(skins)) File.WriteAllBytes(skins, http.GetByteArrayAsync($"{RawBase}/skins.json").GetAwaiter().GetResult());
-        if (!File.Exists(music)) File.WriteAllBytes(music, http.GetByteArrayAsync($"{RawBase}/music_kits.json").GetAwaiter().GetResult());
-        return (skins, music);
-    }
-
-    /// <summary>
-    /// Loads the locally cached pinned snapshot (default: E:\CS2MOD\app-data\cosmetics-lab\catalog\&lt;commit&gt;).
-    /// Never fetches from the network. Throws CatalogCacheException when the cache is absent -
-    /// callers that need catalog validation must fail closed, not skip validation.
-    /// </summary>
-    public static CatalogIndex LoadCachedIndex(string? cacheRoot = null)
-    {
-        var root = cacheRoot ?? CatalogSnapshot.DefaultCacheRoot(CorePaths.Cs2ModRoot);
-        var skins = Path.Combine(root, "skins.json");
-        var music = Path.Combine(root, "music_kits.json");
-        if (!File.Exists(skins) || !File.Exists(music))
-            throw new CatalogCacheException(
-                $"Pinned catalog cache not found under {root} (expected skins.json + music_kits.json). " +
-                "Run the C2 catalog sync or point CatalogSnapshot.EnsureCached at the pinned commit.");
-        return CatalogIndex.Load(root);
-    }
-}
-
-public sealed class CatalogCacheException : Exception
-{
-    public CatalogCacheException(string message) : base(message) { }
-}
-
-/// <summary>
 /// Read-only index over a pinned catalog snapshot: weapon definitions with paint-kit
 /// membership, and music kits. Knife and glove classification participates in
 /// HumanPreset catalog validation and UI enumeration.
+///
+/// Identity is numeric and comes from the English snapshot only (defIndex / paintIndex /
+/// musicKit def_index). Simplified Chinese, when cached, is merged onto those same numeric
+/// keys as display metadata; it never adds, removes or renames an identity, and localized
+/// names are never used as join keys or lookup authorities.
 /// </summary>
 public sealed class CatalogIndex
 {
     private readonly Dictionary<int, WeaponDef> _byWeapon;
-    private readonly Dictionary<int, string> _musicById;
+    private readonly Dictionary<int, CatalogMusicKit> _musicById;
 
     public string Commit { get; }
 
-    public CatalogIndex(Dictionary<int, WeaponDef> byWeapon, Dictionary<int, string> musicById, string commit)
+    /// <summary>Locales merged into this index, identity locale first (for example "en", "zh-CN").</summary>
+    public IReadOnlyList<string> LocalesLoaded { get; }
+
+    public bool HasChinese => LocalesLoaded.Contains(CatalogSnapshot.ChineseLocale);
+
+    public int WeaponCount => _byWeapon.Count;
+    public int PaintCount => _byWeapon.Values.Sum(w => w.Paints.Count);
+    public int MusicKitCount => _musicById.Count;
+    /// <summary>How many paint entries carry localized Chinese metadata.</summary>
+    public int LocalizedPaintCount => _byWeapon.Values.Sum(w => w.Paints.Values.Count(p => p.ChineseName is not null));
+    public int LocalizedMusicKitCount => _musicById.Values.Count(m => m.ChineseName is not null);
+
+    public CatalogIndex(Dictionary<int, WeaponDef> byWeapon, Dictionary<int, CatalogMusicKit> musicById,
+        string commit, IReadOnlyList<string>? localesLoaded = null)
     {
         _byWeapon = byWeapon;
         _musicById = musicById;
         Commit = commit;
+        LocalesLoaded = localesLoaded ?? [CatalogSnapshot.IdentityLocale];
     }
 
+    /// <summary>
+    /// Loads the cache at <paramref name="cacheDir"/>, honouring both the per-locale layout and
+    /// the legacy English-only layout. Chinese metadata is merged when cached, absent otherwise.
+    /// </summary>
     public static CatalogIndex Load(string cacheDir, string commit = CatalogSnapshot.PinnedCommit)
     {
-        var byWeapon = new Dictionary<int, WeaponDef>();
-        foreach (var s in JsonSerializer.Deserialize<List<JsonElement>>(File.ReadAllText(Path.Combine(cacheDir, "skins.json"))) ?? [])
+        var enDir = CatalogSnapshot.ResolveLocaleDir(cacheDir, CatalogSnapshot.IdentityLocale)
+            ?? throw new CatalogCacheException($"No English catalog snapshot found under {cacheDir}.");
+        var zhDir = CatalogSnapshot.ResolveLocaleDir(cacheDir, CatalogSnapshot.ChineseLocale);
+
+        var byWeapon = LoadSkins(Path.Combine(enDir, "skins.json"));
+        var locales = new List<string> { CatalogSnapshot.IdentityLocale };
+
+        if (zhDir is not null)
         {
+            MergeSkinsChinese(byWeapon, Path.Combine(zhDir, "skins.json"));
+            locales.Add(CatalogSnapshot.ChineseLocale);
+        }
+
+        var music = LoadMusicKits(Path.Combine(enDir, "music_kits.json"));
+        if (zhDir is not null && File.Exists(Path.Combine(zhDir, "music_kits.json")))
+            MergeMusicKitsChinese(music, Path.Combine(zhDir, "music_kits.json"));
+
+        return new CatalogIndex(byWeapon, music, commit, locales);
+    }
+
+    private static Dictionary<int, WeaponDef> LoadSkins(string skinsPath)
+    {
+        var byWeapon = new Dictionary<int, WeaponDef>();
+        using var doc = JsonDocument.Parse(File.ReadAllBytes(skinsPath));
+        foreach (var s in doc.RootElement.EnumerateArray())
+        {
+            if (s.ValueKind != JsonValueKind.Object) continue;
             if (!s.TryGetProperty("weapon", out var w) || w.ValueKind != JsonValueKind.Object) continue;
-            if (!w.TryGetProperty("weapon_id", out var widEl)) continue;
-            var defIndex = widEl.GetInt32();
-            var name = w.TryGetProperty("name", out var n) ? n.GetString() ?? "" : "";
-            var categoryId = s.TryGetProperty("category", out var c) && c.TryGetProperty("id", out var cid) ? cid.GetString() ?? "" : "";
+            if (!TryGetInt(w, "weapon_id", out var defIndex)) continue;
             if (!byWeapon.TryGetValue(defIndex, out var def))
             {
-                def = new WeaponDef(defIndex, name, categoryId, new Dictionary<int, string>());
+                def = new WeaponDef(defIndex, GetString(w, "name"), GetNestedId(s, "category"),
+                    new Dictionary<int, CatalogPaint>(), GetString(w, "id"));
                 byWeapon[defIndex] = def;
             }
-            if (s.TryGetProperty("paint_index", out var pi))
-            {
-                // ByMykel data carries paint_index as a string in some snapshots and as a
-                // number in others - accept both.
-                int? paint = pi.ValueKind switch
-                {
-                    JsonValueKind.Number when pi.TryGetInt32(out var i) => i,
-                    JsonValueKind.String when int.TryParse(pi.GetString(), out var i2) => i2,
-                    _ => null,
-                };
-                if (paint is { } p && !def._paints.ContainsKey(p)) def._paints[p] = s.GetProperty("name").GetString() ?? "";
-            }
+            if (!s.TryGetProperty("paint_index", out var pi)) continue;
+            var paint = ReadInt(pi);
+            if (paint is null || def._paints.ContainsKey(paint.Value)) continue;
+            def._paints[paint.Value] = new CatalogPaint(
+                PaintIndex: paint.Value,
+                Name: GetString(s, "name"),
+                PatternName: GetNestedIdName(s, "pattern"),
+                ImageUrl: GetString(s, "image"),
+                RarityId: GetNestedRaw(s, "rarity", "id"),
+                RarityName: GetNestedRaw(s, "rarity", "name"),
+                RarityColor: GetNestedRaw(s, "rarity", "color"),
+                MinFloat: GetDouble(s, "min_float"),
+                MaxFloat: GetDouble(s, "max_float"));
         }
-
-        var musicById = new Dictionary<int, string>();
-        foreach (var m in JsonSerializer.Deserialize<List<JsonElement>>(File.ReadAllText(Path.Combine(cacheDir, "music_kits.json"))) ?? [])
-        {
-            if (!m.TryGetProperty("def_index", out var di)) continue;
-            var id = int.Parse(di.GetString() ?? "");
-            var isStatTrak = m.TryGetProperty("market_hash_name", out var mh) && (mh.GetString() ?? "").StartsWith("StatTrak");
-            if (!musicById.ContainsKey(id) && !isStatTrak) musicById[id] = m.GetProperty("name").GetString() ?? "";
-            else if (!musicById.ContainsKey(id)) musicById[id] = m.GetProperty("name").GetString() ?? "";
-        }
-
-        return new CatalogIndex(byWeapon, musicById, commit);
+        return byWeapon;
     }
+
+    /// <summary>
+    /// Second pass over the localized snapshot: for numeric keys that already exist in the
+    /// identity index, attach Chinese names. Keys unknown to the identity snapshot are ignored.
+    /// </summary>
+    private static void MergeSkinsChinese(Dictionary<int, WeaponDef> byWeapon, string zhSkinsPath)
+    {
+        using var doc = JsonDocument.Parse(File.ReadAllBytes(zhSkinsPath));
+        foreach (var s in doc.RootElement.EnumerateArray())
+        {
+            if (s.ValueKind != JsonValueKind.Object) continue;
+            if (!s.TryGetProperty("weapon", out var w) || w.ValueKind != JsonValueKind.Object) continue;
+            if (!TryGetInt(w, "weapon_id", out var defIndex)) continue;
+            if (!byWeapon.TryGetValue(defIndex, out var def)) continue;
+
+            var paint = s.TryGetProperty("paint_index", out var pi) ? ReadInt(pi) : null;
+            if (paint is null)
+            {
+                // Weapon-level record: only the localized weapon display name is attached.
+                def.SetChineseName(GetString(w, "name"));
+                continue;
+            }
+            if (!def._paints.TryGetValue(paint.Value, out var existing)) continue;
+            def._paints[paint.Value] = existing with
+            {
+                ChineseName = GetString(s, "name"),
+                PatternChineseName = GetNestedIdName(s, "pattern"),
+                RarityChineseName = GetNestedRaw(s, "rarity", "name"),
+                ImageUrl = existing.ImageUrl ?? GetString(s, "image"),
+            };
+            def.SetChineseName(GetString(w, "name"));
+        }
+    }
+
+    private static Dictionary<int, CatalogMusicKit> LoadMusicKits(string musicPath)
+    {
+        var music = new Dictionary<int, CatalogMusicKit>();
+        using var doc = JsonDocument.Parse(File.ReadAllBytes(musicPath));
+        foreach (var m in doc.RootElement.EnumerateArray())
+        {
+            if (m.ValueKind != JsonValueKind.Object) continue;
+            if (!TryGetInt(m, "def_index", out var id)) continue;
+            if (music.ContainsKey(id)) continue;
+            music[id] = new CatalogMusicKit(
+                Id: id,
+                Name: GetString(m, "name"),
+                ImageUrl: GetString(m, "image"),
+                RarityId: GetNestedRaw(m, "rarity", "id"),
+                RarityName: GetNestedRaw(m, "rarity", "name"),
+                RarityColor: GetNestedRaw(m, "rarity", "color"));
+        }
+        return music;
+    }
+
+    private static void MergeMusicKitsChinese(Dictionary<int, CatalogMusicKit> music, string zhMusicPath)
+    {
+        using var doc = JsonDocument.Parse(File.ReadAllBytes(zhMusicPath));
+        foreach (var m in doc.RootElement.EnumerateArray())
+        {
+            if (m.ValueKind != JsonValueKind.Object) continue;
+            if (!TryGetInt(m, "def_index", out var id)) continue;
+            if (!music.TryGetValue(id, out var kit)) continue;
+            music[id] = kit with
+            {
+                ChineseName = GetString(m, "name"),
+                RarityChineseName = GetNestedRaw(m, "rarity", "name"),
+                ImageUrl = kit.ImageUrl ?? GetString(m, "image"),
+            };
+        }
+    }
+
+    // --- JSON helpers. paint_index / def_index arrive as strings in some pinned snapshots and
+    // as numbers in others, so both shapes are accepted. ---
+
+    private static int? ReadInt(JsonElement el) => el.ValueKind switch
+    {
+        JsonValueKind.Number when el.TryGetInt32(out var i) => i,
+        JsonValueKind.String when int.TryParse(el.GetString(), out var s) => s,
+        _ => null,
+    };
+
+    private static bool TryGetInt(JsonElement owner, string name, out int value)
+    {
+        value = 0;
+        if (!owner.TryGetProperty(name, out var el)) return false;
+        if (ReadInt(el) is not { } i) return false;
+        value = i;
+        return true;
+    }
+
+    private static string GetString(JsonElement owner, string name)
+        => owner.TryGetProperty(name, out var el) && el.ValueKind == JsonValueKind.String ? el.GetString() ?? "" : "";
+
+    private static double? GetDouble(JsonElement owner, string name)
+        => owner.TryGetProperty(name, out var el) && el.ValueKind == JsonValueKind.Number && el.TryGetDouble(out var d) ? d : null;
+
+    /// <summary>Reads a string from a nested object, tolerating both a bare string and {id/name}.</summary>
+    private static string? GetNestedRaw(JsonElement owner, string objectName, string property)
+    {
+        if (!owner.TryGetProperty(objectName, out var nested)) return null;
+        if (nested.ValueKind == JsonValueKind.String) return nested.GetString();
+        if (nested.ValueKind != JsonValueKind.Object) return null;
+        return nested.TryGetProperty(property, out var v) && v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+    }
+
+    private static string GetNestedId(JsonElement owner, string objectName)
+        => GetNestedRaw(owner, objectName, "id") ?? "";
+
+    private static string GetNestedIdName(JsonElement owner, string objectName)
+        => GetNestedRaw(owner, objectName, "name") ?? "";
+
+    // --- Lookup APIs: numeric identity only. ---
 
     public bool TryGetWeapon(int defIndex, out WeaponDef def) => _byWeapon.TryGetValue(defIndex, out def!);
 
@@ -116,74 +216,143 @@ public sealed class CatalogIndex
     public bool HasPaint(int defIndex, int paint)
         => _byWeapon.TryGetValue(defIndex, out var def) && def.Paints.ContainsKey(paint);
 
-    public bool TryGetMusicKit(int id, out string name) => _musicById.TryGetValue(id, out name!);
-    /// <summary>Returns ordinary weapon definitions (excluding knives and gloves), ordered by name.</summary>
+    public bool TryGetMusicKit(int id, out string name)
+    {
+        if (_musicById.TryGetValue(id, out var kit)) { name = kit.Name; return true; }
+        name = "";
+        return false;
+    }
+
+    /// <summary>Full music-kit metadata including localized display name.</summary>
+    public bool TryGetMusic(int id, out CatalogMusicKit kit) => _musicById.TryGetValue(id, out kit!);
+
     public IReadOnlyList<WeaponDef> GetOrdinaryWeapons()
         => _byWeapon.Values.Where(w => w.IsOrdinaryWeapon).OrderBy(w => w.Name, StringComparer.OrdinalIgnoreCase).ToList();
 
-    /// <summary>Returns knife definitions, ordered by name.</summary>
     public IReadOnlyList<WeaponDef> GetKnives()
         => _byWeapon.Values.Where(w => w.IsKnife).OrderBy(w => w.Name, StringComparer.OrdinalIgnoreCase).ToList();
 
-    /// <summary>Returns glove definitions, ordered by name.</summary>
     public IReadOnlyList<WeaponDef> GetGloves()
         => _byWeapon.Values.Where(w => w.IsGloves).OrderBy(w => w.Name, StringComparer.OrdinalIgnoreCase).ToList();
 
-    /// <summary>Returns paint kits available for the specified weapon/knife/gloves defIndex, ordered by name.</summary>
     public IReadOnlyList<CatalogPaint> GetPaintsForWeapon(int defIndex)
     {
         if (_byWeapon.TryGetValue(defIndex, out var def))
         {
-            return def.Paints
-                .Select(kv => new CatalogPaint(kv.Key, kv.Value))
-                .OrderBy(p => p.Name, StringComparer.OrdinalIgnoreCase)
-                .ToList();
+            return def.Paints.Values.OrderBy(p => p.Name, StringComparer.OrdinalIgnoreCase).ToList();
         }
         return Array.Empty<CatalogPaint>();
     }
 
-    /// <summary>Returns all music kits in the catalog, ordered by name.</summary>
     public IReadOnlyList<CatalogMusicKit> GetMusicKits()
-        => _musicById.Select(kv => new CatalogMusicKit(kv.Key, kv.Value)).OrderBy(m => m.Name, StringComparer.OrdinalIgnoreCase).ToList();
+        => _musicById.Values.OrderBy(m => m.Name, StringComparer.OrdinalIgnoreCase).ToList();
 
-    /// <summary>Filters ordinary weapons by display name.</summary>
+    // --- Search: Chinese name, English name, or numeric id. Missing Chinese simply never
+    // matches, so entries without localized metadata stay findable by their English name. ---
+
+    public static bool Matches(string? chinese, string english, int id, string? query)
+    {
+        if (string.IsNullOrWhiteSpace(query)) return true;
+        var q = query.Trim();
+        return english.Contains(q, StringComparison.OrdinalIgnoreCase)
+               || (chinese is not null && chinese.Contains(q, StringComparison.Ordinal))
+               || id.ToString().Contains(q, StringComparison.OrdinalIgnoreCase);
+    }
+
     public IReadOnlyList<WeaponDef> SearchOrdinaryWeapons(string? query)
     {
         var items = GetOrdinaryWeapons();
         if (string.IsNullOrWhiteSpace(query)) return items;
-        return items.Where(w => w.Name.Contains(query, StringComparison.OrdinalIgnoreCase)).ToList();
+        return items.Where(w => Matches(w.ChineseName, w.Name, w.DefIndex, query)).ToList();
     }
 
-    /// <summary>Filters paints for a given defIndex by paint name or numeric paint index.</summary>
+    public IReadOnlyList<WeaponDef> SearchKnives(string? query)
+    {
+        var items = GetKnives();
+        if (string.IsNullOrWhiteSpace(query)) return items;
+        return items.Where(w => Matches(w.ChineseName, w.Name, w.DefIndex, query)).ToList();
+    }
+
+    public IReadOnlyList<WeaponDef> SearchGloves(string? query)
+    {
+        var items = GetGloves();
+        if (string.IsNullOrWhiteSpace(query)) return items;
+        return items.Where(w => Matches(w.ChineseName, w.Name, w.DefIndex, query)).ToList();
+    }
+
     public IReadOnlyList<CatalogPaint> SearchPaints(int defIndex, string? query)
     {
         var items = GetPaintsForWeapon(defIndex);
         if (string.IsNullOrWhiteSpace(query)) return items;
-        var q = query.Trim();
-        return items.Where(p => p.Name.Contains(q, StringComparison.OrdinalIgnoreCase) || p.PaintIndex.ToString().Contains(q, StringComparison.OrdinalIgnoreCase)).ToList();
+        return items.Where(p => Matches(p.ChineseName ?? p.PatternChineseName, p.Name, p.PaintIndex, query)).ToList();
     }
 
-    /// <summary>Filters music kits by name or numeric ID.</summary>
     public IReadOnlyList<CatalogMusicKit> SearchMusicKits(string? query)
     {
         var items = GetMusicKits();
         if (string.IsNullOrWhiteSpace(query)) return items;
-        var q = query.Trim();
-        return items.Where(m => m.Name.Contains(q, StringComparison.OrdinalIgnoreCase) || m.Id.ToString().Contains(q, StringComparison.OrdinalIgnoreCase)).ToList();
+        return items.Where(m => Matches(m.ChineseName, m.Name, m.Id, query)).ToList();
     }
 
-    public sealed class WeaponDef(int defIndex, string name, string categoryId, Dictionary<int, string> paints)
+    public sealed class WeaponDef
     {
-        public int DefIndex { get; } = defIndex;
-        public string Name { get; } = name;
-        public string CategoryId { get; } = categoryId;
-        internal readonly Dictionary<int, string> _paints = paints;
-        public IReadOnlyDictionary<int, string> Paints => _paints;
+        private string? _chineseName;
+
+        public int DefIndex { get; }
+        public string Name { get; }
+        /// <summary>Upstream stable item id (for example "leather_handwraps"); auxiliary only.</summary>
+        public string UpstreamId { get; }
+        public string CategoryId { get; }
+        public string? ChineseName => _chineseName;
+        internal readonly Dictionary<int, CatalogPaint> _paints;
+        public IReadOnlyDictionary<int, CatalogPaint> Paints => _paints;
         public bool IsKnife => CategoryId.Contains("melee", StringComparison.OrdinalIgnoreCase) || CategoryId.Contains("knife", StringComparison.OrdinalIgnoreCase);
         public bool IsGloves => CategoryId.Contains("gloves", StringComparison.OrdinalIgnoreCase);
         public bool IsOrdinaryWeapon => !IsKnife && !IsGloves;
+
+        public WeaponDef(int defIndex, string name, string categoryId, Dictionary<int, CatalogPaint> paints,
+            string upstreamId = "")
+        {
+            DefIndex = defIndex;
+            Name = name;
+            CategoryId = categoryId;
+            _paints = paints;
+            UpstreamId = upstreamId;
+        }
+
+        internal void SetChineseName(string? value)
+        {
+            if (!string.IsNullOrWhiteSpace(value)) _chineseName = value;
+        }
     }
 }
 
-public sealed record CatalogPaint(int PaintIndex, string Name);
-public sealed record CatalogMusicKit(int Id, string Name);
+/// <summary>
+/// One paint kit of a specific weapon. <see cref="Name"/> keeps the historical meaning: the
+/// English catalog display name ("AK-47 | Redline"). Everything after it is optional localized
+/// or remote presentation metadata and never participates in identity or validation.
+/// </summary>
+public sealed record CatalogPaint(
+    int PaintIndex,
+    string Name,
+    string? ChineseName = null,
+    string? PatternName = null,
+    string? PatternChineseName = null,
+    string? ImageUrl = null,
+    string? RarityId = null,
+    string? RarityName = null,
+    string? RarityChineseName = null,
+    string? RarityColor = null,
+    double? MinFloat = null,
+    double? MaxFloat = null);
+
+/// <summary>Music kit metadata keyed by the numeric def_index used by HumanPreset.</summary>
+public sealed record CatalogMusicKit(
+    int Id,
+    string Name,
+    string? ChineseName = null,
+    string? ImageUrl = null,
+    string? RarityId = null,
+    string? RarityName = null,
+    string? RarityChineseName = null,
+    string? RarityColor = null);

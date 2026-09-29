@@ -101,7 +101,9 @@
 
 - catalog 更新应可追溯到明确 source ref；
 - generated data 与用户 preset 分离；
-- 本地化名称只用于显示，稳定数值 ID 才是持久化主键。
+- 本地化名称只用于显示，稳定数值 ID 才是持久化主键；
+- 本地缓存按 locale 分目录（`catalog/<commit>/en`、`catalog/<commit>/zh-CN`），`en` 是 identity 来源，`zh-CN` 只按数值 ID 附加显示名；旧的单目录英文缓存继续可读；
+- 缓存写入是显式动作（Controller 的"准备本地清单"），启动与校验路径不访问网络。
 
 ## 5. Source-copy policy
 
