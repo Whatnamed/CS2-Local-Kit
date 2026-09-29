@@ -105,7 +105,8 @@
                     <Border Style="{StaticResource Divider}" Margin="0,0,0,4"/>
                     <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="运行文件已安装"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding FixtureStatusText}"/></Grid>
                     <Grid Margin="0,0,0,2"><TextBlock Style="{StaticResource FieldLabel}" Text="当前文件哈希"/><TextBlock Style="{StaticResource FieldHash}" Text="{Binding FixtureHash}"/></Grid>
-                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="游戏内当前预设"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding ActivePreset}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="游戏内配置"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding InstalledConfigText}"><TextBlock.ToolTip><TextBlock MaxWidth="300" Text="{Binding InstalledConfigEvidence}" TextWrapping="Wrap"/></TextBlock.ToolTip></TextBlock></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="激活预设"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding ActivePreset}"/></Grid>
 
                     <TextBlock Text="最近应用与恢复" Style="{StaticResource GroupTitle}" Margin="0,26,0,6"/>
                     <Border Style="{StaticResource Divider}" Margin="0,0,0,4"/>

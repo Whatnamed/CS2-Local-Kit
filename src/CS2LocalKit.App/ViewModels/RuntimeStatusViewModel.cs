@@ -46,6 +46,39 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public bool ActivePresetExists => Status?.ActivePresetExists ?? false;
     public bool IsWorkingPresetDirty => _manager.IsDirty;
 
+    /// <summary>What the installed fixture is proven to carry; see <see cref="InstalledConfigResolver"/>.</summary>
+    public string InstalledConfigText
+    {
+        get
+        {
+            var (level, presetPath) = InstalledConfigResolver.Resolve(Status, _manager.WorkingPresetName);
+            return level switch
+            {
+                InstalledConfigLevel.Verified => HeaderViewModel.Friendly(presetPath),
+                InstalledConfigLevel.Drifted => "已漂移",
+                InstalledConfigLevel.Unknown => "未知",
+                _ => "未安装",
+            };
+        }
+    }
+
+    public string InstalledConfigEvidence
+    {
+        get
+        {
+            var (level, _) = InstalledConfigResolver.Resolve(Status, _manager.WorkingPresetName);
+            return level switch
+            {
+                InstalledConfigLevel.Verified => "当前文件哈希 = 最近应用记录写入的哈希",
+                InstalledConfigLevel.Drifted => "当前文件哈希 ≠ 最近应用记录写入的哈希",
+                InstalledConfigLevel.Unknown => Status?.LatestApply is null
+                    ? "没有对应此安装路径的应用记录"
+                    : "应用记录缺少 installed.newSha256",
+                _ => "运行文件不存在",
+            };
+        }
+    }
+
     // Latest Apply & Rollback
     public bool LatestApplyExists => Status?.LatestApply != null;
     public string LatestApplyPreset => Status?.LatestApply?.PresetPath ?? "-";
@@ -174,6 +207,8 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         OnPropertyChanged(nameof(FixtureHash));
         OnPropertyChanged(nameof(ActivePreset));
         OnPropertyChanged(nameof(ActivePresetExists));
+        OnPropertyChanged(nameof(InstalledConfigText));
+        OnPropertyChanged(nameof(InstalledConfigEvidence));
         OnPropertyChanged(nameof(IsWorkingPresetDirty));
         OnPropertyChanged(nameof(LatestApplyExists));
         OnPropertyChanged(nameof(LatestApplyPreset));

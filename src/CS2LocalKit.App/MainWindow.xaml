@@ -133,22 +133,18 @@
 
                         <Border Style="{StaticResource VerticalDivider}"/>
 
-                        <StackPanel Margin="0,0,18,0">
-                            <TextBlock Text="游戏内当前" FontSize="10.5" Foreground="{StaticResource BrushTextTertiary}"/>
+                        <StackPanel Margin="0,0,18,0" ToolTip="InventorySimulator 启动时读取的指针；它不代表文件已经写入游戏。">
+                            <TextBlock Text="激活预设" FontSize="10.5" Foreground="{StaticResource BrushTextTertiary}"/>
                             <TextBlock Text="{Binding Header.ActiveName}" FontWeight="SemiBold" Margin="0,2,0,0"
                                        MaxWidth="150" TextTrimming="CharacterEllipsis"/>
                         </StackPanel>
 
                         <Border Style="{StaticResource VerticalDivider}"/>
 
-                        <StackPanel Margin="0,0,18,0">
-                            <TextBlock Text="已应用到 CS2" FontSize="10.5" Foreground="{StaticResource BrushTextTertiary}"/>
-                            <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                                <TextBlock Text="{Binding Header.InstalledName}" FontWeight="SemiBold"
-                                           MaxWidth="130" TextTrimming="CharacterEllipsis"/>
-                                <TextBlock Text="{Binding Header.InstalledTimeText}" Style="{StaticResource MutedText}"
-                                           FontSize="11.5" Margin="7,1,0,0"/>
-                            </StackPanel>
+                        <StackPanel Margin="0,0,18,0" ToolTip="{Binding Header.InstalledConfigDetail}">
+                            <TextBlock Text="游戏内配置" FontSize="10.5" Foreground="{StaticResource BrushTextTertiary}"/>
+                            <TextBlock Text="{Binding Header.InstalledConfigName}" FontWeight="SemiBold"
+                                       MaxWidth="150" TextTrimming="CharacterEllipsis" Margin="0,2,0,0"/>
                         </StackPanel>
 
                         <Border Style="{StaticResource VerticalDivider}"/>

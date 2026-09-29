@@ -114,25 +114,25 @@
                     <Border Style="{StaticResource Divider}" Margin="0,8"/>
 
                     <Grid Margin="0,0,0,4">
-                        <TextBlock Text="游戏内当前预设" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
+                        <TextBlock Text="激活预设" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
                         <TextBlock HorizontalAlignment="Right">
                             <Run Text="{Binding SelectedPreset.IsActive, Converter={StaticResource TrueFalseText}, Mode=OneWay}"/>
                         </TextBlock>
                     </Grid>
                     <TextBlock Style="{StaticResource HintText}" Margin="0,0,0,14"
-                               Text="InventorySimulator 启动时读取的指针；它与“已应用”可能不同，例如手动改过文件之后。"/>
+                               Text="InventorySimulator 启动时读取的指针；它与“游戏内配置”可能不同，例如手动改过文件之后。"/>
 
                     <Border Style="{StaticResource Divider}" Margin="0,8"/>
 
                     <Grid Margin="0,0,0,4">
-                        <TextBlock Text="已应用到 CS2" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
+                        <TextBlock Text="游戏内配置" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
                         <TextBlock HorizontalAlignment="Right">
                             <Run Text="{Binding SelectedPreset.IsInstalled, Converter={StaticResource TrueFalseText}, Mode=OneWay}"/>
                         </TextBlock>
                     </Grid>
                     <TextBlock Style="{StaticResource HintText}"
-                               Text="{Binding DataContext.Header.InstalledTimeText, RelativeSource={RelativeSource AncestorType=Window}}"
-                               Visibility="{Binding SelectedPreset.IsInstalled, Converter={StaticResource BoolToVis}}"/>
+                               Text="{Binding DataContext.Header.InstalledConfigDetail, RelativeSource={RelativeSource AncestorType=Window}}"
+                               TextWrapping="Wrap"/>
                     <TextBlock Style="{StaticResource MonoText}" Margin="0,4,0,0"
                                Text="{Binding DataContext.Header.InstalledHashText, RelativeSource={RelativeSource AncestorType=Window}}"
                                Visibility="{Binding SelectedPreset.IsInstalled, Converter={StaticResource BoolToVis}}"/>
@@ -143,7 +143,7 @@
                 <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedPreset, Converter={StaticResource NotNullToVis}}">
                     <Button Content="载入到编辑器" Style="{StaticResource PrimaryButton}" MinWidth="112"
                             Command="{Binding LoadPresetCommand}"/>
-                    <Button Content="设为游戏当前" MinWidth="112" Margin="10,0,0,0"
+                    <Button Content="设为激活预设" MinWidth="112" Margin="10,0,0,0"
                             Command="{Binding SetActiveCommand}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0"

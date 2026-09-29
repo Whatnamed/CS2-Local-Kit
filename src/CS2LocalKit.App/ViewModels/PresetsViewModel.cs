@@ -93,7 +93,10 @@ public sealed class PresetsViewModel : ViewModelBase
         Presets.Clear();
         var active = _manager.ActivePresetName;
         var working = _manager.WorkingPresetName;
-        var installed = System.IO.Path.GetFileName(_manager.LatestAppliedPresetName ?? "");
+        var (configLevel, configPath) = InstalledConfigResolver.Resolve(_manager.LastStatus, working);
+        var installed = configLevel == InstalledConfigLevel.Verified
+            ? System.IO.Path.GetFileName(configPath ?? "")
+            : "";
 
         try
         {
@@ -302,7 +305,7 @@ public sealed class PresetItemViewModel : ViewModelBase
         set => SetProperty(ref _isWorking, value);
     }
 
-    /// <summary>This preset is what the game fixture currently carries (last successful apply).</summary>
+    /// <summary>The installed fixture hashes to what this preset's newest apply record wrote.</summary>
     public bool IsInstalled { get; }
 
     public bool HasMarker => IsActive || IsWorking || IsInstalled;
@@ -313,8 +316,8 @@ public sealed class PresetItemViewModel : ViewModelBase
         {
             var parts = new List<string>();
             if (IsWorking) parts.Add("正在编辑");
-            if (IsActive) parts.Add("游戏内当前");
-            if (IsInstalled) parts.Add("已应用到 CS2");
+            if (IsActive) parts.Add("激活预设");
+            if (IsInstalled) parts.Add("游戏内配置");
             return parts.Count == 0 ? "未使用" : string.Join(" · ", parts);
         }
     }

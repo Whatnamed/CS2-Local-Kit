@@ -694,6 +694,148 @@ public sealed class UiIntegrationTests : IDisposable
         var statusHealthy = services.RuntimeStatusService.GetStatus();
         Assert.Equal(RuntimeHealthLevel.Ready, statusHealthy.HealthLevel);
     }
+
+    // 21. Header truth: the active pointer and the installed configuration are different claims.
+    [Fact]
+    public void Header_ActivePointerAndInstalledConfig_AreReportedSeparately()
+    {
+        var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var header = new HeaderViewModel(manager, () => { }, () => { });
+
+        // The fixture on disk is what the scaffolding projected; a record attributes it to a.v1.json.
+        WriteApplyRecord("rec-a", "a.v1.json", FixtureSha(), "2026-01-01T00:00:00+08:00");
+        File.WriteAllText(Path.Combine(_presetsRoot, "b.v1.json"),
+            HumanPresetJson.Write(HumanPresetTemplate.CreateMinimalValid()));
+        manager.SetActive("b.v1.json");
+
+        Assert.Equal("b", header.ActiveName);
+        Assert.Equal(InstalledConfigLevel.Verified, header.InstalledConfigLevel);
+        Assert.Equal("a", header.InstalledConfigName);
+    }
+
+    // 22. Header truth: drift is drift, even when the pointer and the record agree.
+    [Fact]
+    public void Header_FixtureDriftFromLatestRecord_IsNotPresentedAsTheRecord()
+    {
+        var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var header = new HeaderViewModel(manager, () => { }, () => { });
+
+        WriteApplyRecord("rec-test", "test-preset.v1.json", new string('f', 64),
+            "2026-01-01T00:00:00+08:00");
+        manager.SetActive("test-preset.v1.json");
+
+        Assert.Equal("test-preset", header.ActiveName);
+        Assert.Equal(InstalledConfigLevel.Drifted, header.InstalledConfigLevel);
+        Assert.Equal("已漂移", header.InstalledConfigName);
+        Assert.Contains("不一致", header.InstalledConfigDetail);
+    }
+
+    // 23. Header truth: a missing fixture is stated as missing, whatever the records say.
+    [Fact]
+    public void Header_MissingFixture_IsReportedAsNotInstalled()
+    {
+        var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var header = new HeaderViewModel(manager, () => { }, () => { });
+
+        WriteApplyRecord("rec-test", "test-preset.v1.json", FixtureSha(), "2026-01-01T00:00:00+08:00");
+        File.Delete(InstalledFixturePath);
+        manager.RefreshRuntimeStatus();
+
+        Assert.Equal(InstalledConfigLevel.NotInstalled, header.InstalledConfigLevel);
+        Assert.Equal("未安装", header.InstalledConfigName);
+    }
+
+    // 24. Header truth: an unattributable file stays 未知 instead of borrowing a preset name.
+    [Fact]
+    public void Header_FixtureWithoutApplyRecord_IsReportedAsUnknown()
+    {
+        var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var header = new HeaderViewModel(manager, () => { }, () => { });
+        manager.RefreshRuntimeStatus();
+
+        Assert.True(manager.LastStatus!.FixtureInstalled);
+        Assert.Null(manager.LastStatus.LatestApply);
+        Assert.Equal(InstalledConfigLevel.Unknown, header.InstalledConfigLevel);
+        Assert.Equal("未知", header.InstalledConfigName);
+        Assert.Contains("没有可归属的应用记录", header.InstalledConfigDetail);
+    }
+
+    // 25. A successful apply makes the working preset the verified configuration, and the Header
+    // follows without an explicit re-read.
+    [Fact]
+    public void Header_AfterSuccessfulApply_ReportsTheWorkingPresetAsInstalled()
+    {
+        var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var header = new HeaderViewModel(manager, () => { }, () => { });
+
+        Assert.NotEqual(InstalledConfigLevel.Verified, header.InstalledConfigLevel);
+
+        manager.LoadPreset("test-preset.v1.json");
+        manager.Draft!.MusicKitId = 78;
+        var result = manager.Apply();
+        Assert.True(result.Success, result.Message);
+
+        Assert.Equal(InstalledConfigLevel.Verified, header.InstalledConfigLevel);
+        Assert.Equal("test-preset", header.InstalledConfigName);
+    }
+
+    // 26. Later drift notifies: the Header re-raises its configuration facts on every refresh.
+    [Fact]
+    public void Header_RaisesConfigFactWhenTheFixtureDriftsAfterARefresh()
+    {
+        var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var header = new HeaderViewModel(manager, () => { }, () => { });
+
+        manager.LoadPreset("test-preset.v1.json");
+        Assert.True(manager.Apply().Success);
+        Assert.Equal("test-preset", header.InstalledConfigName);
+
+        var raised = new List<string?>();
+        header.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        File.WriteAllText(InstalledFixturePath, "{\"tampered\":true}");
+        manager.RefreshRuntimeStatus();
+
+        Assert.Contains(nameof(HeaderViewModel.InstalledConfigName), raised);
+        Assert.Equal(InstalledConfigLevel.Drifted, header.InstalledConfigLevel);
+        Assert.Equal("已漂移", header.InstalledConfigName);
+    }
+
+    private string InstalledFixturePath
+        => Path.Combine(_csgoDir, "addons", "counterstrikesharp", "configs", "plugins", "InventorySimulator", "inventories.json");
+
+    private string FixtureSha()
+    {
+        using var stream = File.OpenRead(InstalledFixturePath);
+        return Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(stream)).ToLowerInvariant();
+    }
+
+    /// <summary>An apply record for the currently installed fixture path, as FixtureApplier writes it.</summary>
+    private void WriteApplyRecord(string directoryName, string presetPath, string newSha256, string createdAt)
+    {
+        var dir = Path.Combine(_backupsRoot, directoryName);
+        Directory.CreateDirectory(dir);
+        var backup = Path.Combine(dir, "inventories.json");
+        File.WriteAllText(backup, "{\"previous\":true}");
+        File.WriteAllText(Path.Combine(dir, "apply-record.json"), JsonSerializer.Serialize(new
+        {
+            kind = "cosmetics-lab-preset-apply-record",
+            createdAt,
+            presetPath,
+            projectedSha256 = newSha256,
+            installedPath = InstalledFixturePath,
+            installed = new { previousSha256 = "p", newSha256 },
+            backupPath = backup,
+            backupSha256 = "p",
+            rollback = "x",
+        }));
+    }
 }
 
 public sealed class MockDialogService : IDialogService
