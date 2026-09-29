@@ -121,7 +121,7 @@ public sealed class ImageCacheTests : IDisposable
     }
 
     [Fact]
-    public async Task OneCallerCancellingDoesNotCancelTheSharedDownload()
+    public async Task OneCallerCancellingDoesNotCancelADownloadAnotherStillWants()
     {
         var url = Url("contested");
         var handler = new FakeHandler(_ => Ok(PngBytes)) { Delay = TimeSpan.FromMilliseconds(150) };
@@ -129,14 +129,34 @@ public sealed class ImageCacheTests : IDisposable
 
         using var abandoning = new CancellationTokenSource();
         var gone = service.GetAsync(url, abandoning.Token);
+        var staying = service.GetAsync(url);   // joins the same download before the first one leaves
         abandoning.Cancel();
 
-        var staying = await service.GetAsync(url);
-
-        Assert.NotNull(staying);
-        Assert.NotNull(await gone);
+        var result = await staying;
+        Assert.NotNull(result);
+        Assert.Null(await gone);
         Assert.Single(handler.Requests);
-        Assert.True(File.Exists(staying!.LocalPath));
+        Assert.True(File.Exists(result!.LocalPath));
+    }
+
+    [Fact]
+    public async Task AbandoningTheLastWaiterReleasesTheUrlRatherThanHoldingTheQueue()
+    {
+        // The point of cancelling for want of a waiter: a card that scrolled away must not keep a
+        // shared download slot, or the cards that are actually on screen wait behind it.
+        var url = Url("abandoned");
+        var handler = new FakeHandler(_ => Ok(PngBytes)) { Delay = TimeSpan.FromMilliseconds(150) };
+        using var service = NewService(handler);
+
+        using var only = new CancellationTokenSource();
+        var gone = service.GetAsync(url, only.Token);
+        only.Cancel();
+        Assert.Null(await gone);
+
+        var retried = await service.GetAsync(url);
+        Assert.NotNull(retried);
+        Assert.Equal(2, handler.Requests.Count);
+        Assert.True(File.Exists(retried!.LocalPath));
     }
 
     [Fact]
@@ -211,6 +231,119 @@ public sealed class ImageCacheTests : IDisposable
         Assert.NotNull(await service.GetAsync(url));
         Assert.Null(await provider.GetAsync(url, 232));
         Assert.Null(ImageSourceProvider.Decode(Path.Combine(_root, "does-not-exist.png"), 232));
+    }
+
+    [Fact]
+    public async Task BytesThatWillNotDecodeAreNotLeftAsAPermanentCacheHit()
+    {
+        // The failure the user would otherwise live with forever: a bad file that decodes to nothing
+        // on every scroll, because the manifest still claims the URL is cached.
+        var url = Url("poisoned");
+        var handler = new FakeHandler(_ => Ok(PngBytes));
+        using var service = NewService(handler);
+        var provider = new ImageSourceProvider(service);
+
+        var poisoned = await service.GetAsync(url);
+        Assert.NotNull(poisoned);
+        Assert.Null(await provider.GetAsync(url, 232));
+
+        Assert.False(service.TryGetCached(url, out _));
+        Assert.False(File.Exists(poisoned!.LocalPath));
+        Assert.Equal(0, service.CachedImageCount);
+
+        Assert.NotNull(await service.GetAsync(url));
+        Assert.Equal(2, handler.Requests.Count);   // it asked again rather than re-reading the bad file
+    }
+
+    [Fact]
+    public async Task EvictingOneUrlLeavesItsNeighboursCached()
+    {
+        var handler = new FakeHandler(_ => Ok(PngBytes));
+        using var service = NewService(handler);
+        var keep = Url("keep");
+        var drop = Url("drop");
+        await service.GetAsync(keep);
+        await service.GetAsync(drop);
+
+        service.Invalidate(drop);
+
+        Assert.False(service.TryGetCached(drop, out _));
+        Assert.True(service.TryGetCached(keep, out _));
+        Assert.NotNull(await service.GetAsync(keep));
+        Assert.Single(handler.Requests, r => r == keep);
+    }
+
+    [Fact]
+    public async Task AnErrorPageIsNeverStoredAsArt()
+    {
+        var url = Url("challenge");
+        var payload = System.Text.Encoding.UTF8.GetBytes("<html><body>Too Many Requests</body></html>");
+        var handler = new FakeHandler(_ => Ok(payload));
+        using var service = NewService(handler);
+
+        Assert.Null(await service.GetAsync(url));
+        Assert.Equal(0, service.CachedImageCount);
+        Assert.Empty(Directory.GetFiles(service.ImagesDirectory));
+
+        // A healthy neighbour is unaffected: refusing to store a bad payload is not a blanket stop.
+        payload = PngBytes;
+        Assert.NotNull(await service.GetAsync(Url("healthy-neighbour")));
+        Assert.Equal(1, service.CachedImageCount);
+    }
+
+    [Fact]
+    public async Task OneTransientFailureDoesNotKeepReRunningTheWholeFallbackMatrix()
+    {
+        var url = Url("flaky");
+        var handler = new FakeHandler(_ => throw new HttpRequestException("unreachable"));
+        using var service = NewService(handler);
+
+        Assert.Null(await service.GetAsync(url));
+        var afterFailure = handler.Requests.Count;
+
+        Assert.Null(await service.GetAsync(url));
+        Assert.Equal(afterFailure, handler.Requests.Count);
+    }
+
+    [Fact]
+    public async Task TheEndpointThatServedArtIsTheNextOneTried()
+    {
+        const string first = "https://community.akamai.steamstatic.com/economy/image/one/232x176";
+        const string second = "https://community.akamai.steamstatic.com/economy/image/two/232x176";
+        var handler = new FakeHandler(url => url.Contains("community.")
+            ? throw new HttpRequestException("that edge is down")
+            : Ok(PngBytes));
+        using var service = NewService(handler);
+
+        Assert.NotNull(await service.GetAsync(first));
+        var discoveryCost = handler.Requests.Count;
+        Assert.True(discoveryCost > 1);
+
+        Assert.NotNull(await service.GetAsync(second));
+
+        // Every image after the first starts at the endpoint that already worked, so a player whose
+        // three other Steam hosts are unreachable does not pay the discovery walk per card.
+        Assert.Equal(discoveryCost + 1, handler.Requests.Count);
+        Assert.EndsWith("steamcommunity-a.akamaihd.net/economy/image/two/232x176", handler.Requests[^1]);
+    }
+
+    [Fact]
+    public async Task ACancelledDownloadDoesNotHoldTheQueueAwayFromAVisibleCard()
+    {
+        var scripted = new WpfArt.Scripted(PngBytes);
+        scripted.Hold(Url("scrolled-past"));   // only this one endpoint stalls
+        using var service = new ImageCacheService(_root, scripted, maxConcurrency: 1);
+
+        using var abandoning = new CancellationTokenSource();
+        var offscreen = service.GetAsync(Url("scrolled-past"), abandoning.Token);
+        await Task.Delay(50);   // it has the only slot
+        abandoning.Cancel();
+        Assert.Null(await offscreen);
+
+        var visible = await service.GetAsync(Url("on-screen")).WaitAsync(TimeSpan.FromSeconds(5));
+
+        Assert.NotNull(visible);
+        scripted.Release(Url("scrolled-past"));
     }
 
     [Fact]

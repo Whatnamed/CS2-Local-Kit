@@ -1,10 +1,5 @@
-using System.Net;
-using System.Net.Http;
-using System.Threading;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using CS2LocalKit.App.Catalog;
 using CS2LocalKit.App.Common;
 using CS2LocalKit.App.Services;
@@ -20,10 +15,10 @@ namespace CS2LocalKit.Core.Tests;
 /// when its art cannot be fetched, and re-attaching an image element must never throw away the
 /// download that is already running for it.
 /// </summary>
+[Collection(WpfArt.GlobalArt)]
 public sealed class MusicKitPreviewTests : IDisposable
 {
     private readonly string _root;
-    private ImageSourceProvider? _previousProvider;
 
     public MusicKitPreviewTests()
     {
@@ -41,69 +36,57 @@ public sealed class MusicKitPreviewTests : IDisposable
     [Fact]
     public void LazyImage_ReattachWhileFetchIsInFlight_StillAppliesTheImage()
     {
-        RunOnStaThread(() =>
+        WpfArt.RunOnStaThread(() =>
         {
             var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
-            var (provider, handler) = WithHandler(gate.Task, Png(256, 198));
+            var handler = new WpfArt.GateHandler(gate.Task, WpfArt.Png(256, 198));
+            using var scope = WpfArt.Install(handler, _root);
 
-            try
-            {
-                var image = new TestImage();
-                LazyImage.SetPixelWidth(image, 512);
-                LazyImage.SetUrl(image, "https://example.invalid/economy/image/kit/512x384");
+            var image = new WpfArt.TestImage();
+            LazyImage.SetPixelWidth(image, 512);
+            LazyImage.SetUrl(image, "https://example.invalid/economy/image/kit/512x384");
 
-                // The first attach starts the fetch; the second one is WPF re-raising Loaded for the
-                // same element. Neither may invalidate the result of the first.
-                image.RaiseReattach();
-                image.RaiseReattach();
-                Assert.Null(image.Source);
+            // The first attach starts the fetch; the second one is WPF re-raising Loaded for the
+            // same element. Neither may invalidate the result of the first.
+            image.RaiseReattach();
+            image.RaiseReattach();
+            Assert.Null(image.Source);
 
-                gate.SetResult();
-                PumpUntil(() => image.Source is not null, TimeSpan.FromSeconds(5));
+            gate.SetResult();
+            WpfArt.PumpUntil(() => image.Source is not null, TimeSpan.FromSeconds(5));
 
-                Assert.NotNull(image.Source);
-                Assert.IsType<BitmapImage>(image.Source);
-                Assert.Single(handler.Requests);
-            }
-            finally
-            {
-                RestoreProvider();
-            }
+            Assert.NotNull(image.Source);
+            Assert.IsType<BitmapImage>(image.Source);
+            Assert.Single(handler.Requests);
         });
     }
 
     [Fact]
     public void LazyImage_DetachedThenReattached_StartsAFreshFetchRatherThanWaitingOnTheOldOne()
     {
-        RunOnStaThread(() =>
+        WpfArt.RunOnStaThread(() =>
         {
-            var (provider, handler) = WithHandler(Task.CompletedTask, Png(64, 64));
+            var handler = new WpfArt.GateHandler(Task.CompletedTask, WpfArt.Png(64, 64));
+            using var scope = WpfArt.Install(handler, _root);
 
-            try
-            {
-                var image = new TestImage();
-                LazyImage.SetPixelWidth(image, 512);
-                LazyImage.SetUrl(image, "https://example.invalid/economy/image/first/512x384");
-                image.RaiseReattach();
-                PumpUntil(() => image.Source is not null, TimeSpan.FromSeconds(5));
-                var first = image.Source;
-                Assert.NotNull(first);
+            var image = new WpfArt.TestImage();
+            LazyImage.SetPixelWidth(image, 512);
+            LazyImage.SetUrl(image, "https://example.invalid/economy/image/first/512x384");
+            image.RaiseReattach();
+            WpfArt.PumpUntil(() => image.Source is not null, TimeSpan.FromSeconds(5));
+            var first = image.Source;
+            Assert.NotNull(first);
 
-                // Detaching cancels the pending apply, so the slot must not stay "running" waiting for
-                // a result that can never be applied: the next attach has to be able to fetch again.
-                image.RaiseDetach();
-                LazyImage.SetUrl(image, "https://example.invalid/economy/image/second/512x384");
-                Assert.Null(image.Source);
+            // Detaching cancels the pending apply, so the slot must not stay "running" waiting for
+            // a result that can never be applied: the next attach has to be able to fetch again.
+            image.RaiseDetach();
+            LazyImage.SetUrl(image, "https://example.invalid/economy/image/second/512x384");
+            Assert.Null(image.Source);
 
-                image.RaiseReattach();
-                PumpUntil(() => !ReferenceEquals(image.Source, first) && image.Source is not null, TimeSpan.FromSeconds(5));
-                Assert.NotNull(image.Source);
-                Assert.Equal(2, handler.Requests.Count);
-            }
-            finally
-            {
-                RestoreProvider();
-            }
+            image.RaiseReattach();
+            WpfArt.PumpUntil(() => !ReferenceEquals(image.Source, first) && image.Source is not null, TimeSpan.FromSeconds(5));
+            Assert.NotNull(image.Source);
+            Assert.Equal(2, handler.Requests.Count);
         });
     }
 
@@ -114,7 +97,7 @@ public sealed class MusicKitPreviewTests : IDisposable
     {
         // The pinned catalog asks for /512x384 but the CDN caps music kit art at its native size.
         var path = Path.Combine(_root, "music-detail.png");
-        File.WriteAllBytes(path, Png(256, 198));
+        File.WriteAllBytes(path, WpfArt.Png(256, 198));
 
         var source = ImageSourceProvider.Decode(path, 512);
 
@@ -196,105 +179,6 @@ public sealed class MusicKitPreviewTests : IDisposable
         cosmetics.Section = CosmeticsSection.MusicKit;
         Assert.True(manager.IsDirty);
         Assert.Null(manager.Draft.MusicKitId);
-    }
-
-    // --- helpers ---
-
-    /// <summary>
-    /// WPF elements need STA, and an image fetch that resumes on the captured context only finishes
-    /// while that thread pumps its dispatcher - which is exactly the situation the detail preview runs in.
-    /// </summary>
-    private static void RunOnStaThread(Action action)
-    {
-        Exception? failure = null;
-        var thread = new Thread(() =>
-        {
-            var dispatcher = Dispatcher.CurrentDispatcher;
-            SynchronizationContext.SetSynchronizationContext(new DispatcherSynchronizationContext(dispatcher));
-            try { action(); }
-            catch (Exception ex) { failure = ex; }
-        })
-        {
-            IsBackground = true,
-        };
-        thread.SetApartmentState(ApartmentState.STA);
-        thread.Start();
-        thread.Join();
-        if (failure is not null) throw failure;
-    }
-
-    private (ImageSourceProvider Provider, GateHandler Handler) WithHandler(Task gate, byte[] payload)
-    {
-        var handler = new GateHandler(gate, payload);
-        var provider = new ImageSourceProvider(new ImageCacheService(_root, handler));
-        _previousProvider = ImageSourceProvider.Current;
-        ImageSourceProvider.Current = provider;
-        return (provider, handler);
-    }
-
-    private void RestoreProvider() => ImageSourceProvider.Current = _previousProvider;
-
-    private static byte[] Png(int width, int height)
-    {
-        var pixels = new byte[width * height * 4];
-        for (var i = 0; i < pixels.Length; i += 4)
-        {
-            pixels[i] = 0x30;
-            pixels[i + 1] = 0x60;
-            pixels[i + 2] = 0x90;
-            pixels[i + 3] = 0xFF;
-        }
-        var frame = BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgra32, null, pixels, width * 4);
-        var encoder = new PngBitmapEncoder();
-        encoder.Frames.Add(BitmapFrame.Create(frame));
-        using var stream = new MemoryStream();
-        encoder.Save(stream);
-        return stream.ToArray();
-    }
-
-    /// <summary>Runs the dispatcher until the condition holds, so awaited image work can finish.</summary>
-    private static void PumpUntil(Func<bool> condition, TimeSpan timeout)
-    {
-        var dispatcher = Dispatcher.CurrentDispatcher;
-        if (condition()) return;
-        var deadline = DateTime.UtcNow + timeout;
-        var frame = new DispatcherFrame();
-        dispatcher.InvokeAsync(async () =>
-        {
-            while (!condition() && DateTime.UtcNow < deadline)
-                await Task.Delay(10);
-            frame.Continue = false;
-        });
-        Dispatcher.PushFrame(frame);
-    }
-
-    private sealed class GateHandler : HttpMessageHandler
-    {
-        private readonly Task _gate;
-        private readonly byte[] _payload;
-
-        public GateHandler(Task gate, byte[] payload)
-        {
-            _gate = gate;
-            _payload = payload;
-        }
-
-        public List<string> Requests { get; } = new();
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken ct)
-        {
-            var url = request.RequestUri!.ToString();
-            lock (Requests) Requests.Add(url);
-            await _gate;
-            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(_payload) };
-        }
-    }
-
-    /// <summary>Exposes the re-attach lifecycle WPF drives internally, without needing a window.</summary>
-    private sealed class TestImage : System.Windows.Controls.Image
-    {
-        public void RaiseReattach() => RaiseEvent(new RoutedEventArgs(LoadedEvent));
-        public void RaiseDetach() => RaiseEvent(new RoutedEventArgs(UnloadedEvent));
     }
 
     private static HumanPreset WithMusicKit(int? musicKitId)

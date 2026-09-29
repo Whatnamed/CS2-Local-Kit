@@ -11,6 +11,8 @@ public sealed class RuntimeStatusTests : IDisposable
     private readonly string _csgoDir;
     private readonly string _cs2Root;
     private readonly string _backupsRoot;
+    private readonly string _presetsRoot;
+    private readonly string _activePresetPath;
 
     private const string LockJson = """
     {
@@ -35,6 +37,11 @@ public sealed class RuntimeStatusTests : IDisposable
         _cs2Root = Path.Combine(_work, "steamapps", "common", "Counter-Strike Global Offensive");
         _csgoDir = Path.Combine(_cs2Root, "game", "csgo");
         _backupsRoot = Path.Combine(_work, "backups");
+        // Preset state is read from disk, so it is pointed at the temp tree as well: left to the
+        // defaults these tests would report whoever happens to have a preset on this machine.
+        _presetsRoot = Path.Combine(_work, "presets", "human");
+        _activePresetPath = Path.Combine(_work, "presets", "active-preset.json");
+        Directory.CreateDirectory(_presetsRoot);
         Directory.CreateDirectory(_csgoDir);
         File.WriteAllText(Path.Combine(_csgoDir, "steam.inf"), SteamInfMatch);
         // appmanifest lives two levels above the install dir: <root>\..\..\ = <library>\steamapps
@@ -83,6 +90,8 @@ public sealed class RuntimeStatusTests : IDisposable
             Cs2Root = _cs2Root,
             LockPath = lockPath,
             BackupsRoot = _backupsRoot,
+            PresetsRoot = _presetsRoot,
+            ActivePresetPath = _activePresetPath,
         }).GetStatus();
 
         Assert.True(status.Cs2Detected);
@@ -113,6 +122,8 @@ public sealed class RuntimeStatusTests : IDisposable
             Cs2Root = _cs2Root,
             LockPath = WriteLock(LockWithDllSha()),
             BackupsRoot = _backupsRoot,
+            PresetsRoot = _presetsRoot,
+            ActivePresetPath = _activePresetPath,
         }).GetStatus();
         Assert.Equal("missing", status.MetaModNativeStatus);
         Assert.Equal("missing", status.CounterStrikeSharpNativeStatus);
@@ -127,6 +138,8 @@ public sealed class RuntimeStatusTests : IDisposable
             Cs2Root = _cs2Root,
             LockPath = WriteLock(LockWithDllSha()),
             BackupsRoot = _backupsRoot,
+            PresetsRoot = _presetsRoot,
+            ActivePresetPath = _activePresetPath,
         }).GetStatus();
         Assert.Equal("changed", status.TestedBuildMatch);
     }
@@ -140,6 +153,8 @@ public sealed class RuntimeStatusTests : IDisposable
             Cs2Root = _cs2Root,
             LockPath = WriteLock(LockJson), // hash no longer matches the tampered dll
             BackupsRoot = _backupsRoot,
+            PresetsRoot = _presetsRoot,
+            ActivePresetPath = _activePresetPath,
         }).GetStatus();
         Assert.Equal("mismatch", status.PatchedDllMatch);
     }

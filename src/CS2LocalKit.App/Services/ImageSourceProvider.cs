@@ -46,9 +46,16 @@ public sealed class ImageSourceProvider
         }
         catch (Exception)
         {
-            return null;   // a damaged or unsupported payload is simply "no art"
+            source = null;
         }
-        if (source is null) return null;
+
+        if (source is null)
+        {
+            // A file that will not decode is not a usable cache entry. Evict exactly this URL so the
+            // next request re-fetches instead of hitting the same broken bytes on every scroll.
+            _cache.Invalidate(entry.SourceUrl);
+            return null;
+        }
 
         if (_decoded.Count >= DecodedCacheLimit) _decoded.Clear();
         _decoded[key] = source;

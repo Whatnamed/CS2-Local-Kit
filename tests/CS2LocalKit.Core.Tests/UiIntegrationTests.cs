@@ -11,6 +11,7 @@ using Xunit;
 
 namespace CS2LocalKit.Core.Tests;
 
+[Collection(WpfArt.GlobalArt)]
 public sealed class UiIntegrationTests : IDisposable
 {
     private readonly string _work;
