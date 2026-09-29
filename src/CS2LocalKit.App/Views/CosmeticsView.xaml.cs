@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using CS2LocalKit.App.ViewModels;
 
 namespace CS2LocalKit.App.Views;
@@ -29,5 +30,11 @@ public partial class CosmeticsView : UserControl
     private void OnMusicKitTabClick(object sender, RoutedEventArgs e)
     {
         if (DataContext is CosmeticsViewModel vm) vm.CurrentSubTab = CosmeticsSubTab.MusicKit;
+    }
+
+    private void OnKnifeSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is not ListBox list || list.SelectedItem is null) return;
+        list.Dispatcher.BeginInvoke(() => list.ScrollIntoView(list.SelectedItem), DispatcherPriority.Loaded);
     }
 }

@@ -33,9 +33,11 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public string MetaModStatus => Status?.MetaModNativeStatus ?? "missing";
     public string CssStatus => Status?.CounterStrikeSharpNativeStatus ?? "missing";
     public bool InventorySimulatorPluginPresent => Status?.InventorySimulatorPluginPresent ?? false;
+    public string InventorySimulatorStatusText => InventorySimulatorPluginPresent ? "已安装" : "未安装";
     public string PatchedDllMatch => Status?.PatchedDllMatch ?? "unknown";
     public string PatchedDllHash => Status?.InventorySimulatorDllSha256 ?? "-";
     public bool FixtureInstalled => Status?.FixtureInstalled ?? false;
+    public string FixtureStatusText => FixtureInstalled ? "已安装" : "未安装";
     public string FixtureHash => Status?.FixtureSha256 ?? "-";
 
     // Active preset
@@ -46,10 +48,21 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     // Latest Apply & Rollback
     public bool LatestApplyExists => Status?.LatestApply != null;
     public string LatestApplyPreset => Status?.LatestApply?.PresetPath ?? "-";
-    public string LatestApplyTime => Status?.LatestApply?.CreatedAt ?? "-";
+    public string LatestApplyTime
+    {
+        get
+        {
+            var raw = Status?.LatestApply?.CreatedAt;
+            return DateTimeOffset.TryParse(raw, out var time)
+                ? time.ToLocalTime().ToString("yyyy-MM-dd HH:mm")
+                : raw ?? "-";
+        }
+    }
     public string LatestApplyHash => Status?.LatestApply?.ProjectedSha256 ?? "-";
     public bool BackupPresent => Status?.LatestApply?.BackupPresent ?? false;
+    public string BackupStatusText => !LatestApplyExists ? "无应用记录" : BackupPresent ? "就绪" : "缺失";
     public bool CurrentMatchesLatestHash => Status?.LatestApply?.CurrentMatchesNewSha256 ?? false;
+    public string LatestHashStatusText => !LatestApplyExists ? "无应用记录" : CurrentMatchesLatestHash ? "匹配" : "不匹配";
     public bool BlockedByCs2Running => Status?.LatestApply?.BlockedByCs2Running ?? false;
     public bool RollbackCanExecute => Status?.LatestApply?.RollbackCanExecute ?? false;
     public string RollbackReason => Status?.LatestApply?.RollbackBlockReason ?? (RollbackCanExecute ? "可安全恢复" : "不可恢复");
@@ -115,9 +128,11 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         OnPropertyChanged(nameof(MetaModStatus));
         OnPropertyChanged(nameof(CssStatus));
         OnPropertyChanged(nameof(InventorySimulatorPluginPresent));
+        OnPropertyChanged(nameof(InventorySimulatorStatusText));
         OnPropertyChanged(nameof(PatchedDllMatch));
         OnPropertyChanged(nameof(PatchedDllHash));
         OnPropertyChanged(nameof(FixtureInstalled));
+        OnPropertyChanged(nameof(FixtureStatusText));
         OnPropertyChanged(nameof(FixtureHash));
         OnPropertyChanged(nameof(ActivePreset));
         OnPropertyChanged(nameof(ActivePresetExists));
@@ -127,7 +142,9 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         OnPropertyChanged(nameof(LatestApplyTime));
         OnPropertyChanged(nameof(LatestApplyHash));
         OnPropertyChanged(nameof(BackupPresent));
+        OnPropertyChanged(nameof(BackupStatusText));
         OnPropertyChanged(nameof(CurrentMatchesLatestHash));
+        OnPropertyChanged(nameof(LatestHashStatusText));
         OnPropertyChanged(nameof(BlockedByCs2Running));
         OnPropertyChanged(nameof(RollbackCanExecute));
         OnPropertyChanged(nameof(RollbackReason));

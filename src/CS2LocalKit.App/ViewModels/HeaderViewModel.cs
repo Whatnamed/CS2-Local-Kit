@@ -20,6 +20,7 @@ public sealed class HeaderViewModel : ViewModelBase
     }
 
     public bool IsDirty => _manager.IsDirty;
+    public string DraftStatusText => _manager.IsDirty ? "有未保存更改" : "已保存";
 
     public bool Cs2Running => _manager.Cs2Running;
 
@@ -45,6 +46,7 @@ public sealed class HeaderViewModel : ViewModelBase
             {
                 OnPropertyChanged(nameof(DisplayPresetName));
                 OnPropertyChanged(nameof(IsDirty));
+                OnPropertyChanged(nameof(DraftStatusText));
             }
             else if (e.PropertyName == nameof(PresetManagerService.Cs2Running))
             {
