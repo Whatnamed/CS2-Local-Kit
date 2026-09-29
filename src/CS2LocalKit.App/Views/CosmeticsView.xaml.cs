@@ -34,7 +34,17 @@ public partial class CosmeticsView : UserControl
 
     private void OnKnifeSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (sender is not ListBox list || list.SelectedItem is null) return;
+        if (sender is ListBox list) ScrollSelectedKnifeIntoView(list);
+    }
+
+    private void OnKnifeListVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue is true && sender is ListBox list) ScrollSelectedKnifeIntoView(list);
+    }
+
+    private static void ScrollSelectedKnifeIntoView(ListBox list)
+    {
+        if (list.SelectedItem is null || !list.IsVisible) return;
         list.Dispatcher.BeginInvoke(() => list.ScrollIntoView(list.SelectedItem), DispatcherPriority.Loaded);
     }
 }

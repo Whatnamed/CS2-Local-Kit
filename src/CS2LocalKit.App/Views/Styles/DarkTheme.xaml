@@ -132,9 +132,6 @@
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="CaretBrush" Value="{StaticResource BrushTextPrimary}"/>
     </Style>
-    <Style TargetType="ComboBoxItem">
-        <Setter Property="AutomationProperties.Name" Value="{Binding Name}"/>
-    </Style>
     <Style TargetType="ListBox">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>

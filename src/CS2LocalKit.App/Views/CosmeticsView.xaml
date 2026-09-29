@@ -165,7 +165,8 @@
                     <TextBlock Text="已配置的刀具" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
                     <ListBox Grid.Row="1" AutomationProperties.Name="刀具列表"
                              ItemsSource="{Binding ConfiguredKnives}" SelectedItem="{Binding SelectedKnifePreset}"
-                             SelectionChanged="OnKnifeSelectionChanged">
+                             SelectionChanged="OnKnifeSelectionChanged"
+                             IsVisibleChanged="OnKnifeListVisibleChanged">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
                                 <Setter Property="AutomationProperties.Name" Value="{Binding KnifeName}"/>
