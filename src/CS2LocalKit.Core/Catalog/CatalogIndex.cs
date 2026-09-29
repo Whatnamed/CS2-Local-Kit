@@ -59,9 +59,11 @@ public sealed class CatalogIndex
             locales.Add(CatalogSnapshot.ChineseLocale);
         }
 
-        var music = LoadMusicKits(Path.Combine(enDir, "music_kits.json"));
-        if (zhDir is not null && File.Exists(Path.Combine(zhDir, "music_kits.json")))
-            MergeMusicKitsChinese(music, Path.Combine(zhDir, "music_kits.json"));
+        var music = BuildMusicIndex(
+            ReadCanonicalMusicKits(Path.Combine(enDir, "music_kits.json")),
+            zhDir is not null && File.Exists(Path.Combine(zhDir, "music_kits.json"))
+                ? ReadCanonicalMusicKits(Path.Combine(zhDir, "music_kits.json"))
+                : null);
 
         return new CatalogIndex(byWeapon, music, commit, locales);
     }
@@ -131,42 +133,79 @@ public sealed class CatalogIndex
         }
     }
 
-    private static Dictionary<int, CatalogMusicKit> LoadMusicKits(string musicPath)
+    private static Dictionary<int, CatalogMusicKit> BuildMusicIndex(
+        Dictionary<int, MusicKitRecord> identity, Dictionary<int, MusicKitRecord>? localized)
     {
         var music = new Dictionary<int, CatalogMusicKit>();
+        foreach (var (id, record) in identity)
+        {
+            // Localized metadata only decorates the record that describes the same variant, so a
+            // StatTrak™ entry can never relabel the plain kit. Keys absent from the identity
+            // snapshot are ignored: localization adds presentation, never identity.
+            MusicKitRecord? zh = null;
+            if (localized is not null
+                && localized.TryGetValue(id, out var localizedRecord)
+                && IsStatTrakVariant(localizedRecord) == IsStatTrakVariant(record))
+                zh = localizedRecord;
+
+            music[id] = new CatalogMusicKit(
+                Id: id,
+                Name: record.Name,
+                ChineseName: zh?.Name,
+                ImageUrl: record.ImageUrl ?? zh?.ImageUrl,
+                RarityId: record.RarityId,
+                RarityName: record.RarityName,
+                RarityChineseName: zh?.RarityName,
+                RarityColor: record.RarityColor);
+        }
+        return music;
+    }
+
+    /// <summary>
+    /// Reduce one locale snapshot to a single record per def_index. Upstream publishes a music kit
+    /// and its StatTrak™ variant as separate records over the same def_index, and the order between
+    /// them is not a contract, so the plain variant wins wherever it exists - HumanPreset addresses
+    /// the kit, not a StatTrak™ instance of it. A def_index that only exists as StatTrak™ keeps
+    /// that record. Within one variant class the first record wins, as before.
+    /// </summary>
+    private static Dictionary<int, MusicKitRecord> ReadCanonicalMusicKits(string musicPath)
+    {
+        var canonical = new Dictionary<int, MusicKitRecord>();
         using var doc = JsonDocument.Parse(File.ReadAllBytes(musicPath));
         foreach (var m in doc.RootElement.EnumerateArray())
         {
             if (m.ValueKind != JsonValueKind.Object) continue;
             if (!TryGetInt(m, "def_index", out var id)) continue;
-            if (music.ContainsKey(id)) continue;
-            music[id] = new CatalogMusicKit(
+            var record = new MusicKitRecord(
                 Id: id,
+                UpstreamId: GetString(m, "id"),
                 Name: GetString(m, "name"),
-                ImageUrl: GetString(m, "image"),
+                ImageUrl: NullIfEmpty(GetString(m, "image")),
                 RarityId: GetNestedRaw(m, "rarity", "id"),
                 RarityName: GetNestedRaw(m, "rarity", "name"),
                 RarityColor: GetNestedRaw(m, "rarity", "color"));
+
+            // The variant marker is the upstream stable item id ("music_kit-78_st") and the explicit
+            // StatTrak™ marker in the English name - never a localized display string.
+            if (!canonical.TryGetValue(id, out var current)
+                || (IsStatTrakVariant(current) && !IsStatTrakVariant(record)))
+                canonical[id] = record;
         }
-        return music;
+        return canonical;
     }
 
-    private static void MergeMusicKitsChinese(Dictionary<int, CatalogMusicKit> music, string zhMusicPath)
-    {
-        using var doc = JsonDocument.Parse(File.ReadAllBytes(zhMusicPath));
-        foreach (var m in doc.RootElement.EnumerateArray())
-        {
-            if (m.ValueKind != JsonValueKind.Object) continue;
-            if (!TryGetInt(m, "def_index", out var id)) continue;
-            if (!music.TryGetValue(id, out var kit)) continue;
-            music[id] = kit with
-            {
-                ChineseName = GetString(m, "name"),
-                RarityChineseName = GetNestedRaw(m, "rarity", "name"),
-                ImageUrl = kit.ImageUrl ?? GetString(m, "image"),
-            };
-        }
-    }
+    private static bool IsStatTrakVariant(MusicKitRecord record)
+        => record.UpstreamId.EndsWith("_st", StringComparison.OrdinalIgnoreCase)
+           || record.Name.StartsWith("StatTrak", StringComparison.OrdinalIgnoreCase);
+
+    private readonly record struct MusicKitRecord(
+        int Id,
+        string UpstreamId,
+        string Name,
+        string? ImageUrl,
+        string? RarityId,
+        string? RarityName,
+        string? RarityColor);
 
     // --- JSON helpers. paint_index / def_index arrive as strings in some pinned snapshots and
     // as numbers in others, so both shapes are accepted. ---
@@ -189,6 +228,9 @@ public sealed class CatalogIndex
 
     private static string GetString(JsonElement owner, string name)
         => owner.TryGetProperty(name, out var el) && el.ValueKind == JsonValueKind.String ? el.GetString() ?? "" : "";
+
+    private static string? NullIfEmpty(string value)
+        => string.IsNullOrWhiteSpace(value) ? null : value;
 
     private static double? GetDouble(JsonElement owner, string name)
         => owner.TryGetProperty(name, out var el) && el.ValueKind == JsonValueKind.Number && el.TryGetDouble(out var d) ? d : null;

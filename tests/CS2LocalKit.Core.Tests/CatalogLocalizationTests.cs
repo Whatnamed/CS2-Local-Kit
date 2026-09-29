@@ -242,6 +242,100 @@ public sealed class CatalogLocalizationTests : IDisposable
         Assert.Contains(CatalogSnapshot.ChineseLocale, status.LocalesMissing);
     }
 
+    // --- Music kits: a kit and its StatTrak™ variant are two upstream records over one def_index. ---
+
+    [Fact]
+    public void MusicKits_LocalizedStatTrakVariant_CannotRelabelThePlainKit()
+    {
+        var index = CatalogIndex.Load(CreateMusicVariantCache(plainFirst: true));
+
+        Assert.True(index.TryGetMusic(78, out var kit));
+        Assert.Equal("Music Kit | Test Kit", kit.Name);
+        Assert.Equal("音乐盒 | 测试包", kit.ChineseName);
+
+        // Image and rarity follow the same record the canonical name came from.
+        Assert.Equal("https://example.invalid/plain.png", kit.ImageUrl);
+        Assert.Equal("rarity_common", kit.RarityId);
+        Assert.Equal("普通", kit.RarityChineseName);
+    }
+
+    [Fact]
+    public void MusicKits_CanonicalVariant_IsIndependentOfSnapshotOrder()
+    {
+        var forward = CatalogIndex.Load(CreateMusicVariantCache(plainFirst: true));
+        var reversed = CatalogIndex.Load(CreateMusicVariantCache(plainFirst: false));
+
+        Assert.True(forward.TryGetMusic(78, out var plainFirstKit));
+        Assert.True(reversed.TryGetMusic(78, out var statFirstKit));
+        Assert.Equal(plainFirstKit, statFirstKit);
+        Assert.Equal(forward.MusicKitCount, reversed.MusicKitCount);
+        Assert.Equal(1, reversed.MusicKitCount);
+    }
+
+    [Fact]
+    public void MusicKits_DuplicateDefIndex_NeverBecomesASecondKit()
+    {
+        var enOnly = CatalogIndex.Load(CreateMusicVariantCache(plainFirst: true, withChinese: false));
+        var bilingual = CatalogIndex.Load(CreateMusicVariantCache(plainFirst: true));
+
+        Assert.Equal(enOnly.MusicKitCount, bilingual.MusicKitCount);
+        Assert.Single(bilingual.GetMusicKits(), m => m.Id == 78);
+        Assert.Single(bilingual.SearchMusicKits("Test Kit"));
+        Assert.Single(bilingual.SearchMusicKits("音乐盒"));
+        Assert.Single(bilingual.SearchMusicKits("78"));
+        Assert.True(bilingual.LocalizedMusicKitCount > 0);
+    }
+
+    [Fact]
+    public void MusicKits_PinnedFixtureShape_StaysOnThePlainVariant()
+    {
+        // The checked-in snapshot carries music_kit-78 and music_kit-78_st over def_index 78.
+        var index = CatalogIndex.Load(CreateLocaleCache());
+
+        Assert.True(index.TryGetMusic(78, out var kit));
+        Assert.Equal("Music Kit | Austin Wintory, The Devil Went Clubbing In Georgia", kit.Name);
+        Assert.DoesNotContain("StatTrak", kit.Name);
+        Assert.Equal("中文·" + kit.Name, kit.ChineseName);
+        Assert.DoesNotContain("StatTrak", kit.ChineseName);
+    }
+
+    /// <summary>
+    /// A cache whose music file holds both variants of one def_index, each carrying metadata that
+    /// identifies which record won. Upstream stable ids stay English in both locales, as upstream.
+    /// </summary>
+    private string CreateMusicVariantCache(bool plainFirst, bool withChinese = true)
+    {
+        var root = CreateLocaleCache(withChinese: withChinese, withMusic: false);
+
+        File.WriteAllText(
+            CatalogSnapshot.CachePath(root, CatalogSnapshot.IdentityLocale, "music_kits.json"),
+            MusicKitPairJson(plainFirst, english: true));
+
+        if (withChinese)
+            File.WriteAllText(
+                CatalogSnapshot.CachePath(root, CatalogSnapshot.ChineseLocale, "music_kits.json"),
+                MusicKitPairJson(plainFirst, english: false));
+
+        return root;
+    }
+
+    private static string MusicKitPairJson(bool plainFirst, bool english)
+    {
+        static string Kit(string id, string name, string image, string rarityId, string rarityName) =>
+            "{\"id\":\"" + id + "\",\"name\":\"" + name + "\",\"def_index\":\"78\"" +
+            ",\"image\":\"" + image + "\"" +
+            ",\"rarity\":{\"id\":\"" + rarityId + "\",\"name\":\"" + rarityName + "\",\"color\":\"#4b69ff\"}}";
+
+        var plain = english
+            ? Kit("music_kit-78", "Music Kit | Test Kit", "https://example.invalid/plain.png", "rarity_common", "Common")
+            : Kit("music_kit-78", "音乐盒 | 测试包", "https://example.invalid/plain.png", "rarity_common", "普通");
+        var statTrak = english
+            ? Kit("music_kit-78_st", "StatTrak™ Music Kit | Test Kit", "https://example.invalid/stat.png", "rarity_mythical", "Mythical")
+            : Kit("music_kit-78_st", "StatTrak™ 音乐盒 | 测试包", "https://example.invalid/stat.png", "rarity_mythical", "隐秘");
+
+        return "[" + (plainFirst ? plain + "," + statTrak : statTrak + "," + plain) + "]";
+    }
+
     private sealed class FixtureFetcher : ICatalogFetcher
     {
         public List<string> Urls { get; } = new();
