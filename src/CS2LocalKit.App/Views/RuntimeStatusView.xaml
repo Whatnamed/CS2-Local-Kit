@@ -1,159 +1,154 @@
 <UserControl x:Class="CS2LocalKit.App.Views.RuntimeStatusView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="Transparent">
+             UseLayoutRounding="True">
     <UserControl.Resources>
-        <Style x:Key="SectionTitle" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="16"/>
+        <Style x:Key="FieldLabel" TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <!-- Label and value share one cell, so the value keeps a left reserve instead of wrapping
+             over the label; long paths and hashes trim. -->
+        <Style x:Key="FieldValue" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="176,0,0,0"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+        <Style x:Key="FieldHash" TargetType="TextBlock" BasedOn="{StaticResource MonoText}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="176,0,0,0"/>
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+        </Style>
+        <Style x:Key="GroupTitle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontSize" Value="{StaticResource SizeSubtitle}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
-            <Setter Property="Margin" Value="0,0,0,14"/>
-        </Style>
-        <Style x:Key="FieldLabel" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource BrushTextMuted}"/>
-            <Setter Property="Margin" Value="0,0,14,9"/>
-        </Style>
-        <Style x:Key="FieldValue" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource BrushTextPrimary}"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="Margin" Value="0,0,0,9"/>
+            <Setter Property="Margin" Value="0,0,0,6"/>
         </Style>
     </UserControl.Resources>
-    <Grid Margin="24,20,24,18">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,0,15">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <StackPanel>
-                <TextBlock Text="状态" FontSize="21" FontWeight="SemiBold"/>
-                <TextBlock Text="{Binding HealthSummary}" Foreground="{StaticResource BrushTextSecondary}"
-                           TextWrapping="Wrap" Margin="0,5,18,0"/>
-            </StackPanel>
-            <Button Grid.Column="1" Content="刷新状态" Command="{Binding RefreshCommand}"
-                    VerticalAlignment="Top"/>
-        </Grid>
-        <ScrollViewer Grid.Row="1" Background="{StaticResource BrushBgWindow}"
-                      VerticalScrollBarVisibility="Auto">
-            <StackPanel Width="860" HorizontalAlignment="Center" Margin="0,0,18,0">
-                <Border BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,0,1"
-                        Padding="0,0,0,17" Margin="0,0,0,19">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="28,4,28,20" MaxWidth="1080" HorizontalAlignment="Center">
+
+            <!-- health -->
+            <Border Background="{StaticResource BrushBgSurface}" CornerRadius="12" Padding="20,18">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
                     <StackPanel>
-                        <TextBlock Text="游戏" Style="{StaticResource SectionTitle}"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="安装路径" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Cs2Path}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="1" Text="运行状态" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Cs2RunningText}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="2" Text="版本 / Build" Style="{StaticResource FieldLabel}"/>
-                            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                                <TextBlock Text="{Binding PatchVersion}"/>
-                                <TextBlock Text="  ·  " Foreground="{StaticResource BrushTextMuted}"/>
-                                <TextBlock Text="{Binding BuildId}"/>
-                            </StackPanel>
-                            <TextBlock Grid.Row="3" Text="测试基准" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding TestedBuildMatch}" Style="{StaticResource FieldValue}"/>
-                        </Grid>
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse Width="10" Height="10" VerticalAlignment="Center" Margin="0,0,10,0"
+                                     Fill="{Binding HealthLevel, Converter={StaticResource HealthBrush}}"/>
+                            <TextBlock Text="{Binding HealthSummary}" Style="{StaticResource GroupTitle}" Margin="0"/>
+                        </StackPanel>
+                        <ItemsControl ItemsSource="{Binding Status.BlockedReasons}" Margin="0,12,0,0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="{StaticResource BrushDanger}"
+                                               FontSize="12" Margin="0,2" TextWrapping="Wrap"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <ItemsControl ItemsSource="{Binding Status.AttentionReasons}" Margin="0,6,0,0">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" Foreground="{StaticResource BrushWarning}"
+                                               FontSize="12" Margin="0,2" TextWrapping="Wrap"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </StackPanel>
-                </Border>
-                <Border BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,0,1"
-                        Padding="0,0,0,17" Margin="0,0,0,19">
-                    <StackPanel>
-                        <TextBlock Text="Runtime" Style="{StaticResource SectionTitle}"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="MetaMod" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Column="1" Text="{Binding MetaModStatus}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="1" Text="CounterStrikeSharp" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CssStatus}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="2" Text="InventorySimulator" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding InventorySimulatorStatusText}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="3" Text="Patched DLL" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PatchedDllMatch}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="4" Text="Fixture" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding FixtureStatusText}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="5" Text="Fixture SHA256" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding FixtureHash}" Style="{StaticResource FieldValue}"
-                                       FontFamily="Consolas" FontSize="11"/>
-                        </Grid>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                        <Button Content="刷新状态" Command="{Binding RefreshCommand}"/>
+                        <Button Content="恢复上一次应用" Style="{StaticResource DangerButton}" Margin="10,0,0,0"
+                                Command="{Binding RestoreLatestCommand}">
+                            <Button.ToolTip>
+                                <TextBlock MaxWidth="260" Text="{Binding RollbackReason}" TextWrapping="Wrap"/>
+                            </Button.ToolTip>
+                        </Button>
                     </StackPanel>
-                </Border>
-                <Border BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,0,0,1"
-                        Padding="0,0,0,17" Margin="0,0,0,19">
-                    <StackPanel>
-                        <TextBlock Text="当前配置" Style="{StaticResource SectionTitle}"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="180"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Text="已激活预设" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Column="1" Text="{Binding ActivePreset}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="1" Text="最近应用" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LatestApplyTime}" Style="{StaticResource FieldValue}"/>
-                            <TextBlock Grid.Row="2" Text="应用的预设" Style="{StaticResource FieldLabel}"/>
-                            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding LatestApplyPreset}" Style="{StaticResource FieldValue}"/>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-                <StackPanel>
-                    <TextBlock Text="恢复" Style="{StaticResource SectionTitle}"/>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="180"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="备份" Style="{StaticResource FieldLabel}"/>
-                        <TextBlock Grid.Column="1" Text="{Binding BackupStatusText}" Style="{StaticResource FieldValue}"/>
-                        <TextBlock Grid.Row="1" Text="当前文件匹配" Style="{StaticResource FieldLabel}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LatestHashStatusText}" Style="{StaticResource FieldValue}"/>
-                        <TextBlock Grid.Row="2" Text="恢复条件" Style="{StaticResource FieldLabel}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding RollbackReason}" Style="{StaticResource FieldValue}"/>
-                    </Grid>
-                    <Button Content="恢复上一次应用" Command="{Binding RestoreLatestCommand}"
-                            Style="{StaticResource DangerButtonStyle}" HorizontalAlignment="Left"
-                            Margin="0,9,0,0"/>
+                </Grid>
+            </Border>
+
+            <Grid Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="CS2 环境" Style="{StaticResource GroupTitle}"/>
+                    <Border Style="{StaticResource Divider}" Margin="0,0,0,4"/>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="安装路径"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding Cs2Path}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="进程状态"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding Cs2RunningText}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="Patch / Client"/><TextBlock Style="{StaticResource FieldValue}"><Run Text="{Binding PatchVersion, Mode=OneWay}"/><Run Text="  ·  "/><Run Text="{Binding ClientVersion, Mode=OneWay}"/></TextBlock></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="Build ID"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding BuildId}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="与测试基线"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding TestedBuildMatch}"/></Grid>
+
+                    <TextBlock Text="运行组件" Style="{StaticResource GroupTitle}" Margin="0,26,0,6"/>
+                    <Border Style="{StaticResource Divider}" Margin="0,0,0,4"/>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="gameinfo MetaMod 启动项"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding GameinfoHasMetamod, Converter={StaticResource TrueFalseText}}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="MetaMod 原生组件"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding MetaModStatus}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="CounterStrikeSharp"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding CssStatus}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="InventorySimulator 插件"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding InventorySimulatorStatusText}"/></Grid>
+                    <Grid Margin="0,7,0,2"><TextBlock Style="{StaticResource FieldLabel}" Text="Patched DLL 校验"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding PatchedDllMatch}"/></Grid>
+                    <Grid Margin="0,0,0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="插件哈希"/><TextBlock Style="{StaticResource FieldHash}" Text="{Binding PatchedDllHash}"/></Grid>
                 </StackPanel>
-            </StackPanel>
-        </ScrollViewer>
-        <TextBlock Grid.Row="2" Text="{Binding StatusMessage}"
-                   Foreground="{StaticResource BrushTextSecondary}" Margin="0,10,0,0"
-                   Visibility="{Binding IsStatusVisible, Converter={StaticResource BoolToVis}}"/>
-    </Grid>
+
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="饰品数据" Style="{StaticResource GroupTitle}"/>
+                    <Border Style="{StaticResource Divider}" Margin="0,0,0,4"/>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="运行文件已安装"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding FixtureStatusText}"/></Grid>
+                    <Grid Margin="0,0,0,2"><TextBlock Style="{StaticResource FieldLabel}" Text="当前文件哈希"/><TextBlock Style="{StaticResource FieldHash}" Text="{Binding FixtureHash}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="游戏内当前预设"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding ActivePreset}"/></Grid>
+
+                    <TextBlock Text="最近应用与恢复" Style="{StaticResource GroupTitle}" Margin="0,26,0,6"/>
+                    <Border Style="{StaticResource Divider}" Margin="0,0,0,4"/>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="预设"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding LatestApplyPreset}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="时间"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding LatestApplyTime}"/></Grid>
+                    <Grid Margin="0,0,0,2"><TextBlock Style="{StaticResource FieldLabel}" Text="投影哈希"/><TextBlock Style="{StaticResource FieldHash}" Text="{Binding LatestApplyHash}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="备份"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding BackupStatusText}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="与当前文件一致"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding LatestHashStatusText}"/></Grid>
+                    <Grid Margin="0,7,0,2"><TextBlock Style="{StaticResource FieldLabel}" Text="可恢复"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding RollbackCanExecute, Converter={StaticResource TrueFalseText}}"/></Grid>
+                    <TextBlock Style="{StaticResource HintText}" Text="{Binding RollbackReason}"/>
+
+                    <TextBlock Text="本地物品清单" Style="{StaticResource GroupTitle}" Margin="0,26,0,6"/>
+                    <Border Style="{StaticResource Divider}" Margin="0,0,0,4"/>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="固定版本"/><TextBlock Style="{StaticResource FieldHash}" Text="{Binding CatalogCommit}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="已载入语言"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding CatalogLocales}"/></Grid>
+                    <Grid Margin="0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="中文覆盖"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding ChineseCoverage}"/></Grid>
+                    <Grid Margin="0,7,0,2"><TextBlock Style="{StaticResource FieldLabel}" Text="内容"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding CatalogCounts}"/></Grid>
+                    <Grid Margin="0,0,0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="清单目录"/><TextBlock Style="{StaticResource FieldHash}" Text="{Binding CatalogCacheRoot}"/></Grid>
+                    <Grid Margin="0,0,0,2"><TextBlock Style="{StaticResource FieldLabel}" Text="图片缓存"/><TextBlock Style="{StaticResource FieldValue}" Text="{Binding ImageCacheState}"/></Grid>
+                    <Grid Margin="0,0,0,7"><TextBlock Style="{StaticResource FieldLabel}" Text="图片目录"/><TextBlock Style="{StaticResource FieldHash}" Text="{Binding ImageCacheRoot}"/></Grid>
+
+                    <Button Content="准备本地清单" Style="{StaticResource GhostButton}" HorizontalAlignment="Left"
+                            Margin="0,10,0,0"
+                            Command="{Binding DataContext.SyncCatalogCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <TextBlock Style="{StaticResource HintText}" Margin="0,8,0,0"
+                               Text="{Binding DataContext.CatalogSyncMessage, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Margin="0,20,0,0" TextWrapping="Wrap"
+                       Visibility="{Binding IsStatusVisible, Converter={StaticResource BoolToVis}}"
+                       Text="{Binding StatusMessage}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                        <Setter Property="Foreground" Value="{StaticResource BrushSuccess}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsStatusSuccess}" Value="False">
+                                <Setter Property="Foreground" Value="{StaticResource BrushDanger}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

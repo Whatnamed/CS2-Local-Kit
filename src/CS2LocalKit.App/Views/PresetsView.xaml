@@ -1,119 +1,185 @@
 <UserControl x:Class="CS2LocalKit.App.Views.PresetsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="Transparent">
-    <Grid Margin="24,20,24,20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="0,0,0,18">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="预设" FontSize="21" FontWeight="SemiBold" VerticalAlignment="Center"/>
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button Content="导入" Command="{Binding ImportCommand}" Margin="0,0,9,0"/>
-                <Button Content="刷新" Command="{Binding RefreshCommand}"/>
-            </StackPanel>
-        </Grid>
+             UseLayoutRounding="True">
+    <Grid Margin="28,4,28,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="336"/>
+            <ColumnDefinition Width="26"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="310"/>
-                <ColumnDefinition Width="12"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Style="{StaticResource CardPanelStyle}">
+        <!-- preset library -->
+        <DockPanel Grid.Column="0" LastChildFill="True">
+            <StackPanel DockPanel.Dock="Top" Margin="0,0,14,12">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="本地预设" FontSize="15" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                    <ListBox Grid.Row="1" AutomationProperties.Name="预设列表"
-                             ItemsSource="{Binding Presets}" SelectedItem="{Binding SelectedPreset}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                <Setter Property="AutomationProperties.Name" Value="{Binding Name}"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"/>
-                                        <TextBlock Text="当前编辑" Foreground="{StaticResource BrushAccent}"
-                                                   FontSize="11" Margin="0,3,0,0"
-                                                   Visibility="{Binding IsWorking, Converter={StaticResource BoolToVis}}"/>
-                                    </StackPanel>
-                                    <TextBlock Grid.Column="1" Text="已激活"
-                                               Foreground="{StaticResource BrushGreen}" FontSize="11"
-                                               Visibility="{Binding IsActive, Converter={StaticResource BoolToVis}}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel Grid.Row="2" Margin="0,16,0,0">
-                        <TextBlock Text="新建预设" Foreground="{StaticResource BrushTextSecondary}"
-                                   Margin="0,0,0,7"/>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox AutomationProperties.Name="新预设名称"
-                                     Text="{Binding NewPresetNameInput, UpdateSourceTrigger=PropertyChanged}"
-                                     Margin="0,0,8,0"/>
-                            <Button Grid.Column="1" Content="新建"
-                                    Command="{Binding CreateNewPresetCommand}"/>
-                        </Grid>
-                    </StackPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <TextBox Style="{StaticResource CompactInput}" MinHeight="34"
+                                 Text="{Binding NewPresetNameInput, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="新预设名称" FontSize="12" Margin="10,0,0,0"
+                                   Foreground="{StaticResource BrushTextDisabled}"
+                                   VerticalAlignment="Center" IsHitTestVisible="False">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding NewPresetNameInput}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <Button Grid.Column="2" Content="新建" MinWidth="66"
+                            Command="{Binding CreateNewPresetCommand}"/>
                 </Grid>
+                <TextBlock Style="{StaticResource HintText}" Margin="0,7,0,0"
+                           Text="名称会自动补全为 .v1.json；新建不会覆盖同名文件。"/>
+            </StackPanel>
+
+            <Grid DockPanel.Dock="Top" Margin="0,0,14,8">
+                <TextBlock VerticalAlignment="Center">
+                    <Run Text="共 "/>
+                    <Run Text="{Binding Presets.Count, Mode=OneWay}" FontWeight="SemiBold"/>
+                    <Run Text=" 个预设"/>
+                </TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="导入" Style="{StaticResource GhostButton}" Command="{Binding ImportCommand}"/>
+                    <Button Content="刷新" Style="{StaticResource GhostButton}" Command="{Binding RefreshCommand}"
+                            Margin="6,0,0,0"/>
+                </StackPanel>
+            </Grid>
+
+            <Border Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4" Margin="0,0,14,0">
+                <ListBox ItemsSource="{Binding Presets}" SelectedItem="{Binding SelectedPreset, Mode=TwoWay}"
+                         ItemContainerStyle="{StaticResource ListRow}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="{Binding FriendlyName}" FontSize="13.5" FontWeight="SemiBold"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding StateText}" FontSize="11"
+                                               Foreground="{StaticResource BrushTextTertiary}" Margin="0,2,0,0"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                    <TextBlock Text="编辑" FontSize="10.5" Foreground="{StaticResource BrushAccent}"
+                                               Visibility="{Binding IsWorking, Converter={StaticResource BoolToVis}}"/>
+                                    <TextBlock Text="游戏内" FontSize="10.5" Foreground="{StaticResource BrushSuccess}"
+                                               Margin="8,0,0,0"
+                                               Visibility="{Binding IsInstalled, Converter={StaticResource BoolToVis}}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </Border>
-            <Border Grid.Column="2" Style="{StaticResource CardPanelStyle}">
-                <Grid>
-                    <StackPanel Visibility="{Binding SelectedPreset, Converter={StaticResource NullToVis}}"
-                                MaxWidth="540" HorizontalAlignment="Left">
-                        <TextBlock Text="{Binding SelectedPreset.Name}" FontSize="20" FontWeight="SemiBold"
-                                   Margin="0,0,0,12"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,25">
-                            <TextBlock Text="当前编辑" Foreground="{StaticResource BrushAccent}"
-                                       Visibility="{Binding SelectedPreset.IsWorking, Converter={StaticResource BoolToVis}}"
-                                       Margin="0,0,20,0"/>
-                            <TextBlock Text="已激活" Foreground="{StaticResource BrushGreen}"
-                                       Visibility="{Binding SelectedPreset.IsActive, Converter={StaticResource BoolToVis}}"/>
-                        </StackPanel>
-                        <Button Content="加载到编辑器" Command="{Binding LoadPresetCommand}"
-                                Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left"
-                                MinWidth="150" Margin="0,0,0,10"/>
-                        <Button Content="设为激活预设" Command="{Binding SetActiveCommand}"
-                                HorizontalAlignment="Left" MinWidth="150" Margin="0,0,0,24"/>
-                        <Border BorderBrush="{StaticResource BrushBorder}" BorderThickness="0,1,0,0"
-                                Padding="0,18,0,0">
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="复制" Command="{Binding DuplicateCommand}" Margin="0,0,9,0"/>
-                                <Button Content="导出" Command="{Binding ExportCommand}" Margin="0,0,9,0"/>
-                                <Button Content="删除" Command="{Binding DeleteCommand}"
-                                        Style="{StaticResource DangerButtonStyle}"/>
-                            </StackPanel>
-                        </Border>
+        </DockPanel>
+
+        <Border Grid.Column="1" Style="{StaticResource VerticalDivider}"/>
+
+        <!-- selected preset: three distinct facts, kept separate on purpose -->
+        <ScrollViewer Grid.Column="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,0,0,16">
+                <TextBlock Text="{Binding SelectedPreset.FriendlyName}" Style="{StaticResource PageTitle}"
+                           TextTrimming="CharacterEllipsis"
+                           Visibility="{Binding SelectedPreset, Converter={StaticResource NotNullToVis}}"/>
+                <TextBlock Text="{Binding SelectedPreset.Name}" Style="{StaticResource MonoText}"
+                           Margin="0,4,0,0"
+                           Visibility="{Binding SelectedPreset, Converter={StaticResource NotNullToVis}}"/>
+                <TextBlock Text="从左侧选择一个预设" Style="{StaticResource HintText}"
+                           Visibility="{Binding SelectedPreset, Converter={StaticResource NullToVis}}"/>
+
+                <StackPanel Margin="0,20,0,0" Visibility="{Binding SelectedPreset, Converter={StaticResource NotNullToVis}}">
+                    <Grid Margin="0,0,0,4">
+                        <TextBlock Text="正在编辑" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
+                        <TextBlock HorizontalAlignment="Right">
+                            <Run Text="{Binding SelectedPreset.IsWorking, Converter={StaticResource TrueFalseText}, Mode=OneWay}"/>
+                        </TextBlock>
+                    </Grid>
+                    <TextBlock Style="{StaticResource HintText}" Margin="0,0,0,14"
+                               Text="编辑器里的草稿；未保存的更改只存在于内存，写入文件需要点“保存预设”。"
+                               Visibility="{Binding SelectedPreset.IsWorking, Converter={StaticResource BoolToVis}}"/>
+
+                    <Border Style="{StaticResource Divider}" Margin="0,8"/>
+
+                    <Grid Margin="0,0,0,4">
+                        <TextBlock Text="游戏内当前预设" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
+                        <TextBlock HorizontalAlignment="Right">
+                            <Run Text="{Binding SelectedPreset.IsActive, Converter={StaticResource TrueFalseText}, Mode=OneWay}"/>
+                        </TextBlock>
+                    </Grid>
+                    <TextBlock Style="{StaticResource HintText}" Margin="0,0,0,14"
+                               Text="InventorySimulator 启动时读取的指针；它与“已应用”可能不同，例如手动改过文件之后。"/>
+
+                    <Border Style="{StaticResource Divider}" Margin="0,8"/>
+
+                    <Grid Margin="0,0,0,4">
+                        <TextBlock Text="已应用到 CS2" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
+                        <TextBlock HorizontalAlignment="Right">
+                            <Run Text="{Binding SelectedPreset.IsInstalled, Converter={StaticResource TrueFalseText}, Mode=OneWay}"/>
+                        </TextBlock>
+                    </Grid>
+                    <TextBlock Style="{StaticResource HintText}"
+                               Text="{Binding DataContext.Header.InstalledTimeText, RelativeSource={RelativeSource AncestorType=Window}}"
+                               Visibility="{Binding SelectedPreset.IsInstalled, Converter={StaticResource BoolToVis}}"/>
+                    <TextBlock Style="{StaticResource MonoText}" Margin="0,4,0,0"
+                               Text="{Binding DataContext.Header.InstalledHashText, RelativeSource={RelativeSource AncestorType=Window}}"
+                               Visibility="{Binding SelectedPreset.IsInstalled, Converter={StaticResource BoolToVis}}"/>
+                </StackPanel>
+
+                <Border Style="{StaticResource Divider}"/>
+
+                <StackPanel Orientation="Horizontal" Visibility="{Binding SelectedPreset, Converter={StaticResource NotNullToVis}}">
+                    <Button Content="载入到编辑器" Style="{StaticResource PrimaryButton}" MinWidth="112"
+                            Command="{Binding LoadPresetCommand}"/>
+                    <Button Content="设为游戏当前" MinWidth="112" Margin="10,0,0,0"
+                            Command="{Binding SetActiveCommand}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10,0,0"
+                            Visibility="{Binding SelectedPreset, Converter={StaticResource NotNullToVis}}">
+                    <Button Content="复制" Style="{StaticResource GhostButton}" Command="{Binding DuplicateCommand}"/>
+                    <Button Content="导出" Style="{StaticResource GhostButton}" Command="{Binding ExportCommand}"
+                            Margin="8,0,0,0"/>
+                    <Button Content="删除" Style="{StaticResource DangerButton}" Command="{Binding DeleteCommand}"
+                            Margin="8,0,0,0"/>
+                </StackPanel>
+
+                <Border Background="{StaticResource BrushBgSurface}" CornerRadius="9" Padding="13,11" Margin="0,20,0,0">
+                    <StackPanel>
+                        <TextBlock Text="存储位置" FontSize="11.5" Foreground="{StaticResource BrushTextTertiary}"/>
+                        <TextBlock Style="{StaticResource MonoText}" Margin="0,4,0,0"
+                                   Text="{Binding Manager.Services.PresetsRoot}"/>
+                        <TextBlock Style="{StaticResource HintText}" Margin="0,8,0,0"
+                                   Text="预设是本工具拥有的文件；应用时才会投影到 CS2 的运行配置。"/>
                     </StackPanel>
-                    <TextBlock Text="从左侧选择预设" Foreground="{StaticResource BrushTextMuted}"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"
-                               Visibility="{Binding SelectedPreset, Converter={StaticResource NotNullToVis}}"/>
-                </Grid>
-            </Border>
-        </Grid>
-        <TextBlock Grid.Row="2" Text="{Binding StatusMessage}"
-                   Foreground="{StaticResource BrushTextSecondary}" Margin="0,12,0,0"
-                   Visibility="{Binding IsStatusVisible, Converter={StaticResource BoolToVis}}"/>
+                </Border>
+
+                <TextBlock Margin="0,14,0,0" TextWrapping="Wrap"
+                           Visibility="{Binding IsStatusVisible, Converter={StaticResource BoolToVis}}"
+                           Text="{Binding StatusMessage}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                            <Setter Property="Foreground" Value="{StaticResource BrushDanger}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsStatusSuccess}" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource BrushSuccess}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

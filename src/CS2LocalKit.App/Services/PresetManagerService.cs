@@ -131,6 +131,23 @@ public class PresetManagerService : ViewModelBase
 
     public event EventHandler? WorkingPresetChanged;
     public event EventHandler? StatusRefreshed;
+    public event EventHandler? CatalogReloaded;
+
+    /// <summary>
+    /// Re-reads the pinned snapshot after an explicit catalog preparation and refreshes the editor
+    /// so localized display names pick up. Validation identity semantics are unchanged: the same
+    /// numeric ids, with more metadata attached.
+    /// </summary>
+    public CatalogIndex? ReloadCatalog()
+    {
+        var index = _services.ReloadCatalog();
+        if (index is not null && !IsDirty && WorkingPresetName is { } name && _services.PresetStore.Exists(name))
+        {
+            LoadPreset(name, force: true);
+        }
+        CatalogReloaded?.Invoke(this, EventArgs.Empty);
+        return index;
+    }
 
     public PresetManagerService(AppServices services, IDialogService dialogService)
     {

@@ -1,332 +1,541 @@
 <UserControl x:Class="CS2LocalKit.App.Views.CosmeticsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="Transparent">
-    <Grid Margin="24,14,24,18">
+             xmlns:common="clr-namespace:CS2LocalKit.App.Common"
+             xmlns:vm="clr-namespace:CS2LocalKit.App.ViewModels"
+             UseLayoutRounding="True"
+             TextOptions.TextFormattingMode="Ideal">
+    <UserControl.Resources>
+        <!-- one finish/music card; selection and art are both driven from the view model -->
+        <DataTemplate x:Key="CardTemplate">
+            <ToggleButton Style="{StaticResource CardToggle}"
+                          IsChecked="{Binding IsSelected, Mode=OneWay}"
+                          Command="{Binding DataContext.SelectSkinCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                          CommandParameter="{Binding}">
+                <Grid Height="120">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="78"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Background="{StaticResource BrushPlaceholder}"
+                            CornerRadius="8,8,0,0">
+                        <Grid>
+                            <Image x:Name="SkinArt" Margin="7" Stretch="Uniform"
+                                   common:LazyImage.Url="{Binding ThumbnailUrl}"
+                                   common:LazyImage.PixelWidth="232"/>
+                            <!-- renders through the art's transparent pixels unless hidden -->
+                            <TextBlock Text="无预览" FontSize="10.5"
+                                       Foreground="{StaticResource BrushTextDisabled}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding Source, ElementName=SkinArt, Converter={StaticResource NullToVis}}"/>
+                        </Grid>
+                    </Border>
+
+                    <StackPanel Grid.Row="1" Margin="9,6,9,2">
+                        <TextBlock Text="{Binding DisplayName}" FontSize="12" FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Text="{Binding SecondaryName}" FontSize="10.5"
+                                   Foreground="{StaticResource BrushTextTertiary}"
+                                   TextTrimming="CharacterEllipsis"
+                                   Visibility="{Binding SecondaryName, Converter={StaticResource NonEmptyToVis}}"/>
+                    </StackPanel>
+
+                    <Border Grid.Row="2" CornerRadius="0,0,8,8" Margin="1,0"
+                            Background="{Binding RarityColor, Converter={StaticResource HexToBrush}}"/>
+                </Grid>
+            </ToggleButton>
+        </DataTemplate>
+
+        <DataTemplate x:Key="MusicCardTemplate">
+            <ToggleButton Style="{StaticResource CardToggle}"
+                          IsChecked="{Binding IsSelected, Mode=OneWay}"
+                          Command="{Binding DataContext.SelectMusicKitCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                          CommandParameter="{Binding}">
+                <Grid Height="120">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="78"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="3"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Background="{StaticResource BrushPlaceholder}" CornerRadius="8,8,0,0">
+                        <Grid>
+                            <Image x:Name="MusicArt" Margin="7" Stretch="Uniform"
+                                   common:LazyImage.Url="{Binding ThumbnailUrl}"
+                                   common:LazyImage.PixelWidth="232"/>
+                            <TextBlock Text="无预览" FontSize="10.5"
+                                       Foreground="{StaticResource BrushTextDisabled}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding Source, ElementName=MusicArt, Converter={StaticResource NullToVis}}"/>
+                        </Grid>
+                    </Border>
+                    <StackPanel Grid.Row="1" Margin="9,6,9,2">
+                        <TextBlock Text="{Binding DisplayName}" FontSize="12" FontWeight="SemiBold"
+                                   TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Text="{Binding SecondaryName}" FontSize="10.5"
+                                   Foreground="{StaticResource BrushTextTertiary}"
+                                   TextTrimming="CharacterEllipsis"
+                                   Visibility="{Binding SecondaryName, Converter={StaticResource NonEmptyToVis}}"/>
+                    </StackPanel>
+                    <Border Grid.Row="2" CornerRadius="0,0,8,8" Margin="1,0"
+                            Background="{Binding RarityColor, Converter={StaticResource HexToBrush}}"/>
+                </Grid>
+            </ToggleButton>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Margin="28,4,28,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,4"
-                    Visibility="{Binding IsMusicKitTab, Converter={StaticResource InvBoolToVis}}">
-            <RadioButton Content="CT" IsChecked="{Binding IsCt}" GroupName="Team"
-                         Style="{StaticResource SegmentButtonStyle}" Margin="0,0,8,0"/>
-            <RadioButton Content="T" IsChecked="{Binding IsT}" GroupName="Team"
-                         Style="{StaticResource SegmentButtonStyle}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,16">
-            <RadioButton Content="枪械" IsChecked="{Binding IsWeaponsTab, Mode=OneWay}"
-                         GroupName="Category" Click="OnWeaponsTabClick"
-                         Style="{StaticResource SegmentButtonStyle}" Margin="0,0,8,0"/>
-            <RadioButton Content="刀具" IsChecked="{Binding IsKnifeTab, Mode=OneWay}"
-                         GroupName="Category" Click="OnKnifeTabClick"
-                         Style="{StaticResource SegmentButtonStyle}" Margin="0,0,8,0"/>
-            <RadioButton Content="手套" IsChecked="{Binding IsGlovesTab, Mode=OneWay}"
-                         GroupName="Category" Click="OnGlovesTabClick"
-                         Style="{StaticResource SegmentButtonStyle}" Margin="0,0,8,0"/>
-            <RadioButton Content="音乐盒" IsChecked="{Binding IsMusicKitTab, Mode=OneWay}"
-                         GroupName="Category" Click="OnMusicKitTabClick"
-                         Style="{StaticResource SegmentButtonStyle}"/>
-        </StackPanel>
-
-        <Grid Grid.Row="2" Visibility="{Binding IsWeaponsTab, Converter={StaticResource BoolToVis}}">
+        <!-- section and team -->
+        <Grid Grid.Row="0" Margin="0,0,0,14">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Style="{StaticResource CardPanelStyle}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="枪械" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                    <TextBlock Grid.Row="1" Text="搜索枪械" Foreground="{StaticResource BrushTextMuted}"
-                               FontSize="11" Margin="0,0,0,5"/>
-                    <TextBox Grid.Row="2" AutomationProperties.Name="搜索枪械"
-                             Text="{Binding WeaponSearchText, UpdateSourceTrigger=PropertyChanged}"
-                             Margin="0,0,0,10"/>
-                    <ListBox Grid.Row="3" AutomationProperties.Name="枪械列表"
-                             ItemsSource="{Binding FilteredWeapons}" SelectedItem="{Binding SelectedWeapon}">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                <Setter Property="AutomationProperties.Name" Value="{Binding Name}"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
+
+            <Border Background="{StaticResource BrushBgSurface}" CornerRadius="9" Padding="3">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Style="{StaticResource Segment}" Content="武器" GroupName="section"
+                                 IsChecked="{Binding IsWeaponsSection, Mode=OneWay}"
+                                 Command="{Binding SelectSectionCommand}"
+                                 CommandParameter="{x:Static vm:CosmeticsSection.Weapons}"/>
+                    <RadioButton Style="{StaticResource Segment}" Content="刀具" GroupName="section"
+                                 IsChecked="{Binding IsKnivesSection, Mode=OneWay}"
+                                 Command="{Binding SelectSectionCommand}"
+                                 CommandParameter="{x:Static vm:CosmeticsSection.Knives}"/>
+                    <RadioButton Style="{StaticResource Segment}" Content="手套" GroupName="section"
+                                 IsChecked="{Binding IsGlovesSection, Mode=OneWay}"
+                                 Command="{Binding SelectSectionCommand}"
+                                 CommandParameter="{x:Static vm:CosmeticsSection.Gloves}"/>
+                    <RadioButton Style="{StaticResource Segment}" Content="音乐盒" GroupName="section"
+                                 IsChecked="{Binding IsMusicKitSection, Mode=OneWay}"
+                                 Command="{Binding SelectSectionCommand}"
+                                 CommandParameter="{x:Static vm:CosmeticsSection.MusicKit}"/>
+                </StackPanel>
+            </Border>
+
+            <TextBlock Grid.Column="1" Text="{Binding TeamSummaryText}" Style="{StaticResource HintText}"
+                       VerticalAlignment="Center" Margin="18,0,18,0"/>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding ShowsTeamContext, Converter={StaticResource BoolToVis}}">
+                    <Border Background="{StaticResource BrushBgSurface}" CornerRadius="9" Padding="3">
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Style="{StaticResource Segment}" Content="反恐精英" GroupName="team"
+                                         IsChecked="{Binding IsCt, Mode=TwoWay}"/>
+                            <RadioButton Style="{StaticResource Segment}" Content="恐怖分子" GroupName="team"
+                                         IsChecked="{Binding IsT, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Margin="14,0,0,0" VerticalAlignment="Center"
+                            Visibility="{Binding ShowsGlovesSwitch, Converter={StaticResource BoolToVis}}">
+                        <CheckBox Style="{StaticResource Switch}" Content="启用手套"
+                                  IsChecked="{Binding GlovesEnabled}"/>
+                    </Border>
+                </StackPanel>
+                <TextBlock Text="全局 · 双方共用" Style="{StaticResource HintText}" VerticalAlignment="Center"
+                           Visibility="{Binding ShowsTeamContext, Converter={StaticResource InvBoolToVis}}"/>
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1" Background="{StaticResource BrushAccentSoft}" CornerRadius="9" Padding="14,10"
+                Margin="0,0,0,12"
+                Visibility="{Binding DataContext.CatalogUnavailable, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}">
+            <Grid>
+                <StackPanel>
+                    <TextBlock Text="本地物品清单尚未准备" FontWeight="SemiBold"/>
+                    <TextBlock Style="{StaticResource HintText}" Margin="0,3,0,0"
+                               Text="没有清单时无法浏览或校验皮肤，保存与应用会被阻断。点击下方按钮下载当前固定版本的英文与简体中文数据（仅写入本地应用数据目录）。"/>
+                </StackPanel>
+                <Button Content="{Binding DataContext.CatalogSyncButtonText, RelativeSource={RelativeSource AncestorType=Window}}"
+                        Style="{StaticResource PrimaryButton}"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Command="{Binding DataContext.SyncCatalogCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+            </Grid>
+        </Border>
+
+        <!-- browser: model list -> finish grid -> editing detail -->
+        <Grid Grid.Row="2" Visibility="{Binding IsMusicKitSection, Converter={StaticResource InvBoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="272"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="26"/>
+                <ColumnDefinition Width="312"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- model list -->
+            <DockPanel Grid.Column="0" LastChildFill="True">
+                <StackPanel DockPanel.Dock="Top">
+                    <Grid Margin="0,0,14,8">
+                        <TextBox Style="{StaticResource CompactInput}" MinHeight="34" Text="{Binding ItemSearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="搜索武器（中文 / English / #ID）" FontSize="12"
+                                   Foreground="{StaticResource BrushTextDisabled}" Margin="10,0,0,0"
+                                   VerticalAlignment="Center" IsHitTestVisible="False">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ItemSearchText}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <CheckBox Content="只看已配置" IsChecked="{Binding OnlyConfigured}" Margin="0,0,14,10"/>
+                </StackPanel>
+
+                <Border Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4,4,4,4">
+                    <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                             ItemContainerStyle="{StaticResource ListRow}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid>
+                                <Grid Margin="0,1">
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="42"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis"/>
-                                    <Ellipse Grid.Column="1" Width="5" Height="5" Margin="8,0,2,0"
-                                             Fill="{StaticResource BrushAccent}" VerticalAlignment="Center"
-                                             Visibility="{Binding HasCosmetic, Converter={StaticResource BoolToVis}}"/>
+                                    <Border Grid.Column="0" Width="40" Height="28" CornerRadius="5"
+                                            Background="{StaticResource BrushPlaceholder}" Margin="0,0,10,0"
+                                            Visibility="{Binding ImageUrl, Converter={StaticResource NotNullToVis}}">
+                                        <Grid>
+                                            <Image Stretch="Uniform" Margin="3"
+                                                   common:LazyImage.Url="{Binding ImageUrl}"
+                                                   common:LazyImage.PixelWidth="116"/>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding DisplayName}" FontSize="13" FontWeight="SemiBold"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Summary}" FontSize="11"
+                                                   Foreground="{StaticResource BrushTextTertiary}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Visibility="{Binding Summary, Converter={StaticResource NonEmptyToVis}}"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="2" VerticalAlignment="Center" Margin="8,0,0,0"
+                                            CornerRadius="4" Padding="6,2" Background="{StaticResource BrushAccentSoft}"
+                                            Visibility="{Binding IsCurrent, Converter={StaticResource BoolToVis}}">
+                                        <TextBlock Text="当前" FontSize="10.5" Foreground="{StaticResource BrushAccent}"/>
+                                    </Border>
+                                    <Ellipse Grid.Column="2" Width="6" Height="6" Margin="8,0,0,0"
+                                             VerticalAlignment="Center" Fill="{StaticResource BrushSuccess}"
+                                             Visibility="{Binding IsConfigured, Converter={StaticResource BoolToVis}}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                </Grid>
-            </Border>
-            <Border Grid.Column="2" Style="{StaticResource CardPanelStyle}">
-                <Grid>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  Visibility="{Binding CurrentWeaponDraft, Converter={StaticResource NullToVis}}">
-                        <StackPanel Margin="0,0,8,0">
-                            <Grid Margin="0,0,0,18">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding SelectedWeapon.Name}" FontSize="20" FontWeight="SemiBold"/>
-                                    <TextBlock Text="{Binding CurrentWeaponDraft.DefIndex, StringFormat='DefIndex {0}'}"
-                                               Foreground="{StaticResource BrushTextMuted}" FontSize="11" Margin="0,3,0,0"/>
-                                </StackPanel>
-                                <Button Grid.Column="1" Content="移除配置"
-                                        Command="{Binding RemoveWeaponCosmeticCommand}"
-                                        Style="{StaticResource DangerButtonStyle}"/>
-                            </Grid>
-                            <TextBlock Text="皮肤" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6"/>
-                            <TextBox AutomationProperties.Name="搜索皮肤"
-                                     Text="{Binding PaintSearchText, UpdateSourceTrigger=PropertyChanged}"
-                                     Margin="0,0,0,7"/>
-                            <ComboBox AutomationProperties.Name="选择皮肤"
-                                      ItemsSource="{Binding FilteredPaints}" SelectedItem="{Binding SelectedPaint}"
-                                      DisplayMemberPath="Name" MaxDropDownHeight="260" Margin="0,0,0,16"/>
-                            <TextBlock Text="磨损度" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,5"/>
-                            <Grid Margin="0,0,0,16">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="84"/>
-                                </Grid.ColumnDefinitions>
-                                <Slider AutomationProperties.Name="枪械磨损度" Minimum="0" Maximum="1"
-                                        Value="{Binding CurrentWeaponDraft.Wear, UpdateSourceTrigger=PropertyChanged}"
-                                        VerticalAlignment="Center" Margin="0,0,14,0"/>
-                                <TextBox Grid.Column="1" AutomationProperties.Name="枪械磨损度数值"
-                                         Text="{Binding CurrentWeaponDraft.Wear, Converter={StaticResource DoubleFormat}, UpdateSourceTrigger=LostFocus}"/>
-                            </Grid>
-                            <Grid Margin="0,0,0,16">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="150"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <StackPanel Grid.Column="0" Margin="0,0,12,0">
-                                    <TextBlock Text="图案模板 Seed" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,5"/>
-                                    <TextBox AutomationProperties.Name="枪械 Seed"
-                                             Text="{Binding CurrentWeaponDraft.Seed, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="名称标签" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,5"/>
-                                    <TextBox AutomationProperties.Name="枪械名称标签"
-                                             Text="{Binding CurrentWeaponDraft.NameTag, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
-                            </Grid>
-                            <CheckBox Content="启用 StatTrak" IsChecked="{Binding CurrentWeaponDraft.StatTrakEnabled}"
-                                      Margin="0,0,0,8"/>
-                            <TextBox AutomationProperties.Name="枪械 StatTrak 数值"
-                                     Text="{Binding CurrentWeaponDraft.StatTrakCount, UpdateSourceTrigger=PropertyChanged}"
-                                     Visibility="{Binding CurrentWeaponDraft.StatTrakEnabled, Converter={StaticResource BoolToVis}}"/>
-                        </StackPanel>
-                    </ScrollViewer>
-                    <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,6,0,0"
-                                Visibility="{Binding CurrentWeaponDraft, Converter={StaticResource NotNullToVis}}">
-                        <TextBlock Text="{Binding SelectedWeapon.Name}" FontSize="20" FontWeight="SemiBold"
-                                   Margin="0,0,0,7"/>
-                        <TextBlock Text="此武器尚未配置饰品" Foreground="{StaticResource BrushTextMuted}"
-                                   Margin="0,0,0,17"/>
-                        <Button Content="配置此武器" Command="{Binding AddOrConfigureWeaponCommand}"
-                                Style="{StaticResource PrimaryButtonStyle}" HorizontalAlignment="Left"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-        </Grid>
+                </Border>
+            </DockPanel>
 
-        <Grid Grid.Row="2" Visibility="{Binding IsKnifeTab, Converter={StaticResource BoolToVis}}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
-                <ColumnDefinition Width="12"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" Style="{StaticResource CardPanelStyle}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="已配置的刀具" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
-                    <ListBox Grid.Row="1" AutomationProperties.Name="刀具列表"
-                             ItemsSource="{Binding ConfiguredKnives}" SelectedItem="{Binding SelectedKnifePreset}"
-                             SelectionChanged="OnKnifeSelectionChanged"
-                             IsVisibleChanged="OnKnifeListVisibleChanged">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                <Setter Property="AutomationProperties.Name" Value="{Binding KnifeName}"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding KnifeName}"/>
-                                    <TextBlock Text="{Binding PaintName}" Foreground="{StaticResource BrushTextMuted}"
-                                               FontSize="11" Margin="0,3,0,0"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                    <StackPanel Grid.Row="2" Margin="0,14,0,0">
-                        <TextBlock Text="添加刀具" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6"/>
-                        <ComboBox AutomationProperties.Name="添加刀具型号"
-                                  ItemsSource="{Binding AvailableCatalogKnives}" SelectedItem="{Binding KnifeToAdd}"
-                                  DisplayMemberPath="Name" Margin="0,0,0,8"/>
-                        <Button Content="添加" Command="{Binding AddKnifePresetCommand}" HorizontalAlignment="Left"/>
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <Border Grid.Column="2" Style="{StaticResource CardPanelStyle}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              Visibility="{Binding SelectedKnifePreset, Converter={StaticResource NullToVis}}">
-                    <StackPanel Margin="0,0,8,0">
-                        <TextBlock Text="{Binding SelectedKnifePreset.KnifeName}" FontSize="20"
-                                   FontWeight="SemiBold" Margin="0,0,0,4"/>
-                        <TextBlock Text="当前刀具" Foreground="{StaticResource BrushGreen}" FontSize="12"
-                                   Visibility="{Binding IsSelectedKnifeCurrent, Converter={StaticResource BoolToVis}}"
-                                   Margin="0,0,0,10"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
-                            <Button Content="设为当前" Command="{Binding SetCurrentKnifeCommand}" Margin="0,0,9,0"/>
-                            <Button Content="删除预设" Command="{Binding DeleteKnifePresetCommand}"
-                                    Style="{StaticResource DangerButtonStyle}"/>
-                        </StackPanel>
-                        <TextBlock Text="皮肤" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6"/>
-                        <TextBox AutomationProperties.Name="搜索刀具皮肤"
-                                 Text="{Binding KnifePaintSearchText, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="0,0,0,7"/>
-                        <ComboBox AutomationProperties.Name="选择刀具皮肤"
-                                  ItemsSource="{Binding FilteredKnifePaints}" SelectedItem="{Binding SelectedKnifePaint}"
-                                  DisplayMemberPath="Name" MaxDropDownHeight="260" Margin="0,0,0,16"/>
-                        <TextBlock Text="磨损度" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,5"/>
-                        <Grid Margin="0,0,0,16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="84"/>
-                            </Grid.ColumnDefinitions>
-                            <Slider AutomationProperties.Name="刀具磨损度" Minimum="0" Maximum="1"
-                                    Value="{Binding SelectedKnifePreset.Wear, UpdateSourceTrigger=PropertyChanged}"
-                                    VerticalAlignment="Center" Margin="0,0,14,0"/>
-                            <TextBox Grid.Column="1" AutomationProperties.Name="刀具磨损度数值"
-                                     Text="{Binding SelectedKnifePreset.Wear, Converter={StaticResource DoubleFormat}, UpdateSourceTrigger=LostFocus}"/>
-                        </Grid>
-                        <Grid Margin="0,0,0,16">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" Margin="0,0,12,0">
-                                <TextBlock Text="图案模板 Seed" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,5"/>
-                                <TextBox AutomationProperties.Name="刀具 Seed"
-                                         Text="{Binding SelectedKnifePreset.Seed, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="名称标签" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,5"/>
-                                <TextBox AutomationProperties.Name="刀具名称标签"
-                                         Text="{Binding SelectedKnifePreset.NameTag, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-                        </Grid>
-                        <CheckBox Content="启用 StatTrak" IsChecked="{Binding SelectedKnifePreset.StatTrakEnabled}"
-                                  Margin="0,0,0,8"/>
-                        <TextBox AutomationProperties.Name="刀具 StatTrak 数值"
-                                 Text="{Binding SelectedKnifePreset.StatTrakCount, UpdateSourceTrigger=PropertyChanged}"
-                                 Visibility="{Binding SelectedKnifePreset.StatTrakEnabled, Converter={StaticResource BoolToVis}}"/>
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
-        </Grid>
-
-        <Border Grid.Row="2" Style="{StaticResource CardPanelStyle}"
-                MaxWidth="800" HorizontalAlignment="Center"
-                Visibility="{Binding IsGlovesTab, Converter={StaticResource BoolToVis}}">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <StackPanel Width="560" HorizontalAlignment="Center" Margin="0,0,8,0">
-                    <TextBlock Text="手套" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,18"/>
-                    <CheckBox Content="为当前阵营启用手套" IsChecked="{Binding CurrentGloves.Enabled}"
-                              Margin="0,0,0,22"/>
-                    <TextBlock Text="手套型号" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6"/>
-                    <ComboBox AutomationProperties.Name="选择手套型号"
-                              ItemsSource="{Binding AvailableGloves}" SelectedItem="{Binding SelectedGloveDef}"
-                              DisplayMemberPath="Name" Margin="0,0,0,18"/>
-                    <TextBlock Text="皮肤" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6"/>
-                    <ComboBox AutomationProperties.Name="选择手套皮肤"
-                              ItemsSource="{Binding AvailableGlovePaints}" SelectedItem="{Binding SelectedGlovePaint}"
-                              DisplayMemberPath="Name" Margin="0,0,0,18"/>
-                    <TextBlock Text="磨损度" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6"/>
-                    <Grid Margin="0,0,0,18">
+            <!-- finish grid -->
+            <DockPanel Grid.Column="1" LastChildFill="True" x:Name="SkinHost">
+                <StackPanel DockPanel.Dock="Top" Margin="18,0,14,10">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="84"/>
+                            <ColumnDefinition Width="220"/>
                         </Grid.ColumnDefinitions>
-                        <Slider AutomationProperties.Name="手套磨损度" Minimum="0" Maximum="1"
-                                Value="{Binding CurrentGloves.Wear, UpdateSourceTrigger=PropertyChanged}"
-                                VerticalAlignment="Center" Margin="0,0,14,0"/>
-                        <TextBox Grid.Column="1" AutomationProperties.Name="手套磨损度数值"
-                                 Text="{Binding CurrentGloves.Wear, Converter={StaticResource DoubleFormat}, UpdateSourceTrigger=LostFocus}"/>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="{Binding DetailWeaponName}" Style="{StaticResource SectionTitle}"
+                                       TextTrimming="CharacterEllipsis"/>
+                            <TextBlock Text="{Binding DetailWeaponSecondaryName}" Style="{StaticResource HintText}"
+                                       Margin="0,2,0,0"
+                                       Visibility="{Binding DetailWeaponSecondaryName, Converter={StaticResource NonEmptyToVis}}"/>
+                        </StackPanel>
+                        <Grid Grid.Column="1">
+                            <TextBox Style="{StaticResource CompactInput}" MinHeight="34"
+                                     Text="{Binding SkinSearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Text="搜索皮肤" FontSize="12" Margin="10,0,0,0"
+                                       Foreground="{StaticResource BrushTextDisabled}"
+                                       VerticalAlignment="Center" IsHitTestVisible="False">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SkinSearchText}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Grid>
                     </Grid>
-                    <TextBlock Text="图案模板 Seed" Foreground="{StaticResource BrushTextSecondary}" Margin="0,0,0,6"/>
-                    <TextBox AutomationProperties.Name="手套 Seed" Width="170" HorizontalAlignment="Left"
-                             Text="{Binding CurrentGloves.Seed, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <TextBlock DockPanel.Dock="Bottom" Text="{Binding SkinsHintText}" Style="{StaticResource HintText}"
+                           Margin="18,10,14,0"/>
+
+                <Grid Margin="18,0,6,0">
+                    <Border Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4">
+                        <ListBox x:Name="SkinRowList" ItemsSource="{Binding SkinRows}"
+                                 Background="Transparent" BorderThickness="0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 SelectionMode="Extended">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Margin" Value="0"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <ContentPresenter/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding Cards}"
+                                                  ItemTemplate="{StaticResource CardTemplate}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="{Binding DataContext.ColumnCount, RelativeSource={RelativeSource AncestorType=ListBox}}"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                    <TextBlock Text="{Binding GridPlaceholderText}" Style="{StaticResource HintText}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </DockPanel>
+
+            <Border Grid.Column="2" Style="{StaticResource VerticalDivider}"/>
+
+            <!-- editing detail -->
+            <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="0,0,0,16">
+                    <Border Height="168" CornerRadius="10" Background="{StaticResource BrushPlaceholder}">
+                        <Grid>
+                            <Image x:Name="DetailArt" Margin="12" Stretch="Uniform"
+                                   common:LazyImage.Url="{Binding DetailImageUrl}"
+                                   common:LazyImage.PixelWidth="512"/>
+                            <TextBlock Text="选择皮肤后显示预览" FontSize="11.5"
+                                       Foreground="{StaticResource BrushTextDisabled}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding Source, ElementName=DetailArt, Converter={StaticResource NullToVis}}"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Height="4" CornerRadius="2" Margin="0,8,0,0"
+                            Background="{Binding DetailRarityBrush, FallbackValue={StaticResource BrushBorderSubtle}}"/>
+
+                    <TextBlock Text="{Binding DetailPaintName}" Style="{StaticResource SectionTitle}"
+                               Margin="0,14,0,0" TextWrapping="Wrap"/>
+                    <TextBlock Text="{Binding DetailPaintSecondary}" Style="{StaticResource MutedText}"
+                               FontSize="12" Margin="0,2,0,0"
+                               Visibility="{Binding DetailPaintSecondary, Converter={StaticResource NonEmptyToVis}}"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="{Binding DetailPaintIndex}" Style="{StaticResource MonoText}" Margin="0,0,12,0"/>
+                        <TextBlock Text="{Binding DetailRarityLabel}" Style="{StaticResource HintText}" Margin="0,1,0,0"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding DetailFloatRange}" Style="{StaticResource HintText}" Margin="0,3,0,0"
+                               Visibility="{Binding DetailFloatRange, Converter={StaticResource NonEmptyToVis}}"/>
+
+                    <Border Style="{StaticResource Divider}"/>
+
+                    <StackPanel Visibility="{Binding IsEntryConfigured, Converter={StaticResource BoolToVis}}">
+                        <Grid>
+                            <TextBlock Text="磨损度" Style="{StaticResource MutedText}" HorizontalAlignment="Left"/>
+                            <TextBlock HorizontalAlignment="Right">
+                                <Run Text="{Binding WearBucketText, Mode=OneWay}" Foreground="{StaticResource BrushTextPrimary}"/>
+                                <Run Text="  "/>
+                                <Run Text="{Binding WearValueText, Mode=OneWay}" Foreground="{StaticResource BrushTextSecondary}"
+                                     FontFamily="{StaticResource FontMono}"/>
+                            </TextBlock>
+                        </Grid>
+                        <Slider Style="{StaticResource WearSlider}" Margin="0,8,0,2"
+                                Value="{Binding DetailEntry.Wear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="{Binding WearBucketRange}" Style="{StaticResource HintText}"
+                                   HorizontalAlignment="Right"/>
+
+                        <Grid Margin="0,16,0,0">
+                            <TextBlock Text="磨损编号 (Seed)" Style="{StaticResource MutedText}"
+                                       HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBox Style="{StaticResource CompactInput}" Width="96" HorizontalAlignment="Right"
+                                     Text="{Binding DetailEntry.Seed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+
+                        <StackPanel Visibility="{Binding EntrySupportsDetails, Converter={StaticResource BoolToVis}}">
+                            <Grid Margin="0,14,0,0">
+                                <TextBlock Text="StatTrak™" Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <CheckBox Style="{StaticResource Switch}" HorizontalAlignment="Right"
+                                          IsChecked="{Binding DetailEntry.StatTrakEnabled, Mode=TwoWay}"/>
+                            </Grid>
+                            <Grid Margin="0,12,0,0"
+                                  Visibility="{Binding DetailEntry.StatTrakEnabled, Converter={StaticResource BoolToVis}}">
+                                <TextBlock Text="击杀数" Style="{StaticResource MutedText}"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBox Style="{StaticResource CompactInput}" Width="96" HorizontalAlignment="Right"
+                                         Text="{Binding DetailEntry.StatTrakCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                            <TextBlock Text="名称标签" Style="{StaticResource MutedText}" Margin="0,14,0,4"/>
+                            <TextBox Style="{StaticResource {x:Type TextBox}}"
+                                     Text="{Binding DetailEntry.NameTag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     ToolTip="改名标签需要游戏内改名卡支持，此字段仅写入预设。"/>
+                        </StackPanel>
+
+                        <Border Background="{StaticResource BrushBgSurface}" CornerRadius="9" Padding="12,10" Margin="0,18,0,0"
+                                Visibility="{Binding EntrySupportsDetails, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Style="{StaticResource HintText}"
+                                       Text="磨损、磨损编号与 StatTrak 只影响外观表现，不会改变武器本身。"/>
+                        </Border>
+
+                        <Button Content="移除此皮肤" Style="{StaticResource DangerButton}"
+                                HorizontalAlignment="Stretch" Margin="0,14,0,0"
+                                Command="{Binding RemoveCosmeticCommand}"/>
+                    </StackPanel>
+
+                    <Button Content="设为当前刀" Style="{StaticResource PrimaryButton}"
+                            HorizontalAlignment="Stretch" Margin="0,16,0,0"
+                            Visibility="{Binding IsKnivesSection, Converter={StaticResource BoolToVis}}"
+                            Command="{Binding SetCurrentKnifeCommand}"/>
+
+                    <Border Background="{StaticResource BrushBgSurface}" CornerRadius="9" Padding="13,11" Margin="0,16,0,0"
+                            Visibility="{Binding IsGlovesDisabledNotice, Converter={StaticResource BoolToVis}}">
+                        <StackPanel>
+                            <TextBlock Text="手套当前未启用" Style="{StaticResource MutedText}"/>
+                            <TextBlock Style="{StaticResource HintText}" Margin="0,4,0,0"
+                                       Text="启用后可选择型号与外观；停用会保留已保存的型号与皮肤。"/>
+                            <Button Content="启用手套" Style="{StaticResource PrimaryButton}" Margin="0,10,0,0"
+                                    Command="{Binding EnableGlovesCommand}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <StackPanel Visibility="{Binding IsEntryConfigured, Converter={StaticResource InvBoolToVis}}">
+                        <Border Background="{StaticResource BrushBgSurface}" CornerRadius="9" Padding="13,11" Margin="0,16,0,0">
+                            <TextBlock Style="{StaticResource HintText}"
+                                       Text="该武器尚未配置皮肤。在左侧点选一张卡片即可应用外观并进入编辑。"/>
+                        </Border>
+                    </StackPanel>
                 </StackPanel>
             </ScrollViewer>
-        </Border>
+        </Grid>
 
-        <Border Grid.Row="2" Style="{StaticResource CardPanelStyle}"
-                MaxWidth="800" HorizontalAlignment="Center"
-                Visibility="{Binding IsMusicKitTab, Converter={StaticResource BoolToVis}}">
-            <Grid Width="680" HorizontalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="音乐盒" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,5"/>
-                <TextBlock Grid.Row="1" Text="全局设置，不区分 CT / T"
-                           Foreground="{StaticResource BrushTextMuted}" Margin="0,0,0,18"/>
-                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,16">
-                    <TextBlock Text="当前选择  " Foreground="{StaticResource BrushTextMuted}"/>
-                    <TextBlock Text="{Binding SelectedMusicKit.Name, TargetNullValue=未选择音乐盒}"/>
-                </StackPanel>
-                <Grid Grid.Row="3" Margin="0,0,0,12">
+        <!-- music kits: global, so the browser columns collapse into one grid plus detail -->
+        <Grid Grid.Row="2" Visibility="{Binding IsMusicKitSection, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="26"/>
+                <ColumnDefinition Width="312"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel Grid.Column="0" LastChildFill="True" x:Name="MusicHost">
+                <Grid DockPanel.Dock="Top" Margin="0,0,14,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="260"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox AutomationProperties.Name="搜索音乐盒"
-                             Text="{Binding MusicKitSearchText, UpdateSourceTrigger=PropertyChanged}"
-                             Margin="0,0,10,0"/>
-                    <Button Grid.Column="1" Content="清除选择" Command="{Binding ClearMusicKitCommand}"/>
+                    <TextBlock Text="点击卡片选择全局音乐盒，双方共用同一首。" Style="{StaticResource HintText}"
+                               VerticalAlignment="Center"/>
+                    <Grid Grid.Column="1">
+                        <TextBox Style="{StaticResource CompactInput}" MinHeight="34"
+                                 Text="{Binding MusicKitSearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="搜索音乐盒（中文 / English / #ID）" FontSize="12" Margin="10,0,0,0"
+                                   Foreground="{StaticResource BrushTextDisabled}"
+                                   VerticalAlignment="Center" IsHitTestVisible="False">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding MusicKitSearchText}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
                 </Grid>
-                <ListBox Grid.Row="4" AutomationProperties.Name="音乐盒列表"
-                         ItemsSource="{Binding FilteredMusicKits}" SelectedItem="{Binding SelectedMusicKit}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                            <Setter Property="AutomationProperties.Name" Value="{Binding Name}"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
-        </Border>
+
+                <Grid>
+                    <Border Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4">
+                        <ListBox ItemsSource="{Binding MusicKitRows}"
+                                 Background="Transparent" BorderThickness="0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 SelectionMode="Extended">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="Focusable" Value="False"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <ContentPresenter/>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding Cards}"
+                                                  ItemTemplate="{StaticResource MusicCardTemplate}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <UniformGrid Columns="{Binding DataContext.ColumnCount, RelativeSource={RelativeSource AncestorType=ListBox}}"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                    <TextBlock Text="{Binding GridPlaceholderText}" Style="{StaticResource HintText}"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </DockPanel>
+
+            <Border Grid.Column="1" Style="{StaticResource VerticalDivider}"/>
+
+            <StackPanel Grid.Column="2">
+                <Border Height="168" CornerRadius="10" Background="{StaticResource BrushPlaceholder}">
+                    <Grid>
+                        <Image x:Name="MusicDetailArt" Margin="12" Stretch="Uniform"
+                               common:LazyImage.Url="{Binding MusicKitImageUrl}"
+                               common:LazyImage.PixelWidth="512"/>
+                        <TextBlock Text="未选择音乐盒" FontSize="11.5"
+                                   Foreground="{StaticResource BrushTextDisabled}"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Visibility="{Binding Source, ElementName=MusicDetailArt, Converter={StaticResource NullToVis}}"/>
+                    </Grid>
+                </Border>
+                <TextBlock Text="{Binding MusicKitName}" Style="{StaticResource SectionTitle}"
+                           Margin="0,14,0,0" TextWrapping="Wrap"/>
+                <TextBlock Text="{Binding MusicKitSecondaryName}" Style="{StaticResource MutedText}"
+                           FontSize="12" Margin="0,2,0,0"
+                           Visibility="{Binding MusicKitSecondaryName, Converter={StaticResource NonEmptyToVis}}"/>
+                <TextBlock Text="{Binding MusicKitIdText}" Style="{StaticResource MonoText}" Margin="0,8,0,0"
+                           Visibility="{Binding MusicKitIdText, Converter={StaticResource NonEmptyToVis}}"/>
+
+                <Border Background="{StaticResource BrushBgSurface}" CornerRadius="9" Padding="13,11" Margin="0,16,0,0"
+                        Visibility="{Binding IsMusicKitConfigured, Converter={StaticResource InvBoolToVis}}">
+                    <TextBlock Style="{StaticResource HintText}"
+                               Text="音乐盒是全局设置，不属于 CT 或 T；未选择时游戏使用默认音乐。"/>
+                </Border>
+
+                <Button Content="清除音乐盒" Style="{StaticResource DangerButton}" HorizontalAlignment="Stretch"
+                        Margin="0,14,0,0" Command="{Binding ClearMusicKitCommand}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

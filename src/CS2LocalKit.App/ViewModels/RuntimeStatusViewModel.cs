@@ -1,5 +1,6 @@
 using CS2LocalKit.App.Common;
 using CS2LocalKit.App.Services;
+using CS2LocalKit.Core.Catalog;
 using CS2LocalKit.Core.Runtime;
 
 namespace CS2LocalKit.App.ViewModels;
@@ -88,6 +89,40 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public RelayCommand RefreshCommand { get; }
     public RelayCommand RestoreLatestCommand { get; }
 
+    /// <summary>Local catalog snapshot state. Data preparation lives here, not in the game tree.</summary>
+    public string CatalogCommit => CatalogSnapshot.PinnedCommit;
+    public string CatalogCacheRoot => _manager.Services.CatalogCacheRoot;
+    public string CatalogLocales
+    {
+        get
+        {
+            var catalog = _manager.Catalog;
+            return catalog is null ? "不可用" : string.Join(" + ", catalog.LocalesLoaded);
+        }
+    }
+    public bool CatalogAvailable => _manager.Catalog is not null;
+    public string CatalogCounts
+    {
+        get
+        {
+            var c = _manager.Catalog;
+            return c is null ? _manager.Services.CatalogError ?? "清单不可用，保存与应用会被阻断"
+                : $"{c.WeaponCount} 个武器 · {c.PaintCount} 个皮肤（{c.LocalizedPaintCount} 个含中文名）· {c.MusicKitCount} 个音乐盒";
+        }
+    }
+    public string MusicKitCatalogState => _manager.Catalog is null ? "未载入" : $"{_manager.Catalog.MusicKitCount} 条";
+    public string ChineseCoverage
+    {
+        get
+        {
+            var c = _manager.Catalog;
+            if (c is null || c.PaintCount == 0) return "—";
+            return $"{(double)c.LocalizedPaintCount / c.PaintCount:P0}";
+        }
+    }
+    public string ImageCacheRoot => _manager.Services.Images.CacheRoot;
+    public string ImageCacheState => $"{_manager.Services.Images.CachedImageCount} 张已缓存";
+
     public RuntimeStatusViewModel(PresetManagerService manager)
     {
         _manager = manager;
@@ -98,6 +133,9 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         _manager.StatusRefreshed += (s, e) => RefreshProperties();
         _manager.WorkingPresetChanged += (s, e) => RefreshProperties();
     }
+
+    /// <summary>Called after an explicit catalog preparation so the data section refreshes.</summary>
+    public void RefreshAfterCatalogChange() => RefreshProperties();
 
     private void ExecuteRefresh()
     {
@@ -148,6 +186,13 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         OnPropertyChanged(nameof(BlockedByCs2Running));
         OnPropertyChanged(nameof(RollbackCanExecute));
         OnPropertyChanged(nameof(RollbackReason));
+        OnPropertyChanged(nameof(CatalogAvailable));
+        OnPropertyChanged(nameof(CatalogLocales));
+        OnPropertyChanged(nameof(CatalogCounts));
+        OnPropertyChanged(nameof(MusicKitCatalogState));
+        OnPropertyChanged(nameof(ChineseCoverage));
+        OnPropertyChanged(nameof(ImageCacheState));
+        OnPropertyChanged(nameof(ImageCacheRoot));
 
         RestoreLatestCommand.RaiseCanExecuteChanged();
     }

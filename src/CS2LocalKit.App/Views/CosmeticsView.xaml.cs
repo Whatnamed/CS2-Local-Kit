@@ -1,50 +1,39 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Threading;
 using CS2LocalKit.App.ViewModels;
 
 namespace CS2LocalKit.App.Views;
 
 public partial class CosmeticsView : UserControl
 {
+    /// <summary>Card margins in the CardToggle style, added to the target card width.</summary>
+    private const double CardGutter = 10;
+
     public CosmeticsView()
     {
         InitializeComponent();
+        SizeChanged += (_, _) => UpdateColumnCount();
+        IsVisibleChanged += (_, e) =>
+        {
+            if (e.NewValue is true) UpdateColumnCount();
+        };
     }
 
-    private void OnWeaponsTabClick(object sender, RoutedEventArgs e)
+    /// <summary>
+    /// The grid virtualizes rows, so the number of cards per row comes from the width the grid
+    /// actually has. Recomputed on resize and when the section changes.
+    /// </summary>
+    private void UpdateColumnCount()
     {
-        if (DataContext is CosmeticsViewModel vm) vm.CurrentSubTab = CosmeticsSubTab.Weapons;
-    }
+        if (DataContext is not CosmeticsViewModel vm) return;
+        var host = vm.IsMusicKitSection ? MusicHost : SkinHost;
+        if (host is null) return;
 
-    private void OnKnifeTabClick(object sender, RoutedEventArgs e)
-    {
-        if (DataContext is CosmeticsViewModel vm) vm.CurrentSubTab = CosmeticsSubTab.Knife;
-    }
+        var available = host.ActualWidth - CardGutter;
+        if (available <= 0) return;
 
-    private void OnGlovesTabClick(object sender, RoutedEventArgs e)
-    {
-        if (DataContext is CosmeticsViewModel vm) vm.CurrentSubTab = CosmeticsSubTab.Gloves;
-    }
-
-    private void OnMusicKitTabClick(object sender, RoutedEventArgs e)
-    {
-        if (DataContext is CosmeticsViewModel vm) vm.CurrentSubTab = CosmeticsSubTab.MusicKit;
-    }
-
-    private void OnKnifeSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (sender is ListBox list) ScrollSelectedKnifeIntoView(list);
-    }
-
-    private void OnKnifeListVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-    {
-        if (e.NewValue is true && sender is ListBox list) ScrollSelectedKnifeIntoView(list);
-    }
-
-    private static void ScrollSelectedKnifeIntoView(ListBox list)
-    {
-        if (list.SelectedItem is null || !list.IsVisible) return;
-        list.Dispatcher.BeginInvoke(() => list.ScrollIntoView(list.SelectedItem), DispatcherPriority.Loaded);
+        var cell = vm.SkinCardWidth + CardGutter;
+        var columns = Math.Clamp((int)(available / cell), 1, 12);
+        if (vm.ColumnCount != columns) vm.ColumnCount = columns;
     }
 }

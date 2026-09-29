@@ -93,6 +93,7 @@ public sealed class PresetsViewModel : ViewModelBase
         Presets.Clear();
         var active = _manager.ActivePresetName;
         var working = _manager.WorkingPresetName;
+        var installed = System.IO.Path.GetFileName(_manager.LatestAppliedPresetName ?? "");
 
         try
         {
@@ -101,7 +102,9 @@ public sealed class PresetsViewModel : ViewModelBase
             {
                 bool isActive = string.Equals(name, active, StringComparison.OrdinalIgnoreCase);
                 bool isWorking = string.Equals(name, working, StringComparison.OrdinalIgnoreCase);
-                Presets.Add(new PresetItemViewModel(name, isActive, isWorking));
+                bool isInstalled = !string.IsNullOrEmpty(installed)
+                    && string.Equals(name, installed, StringComparison.OrdinalIgnoreCase);
+                Presets.Add(new PresetItemViewModel(name, isActive, isWorking, isInstalled));
             }
 
             if (SelectedPreset != null)
@@ -284,6 +287,9 @@ public sealed class PresetItemViewModel : ViewModelBase
 
     public string Name { get; }
 
+    /// <summary>Preset files are stored as &lt;name&gt;.v1.json; the list shows the readable part.</summary>
+    public string FriendlyName => HeaderViewModel.Friendly(Name);
+
     public bool IsActive
     {
         get => _isActive;
@@ -296,10 +302,28 @@ public sealed class PresetItemViewModel : ViewModelBase
         set => SetProperty(ref _isWorking, value);
     }
 
-    public PresetItemViewModel(string name, bool isActive, bool isWorking)
+    /// <summary>This preset is what the game fixture currently carries (last successful apply).</summary>
+    public bool IsInstalled { get; }
+
+    public bool HasMarker => IsActive || IsWorking || IsInstalled;
+
+    public string StateText
+    {
+        get
+        {
+            var parts = new List<string>();
+            if (IsWorking) parts.Add("正在编辑");
+            if (IsActive) parts.Add("游戏内当前");
+            if (IsInstalled) parts.Add("已应用到 CS2");
+            return parts.Count == 0 ? "未使用" : string.Join(" · ", parts);
+        }
+    }
+
+    public PresetItemViewModel(string name, bool isActive, bool isWorking, bool isInstalled = false)
     {
         Name = name;
         _isActive = isActive;
         _isWorking = isWorking;
+        IsInstalled = isInstalled;
     }
 }

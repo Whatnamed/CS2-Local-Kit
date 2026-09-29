@@ -1,0 +1,101 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:common="clr-namespace:CS2LocalKit.App.Common">
+
+    <!-- ============================================================
+         Design tokens. One neutral dark surface ramp, one accent, and
+         semantic colors reserved for real meaning (dirty / blocked /
+         destructive). Rarity colors come from catalog data and are the
+         only place where decorative color is allowed.
+         ============================================================ -->
+
+    <common:BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    <common:BooleanToVisibilityConverter x:Key="InvBoolToVis" Invert="True"/>
+    <common:InverseBooleanConverter x:Key="InvBool"/>
+    <!-- NullToVis: visible while the value is null. NotNullToVis: visible while it is not. -->
+    <common:NullToVisibilityConverter x:Key="NullToVis" Invert="True"/>
+    <common:NullToVisibilityConverter x:Key="NotNullToVis"/>
+    <common:NonEmptyToVisibilityConverter x:Key="NonEmptyToVis"/>
+    <common:EmptyToVisibilityConverter x:Key="EmptyToVis"/>
+    <common:EqualityToVisibilityConverter x:Key="EqToVis"/>
+    <common:TrueFalseTextConverter x:Key="TrueFalseText"/>
+    <common:HexToBrushConverter x:Key="HexToBrush"/>
+    <common:HealthLevelToBrushConverter x:Key="HealthBrush"/>
+    <common:HealthLevelToBadgeTextConverter x:Key="HealthBadge"/>
+    <common:DoubleFormatConverter x:Key="DoubleFormat"/>
+
+    <!-- surfaces -->
+    <Color x:Key="ColorBgWindow">#FF101215</Color>
+    <Color x:Key="ColorBgRail">#FF0C0E11</Color>
+    <Color x:Key="ColorBgSurface">#FF16181D</Color>
+    <Color x:Key="ColorBgRaised">#FF1B1E24</Color>
+    <Color x:Key="ColorBgHover">#FF22262E</Color>
+    <Color x:Key="ColorBgPressed">#FF2A2F38</Color>
+    <Color x:Key="ColorBgSelected">#FF223045</Color>
+    <Color x:Key="ColorBorderSubtle">#FF262A32</Color>
+    <Color x:Key="ColorBorderStrong">#FF363D49</Color>
+
+    <SolidColorBrush x:Key="BrushBgWindow" Color="{StaticResource ColorBgWindow}"/>
+    <SolidColorBrush x:Key="BrushBgRail" Color="{StaticResource ColorBgRail}"/>
+    <SolidColorBrush x:Key="BrushBgSurface" Color="{StaticResource ColorBgSurface}"/>
+    <SolidColorBrush x:Key="BrushBgRaised" Color="{StaticResource ColorBgRaised}"/>
+    <SolidColorBrush x:Key="BrushBgHover" Color="{StaticResource ColorBgHover}"/>
+    <SolidColorBrush x:Key="BrushBgPressed" Color="{StaticResource ColorBgPressed}"/>
+    <SolidColorBrush x:Key="BrushBgSelected" Color="{StaticResource ColorBgSelected}"/>
+    <SolidColorBrush x:Key="BrushBorderSubtle" Color="{StaticResource ColorBorderSubtle}"/>
+    <SolidColorBrush x:Key="BrushBorderStrong" Color="{StaticResource ColorBorderStrong}"/>
+
+    <!-- text -->
+    <SolidColorBrush x:Key="BrushTextPrimary" Color="#FFEEF1F5"/>
+    <SolidColorBrush x:Key="BrushTextSecondary" Color="#FFA5AEBB"/>
+    <SolidColorBrush x:Key="BrushTextTertiary" Color="#FF727B8B"/>
+    <SolidColorBrush x:Key="BrushTextDisabled" Color="#FF59616E"/>
+    <SolidColorBrush x:Key="BrushTextOnAccent" Color="#FFFFFFFF"/>
+
+    <!-- accent + semantics -->
+    <SolidColorBrush x:Key="BrushAccent" Color="#FF4F8CFF"/>
+    <SolidColorBrush x:Key="BrushAccentHover" Color="#FF6AA1FF"/>
+    <SolidColorBrush x:Key="BrushAccentPressed" Color="#FF3E71DC"/>
+    <SolidColorBrush x:Key="BrushAccentSoft" Color="#1F4F8CFF"/>
+    <SolidColorBrush x:Key="BrushAccentBorder" Color="#664F8CFF"/>
+    <SolidColorBrush x:Key="BrushSuccess" Color="#FF3FB27F"/>
+    <SolidColorBrush x:Key="BrushWarning" Color="#FFD9A24B"/>
+    <SolidColorBrush x:Key="BrushDanger" Color="#FFE15555"/>
+    <SolidColorBrush x:Key="BrushDangerSoft" Color="#1FE15555"/>
+
+    <!-- placeholder used while art is missing, loading, or unavailable -->
+    <LinearGradientBrush x:Key="BrushPlaceholder" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FF1E2229" Offset="0"/>
+        <GradientStop Color="#FF171A20" Offset="1"/>
+    </LinearGradientBrush>
+
+    <!-- type -->
+    <FontFamily x:Key="FontUi">Segoe UI Variable Text, Segoe UI, Microsoft YaHei UI</FontFamily>
+    <FontFamily x:Key="FontDisplay">Segoe UI Variable Display, Segoe UI, Microsoft YaHei UI</FontFamily>
+    <FontFamily x:Key="FontMono">Cascadia Mono, Consolas</FontFamily>
+
+    <sys:Double x:Key="SizeCaption" xmlns:sys="clr-namespace:System;assembly=mscorlib">11.5</sys:Double>
+    <sys:Double x:Key="SizeBody" xmlns:sys="clr-namespace:System;assembly=mscorlib">13</sys:Double>
+    <sys:Double x:Key="SizeSubtitle" xmlns:sys="clr-namespace:System;assembly=mscorlib">14</sys:Double>
+    <sys:Double x:Key="SizeTitle" xmlns:sys="clr-namespace:System;assembly=mscorlib">16.5</sys:Double>
+    <sys:Double x:Key="SizeDisplay" xmlns:sys="clr-namespace:System;assembly=mscorlib">22</sys:Double>
+
+    <!-- spacing scale -->
+    <Thickness x:Key="Gap2">2</Thickness>
+    <Thickness x:Key="Gap4">4</Thickness>
+    <Thickness x:Key="Gap8">8</Thickness>
+    <Thickness x:Key="Gap12">12</Thickness>
+    <Thickness x:Key="Gap16">16</Thickness>
+    <Thickness x:Key="Gap20">20</Thickness>
+    <Thickness x:Key="Gap24">24</Thickness>
+    <Thickness x:Key="Gap32">32</Thickness>
+    <Thickness x:Key="PadPage">28,20,28,20</Thickness>
+    <Thickness x:Key="PadRow">12,9</Thickness>
+    <Thickness x:Key="PadControl">11,7</Thickness>
+
+    <CornerRadius x:Key="RadiusControl">6</CornerRadius>
+    <CornerRadius x:Key="RadiusCard">9</CornerRadius>
+    <CornerRadius x:Key="RadiusPanel">13</CornerRadius>
+
+</ResourceDictionary>

@@ -1,11 +1,33 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using CS2LocalKit.App.Catalog;
 using CS2LocalKit.App.Common;
 using CS2LocalKit.Core.Catalog;
 using CS2LocalKit.Core.HumanPresets;
 
 namespace CS2LocalKit.App.Services;
+
+/// <summary>
+/// The editing surface shared by the weapon, knife and glove entries. Only the fields the
+/// Cosmetics editor binds to appear here; the canonical shape stays in HumanPreset.
+/// </summary>
+public interface ICosmeticEntry : INotifyPropertyChanged
+{
+    int DefIndex { get; set; }
+    int Paint { get; set; }
+    string PaintName { get; set; }
+    double Wear { get; set; }
+    int Seed { get; set; }
+}
+
+/// <summary>Entries that also carry a name tag and a StatTrak counter (weapons and knives).</summary>
+public interface IDetailedEntry : ICosmeticEntry
+{
+    string NameTag { get; set; }
+    bool StatTrakEnabled { get; set; }
+    int StatTrakCount { get; set; }
+}
 
 public sealed class PresetDraft : ViewModelBase
 {
@@ -92,9 +114,9 @@ public sealed class PresetDraft : ViewModelBase
         {
             draft.WorkingPresetName = presetName;
             draft.MusicKitId = preset.MusicKitId;
-            if (preset.MusicKitId is { } mid && catalog is not null && catalog.TryGetMusicKit(mid, out var mName))
+            if (preset.MusicKitId is { } mid && catalog is not null && catalog.TryGetMusic(mid, out var kit))
             {
-                draft.MusicKitName = mName;
+                draft.MusicKitName = CatalogDisplay.Primary(kit.ChineseName, kit.Name);
             }
 
             draft.Ct.LoadFrom(preset.Ct, catalog);
@@ -156,8 +178,8 @@ public sealed class TeamDraft : ViewModelBase
             string paintName = $"Paint #{w.Preset.Paint}";
             if (catalog is not null && catalog.TryGetWeapon(w.DefIndex, out var def))
             {
-                weaponName = def.Name;
-                if (def.Paints.TryGetValue(w.Preset.Paint, out var pn)) paintName = pn;
+                weaponName = CatalogDisplay.Primary(def.ChineseName, def.Name);
+                if (def.Paints.TryGetValue(w.Preset.Paint, out var pn)) paintName = CatalogDisplay.FinishPrimary(pn);
             }
 
             Weapons.Add(new WeaponCosmeticDraft
@@ -205,7 +227,7 @@ public sealed class TeamDraft : ViewModelBase
     }
 }
 
-public sealed class WeaponCosmeticDraft : ViewModelBase
+public sealed class WeaponCosmeticDraft : ViewModelBase, ICosmeticEntry, IDetailedEntry
 {
     private int _defIndex;
     private string _weaponName = "";
@@ -333,8 +355,8 @@ public sealed class KnifeSectionDraft : ViewModelBase
             string paintName = $"Paint #{k.Preset.Paint}";
             if (catalog is not null && catalog.TryGetWeapon(k.DefIndex, out var def))
             {
-                knifeName = def.Name;
-                if (def.Paints.TryGetValue(k.Preset.Paint, out var pn)) paintName = pn;
+                knifeName = CatalogDisplay.Primary(def.ChineseName, def.Name);
+                if (def.Paints.TryGetValue(k.Preset.Paint, out var pn)) paintName = CatalogDisplay.FinishPrimary(pn);
             }
 
             Presets.Add(new KnifePresetDraft
@@ -378,7 +400,7 @@ public sealed class KnifeSectionDraft : ViewModelBase
     }
 }
 
-public sealed class KnifePresetDraft : ViewModelBase
+public sealed class KnifePresetDraft : ViewModelBase, ICosmeticEntry, IDetailedEntry
 {
     private int _defIndex;
     private string _knifeName = "";
@@ -449,7 +471,7 @@ public sealed class KnifePresetDraft : ViewModelBase
     }
 }
 
-public sealed class GlovesDraft : ViewModelBase
+public sealed class GlovesDraft : ViewModelBase, ICosmeticEntry
 {
     private readonly PresetDraft _root;
     private bool _enabled;
@@ -535,8 +557,8 @@ public sealed class GlovesDraft : ViewModelBase
         string paintName = $"Paint #{gloves.Paint}";
         if (catalog is not null && catalog.TryGetWeapon(gloves.DefIndex, out var def))
         {
-            gloveName = def.Name;
-            if (def.Paints.TryGetValue(gloves.Paint, out var pn)) paintName = pn;
+            gloveName = CatalogDisplay.Primary(def.ChineseName, def.Name);
+            if (def.Paints.TryGetValue(gloves.Paint, out var pn)) paintName = CatalogDisplay.FinishPrimary(pn);
         }
 
         GloveName = gloveName;
