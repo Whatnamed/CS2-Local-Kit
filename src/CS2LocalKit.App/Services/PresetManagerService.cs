@@ -185,24 +185,8 @@ public class PresetManagerService : ViewModelBase
 
         if (IsDirty && !force)
         {
-            var resolution = _dialogService.ConfirmUnsavedChanges(WorkingPresetName ?? "当前预设");
-            switch (resolution)
-            {
-                case UnsavedChangesResolution.SaveAndSwitch:
-                    var saveResult = Save();
-                    if (!saveResult.Success)
-                    {
-                        _dialogService.ShowError("保存失败", saveResult.Message);
-                        return false;
-                    }
-                    break;
-                case UnsavedChangesResolution.DiscardAndSwitch:
-                    // proceed without saving
-                    break;
-                case UnsavedChangesResolution.Cancel:
-                default:
-                    return false;
-            }
+            if (!ResolveUnsavedChanges())
+                return false;
         }
 
         try
@@ -221,6 +205,29 @@ public class PresetManagerService : ViewModelBase
             return false;
         }
     }
+    public bool ResolveUnsavedChanges()
+    {
+        if (!IsDirty) return true;
+
+        var resolution = _dialogService.ConfirmUnsavedChanges(WorkingPresetName ?? "当前预设");
+        switch (resolution)
+        {
+            case UnsavedChangesResolution.SaveAndSwitch:
+                var saveResult = Save();
+                if (!saveResult.Success)
+                {
+                    _dialogService.ShowError("保存失败", saveResult.Message);
+                    return false;
+                }
+                return true;
+            case UnsavedChangesResolution.DiscardAndSwitch:
+                return true;
+            case UnsavedChangesResolution.Cancel:
+            default:
+                return false;
+        }
+    }
+
 
     public OperationResult Save()
     {
@@ -396,5 +403,19 @@ public class PresetManagerService : ViewModelBase
         RuntimeHealth = status.HealthLevel;
         RuntimeSummary = status.HealthSummary;
         StatusRefreshed?.Invoke(this, EventArgs.Empty);
+    }
+    /// <summary>
+    /// Lightweight process state check. Queries cs2.exe status and only triggers a full
+    /// runtime status refresh when running state changes.
+    /// </summary>
+    public bool PollProcessState()
+    {
+        bool isRunning = _services.RuntimeStatusService.CheckCs2Running();
+        if (isRunning != Cs2Running)
+        {
+            RefreshRuntimeStatus();
+            return true;
+        }
+        return false;
     }
 }

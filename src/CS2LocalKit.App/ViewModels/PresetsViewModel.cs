@@ -156,6 +156,11 @@ public sealed class PresetsViewModel : ViewModelBase
             ShowFeedback(false, $"预设文件 [{normalizedName}] 已存在，无法覆盖");
             return;
         }
+        // Enforce unsaved changes contract before creating file or switching
+        if (!_manager.ResolveUnsavedChanges())
+        {
+            return;
+        }
 
         try
         {
@@ -163,7 +168,7 @@ public sealed class PresetsViewModel : ViewModelBase
             _manager.Services.PresetStore.Save(normalizedName, template);
             NewPresetNameInput = "";
             RefreshPresetList();
-            _manager.LoadPreset(normalizedName, force: true);
+            _manager.LoadPreset(normalizedName, force: false);
             ShowFeedback(true, $"已成功创建新预设 [{normalizedName}] 并载入编辑器");
         }
         catch (Exception ex)

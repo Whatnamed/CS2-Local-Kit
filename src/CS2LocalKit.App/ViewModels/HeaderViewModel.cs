@@ -35,6 +35,9 @@ public sealed class HeaderViewModel : ViewModelBase
     public HeaderViewModel(PresetManagerService manager, Action onSave, Action onApply)
     {
         _manager = manager;
+        SaveCommand = new RelayCommand(onSave);
+        ApplyCommand = new RelayCommand(onApply, () => !_manager.Cs2Running);
+
         _manager.PropertyChanged += (s, e) =>
         {
             if (e.PropertyName == nameof(PresetManagerService.WorkingPresetName)
@@ -47,6 +50,7 @@ public sealed class HeaderViewModel : ViewModelBase
             {
                 OnPropertyChanged(nameof(Cs2Running));
                 OnPropertyChanged(nameof(Cs2StatusText));
+                ApplyCommand.RaiseCanExecuteChanged();
             }
             else if (e.PropertyName == nameof(PresetManagerService.RuntimeHealth)
                      || e.PropertyName == nameof(PresetManagerService.RuntimeSummary))
@@ -55,8 +59,5 @@ public sealed class HeaderViewModel : ViewModelBase
                 OnPropertyChanged(nameof(HealthSummary));
             }
         };
-
-        SaveCommand = new RelayCommand(onSave);
-        ApplyCommand = new RelayCommand(onApply, () => !_manager.Cs2Running);
     }
 }

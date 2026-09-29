@@ -40,6 +40,7 @@ public sealed class CosmeticsViewModel : ViewModelBase
     // Music Kit
     private string _musicKitSearchText = "";
     private CatalogMusicKit? _selectedMusicKit;
+    private bool _syncingMusicKitSelection;
 
     // Inline feedback
     private string _statusMessage = "";
@@ -260,10 +261,11 @@ public sealed class CosmeticsViewModel : ViewModelBase
         {
             if (SetProperty(ref _selectedMusicKit, value))
             {
-                if (_manager.Draft != null)
+                // Only explicit user selection (not search filtering / list refresh) mutates draft
+                if (!_syncingMusicKitSelection && value != null && _manager.Draft != null)
                 {
-                    _manager.Draft.MusicKitId = value?.Id;
-                    _manager.Draft.MusicKitName = value?.Name;
+                    _manager.Draft.MusicKitId = value.Id;
+                    _manager.Draft.MusicKitName = value.Name;
                 }
             }
         }
@@ -306,7 +308,15 @@ public sealed class CosmeticsViewModel : ViewModelBase
         SetCurrentKnifeCommand = new RelayCommand(SetCurrentKnife, () => SelectedKnifePreset != null && !IsSelectedKnifeCurrent);
         AddKnifePresetCommand = new RelayCommand(AddKnifePreset, () => KnifeToAdd != null);
         DeleteKnifePresetCommand = new RelayCommand(DeleteKnifePreset, () => SelectedKnifePreset != null && !IsSelectedKnifeCurrent);
-        ClearMusicKitCommand = new RelayCommand(() => SelectedMusicKit = null);
+        ClearMusicKitCommand = new RelayCommand(() =>
+        {
+            SelectedMusicKit = null;
+            if (_manager.Draft != null)
+            {
+                _manager.Draft.MusicKitId = null;
+                _manager.Draft.MusicKitName = null;
+            }
+        });
 
         SaveCommand = new RelayCommand(ExecuteSave);
         ApplyCommand = new RelayCommand(ExecuteApply, () => !_manager.Cs2Running);
@@ -565,26 +575,37 @@ public sealed class CosmeticsViewModel : ViewModelBase
         }
     }
 
-    private void RefreshMusicKitsList()
+    public void RefreshMusicKitsList()
     {
-        FilteredMusicKits.Clear();
-        if (Catalog == null) return;
+        _syncingMusicKitSelection = true;
+        try
+        {
+            FilteredMusicKits.Clear();
+            if (Catalog == null) return;
 
-        var kits = Catalog.SearchMusicKits(MusicKitSearchText);
-        foreach (var k in kits) FilteredMusicKits.Add(k);
+            var kits = Catalog.SearchMusicKits(MusicKitSearchText);
+            foreach (var k in kits) FilteredMusicKits.Add(k);
+
+            if (_manager.Draft?.MusicKitId is { } mid)
+            {
+                _selectedMusicKit = FilteredMusicKits.FirstOrDefault(m => m.Id == mid);
+                OnPropertyChanged(nameof(SelectedMusicKit));
+            }
+            else
+            {
+                _selectedMusicKit = null;
+                OnPropertyChanged(nameof(SelectedMusicKit));
+            }
+        }
+        finally
+        {
+            _syncingMusicKitSelection = false;
+        }
     }
 
     private void RefreshMusicKitSelection()
     {
         RefreshMusicKitsList();
-        if (_manager.Draft?.MusicKitId is { } mid)
-        {
-            SelectedMusicKit = FilteredMusicKits.FirstOrDefault(m => m.Id == mid);
-        }
-        else
-        {
-            SelectedMusicKit = null;
-        }
     }
 
     public void ExecuteSave()

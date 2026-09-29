@@ -502,6 +502,195 @@ public sealed class UiIntegrationTests : IDisposable
         var imported = services.PresetStore.Load(importedName);
         Assert.Equal(HumanPresetJson.Write(original), HumanPresetJson.Write(imported));
     }
+
+    // C4.1 Regression Tests:
+
+    // 15. Process state monitor transition updates runtime status and command CanExecute
+    [Fact]
+    public void ProcessStateMonitor_TransitionUpdatesRuntimeStatusAndCommandCanExecute()
+    {
+        bool probeRunning = false;
+        var services = CreateTestServices(cs2RunningProbe: () => probeRunning);
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var cosmetics = new CosmeticsViewModel(manager);
+        var header = new HeaderViewModel(manager, () => { }, () => { });
+
+        Assert.False(manager.Cs2Running);
+        Assert.False(header.Cs2Running);
+        Assert.Equal("CS2 已关闭", header.Cs2StatusText);
+        Assert.True(cosmetics.ApplyCommand.CanExecute(null));
+        Assert.True(header.ApplyCommand.CanExecute(null));
+
+        // Process starts
+        probeRunning = true;
+        bool changedToRunning = manager.PollProcessState();
+        Assert.True(changedToRunning);
+        Assert.True(manager.Cs2Running);
+        Assert.True(header.Cs2Running);
+        Assert.Equal("CS2 正在运行", header.Cs2StatusText);
+        Assert.False(cosmetics.ApplyCommand.CanExecute(null));
+        Assert.False(header.ApplyCommand.CanExecute(null));
+
+        // Calling again with no state change returns false
+        Assert.False(manager.PollProcessState());
+
+        // Process stops
+        probeRunning = false;
+        bool changedToStopped = manager.PollProcessState();
+        Assert.True(changedToStopped);
+        Assert.False(manager.Cs2Running);
+        Assert.False(header.Cs2Running);
+        Assert.Equal("CS2 已关闭", header.Cs2StatusText);
+        Assert.True(cosmetics.ApplyCommand.CanExecute(null));
+        Assert.True(header.ApplyCommand.CanExecute(null));
+    }
+
+    // 16. Music Kit search filtering never mutates canonical draft
+    [Fact]
+    public void MusicKitSelection_SearchFilterNeverMutatesCanonicalDraft()
+    {
+        var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        manager.LoadPreset("test-preset.v1.json");
+
+        // Set initial MusicKit
+        manager.Draft!.MusicKitId = 78;
+        manager.Save();
+        Assert.False(manager.IsDirty);
+        Assert.Equal(78, manager.Draft.MusicKitId);
+
+        var cosmetics = new CosmeticsViewModel(manager);
+        Assert.Equal(78, manager.Draft.MusicKitId);
+        Assert.False(manager.IsDirty);
+
+        // Search for something that doesn't match kit 78
+        cosmetics.MusicKitSearchText = "Nonexistent_Search_Filter_Mismatch";
+        Assert.Empty(cosmetics.FilteredMusicKits);
+        Assert.Null(cosmetics.SelectedMusicKit);
+
+        // Crucial invariant: canonical draft MUST remain untouched and clean
+        Assert.Equal(78, manager.Draft.MusicKitId);
+        Assert.False(manager.IsDirty);
+
+        // Load Preset B with search filter still active
+        var presetB = HumanPresetTemplate.CreateMinimalValid();
+        presetB = new HumanPreset
+        {
+            Kind = presetB.Kind,
+            SchemaVersion = presetB.SchemaVersion,
+            Ct = presetB.Ct,
+            T = presetB.T,
+            MusicKitId = 78,
+        };
+        File.WriteAllText(Path.Combine(_presetsRoot, "preset-b.v1.json"), HumanPresetJson.Write(presetB));
+
+        manager.LoadPreset("preset-b.v1.json");
+        Assert.Equal(78, manager.Draft.MusicKitId);
+        Assert.False(manager.IsDirty);
+    }
+
+    // 17. New Preset respects unsaved changes contract: Cancel
+    [Fact]
+    public void NewPreset_RespectsUnsavedChangesContract_Cancel()
+    {
+        var services = CreateTestServices();
+        var dialog = new MockDialogService { ResolutionToReturn = UnsavedChangesResolution.Cancel };
+        var manager = new PresetManagerService(services, dialog);
+        var presetsVm = new PresetsViewModel(manager);
+
+        manager.LoadPreset("test-preset.v1.json");
+        manager.Draft!.MusicKitId = 78; // make dirty
+        Assert.True(manager.IsDirty);
+
+        presetsVm.NewPresetNameInput = "new-cancelled.v1.json";
+        presetsVm.CreateNewPresetCommand.Execute(null);
+
+        // Invariant: file must NOT be created, draft must NOT be lost, working preset remains
+        Assert.False(services.PresetStore.Exists("new-cancelled.v1.json"));
+        Assert.Equal("test-preset.v1.json", manager.WorkingPresetName);
+        Assert.True(manager.IsDirty);
+        Assert.Equal(78, manager.Draft.MusicKitId);
+    }
+
+    // 18. New Preset respects unsaved changes contract: SaveAndSwitch
+    [Fact]
+    public void NewPreset_RespectsUnsavedChangesContract_SaveAndSwitch()
+    {
+        var services = CreateTestServices();
+        var dialog = new MockDialogService { ResolutionToReturn = UnsavedChangesResolution.SaveAndSwitch };
+        var manager = new PresetManagerService(services, dialog);
+        var presetsVm = new PresetsViewModel(manager);
+
+        manager.LoadPreset("test-preset.v1.json");
+        manager.Draft!.MusicKitId = 78; // make dirty
+        Assert.True(manager.IsDirty);
+
+        presetsVm.NewPresetNameInput = "new-saved.v1.json";
+        presetsVm.CreateNewPresetCommand.Execute(null);
+
+        // Invariant: old preset was saved with change, new preset created and switched to, clean draft
+        Assert.True(services.PresetStore.Exists("new-saved.v1.json"));
+        Assert.Equal("new-saved.v1.json", manager.WorkingPresetName);
+        Assert.False(manager.IsDirty);
+
+        // Verify old preset persisted the change
+        var savedOld = services.PresetStore.Load("test-preset.v1.json");
+        Assert.Equal(78, savedOld.MusicKitId);
+    }
+
+    // 19. New Preset respects unsaved changes contract: DiscardAndSwitch
+    [Fact]
+    public void NewPreset_RespectsUnsavedChangesContract_DiscardAndSwitch()
+    {
+        var services = CreateTestServices();
+        var dialog = new MockDialogService { ResolutionToReturn = UnsavedChangesResolution.DiscardAndSwitch };
+        var manager = new PresetManagerService(services, dialog);
+        var presetsVm = new PresetsViewModel(manager);
+
+        manager.LoadPreset("test-preset.v1.json");
+        manager.Draft!.MusicKitId = 78; // make dirty
+        Assert.True(manager.IsDirty);
+
+        presetsVm.NewPresetNameInput = "new-discarded.v1.json";
+        presetsVm.CreateNewPresetCommand.Execute(null);
+
+        // Invariant: old preset on disk does NOT have the dirty change, new preset created and loaded
+        Assert.True(services.PresetStore.Exists("new-discarded.v1.json"));
+        Assert.Equal("new-discarded.v1.json", manager.WorkingPresetName);
+        Assert.False(manager.IsDirty);
+
+        var untouchedOld = services.PresetStore.Load("test-preset.v1.json");
+        Assert.Null(untouchedOld.MusicKitId);
+    }
+
+    // 20. RuntimeHealth missing native components are Blocked
+    [Fact]
+    public void RuntimeHealth_MissingNativeComponents_AreBlocked()
+    {
+        var services = CreateTestServices();
+
+        // 1. When MetaMod DLL is missing
+        var mmDll = Path.Combine(_csgoDir, "addons", "metamod", "bin", "win64", "metamod.2.cs2.dll");
+        File.Delete(mmDll);
+        var statusMmMissing = services.RuntimeStatusService.GetStatus();
+        Assert.Equal(RuntimeHealthLevel.Blocked, statusMmMissing.HealthLevel);
+        Assert.Contains(statusMmMissing.BlockedReasons, r => r.Contains("MetaMod 原生组件缺失"));
+
+        // Restore MetaMod
+        File.WriteAllText(mmDll, "");
+
+        // 2. When CounterStrikeSharp bin directory is missing
+        var cssDir = Path.Combine(_csgoDir, "addons", "counterstrikesharp", "bin", "win64");
+        Directory.Delete(cssDir);
+        var statusCssMissing = services.RuntimeStatusService.GetStatus();
+        Assert.Equal(RuntimeHealthLevel.Blocked, statusCssMissing.HealthLevel);
+        Assert.Contains(statusCssMissing.BlockedReasons, r => r.Contains("CounterStrikeSharp 原生组件缺失"));
+
+        // Restore CSS
+        Directory.CreateDirectory(cssDir);
+        var statusHealthy = services.RuntimeStatusService.GetStatus();
+        Assert.Equal(RuntimeHealthLevel.Ready, statusHealthy.HealthLevel);
+    }
 }
 
 public sealed class MockDialogService : IDialogService

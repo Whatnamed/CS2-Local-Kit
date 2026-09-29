@@ -26,6 +26,9 @@ public sealed partial class RuntimeStatusService
     {
         _options = options ?? new Options();
     }
+    /// <summary>Lightweight check for process state without full file/hash scan.</summary>
+    public bool CheckCs2Running() => (_options.Cs2RunningProbe ?? Cs2Locator.IsCs2Running)();
+
 
     [GeneratedRegex(@"^(PatchVersion|ClientVersion)=(.*)$", RegexOptions.Multiline)]
     private static partial Regex SteamInfLine();
@@ -247,14 +250,15 @@ public sealed class RuntimeStatus
         {
             var list = new List<string>();
             if (!Cs2Detected) list.Add("未检测到 CS2 安装路径");
-            if (PatchedDllMatch == "mismatch") list.Add("InventorySimulator patched DLL 校验不匹配");
-            if (!InventorySimulatorPluginPresent && Cs2Detected) list.Add("InventorySimulator 插件文件缺失");
-            if (!FixtureInstalled && Cs2Detected) list.Add("饰品运行文件 (inventories.json) 未安装");
             if (!GameinfoHasMetamod && Cs2Detected) list.Add("gameinfo.gi 未配置 MetaMod 启动项");
+            if (MetaModNativeStatus == "missing" && Cs2Detected) list.Add("MetaMod 原生组件缺失");
+            if (CounterStrikeSharpNativeStatus == "missing" && Cs2Detected) list.Add("CounterStrikeSharp 原生组件缺失");
+            if (!InventorySimulatorPluginPresent && Cs2Detected) list.Add("InventorySimulator 插件文件缺失");
+            if (PatchedDllMatch == "mismatch") list.Add("InventorySimulator patched DLL 校验不匹配");
+            if (!FixtureInstalled && Cs2Detected) list.Add("饰品运行文件 (inventories.json) 未安装");
             return list;
         }
     }
-
     public IReadOnlyList<string> AttentionReasons
     {
         get
@@ -262,8 +266,6 @@ public sealed class RuntimeStatus
             var list = new List<string>();
             if (Cs2Detected && TestedBuildMatch == "changed") list.Add("CS2 客户端版本已更新，与当前测试基线不同");
             if (string.IsNullOrEmpty(ActivePreset) || !ActivePresetExists) list.Add("未选择或未找到已激活预设");
-            if (Cs2Detected && MetaModNativeStatus == "missing") list.Add("MetaMod 文件未找到");
-            if (Cs2Detected && CounterStrikeSharpNativeStatus == "missing") list.Add("CounterStrikeSharp 文件未找到");
             return list;
         }
     }

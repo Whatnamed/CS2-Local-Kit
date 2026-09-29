@@ -28,13 +28,20 @@ $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 
 # 1. Resolve dotnet CLI
 if (-not $DotNetExe) {
-    $candidate = Join-Path $repoRoot 'temp\tooling\dotnet\dotnet.exe'
-    if (Test-Path -LiteralPath $candidate) {
-        $DotNetExe = $candidate
-    } else {
-        $candidate2 = 'E:\Projects\CS2-Local-Kit\wt-cosmetics-lab\temp\tooling\dotnet\dotnet.exe'
-        if (Test-Path -LiteralPath $candidate2) {
-            $DotNetExe = $candidate2
+    # Priority 1: Task-local tooling in current repo/worktree
+    $taskLocal = Join-Path $repoRoot 'temp\tooling\dotnet\dotnet.exe'
+    if (Test-Path -LiteralPath $taskLocal) {
+        $DotNetExe = $taskLocal
+    }
+    # Priority 2: Persistent tooling under $Cs2ModRoot\tooling\dotnet
+    elseif (Test-Path -LiteralPath (Join-Path $Cs2ModRoot 'tooling\dotnet\dotnet.exe')) {
+        $DotNetExe = Join-Path $Cs2ModRoot 'tooling\dotnet\dotnet.exe'
+    }
+    # Priority 3: dotnet available in PATH
+    else {
+        $fromPath = Get-Command 'dotnet' -ErrorAction SilentlyContinue
+        if ($fromPath) {
+            $DotNetExe = $fromPath.Source
         } else {
             $DotNetExe = 'dotnet'
         }
