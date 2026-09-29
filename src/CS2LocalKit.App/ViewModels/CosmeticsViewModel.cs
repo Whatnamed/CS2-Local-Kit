@@ -323,6 +323,11 @@ public sealed class CosmeticsViewModel : ViewModelBase
 
         _manager.WorkingPresetChanged += (s, e) => OnPresetLoaded();
         _manager.StatusRefreshed += (s, e) => ApplyCommand.RaiseCanExecuteChanged();
+        _manager.PropertyChanged += (s, e) =>
+        {
+            if (e.PropertyName == nameof(PresetManagerService.IsDirty) && _manager.IsDirty)
+                IsStatusVisible = false;
+        };
 
         InitializeCatalogData();
         OnPresetLoaded();
@@ -342,6 +347,7 @@ public sealed class CosmeticsViewModel : ViewModelBase
 
     private void OnPresetLoaded()
     {
+        IsStatusVisible = false;
         RefreshWeaponList();
         RefreshKnifeList();
         RefreshGlovesSelection();
