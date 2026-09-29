@@ -109,8 +109,10 @@ $fileHashes = [ordered]@{}
 foreach ($f in $files) {
     $rel = $f.FullName.Substring($payloadDir.Length).TrimStart('\', '/').Replace('\', '/')
     $stream = [System.IO.File]::OpenRead($f.FullName)
-    $hash = [BitConverter]::ToString([System.Security.Cryptography.SHA256]::HashData($stream)).Replace('-', '').ToLowerInvariant()
-    $stream.Dispose()
+    try {
+        # ComputeHash over the stream works on both Windows PowerShell and pwsh.
+        $hash = [BitConverter]::ToString([System.Security.Cryptography.SHA256]::Create().ComputeHash($stream)).Replace('-', '').ToLowerInvariant()
+    } finally { $stream.Dispose() }
     $fileHashes[$rel] = $hash
 
     # Boundary check: ensure no private SteamID or preset JSON leaked into release
