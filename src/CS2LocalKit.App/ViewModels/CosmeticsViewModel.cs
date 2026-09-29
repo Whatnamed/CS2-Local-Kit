@@ -186,7 +186,12 @@ public sealed class CosmeticsViewModel : ViewModelBase
         }
     }
 
-    public int SkinCardWidth => 168;
+    /// <summary>
+    /// Target card width; the view adds its gutter and turns that into cards per row. Sized so a
+    /// default-width window fits three columns and the minimum window fits two without stretching a
+    /// card wide enough to dominate the detail column.
+    /// </summary>
+    public int SkinCardWidth => 164;
 
     /// <summary>Chunks the flat card lists into rows so only visible rows build card elements.</summary>
     public void RebuildRows()

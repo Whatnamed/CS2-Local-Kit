@@ -25,11 +25,15 @@
                             <Image x:Name="SkinArt" Margin="7" Stretch="Uniform"
                                    common:LazyImage.Url="{Binding ThumbnailUrl}"
                                    common:LazyImage.PixelWidth="232"/>
-                            <!-- renders through the art's transparent pixels unless hidden -->
+                            <!-- waiting for art and having no art are different facts -->
+                            <TextBlock Text="加载中" FontSize="10.5"
+                                       Foreground="{StaticResource BrushTextDisabled}" Opacity="0.7"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=SkinArt, Converter={StaticResource EqToVis}, ConverterParameter=Loading}"/>
                             <TextBlock Text="无预览" FontSize="10.5"
                                        Foreground="{StaticResource BrushTextDisabled}"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Visibility="{Binding Source, ElementName=SkinArt, Converter={StaticResource NullToVis}}"/>
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=SkinArt, Converter={StaticResource EqToVis}, ConverterParameter=Unavailable}"/>
                         </Grid>
                     </Border>
 
@@ -42,7 +46,7 @@
                                    Visibility="{Binding SecondaryName, Converter={StaticResource NonEmptyToVis}}"/>
                     </StackPanel>
 
-                    <Border Grid.Row="2" CornerRadius="0,0,8,8" Margin="1,0"
+                    <Border Grid.Row="2" CornerRadius="3" Margin="10,0"
                             Background="{Binding RarityColor, Converter={StaticResource HexToBrush}}"/>
                 </Grid>
             </ToggleButton>
@@ -64,10 +68,14 @@
                             <Image x:Name="MusicArt" Margin="7" Stretch="Uniform"
                                    common:LazyImage.Url="{Binding ThumbnailUrl}"
                                    common:LazyImage.PixelWidth="232"/>
+                            <TextBlock Text="加载中" FontSize="10.5"
+                                       Foreground="{StaticResource BrushTextDisabled}" Opacity="0.7"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=MusicArt, Converter={StaticResource EqToVis}, ConverterParameter=Loading}"/>
                             <TextBlock Text="无预览" FontSize="10.5"
                                        Foreground="{StaticResource BrushTextDisabled}"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Visibility="{Binding Source, ElementName=MusicArt, Converter={StaticResource NullToVis}}"/>
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=MusicArt, Converter={StaticResource EqToVis}, ConverterParameter=Unavailable}"/>
                         </Grid>
                     </Border>
                     <StackPanel Grid.Row="1" Margin="9,6,9,2">
@@ -78,7 +86,7 @@
                                    TextTrimming="CharacterEllipsis"
                                    Visibility="{Binding SecondaryName, Converter={StaticResource NonEmptyToVis}}"/>
                     </StackPanel>
-                    <Border Grid.Row="2" CornerRadius="0,0,8,8" Margin="1,0"
+                    <Border Grid.Row="2" CornerRadius="3" Margin="10,0"
                             Background="{Binding RarityColor, Converter={StaticResource HexToBrush}}"/>
                 </Grid>
             </ToggleButton>
@@ -165,18 +173,19 @@
         <!-- browser: model list -> finish grid -> editing detail -->
         <Grid Grid.Row="2" Visibility="{Binding IsMusicKitSection, Converter={StaticResource InvBoolToVis}}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="272"/>
+                <ColumnDefinition Width="216"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="26"/>
-                <ColumnDefinition Width="312"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="260"/>
             </Grid.ColumnDefinitions>
 
             <!-- model list -->
             <DockPanel Grid.Column="0" LastChildFill="True">
                 <StackPanel DockPanel.Dock="Top">
-                    <Grid Margin="0,0,14,8">
+                    <Grid Margin="0,0,10,8">
                         <TextBox Style="{StaticResource CompactInput}" MinHeight="34" Text="{Binding ItemSearchText, UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBlock Text="搜索武器（中文 / English / #ID）" FontSize="12"
+                                   TextTrimming="CharacterEllipsis"
                                    Foreground="{StaticResource BrushTextDisabled}" Margin="10,0,0,0"
                                    VerticalAlignment="Center" IsHitTestVisible="False">
                             <TextBlock.Style>
@@ -240,7 +249,7 @@
 
             <!-- finish grid -->
             <DockPanel Grid.Column="1" LastChildFill="True" x:Name="SkinHost">
-                <StackPanel DockPanel.Dock="Top" Margin="18,0,14,10">
+                <StackPanel DockPanel.Dock="Top" Margin="16,0,14,10">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -275,10 +284,10 @@
                 </StackPanel>
 
                 <TextBlock DockPanel.Dock="Bottom" Text="{Binding SkinsHintText}" Style="{StaticResource HintText}"
-                           Margin="18,10,14,0"/>
+                           Margin="16,10,14,0"/>
 
-                <Grid Margin="18,0,6,0">
-                    <Border Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4">
+                <Grid Margin="16,0,4,0">
+                    <Border x:Name="SkinGridBorder" Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4">
                         <ListBox x:Name="SkinRowList" ItemsSource="{Binding SkinRows}"
                                  Background="Transparent" BorderThickness="0"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -317,11 +326,12 @@
                 </Grid>
             </DockPanel>
 
-            <Border Grid.Column="2" Style="{StaticResource VerticalDivider}"/>
+            <Border Grid.Column="2" Style="{StaticResource VerticalDivider}" Margin="8,0"/>
 
             <!-- editing detail -->
-            <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                <StackPanel Margin="0,0,0,16">
+            <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                          Padding="0,0,10,0">
+                <StackPanel Margin="0,0,4,16">
                     <Border Height="168" CornerRadius="10" Background="{StaticResource BrushPlaceholder}">
                         <Grid>
                             <Image x:Name="DetailArt" Margin="12" Stretch="Uniform"
@@ -330,7 +340,15 @@
                             <TextBlock Text="选择皮肤后显示预览" FontSize="11.5"
                                        Foreground="{StaticResource BrushTextDisabled}"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Visibility="{Binding Source, ElementName=DetailArt, Converter={StaticResource NullToVis}}"/>
+                                       Visibility="{Binding DetailImageUrl, Converter={StaticResource EmptyToVis}}"/>
+                            <TextBlock Text="预览加载中" FontSize="11.5"
+                                       Foreground="{StaticResource BrushTextDisabled}" Opacity="0.7"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=DetailArt, Converter={StaticResource EqToVis}, ConverterParameter=Loading}"/>
+                            <TextBlock Text="暂无预览" FontSize="11.5"
+                                       Foreground="{StaticResource BrushTextDisabled}"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=DetailArt, Converter={StaticResource EqToVis}, ConverterParameter=Unavailable}"/>
                         </Grid>
                     </Border>
 
@@ -435,8 +453,8 @@
         <Grid Grid.Row="2" Visibility="{Binding IsMusicKitSection, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="26"/>
-                <ColumnDefinition Width="312"/>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition Width="260"/>
             </Grid.ColumnDefinitions>
 
             <DockPanel Grid.Column="0" LastChildFill="True" x:Name="MusicHost">
@@ -467,8 +485,8 @@
                     </Grid>
                 </Grid>
 
-                <Grid>
-                    <Border Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4">
+                <Grid Margin="0,0,4,0">
+                    <Border x:Name="MusicGridBorder" Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4">
                         <ListBox ItemsSource="{Binding MusicKitRows}"
                                  Background="Transparent" BorderThickness="0"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -505,9 +523,9 @@
                 </Grid>
             </DockPanel>
 
-            <Border Grid.Column="1" Style="{StaticResource VerticalDivider}"/>
+            <Border Grid.Column="1" Style="{StaticResource VerticalDivider}" Margin="8,0"/>
 
-            <StackPanel Grid.Column="2">
+            <StackPanel Grid.Column="2" Margin="0,0,4,0">
                 <Border Height="168" CornerRadius="10" Background="{StaticResource BrushPlaceholder}">
                     <Grid>
                         <Image x:Name="MusicDetailArt" Margin="12" Stretch="Uniform"
@@ -520,10 +538,14 @@
                                    Visibility="{Binding IsMusicKitConfigured, Converter={StaticResource InvBoolToVis}}"/>
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                                     Visibility="{Binding IsMusicKitConfigured, Converter={StaticResource BoolToVis}}">
+                            <TextBlock Text="预览加载中" FontSize="11.5"
+                                       Foreground="{StaticResource BrushTextDisabled}" Opacity="0.7"
+                                       HorizontalAlignment="Center"
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=MusicDetailArt, Converter={StaticResource EqToVis}, ConverterParameter=Loading}"/>
                             <TextBlock Text="暂无预览" FontSize="11.5"
                                        Foreground="{StaticResource BrushTextDisabled}"
                                        HorizontalAlignment="Center"
-                                       Visibility="{Binding Source, ElementName=MusicDetailArt, Converter={StaticResource NullToVis}}"/>
+                                       Visibility="{Binding Path=(common:LazyImage.ArtState), ElementName=MusicDetailArt, Converter={StaticResource EqToVis}, ConverterParameter=Unavailable}"/>
                         </StackPanel>
                     </Grid>
                 </Border>

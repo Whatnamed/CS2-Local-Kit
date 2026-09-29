@@ -46,6 +46,9 @@
     <SolidColorBrush x:Key="BrushBorderSubtle" Color="{StaticResource ColorBorderSubtle}"/>
     <SolidColorBrush x:Key="BrushBorderStrong" Color="{StaticResource ColorBorderStrong}"/>
 
+    <!-- scrollbar thumb: readable against every surface, but never competing with content -->
+    <SolidColorBrush x:Key="BrushScrollThumb" Color="#FF2E343D"/>
+
     <!-- text -->
     <SolidColorBrush x:Key="BrushTextPrimary" Color="#FFEEF1F5"/>
     <SolidColorBrush x:Key="BrushTextSecondary" Color="#FFA5AEBB"/>

@@ -228,7 +228,7 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Border x:Name="Surface" Background="{StaticResource BrushBgRaised}"
                             BorderBrush="{StaticResource BrushBorderSubtle}" BorderThickness="1"
-                            CornerRadius="{StaticResource RadiusCard}" Margin="5"
+                            CornerRadius="{StaticResource RadiusCard}" Margin="4"
                             SnapsToDevicePixels="True">
                         <ContentPresenter/>
                     </Border>
@@ -237,10 +237,12 @@
                             <Setter TargetName="Surface" Property="Background" Value="{StaticResource BrushBgHover}"/>
                             <Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource BrushBorderStrong}"/>
                         </Trigger>
+                        <!-- one accent, carried by the border: a whole card of saturated blue would
+                             compete with the art it is supposed to frame -->
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource BrushAccent}"/>
                             <Setter TargetName="Surface" Property="BorderThickness" Value="2"/>
-                            <Setter TargetName="Surface" Property="Background" Value="{StaticResource BrushBgSelected}"/>
+                            <Setter TargetName="Surface" Property="Background" Value="{StaticResource BrushAccentSoft}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Surface" Property="Opacity" Value="0.35"/>
@@ -483,20 +485,28 @@
         </Setter>
     </Style>
 
-    <!-- thin scrollbars -->
+    <!-- thin scrollbars: quiet at rest, clearly grabbable on hover, never a second column of chrome -->
     <Style x:Key="ThinThumb" TargetType="Thumb">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Border CornerRadius="4" Background="{StaticResource BrushBorderStrong}" Margin="2"
-                            MinHeight="24"/>
+                    <Border x:Name="Knob" CornerRadius="3" Background="{StaticResource BrushScrollThumb}"
+                            Margin="1" MinHeight="22" MinWidth="4"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Knob" Property="Background" Value="{StaticResource BrushBorderStrong}"/>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="Knob" Property="Background" Value="{StaticResource BrushBorderStrong}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
     <Style TargetType="ScrollBar">
-        <Setter Property="Width" Value="11"/>
+        <Setter Property="Width" Value="8"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -517,7 +527,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="Orientation" Value="Horizontal">
                             <Setter Property="Width" Value="Auto"/>
-                            <Setter Property="Height" Value="11"/>
+                            <Setter Property="Height" Value="8"/>
                             <Setter TargetName="PART_Track" Property="IsDirectionReversed" Value="False"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
