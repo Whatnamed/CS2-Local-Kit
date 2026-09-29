@@ -22,7 +22,11 @@ public enum ImageArtState
     /// <summary>Source is the art for the current URL.</summary>
     Loaded,
 
-    /// <summary>The current URL has no art: no URL at all, or it could not be fetched or decoded.</summary>
+    /// <summary>
+    /// The current URL shows no art right now: no URL at all, or the last attempt could not be
+    /// fetched or decoded. A pending bounded retry belongs here - waiting for permission to ask again
+    /// is a failure the viewer can see, not progress.
+    /// </summary>
     Unavailable,
 }
 
@@ -167,11 +171,22 @@ public static class LazyImage
             // A superseded request may not relabel this element: whoever owns the current generation
             // decides what the viewer sees, otherwise a late A could overwrite a fresh C.
 
-            if (source is null && TryAgain(image, slot)) return;   // the retry owns the element now
+            if (source is null)
+            {
+                // A failed attempt is a failure now, not "still loading": the cooldown that may follow
+                // is waiting for permission to ask again, which the viewer cannot tell apart from
+                // progress. Report Unavailable immediately and let the retry re-enter Loading when it
+                // actually runs.
+                image.Source = null;
+                slot.HasResult = false;
+                SetArtState(image, ImageArtState.Unavailable);
+                TryAgain(image, slot);
+                return;
+            }
 
             image.Source = source;
-            slot.HasResult = source is not null;
-            SetArtState(image, source is not null ? ImageArtState.Loaded : ImageArtState.Unavailable);
+            slot.HasResult = true;
+            SetArtState(image, ImageArtState.Loaded);
         }
         finally
         {
@@ -180,15 +195,15 @@ public static class LazyImage
     }
 
     /// <summary>
-    /// Schedules the next allowed attempt for the current selection and reports whether it was
-    /// scheduled. A CDN endpoint that was unreachable a moment ago is not a fact about this skin, so
-    /// an element that is still on screen gets another try once the cache is willing to ask for that
-    /// URL again. The budget is fixed per selection, so this is a recovery path and not a standing
-    /// timer or a retry storm.
+    /// Schedules the next allowed attempt for the current selection. A CDN endpoint that was
+    /// unreachable a moment ago is not a fact about this skin, so an element that is still on screen
+    /// gets another try once the cache is willing to ask for that URL again. The budget is fixed per
+    /// selection, so this is a recovery path and not a standing timer or a retry storm. The element
+    /// stays <see cref="ImageArtState.Unavailable"/> while the cooldown elapses.
     /// </summary>
-    private static bool TryAgain(Image image, Slot slot)
+    private static void TryAgain(Image image, Slot slot)
     {
-        if (slot.RetriesUsed >= MaxRetries) return false;
+        if (slot.RetriesUsed >= MaxRetries) return;
         slot.RetriesUsed++;
 
         var retry = new CancellationTokenSource();
@@ -198,7 +213,6 @@ public static class LazyImage
         // competing fetch while the cooldown is elapsing.
         slot.Running = true;
         _ = RetryAsync(image, slot, slot.Generation, retry);
-        return true;
     }
 
     private static async Task RetryAsync(Image image, Slot slot, long generation, CancellationTokenSource retry)

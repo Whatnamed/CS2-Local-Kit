@@ -13,7 +13,12 @@
   },
   "exactUpstreamStatus": {
     "state": "startup-fail",
-    "detail": "Unmodified upstream 3.3.0 (C1) crashes cs2.exe during listen-server startup on the tested build: managed NativeException 'Global Variables not initialized yet' from Utilities.GetPlayers() reached via Load() -> OnFileChanged(); process dies in coreclr.dll (0x80131623). Exact-upstream 3.3.0 is NOT accepted.",
+    "observedOnCs2Build": {
+      "patchVersion": "1.41.8.5",
+      "clientVersion": "2000918",
+      "buildId": "25537370"
+    },
+    "detail": "Unmodified upstream 3.3.0 (C1) crashes cs2.exe during listen-server startup on CS2 1.41.8.5, the build it was probed on: managed NativeException 'Global Variables not initialized yet' from Utilities.GetPlayers() reached via Load() -> OnFileChanged(); process dies in coreclr.dll (0x80131623). Exact-upstream 3.3.0 is NOT accepted. This observation has not been re-run on the newer testedCs2Build, which only ever saw the patched runtime.",
     "evidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20260928-221018-posttest"
   },
   "acceptedRuntime": {

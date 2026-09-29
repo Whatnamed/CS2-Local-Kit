@@ -112,6 +112,36 @@ public sealed class LazyImageIdentityTests : IDisposable
             LazyImage.SetUrl(image, Art("asiimov"));
             WpfArt.PumpUntil(() => LazyImage.GetArtState(image) == ImageArtState.Unavailable, Timeout);
 
+            // PumpUntil gives up silently at the deadline, so the state has to be asserted here: an
+            // element that stayed "Loading" forever would otherwise pass this test.
+            Assert.Equal(ImageArtState.Unavailable, LazyImage.GetArtState(image));
+            Assert.Null(image.Source);
+        });
+    }
+
+    [Fact]
+    public void AFailedAttemptIsUnavailableWhileTheRetryWaits()
+    {
+        WpfArt.RunOnStaThread(() =>
+        {
+            var scripted = new WpfArt.Scripted(Artwork(WpfArt.Red));
+            scripted.Refuse(Art("broken"));
+            using var scope = WpfArt.Install(scripted, _root);
+
+            var image = new Image();
+            using var host = WpfArt.Host(image);
+            LazyImage.SetPixelWidth(image, 512);
+            LazyImage.SetUrl(image, Art("broken"));
+            host.WaitForLoaded();
+
+            WpfArt.PumpUntil(() => LazyImage.GetArtState(image) == ImageArtState.Unavailable, Timeout);
+            Assert.Equal(ImageArtState.Unavailable, LazyImage.GetArtState(image));
+            Assert.Null(image.Source);
+
+            // The bounded cooldown retries are still pending, but a wait for permission to ask again is
+            // not progress: the element must not be relabelled "Loading" behind the viewer's back.
+            WpfArt.Pump(TimeSpan.FromMilliseconds(500));
+            Assert.Equal(ImageArtState.Unavailable, LazyImage.GetArtState(image));
             Assert.Null(image.Source);
         });
     }
@@ -168,6 +198,7 @@ public sealed class LazyImageIdentityTests : IDisposable
 
             scripted.Release(Art("slow"));
             WpfArt.PumpUntil(() => LazyImage.GetArtState(image) == ImageArtState.Loaded, Timeout);
+            Assert.Equal(ImageArtState.Loaded, LazyImage.GetArtState(image));
 
             // An element with nothing to ask for is a different fact, and it is final immediately.
             LazyImage.SetUrl(image, null);

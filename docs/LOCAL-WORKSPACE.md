@@ -128,13 +128,23 @@ E:\CS2MOD\diagnostics\
 
 ## 7. App data
 
-Controller 的本地持久状态（预设、备份、诊断、图片 cache）使用：
+`E:\CS2MOD` 下的持久数据按 ownership 分区，不要把所有本地状态都当成 app-data：
 
 ```text
-E:\CS2MOD\app-data\
+E:\CS2MOD\presets\human\                  人用预设（HumanPreset 产品层）
+E:\CS2MOD\backups\cosmetics-lab\          fixture 写入前的备份与 apply record
+E:\CS2MOD\diagnostics\                    各 workstream 的实机诊断落盘（cosmetics-lab / bot-baseline / controller-ui-recovery）
+E:\CS2MOD\app-data\cosmetics-lab\         Controller 内部 app state
+    active-preset.json                    下一次 CS2 启动读取的激活预设指针
+    player-state.json                     本机玩家 / 运行时状态
+    catalog\                              pinned 清单快照缓存
+    image-cache\                          饰品图片 cache 与 index.json
+    inventory-simulator\                  最近一次 projection 产物
+    diagnostics\                          Controller 自身错误日志
 ```
 
-或经过明确设计的系统 app-data 位置。
+machine-readable 的默认值以 `src/CS2LocalKit.Core/CorePaths.cs` 为准；`CS2LOCALKIT_CS2MOD_ROOT`
+环境变量可整体覆盖数据根目录，测试用显式路径覆盖。
 
 不要每轮实验生成一个难以发现的新 cache 路径。
 
