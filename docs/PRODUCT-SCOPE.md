@@ -80,18 +80,24 @@ USP-S / P2000、M4A1-S / M4A4 等互斥 loadout 的武器选择完全由玩家�
 
 ## 5. 本地控制界面
 
-Panel / desktop controller 属于后续产品层，而不是 runtime correctness 的前置条件。
+桌面 Controller（`src/CS2LocalKit.App`）已经存在，是 Human cosmetics 的日常编辑与验收入口；它仍然是位于 runtime correctness 之上的产品层，不是领域语义的所有者。
 
-未来主要职责：
+当前已提供：
 
-- runtime 状态与兼容性提示；
+- runtime 状态与 CS2 build 兼容性提示；
+- Human cosmetics 编辑：武器 / 刀型 / 手套 / 音乐盒，CT 与 T 分开；
+- 编辑中预设、激活预设与游戏内配置三者分别呈现；
+- 预设的新建 / 复制 / 删除 / 载入 / 设为激活 / 导入 / 导出；
+- 写入游戏配置（Apply）与恢复上一次应用（Restore）；
+- 固定版本清单快照的本地准备。
+
+尚未提供，属于后续产品层职责：
+
 - Bot 配置入口；
-- Human cosmetics preset 编辑；
-- 导入 / 导出；
-- 安装 / 恢复；
-- release / diagnostics 的本地访问。
+- tray-first 生命周期与 overlay；
+- release / diagnostics 的浏览入口。
 
-Panel 不应成为 Bot AI 或 cosmetics 生命周期的隐藏 owner。
+Controller 不应成为 Bot AI 或 cosmetics 生命周期的隐藏 owner：它只调用 Core 的 apply / restore 入口，不复制其语义。
 
 ## 6. 持久本地数据
 

@@ -6,12 +6,12 @@ weapon cosmetics, knife identity/cosmetics, gloves and Music Kit 28, without any
 without any legacy Local-Arena cosmetics code?
 
 This is a feasibility/compatibility experiment, not the production HumanCosmetics implementation.
-Runtime pin: `runtime/inventory-simulator.lock.json` (status `candidate` until the real-game gate passes).
+Runtime pin: `runtime/inventory-simulator.lock.json` (status `accepted-as-patched`: pinned upstream commit plus the project-owned minimal C1.1 lifecycle patch; unmodified upstream failed the startup gate).
 
 ## Layout
 
 ```text
-runtime/inventory-simulator.lock.json        exact upstream pin (InventorySimulator + MetaMod + CSS)
+runtime/inventory-simulator.lock.json        accepted runtime pin (patched InventorySimulator + MetaMod + CSS)
 experiments/cosmetics-lab/
   inventory-simulator/test-preset.json       non-private item selections + catalog provenance
   inventory-simulator/MANUAL-TEST.md         user-facing in-game test sequence

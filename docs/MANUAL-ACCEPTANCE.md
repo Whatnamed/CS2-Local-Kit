@@ -57,6 +57,21 @@
 
 ## 5. Knife
 
+当前 C4 的验收对象是"预设里选定的那一把刀"。用 `\` 在多个 knife defIndex 之间轮换属于尚未实现的 quick knife capability（PRODUCT-SCOPE 的 deferred 列表），因此下面的轮换序列只是**将来**该能力进入验收时的 gate，不能当作本轮 C4 必须已经实现的行为。
+
+### 5.1 当前必须验证：选定的 knife
+
+- 实际 knife identity 等于预设选定的 defIndex；
+- first-person model 与 animation 属于该 knife；
+- 该 knife 自己的 skin 正确呈现；
+- HUD icon 正确；
+- 重生与换边后保持正确；
+- 无额外地面刀、无临时多余手枪；
+- 无持续切刀 / 音效 / HUD 抖动；
+- 不 crash。
+
+### 5.2 未来 quick knife 的验收 gate（deferred）
+
 默认轮换：
 
 ```text
@@ -76,6 +91,7 @@
 - 无持续切刀/音效/HUD 抖动；
 - 不会第二次按键跳过；
 - 死亡/重生后状态合理；
+- 不 crash。
 - 不 crash。
 
 如果出现“目标刀动作 + 默认刀模型”之类情况，要分别记录 model / animation / skin，不要统一写成“刀坏了”。

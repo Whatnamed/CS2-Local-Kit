@@ -89,7 +89,7 @@ committed.
 (preset + SteamID -> EquippedV5 text). `Apply-HumanCosmeticsPreset.ps1` is the
 single entrypoint that validates, projects, backs up the currently installed
 fixture, atomically replaces the file InventorySimulator actually reads, hash
-verifies and writes rollback metadata. Panel/UI later reuses the apply
+verifies and writes rollback metadata. The Controller UI reuses the apply
 entrypoint; nothing else writes into the game directory. The projector's
 SteamID comes from the private player state file
 (`E:\CS2MOD\app-data\cosmetics-lab\player-state.json`) or an explicit

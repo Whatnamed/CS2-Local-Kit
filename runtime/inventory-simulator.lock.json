@@ -7,9 +7,9 @@
   "license": "MIT",
   "status": "accepted-as-patched",
   "testedCs2Build": {
-    "patchVersion": "1.41.8.5",
-    "clientVersion": "2000918",
-    "buildId": "25537370"
+    "patchVersion": "1.41.8.6",
+    "clientVersion": "2000919",
+    "buildId": "25588766"
   },
   "exactUpstreamStatus": {
     "state": "startup-fail",
@@ -29,6 +29,19 @@
       "result": "startup PASS + full C1 cosmetic acceptance PASS on CS2 1.41.8.5 (CT/T gun cosmetics, knife identity/model/animation/finish, gloves across spawns and side change, Music Kit shown as ID 28 - display correct, injection causality not separately isolated)",
       "evidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20260928-234052-posttest",
       "cssLog": "23:06:46 'Finished loading plugin InventorySimulator', no errors in session window"
+    },
+    "retestOnNewerBuild": {
+      "date": "2026-09-29",
+      "cs2Build": { "patchVersion": "1.41.8.6", "clientVersion": "2000919", "buildId": "25588766" },
+      "result": "manual acceptance reported by the user on this machine: Controller Save -> Apply, then a real CS2 session. Weapon, knife, glove and music kit cosmetics all rendered; respawn and side change showed no problem; no crash, HUD or audio loop, no performance anomaly.",
+      "evidenceLevel": "user-reported manual acceptance plus a read-only post-test snapshot of local build facts. It is not an automated proof and does not re-run the C1/C1.1 gate.",
+      "localFacts": {
+        "steamInf": "PatchVersion=1.41.8.6, ClientVersion=2000919, VersionDate=Sep 28 2026",
+        "appmanifest730": "buildid 25588766; LastUpdated 2026-09-29T08:01:06+08:00; LastPlayed 2026-09-29T22:04:11+08:00",
+        "installedPluginSha256": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489, equal to acceptedRuntime.patchedDllSha256",
+        "lastApplyRecord": "E:\\CS2MOD\\backups\\cosmetics-lab\\20260929-213743912-e596054b-preset-apply (2026-09-29T21:37:43.915+08:00, preset personal-default.v1.json, newSha256 390a60cc87f7d6020ee008ef8d41c798e4c988e8b2750c85b9f055f24f8213a9)",
+        "sequence": "the Apply at 21:37:43 wrote the fixture the game loaded in the 22:04:11 session, which is after this build's 08:01:06 update"
+      }
     },
     "release": "E:\\CS2MOD\\releases\\cosmetics-lab\\inventory-simulator-c1_1-patched-20260928-225604"
   },

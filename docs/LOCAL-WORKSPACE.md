@@ -128,7 +128,7 @@ E:\CS2MOD\diagnostics\
 
 ## 7. App data
 
-未来 Panel / controller 如需要本地持久状态，应优先使用：
+Controller 的本地持久状态（预设、备份、诊断、图片 cache）使用：
 
 ```text
 E:\CS2MOD\app-data\

@@ -63,7 +63,7 @@ it comes from `E:\CS2MOD\app-data\cosmetics-lab\player-state.json` (private) or 
 explicit `-SteamId64`. Projection (pure) and installation
 (`Apply-HumanCosmeticsPreset.ps1`: cs2-closed check, validate, project to staging,
 backup, atomic replace, hash verify, auto-rollback, rollback metadata) are
-separate entrypoints; future Panel/UI must reuse the apply entrypoint.
+separate entrypoints; the C4 Controller reuses this apply entrypoint rather than duplicating it.
 
 ## C3 — Human Cosmetics Controller Foundation（2026-09-29，无 runtime 变化）
 
@@ -83,9 +83,28 @@ runtime status）+ `src/CS2LocalKit.Controller`（薄 CLI）。关键结果：
   ARCHITECTURE §3/§6、MANUAL-ACCEPTANCE §4、COMPATIBILITY-WATCH §6）；
 - 真实 CS2 安装的 runtime/fixture 在本阶段未被修改（.NET golden 与已安装 fixture 一致）。
 
+## C4 — Controller UI（2026-09-29 起，进行中）
+
+`src/CS2LocalKit.App`（WPF Controller）建立在 C3 的 Core 入口之上：饰品浏览（武器 / 刀型 /
+手套 / 音乐盒）、预设管理、runtime status 与 Save / Apply / Restore。它只调用 Core 的
+projection 与 apply 事务，不在 UI 层复制其语义。
+
+已由用户在本机真实游戏完成的验收（2026-09-29）：
+
+- Controller Save → Apply，然后进入 CS2（1.41.8.6 / buildId 25588766）实测；
+- 枪械、刀、手套、音乐盒外观均正确；
+- 重生、换边未观察到问题；无 crash、HUD / 音频循环或性能异常；
+- 因此 HumanPreset → projection → InventorySimulator → CS2 主链在本轮视为通过；runtime pin
+  的 tested build 已据此更新，证据级别见 `runtime/inventory-simulator.lock.json` 的
+  `acceptedRuntime.retestOnNewerBuild`（用户口头验收 + 本机 build 事实，不是自动化证明）。
+
+仍未收口的部分：C4.3 的 presentation / image 缺陷 —— 预览图与当前选择不同步、批量预览只
+加载一部分、滚动条与卡片密度观感。这些都在 UI 层，不改变上面的 runtime 结论；在用户复测
+C4.3 新 release 之前，不宣称整个 C4 最终 PASS。
+
 ## Still deferred (explicitly)
 
-Quick knife cycling (`\`), knife rotation, Panel/UI, agents/stickers/charms.
+Quick knife cycling (`\`), knife rotation, agents/stickers/charms, tray-first lifecycle.
 (M4A1-S/M4A4 and USP-S/P2000 identity override is an explicit non-goal, not a
 deferred task - see PRODUCT-SCOPE §3.1/3.2.) C3+ work must not reopen C1/C1.1 or
 modify the accepted runtime patch.

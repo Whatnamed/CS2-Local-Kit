@@ -24,16 +24,17 @@
 
 ### ianlucas/cs2-css-inventory-simulator
 
-角色：**candidate** Human cosmetics runtime（CosmeticsLab 实验候选），不是已接受的 production dependency。
+角色：**accepted-as-patched** Human cosmetics runtime —— pinned upstream commit 加上本项目拥有的最小 patch，而不是源码 fork。
 
 当前状态：
 
-- 以 exact upstream release 二进制形式在 `experiments/cosmetics-lab` 中验证；
-- 不 fork、不修改其 DLL / gamedata，不 vendor 源码；
+- 精确 ref、patched DLL hash、patch 定义与实机验收记录以 `runtime/inventory-simulator.lock.json` 为准，本文不复制这些会过期的事实；
+- 未修改的 exact upstream release 在被测 build 上于 listen server 启动阶段崩溃，因此 **不** 是可用形态；该结论记录在 lock 的 `exactUpstreamStatus`，不要按“不修改 DLL”的旧口径理解本组件；
+- 当前接受形态 = pinned upstream commit + 项目自有最小 lifecycle patch（见 `experiments/cosmetics-lab/inventory-simulator/`），不 vendor 完整 upstream 源码；
 - Human cosmetics 的故障域必须与 Bot runtime 隔离，本组件只服务 Human 玩家自己；
-- 只有真实游戏验收（C1/C2 gate）通过后，才考虑从 candidate 升级为架构依赖并改写本文档。
+- 任何 upstream 更新都必须重新通过 `docs/COMPATIBILITY-WATCH.md` 的 C1/C1.1 gate 之后，才允许改变 lock 中的 `status`。
 
-许可证当前为 MIT；分发其原样二进制时保留 attribution。
+许可证当前为 MIT；分发其修改版本时保留适用的 attribution 与许可证义务。
 
 ## 2. Framework dependencies
 
