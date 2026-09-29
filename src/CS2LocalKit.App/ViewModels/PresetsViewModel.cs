@@ -168,7 +168,7 @@ public sealed class PresetsViewModel : ViewModelBase
             _manager.Services.PresetStore.Save(normalizedName, template);
             NewPresetNameInput = "";
             RefreshPresetList();
-            _manager.LoadPreset(normalizedName, force: false);
+            _manager.LoadPreset(normalizedName, force: true);
             ShowFeedback(true, $"已成功创建新预设 [{normalizedName}] 并载入编辑器");
         }
         catch (Exception ex)

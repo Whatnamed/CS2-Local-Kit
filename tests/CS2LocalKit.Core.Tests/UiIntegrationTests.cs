@@ -606,6 +606,7 @@ public sealed class UiIntegrationTests : IDisposable
         presetsVm.CreateNewPresetCommand.Execute(null);
 
         // Invariant: file must NOT be created, draft must NOT be lost, working preset remains
+        Assert.Equal(1, dialog.ConfirmUnsavedChangesCallCount);
         Assert.False(services.PresetStore.Exists("new-cancelled.v1.json"));
         Assert.Equal("test-preset.v1.json", manager.WorkingPresetName);
         Assert.True(manager.IsDirty);
@@ -629,6 +630,7 @@ public sealed class UiIntegrationTests : IDisposable
         presetsVm.CreateNewPresetCommand.Execute(null);
 
         // Invariant: old preset was saved with change, new preset created and switched to, clean draft
+        Assert.Equal(1, dialog.ConfirmUnsavedChangesCallCount);
         Assert.True(services.PresetStore.Exists("new-saved.v1.json"));
         Assert.Equal("new-saved.v1.json", manager.WorkingPresetName);
         Assert.False(manager.IsDirty);
@@ -655,6 +657,7 @@ public sealed class UiIntegrationTests : IDisposable
         presetsVm.CreateNewPresetCommand.Execute(null);
 
         // Invariant: old preset on disk does NOT have the dirty change, new preset created and loaded
+        Assert.Equal(1, dialog.ConfirmUnsavedChangesCallCount);
         Assert.True(services.PresetStore.Exists("new-discarded.v1.json"));
         Assert.Equal("new-discarded.v1.json", manager.WorkingPresetName);
         Assert.False(manager.IsDirty);
@@ -699,8 +702,13 @@ public sealed class MockDialogService : IDialogService
     public bool ConfirmToReturn { get; set; } = true;
     public string? SaveFileDialogResult { get; set; }
     public string? OpenFileDialogResult { get; set; }
+    public int ConfirmUnsavedChangesCallCount { get; private set; }
 
-    public UnsavedChangesResolution ConfirmUnsavedChanges(string presetName) => ResolutionToReturn;
+    public UnsavedChangesResolution ConfirmUnsavedChanges(string presetName)
+    {
+        ConfirmUnsavedChangesCallCount++;
+        return ResolutionToReturn;
+    }
     public bool Confirm(string title, string message) => ConfirmToReturn;
     public void ShowError(string title, string message) { }
     public void ShowInfo(string title, string message) { }
