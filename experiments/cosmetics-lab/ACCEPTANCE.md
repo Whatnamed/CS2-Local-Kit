@@ -83,7 +83,7 @@ runtime status）+ `src/CS2LocalKit.Controller`（薄 CLI）。关键结果：
   ARCHITECTURE §3/§6、MANUAL-ACCEPTANCE §4、COMPATIBILITY-WATCH §6）；
 - 真实 CS2 安装的 runtime/fixture 在本阶段未被修改（.NET golden 与已安装 fixture 一致）。
 
-## C4 — Controller UI（2026-09-29 起，进行中）
+## C4 — Controller UI（2026-09-29 起，已收口）
 
 `src/CS2LocalKit.App`（WPF Controller）建立在 C3 的 Core 入口之上：饰品浏览（武器 / 刀型 /
 手套 / 音乐盒）、预设管理、runtime status 与 Save / Apply / Restore。它只调用 Core 的
@@ -98,9 +98,22 @@ projection 与 apply 事务，不在 UI 层复制其语义。
   的 tested build 已据此更新，证据级别见 `runtime/inventory-simulator.lock.json` 的
   `acceptedRuntime.retestOnNewerBuild`（用户口头验收 + 本机 build 事实，不是自动化证明）。
 
-仍未收口的部分：C4.3 的 presentation / image 缺陷 —— 预览图与当前选择不同步、批量预览只
-加载一部分、滚动条与卡片密度观感。这些都在 UI 层，不改变上面的 runtime 结论；在用户复测
-C4.3 新 release 之前，不宣称整个 C4 最终 PASS。
+C4.3 的 presentation / image 缺陷已修复，并由用户于 2026-09-30 在真实 Controller release 上
+完成最终人工验收 PASS（`controller-20260930-092036`，HEAD `110553c`）：
+
+- 预览图与当前选择同步：`LazyImage` 的请求身份化，URL / 解码宽度变化时立即清掉旧
+  `Image.Source`，被取代的请求不再有权改写元素；重复 `Loaded` 不会丢弃在途下载。
+- 预览完整加载：根因是本机 4 个等价 CDN endpoint 中 3 个不可达、可用那个排在最后，而离屏卡片
+  的请求不会被取消，于是每个注定失败的尝试都占住 4 个共享下载许可之一（是队列饥饿，不是并发数
+  太小，`MaxConcurrency` 保持 4）。改为按兴趣计数取消、3 s connect timeout、记住可用路由、失败
+  进入 30 s 有界 cooldown。同输入冷启动 12 张：74.3 s → 7.1 s；真网分层 smoke 42/42 成功。
+- 呈现与滚动：卡片列数改按卡片区自身实测宽度计算并随尺寸 / section 重算；detail 右栏留出
+  gutter；垂直 ScrollBar 用 `ScrollViewer.VerticalScrollBarVisibility=Hidden` 去掉 chrome（样式
+  setter 做不到：模板用 `TemplateBinding` 绑 `Visibility`，优先级更高）。
+
+证据级别：以上三条的修复过程由 agent 侧的 151/151 Debug + Release 测试（含真实 WPF
+STA/Dispatcher 生命周期测试）与桌面 smoke 支撑；**最终结论来自用户本人对该 release 的人工验收**。
+上一条 game-side Save → Apply → CS2 实机 PASS 的证据级别不变，不因 UI 收口而升级。
 
 ## Still deferred (explicitly)
 
