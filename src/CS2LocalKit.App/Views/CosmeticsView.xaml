@@ -6,6 +6,17 @@
              UseLayoutRounding="True"
              TextOptions.TextFormattingMode="Ideal">
     <UserControl.Resources>
+        <!-- The three scrolling surfaces on this page (model list, card grid, detail rail) are driven
+             by wheel, trackpad and keyboard, so the vertical bar was chrome competing with the art it
+             belonged to. Collapsing rather than hiding it also gives the reserved gutter back. -->
+        <Style TargetType="ScrollBar" BasedOn="{StaticResource {x:Type ScrollBar}}">
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Vertical">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <!-- one finish/music card; selection and art are both driven from the view model -->
         <DataTemplate x:Key="CardTemplate">
             <ToggleButton Style="{StaticResource CardToggle}"
