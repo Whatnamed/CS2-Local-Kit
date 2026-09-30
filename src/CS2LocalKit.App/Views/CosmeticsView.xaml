@@ -6,17 +6,6 @@
              UseLayoutRounding="True"
              TextOptions.TextFormattingMode="Ideal">
     <UserControl.Resources>
-        <!-- The three scrolling surfaces on this page (model list, card grid, detail rail) are driven
-             by wheel, trackpad and keyboard, so the vertical bar was chrome competing with the art it
-             belonged to. Collapsing rather than hiding it also gives the reserved gutter back. -->
-        <Style TargetType="ScrollBar" BasedOn="{StaticResource {x:Type ScrollBar}}">
-            <Style.Triggers>
-                <Trigger Property="Orientation" Value="Vertical">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
         <!-- one finish/music card; selection and art are both driven from the view model -->
         <DataTemplate x:Key="CardTemplate">
             <ToggleButton Style="{StaticResource CardToggle}"
@@ -214,10 +203,14 @@
                     <CheckBox Content="只看已配置" IsChecked="{Binding OnlyConfigured}" Margin="0,0,14,10"/>
                 </StackPanel>
 
+                <!-- Hidden rather than Auto: the bar was chrome here, and the wheel, trackpad and
+                     keyboard still scroll. A ScrollBar style cannot do this instead - the ScrollViewer
+                     template binds the bar's Visibility with TemplateBinding, which outranks a setter. -->
                 <Border Background="{StaticResource BrushBgSurface}" CornerRadius="11" Padding="4,4,4,4">
                     <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                              ItemContainerStyle="{StaticResource ListRow}"
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Hidden">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,1">
@@ -302,7 +295,7 @@
                         <ListBox x:Name="SkinRowList" ItemsSource="{Binding SkinRows}"
                                  Background="Transparent" BorderThickness="0"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                  SelectionMode="Extended">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
@@ -340,7 +333,7 @@
             <Border Grid.Column="2" Style="{StaticResource VerticalDivider}" Margin="8,0"/>
 
             <!-- editing detail -->
-            <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+            <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden"
                           Padding="0,0,10,0">
                 <StackPanel Margin="0,0,4,16">
                     <Border Height="168" CornerRadius="10" Background="{StaticResource BrushPlaceholder}">
@@ -501,6 +494,7 @@
                         <ListBox ItemsSource="{Binding MusicKitRows}"
                                  Background="Transparent" BorderThickness="0"
                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                  SelectionMode="Extended">
                             <ListBox.ItemContainerStyle>
                                 <Style TargetType="ListBoxItem">
