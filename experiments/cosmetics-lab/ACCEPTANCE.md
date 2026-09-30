@@ -47,7 +47,7 @@ projection problem — every migrated item (CT/T gun skins, CT Karambit Fade wit
 name tag, T Butterfly Autotronic, Sport Gloves Slingshot both sides, Music Kit 78)
 matched the legacy `1.json` configuration. Music Kit switching from 28 (C1.1 test
 fixture) to 78 (personal preset) also confirmed injection causality. Evidence:
-`20260929-235446-preset-migration` + fixture hashes in
+`20260929-004716-preset-migration` + fixture hashes in
 `E:\CS2MOD\backups\cosmetics-lab\20260929-000235-c2-fixture` /
 `20260929-004745-preset-apply` (the installed fixture content is unchanged by the
 later C2 cleanup: projection sha256 `01a8a7494b4565b0bcccff4bdd1ff6a9fc26108f9fd162edc6921c26db34700c`).

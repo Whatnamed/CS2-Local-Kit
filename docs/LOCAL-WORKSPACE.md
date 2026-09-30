@@ -77,6 +77,10 @@ E:\CS2MOD\
 - release package 不应捆绑用户私人 preset；
 - preset importer 应允许保留原文件作为回退。
 
+`E:\CS2MOD\1.json`（legacy `cs2bip-cosmetics-preset` 导出）保持在根目录：它是
+`scripts/cosmetics-lab/Convert-LegacyHumanPreset.ps1` 的默认输入，也是 C2 migration report
+记录的 source hash 对象；移走它会破坏 preset 迁移链的可重放性。
+
 ## 4. Releases
 
 实验和正式测试 ZIP 长期放：
@@ -133,7 +137,7 @@ E:\CS2MOD\diagnostics\
 ```text
 E:\CS2MOD\presets\human\                  人用预设（HumanPreset 产品层）
 E:\CS2MOD\backups\cosmetics-lab\          fixture 写入前的备份与 apply record
-E:\CS2MOD\diagnostics\                    各 workstream 的实机诊断落盘（cosmetics-lab / bot-baseline / controller-ui-recovery）
+E:\CS2MOD\diagnostics\                    各 workstream 的实机诊断落盘（cosmetics-lab / bot-baseline / controller）
 E:\CS2MOD\app-data\cosmetics-lab\         Controller 内部 app state
     active-preset.json                    下一次 CS2 启动读取的激活预设指针
     player-state.json                     本机玩家 / 运行时状态
@@ -153,6 +157,14 @@ machine-readable 的默认值以 `src/CS2LocalKit.Core/CorePaths.cs` 为准；`C
 旧 `E:\CS2MOD` 内容无需因为新仓建立就删除。
 
 旧 Local-Arena clone、历史 release 或诊断如用户认为仍有参考价值，可以继续留存；是否移动到 `legacy/` 由实际需要决定，不强制整理。
+
+当前机器的 `legacy\` 分区（不被当前代码或 canonical 文档引用，但保留私人数据与操作记录）：
+
+```text
+legacy\local-arena\            旧 Whatnamed/Local-Arena clone（legacy reference，不是本仓 upstream）
+legacy\presets\                schema v2 旧导出与被路径约定遗弃的 preset 草稿
+legacy\worktree-task-scripts\  未进 Git 的一次性实机操作脚本（cosmetics-lab / bot-baseline）
+```
 
 ## 9. Repo-local temp
 
