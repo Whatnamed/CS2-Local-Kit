@@ -84,17 +84,28 @@ public sealed partial class RuntimeStatusService
             else
                 status.TestedBuildMatch = "unknown";
 
-            status.GameinfoHasMetamod = File.Exists(Path.Combine(csgoDir, "gameinfo.gi"))
-                && File.ReadAllText(Path.Combine(csgoDir, "gameinfo.gi")).Contains("csgo/addons/metamod");
-            // Presence only: there is no reliable installed manifest/hash source for the
-            // framework builds in this phase, so "present-unverified" must never be read
-            // as "version matches the lock".
+            var gameinfo = Path.Combine(csgoDir, "gameinfo.gi");
+            var searchPaths = File.Exists(gameinfo)
+                ? Regex.Match(File.ReadAllText(gameinfo), @"\bSearchPaths\s*\{([^}]*)\}", RegexOptions.Singleline).Groups[1].Value
+                : "";
+            status.GameinfoHasMetamod = Regex.IsMatch(searchPaths, @"^[ \t]*Game[ \t]+csgo/addons/metamod[ \t]*\r?$", RegexOptions.Multiline);
+            // Historical locks support presence only. Explicit compatibility candidates
+            // additionally verify their recorded loader/native/API file hashes below.
             status.MetaModNativeStatus = File.Exists(Path.Combine(csgoDir, "addons", "metamod", "bin", "win64", "metamod.2.cs2.dll"))
                 ? "present-unverified"
                 : "missing";
             status.CounterStrikeSharpNativeStatus = Directory.Exists(Path.Combine(csgoDir, "addons", "counterstrikesharp", "bin", "win64"))
                 ? "present-unverified"
                 : "missing";
+            if (pin?.CandidatePatchVersion is not null
+                && status.PatchVersion == pin.CandidatePatchVersion
+                && status.ClientVersion == pin.CandidateClientVersion
+                && status.BuildId == pin.CandidateBuildId)
+            {
+                status.FrameworkCandidate = true;
+                status.MetaModNativeStatus = VerifyFrameworkFiles(csgoDir, pin.CandidateMetaModFiles, pin.CandidateMetaModVersion);
+                status.CounterStrikeSharpNativeStatus = VerifyFrameworkFiles(csgoDir, pin.CandidateCounterStrikeSharpFiles, pin.CandidateCounterStrikeSharpVersion);
+            }
 
             var isDll = Path.Combine(csgoDir, "addons", "counterstrikesharp", "plugins", "InventorySimulator", "InventorySimulator.dll");
             status.InventorySimulatorPluginPresent = File.Exists(isDll);
@@ -130,6 +141,20 @@ public sealed partial class RuntimeStatusService
         status.ActivePresetExists = active is not null && File.Exists(Path.Combine(presetsRoot, active));
 
         return status;
+    }
+
+    private static string VerifyFrameworkFiles(string csgoDir, IReadOnlyDictionary<string, string> files, string? version)
+    {
+        if (files.Count == 0) return "present-unverified";
+        var root = Path.GetFullPath(csgoDir) + Path.DirectorySeparatorChar;
+        foreach (var (relativePath, expectedHash) in files)
+        {
+            var path = Path.GetFullPath(Path.Combine(csgoDir, relativePath));
+            if (!path.StartsWith(root, StringComparison.OrdinalIgnoreCase) || !File.Exists(path)) return "missing";
+            using var stream = File.OpenRead(path);
+            if (!Convert.ToHexString(SHA256.HashData(stream)).Equals(expectedHash, StringComparison.OrdinalIgnoreCase)) return "hash-mismatch";
+        }
+        return $"candidate-hash-match ({version}; 实机待验收)";
     }
 
     private static LatestApplyInfo? FindLatestApply(string backupsRoot, string installedFixturePath, string? currentFixtureSha, bool cs2Running)
@@ -218,10 +243,11 @@ public sealed class RuntimeStatus
     /// <summary>"match" | "changed" | "unknown" against the lock's tested build.</summary>
     public string TestedBuildMatch { get; set; } = "unknown";
     public bool GameinfoHasMetamod { get; set; }
-    /// <summary>"present-unverified" | "missing". Presence is not a version match - no
-    /// reliable installed-manifest/hash source exists for framework builds in this phase.</summary>
+    public bool FrameworkCandidate { get; set; }
+    /// <summary>"present-unverified" | "missing" | "hash-mismatch" | "candidate-hash-match (...)".
+    /// Candidate hashes prove file identity, never real-game acceptance.</summary>
     public string MetaModNativeStatus { get; set; } = "missing";
-    /// <summary>"present-unverified" | "missing" - same semantics as MetaModNativeStatus.</summary>
+    /// <summary>Same file-identity semantics as MetaModNativeStatus.</summary>
     public string CounterStrikeSharpNativeStatus { get; set; } = "missing";
     public bool InventorySimulatorPluginPresent { get; set; }
     public string? InventorySimulatorDllSha256 { get; set; }
@@ -253,6 +279,8 @@ public sealed class RuntimeStatus
             if (!GameinfoHasMetamod && Cs2Detected) list.Add("gameinfo.gi 未配置 MetaMod 启动项");
             if (MetaModNativeStatus == "missing" && Cs2Detected) list.Add("MetaMod 原生组件缺失");
             if (CounterStrikeSharpNativeStatus == "missing" && Cs2Detected) list.Add("CounterStrikeSharp 原生组件缺失");
+            if (MetaModNativeStatus == "hash-mismatch") list.Add("MetaMod candidate 文件哈希不匹配");
+            if (CounterStrikeSharpNativeStatus == "hash-mismatch") list.Add("CounterStrikeSharp candidate 文件哈希不匹配");
             if (!InventorySimulatorPluginPresent && Cs2Detected) list.Add("InventorySimulator 插件文件缺失");
             if (PatchedDllMatch == "mismatch") list.Add("InventorySimulator patched DLL 校验不匹配");
             if (!FixtureInstalled && Cs2Detected) list.Add("饰品运行文件 (inventories.json) 未安装");
@@ -265,6 +293,7 @@ public sealed class RuntimeStatus
         {
             var list = new List<string>();
             if (Cs2Detected && TestedBuildMatch == "changed") list.Add("CS2 客户端版本已更新，与当前测试基线不同");
+            if (FrameworkCandidate) list.Add("当前 framework 为 compatibility candidate，文件校验不代表实机验收通过");
             if (string.IsNullOrEmpty(ActivePreset) || !ActivePresetExists) list.Add("未选择或未找到已激活预设");
             return list;
         }

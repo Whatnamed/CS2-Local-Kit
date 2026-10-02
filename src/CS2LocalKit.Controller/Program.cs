@@ -175,8 +175,8 @@ public static class Program
         Console.WriteLine($"build             : patch={status.PatchVersion ?? "?"} client={status.ClientVersion ?? "?"} buildid={status.BuildId ?? "?"}");
         Console.WriteLine($"tested build match: {status.TestedBuildMatch}");
         Console.WriteLine($"gameinfo metamod  : {status.GameinfoHasMetamod}");
-        Console.WriteLine($"metamod native    : {status.MetaModNativeStatus} (presence only, no version verification){(status.Lock is null ? "" : $" (lock expects {status.Lock.MetaModVersion})")}");
-        Console.WriteLine($"cssharp native    : {status.CounterStrikeSharpNativeStatus} (presence only, no version verification){(status.Lock is null ? "" : $" (lock expects {status.Lock.CounterStrikeSharpVersion})")}");
+        Console.WriteLine($"metamod native    : {status.MetaModNativeStatus}{(status.Lock is null ? "" : $" (lock expects {status.Lock.MetaModVersion})")}");
+        Console.WriteLine($"cssharp native    : {status.CounterStrikeSharpNativeStatus}{(status.Lock is null ? "" : $" (lock expects {status.Lock.CounterStrikeSharpVersion})")}");
         Console.WriteLine($"invsim plugin     : {status.InventorySimulatorPluginPresent}, patched dll hash: {status.PatchedDllMatch}");
         Console.WriteLine($"fixture installed : {status.FixtureInstalled}, sha256: {status.FixtureSha256 ?? "-"}");
         Console.WriteLine($"active preset     : {status.ActivePreset ?? "(none set)"}{(status.ActivePreset is null || status.ActivePresetExists ? "" : " (MISSING FILE)")}");

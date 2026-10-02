@@ -15,6 +15,13 @@ public sealed class InventorySimulatorLock
     public required string? PatchedDllSha256 { get; init; }
     public required string MetaModVersion { get; init; }
     public required string CounterStrikeSharpVersion { get; init; }
+    public string? CandidatePatchVersion { get; init; }
+    public string? CandidateClientVersion { get; init; }
+    public string? CandidateBuildId { get; init; }
+    public string? CandidateMetaModVersion { get; init; }
+    public string? CandidateCounterStrikeSharpVersion { get; init; }
+    public IReadOnlyDictionary<string, string> CandidateMetaModFiles { get; init; } = new Dictionary<string, string>();
+    public IReadOnlyDictionary<string, string> CandidateCounterStrikeSharpFiles { get; init; } = new Dictionary<string, string>();
 
     public static InventorySimulatorLock Load(string path)
     {
@@ -43,6 +50,18 @@ public sealed class InventorySimulatorLock
                 css = cv2.GetString() ?? "";
         }
 
+        JsonElement candidate = default, candidateBuild = default, candidateMm = default, candidateCss = default;
+        if (r.TryGetProperty("compatibilityCandidate", out candidate)
+            && candidate.TryGetProperty("status", out var candidateStatus) && candidateStatus.GetString() == "candidate")
+        {
+            candidate.TryGetProperty("targetCs2Build", out candidateBuild);
+            if (candidate.TryGetProperty("framework", out var candidateFramework))
+            {
+                candidateFramework.TryGetProperty("metamod", out candidateMm);
+                candidateFramework.TryGetProperty("counterstrikesharp", out candidateCss);
+            }
+        }
+
         return new InventorySimulatorLock
         {
             Repository = r.TryGetProperty("repository", out var repo) ? repo.GetString() ?? "" : "",
@@ -55,6 +74,23 @@ public sealed class InventorySimulatorLock
             PatchedDllSha256 = patchedDll,
             MetaModVersion = metamod,
             CounterStrikeSharpVersion = css,
+            CandidatePatchVersion = OptionalString(candidateBuild, "patchVersion"),
+            CandidateClientVersion = OptionalString(candidateBuild, "clientVersion"),
+            CandidateBuildId = OptionalString(candidateBuild, "buildId"),
+            CandidateMetaModVersion = OptionalString(candidateMm, "version"),
+            CandidateCounterStrikeSharpVersion = OptionalString(candidateCss, "version"),
+            CandidateMetaModFiles = InstalledFiles(candidateMm),
+            CandidateCounterStrikeSharpFiles = InstalledFiles(candidateCss),
         };
+    }
+
+    private static string? OptionalString(JsonElement element, string name) =>
+        element.ValueKind == JsonValueKind.Object && element.TryGetProperty(name, out var value) ? value.GetString() : null;
+
+    private static IReadOnlyDictionary<string, string> InstalledFiles(JsonElement element)
+    {
+        if (element.ValueKind != JsonValueKind.Object || !element.TryGetProperty("installedFiles", out var files))
+            return new Dictionary<string, string>();
+        return files.EnumerateObject().ToDictionary(p => p.Name, p => p.Value.GetString() ?? "");
     }
 }

@@ -144,6 +144,49 @@ public sealed class RuntimeStatusTests : IDisposable
         Assert.Equal("changed", status.TestedBuildMatch);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CandidateFramework_VerifiesEntireLoaderChain_WithoutAcceptingNewBuild(bool tamperLoader)
+    {
+        const string native = "addons/metamod/bin/win64/metamod.2.cs2.dll";
+        const string loader = "addons/metamod/bin/win64/server.dll";
+        File.WriteAllText(Path.Combine(_csgoDir, loader), "candidate-loader");
+        string Hash(string rel) => Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(Path.Combine(_csgoDir, rel)))).ToLowerInvariant();
+        var json = System.Text.Json.Nodes.JsonNode.Parse(LockWithDllSha())!;
+        json["compatibilityCandidate"] = System.Text.Json.Nodes.JsonNode.Parse(JsonSerializer.Serialize(new
+        {
+            status = "candidate",
+            targetCs2Build = new { patchVersion = "1.41.8.8", clientVersion = "2000922", buildId = "25640462" },
+            framework = new { metamod = new { version = "2.0.0-git1473", installedFiles = new Dictionary<string, string> { [native] = Hash(native), [loader] = Hash(loader) } } },
+        }));
+        File.WriteAllText(Path.Combine(_csgoDir, "steam.inf"), "PatchVersion=1.41.8.8\nClientVersion=2000922\n");
+        File.WriteAllText(Path.GetFullPath(Path.Combine(_cs2Root, "..", "..", "appmanifest_730.acf")), "\"buildid\" \"25640462\"");
+        if (tamperLoader) File.WriteAllText(Path.Combine(_csgoDir, loader), "other-loader");
+        var status = new RuntimeStatusService(new RuntimeStatusService.Options
+        {
+            Cs2Root = _cs2Root,
+            LockPath = WriteLock(json.ToJsonString()),
+            BackupsRoot = _backupsRoot,
+            PresetsRoot = _presetsRoot,
+            ActivePresetPath = _activePresetPath,
+            Cs2RunningProbe = () => false,
+        }).GetStatus();
+        Assert.Equal("changed", status.TestedBuildMatch);
+        Assert.True(status.FrameworkCandidate);
+        Assert.Equal("1.41.8.5", status.Lock!.PatchVersion);
+        if (tamperLoader)
+        {
+            Assert.Equal("hash-mismatch", status.MetaModNativeStatus);
+            Assert.Equal(RuntimeHealthLevel.Blocked, status.HealthLevel);
+        }
+        else
+        {
+            Assert.Contains("candidate-hash-match", status.MetaModNativeStatus);
+            Assert.Equal(RuntimeHealthLevel.Attention, status.HealthLevel);
+        }
+    }
+
     [Fact]
     public void Status_PatchedDllMismatch_IsReported()
     {
@@ -157,6 +200,23 @@ public sealed class RuntimeStatusTests : IDisposable
             ActivePresetPath = _activePresetPath,
         }).GetStatus();
         Assert.Equal("mismatch", status.PatchedDllMatch);
+    }
+
+    [Fact]
+    public void LoaderReferenceInComment_IsNotAStartupEntry()
+    {
+        File.WriteAllText(Path.Combine(_csgoDir, "gameinfo.gi"), "// Game csgo/addons/metamod\nSearchPaths\n{\n Game csgo\n}\n");
+        var status = new RuntimeStatusService(new RuntimeStatusService.Options
+        {
+            Cs2Root = _cs2Root,
+            LockPath = WriteLock(LockWithDllSha()),
+            BackupsRoot = _backupsRoot,
+            PresetsRoot = _presetsRoot,
+            ActivePresetPath = _activePresetPath,
+            Cs2RunningProbe = () => false,
+        }).GetStatus();
+        Assert.False(status.GameinfoHasMetamod);
+        Assert.Equal(RuntimeHealthLevel.Blocked, status.HealthLevel);
     }
 
     [Fact]
