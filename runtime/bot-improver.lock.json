@@ -67,13 +67,13 @@
       "patchVersion": "1.41.8.8",
       "buildId": "25640462"
     },
-    "result": "User reports normal Bot functionality. Prior Mirage FPS was 180-200; enhanced-Bot Train FPS was usually 140-160 with rare dips to 100-120. No Train baseline without enhanced plugins was recorded, so this does not establish a Bot performance regression.",
-    "status": "functional-observed-same-map-performance-comparison-pending",
+    "result": "On the same Train map, user reports restored baseline 180-200 FPS, roughly 30-40 FPS higher and more stable than enhanced Bot (usually 140-160; rare 100-120 dips and occasional brief stutter). The phrase about different player counts was a speech-recognition error: user meant different FPS. This is qualitative manual performance evidence; no instrumented profiling or component attribution.",
+    "status": "functional-observed-performance-gate-not-passed",
     "evidence": "E:\\CS2MOD\\diagnostics\\bot-baseline\\20261002-manual-bot-feedback",
     "cssLog": "All nine installed managed plugin directories completed loading in sessions starting at 16:11 and 17:14 +08:00.",
     "restore": {
-      "humanEvidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20261002-174331-posttest",
-      "result": "113 entries verified against original hashes; Human-only runtime restored; game retest pending",
+      "humanEvidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20261002-175546-posttest",
+      "result": "113 entries verified against original hashes; Human-only runtime restored; InventorySimulator successfully loaded at 17:48:37.058 +08:00; explicit visual cosmetic recheck pending.",
       "backup": "E:\\CS2MOD\\backups\\bot-baseline\\20261002-080357136-fb3c7037"
     },
     "performanceComparison": {
@@ -82,9 +82,10 @@
       "candidateMap": "Train",
       "candidateTypicalReportedFps": "140-160",
       "candidateRareReportedFps": "100-120",
-      "sameMapBaseline": "not measured yet",
-      "botCounts": "not supplied; keep native Bot count equal across comparison",
-      "baselineState": "Enhanced Bot payload restored/uninstalled; Human baseline active"
+      "sameMapBaseline": "Train, user-reported 180-200 FPS after enhanced Bot restore/uninstall",
+      "botCounts": "No reported count difference: prior wording was speech-recognition error, corrected to FPS difference; exact counts not recorded.",
+      "baselineState": "Enhanced Bot payload restored/uninstalled; Human baseline active",
+      "stabilityFeedback": "Restored baseline more stable; enhanced Bot sometimes has deep FPS drops and brief stutter."
     }
   }
 }

@@ -204,3 +204,13 @@ Agent 未启动游戏，也未据未量化的 FPS 下降调整插件或 game cva
 因此目前是**缺少同地图性能对照**，尚不能把跨地图差异归因为 Bot 性能回归。
 增强 Bot 已撤下，Human-only baseline 保留，供用户在同 Train/同原生 Bot 数量/同画质下重测。
 不要同时移除所有原生 Bot 再把负载差异当作增强插件开销。
+
+用户再测恢复后的 Train，报告 180–200 FPS，较增强 Bot 高约 30–40 FPS，也更稳定；
+增强 Bot 时会偶发深度掉帧和短暂卡顿。“人数不一样”随后被用户明确纠正为语音识别错误，
+实际说的是“帧数不一样”，因此不记录为已观察到人数差异。
+现已具备同地图的定性性能差异证据，Bot 性能 gate 未通过，仍为 candidate。
+未进行 instrumented profiling，不能把开销定位到某个 plugin，也不能据此宣布必须等待 upstream。
+
+恢复后新 session：CSS 在 17:48:35 startup，InventorySimulator 于 17:48:37.058 成功加载。
+证据：`E:\CS2MOD\diagnostics\cosmetics-lab\20261002-175546-posttest`。
+Agent 未再次安装 Bot；Human 的显式视觉饰品复核仍待补充。
