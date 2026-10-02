@@ -5,7 +5,7 @@
 工作树 `E:\Projects\CS2-Local-Kit\wt-14188-recovery`，branch `codex/cs2-14188-bot-recovery`。
 旧 `experiment/bot-baseline` 的 `1bdc890` / `13c14a7` 经审查迁移 tooling，未 merge 旧 branch。
 
-## Human：静态恢复完成，实机未测
+## Human：恢复与初始 preflight
 
 本机实际 `steam.inf` / appmanifest：`1.41.8.8 / ClientVersion 2000922 / BuildId 25640462`。
 Valve 更新后 `gameinfo.gi` 没有 MetaMod startup entry，插件目录和私人 fixture 仍在。
@@ -114,7 +114,7 @@ Rush behavior-tree sources 仅随包留存为 optional material，未部署或�
 
 ## 状态与下一道 gate
 
-用户于本次询问回复“尚未测试”。Agent 未启动 CS2。
+用户于初始 preflight 询问回复“尚未测试”。后续部分实机证据见下。Agent 未启动 CS2。
 InventorySimulator `accepted-as-patched` / accepted hash 与历史 tested build `1.41.8.6` 保留；
 `1.41.8.8 + git1473` 在单独 compatibilityCandidate 下保持 `manual-game-pending`。
 Bot pin 与 artifact 仅为 candidate，testedCs2Build 仍为 null。
@@ -134,3 +134,16 @@ Bot baseline stable 或无需等待 upstream。失败时按当前 session 日志
 [CSS v1.0.376](https://github.com/roflmuffin/CounterStrikeSharp/releases/tag/v1.0.376)、
 [InventorySimulator pin](https://github.com/ianlucas/cs2-css-inventory-simulator/commit/fade4449aaa6d5153261c855d0cc12d7dacfefdd)、
 [Bot current-main candidate](https://github.com/ed0ard/CS2-Bot-Improver/tree/9848ac892653db6a256c32524dddf6a05cf4383c)。
+
+## 15:58 后续反馈：Human 饰品生效，完整 gate 待确认
+
+用户反馈“测了，饰品有效果了”。这确认实际 cosmetic projection 已恢复，
+但没有单独确认枪/刀/手套/音乐盒全项、respawn/side change 或无 crash/HUD/audio/performance 异常。
+不将这条反馈扩大为完整验收 PASS。
+
+只读 post-test 证据：`E:\CS2MOD\diagnostics\cosmetics-lab\20261002-155843-posttest`。
+当前 build 仍为 `1.41.8.8 / 2000922`，patched InventorySimulator DLL SHA256 仍匹配 accepted hash。
+`log-cssharp20261002.txt` 记录两次 CSS startup：15:41:18 和 15:42:40；
+InventorySimulator 分别于 15:41:19.969、15:42:41.738 完成加载，日志没有 ERROR/exception。
+这验证当前实际加载链，并支持用户的饰品生效观察；它不单独证明全部 gameplay 稳定性。
+采集时未检测到 cs2.exe，未执行 Bot install；新的 framework/build 继续保持 candidate。

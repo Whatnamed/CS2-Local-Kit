@@ -99,6 +99,13 @@
       }
     },
     "gate": "manual-game-pending",
-    "notes": "MetaMod-only recovery after gameinfo.gi rewrite; acceptedRuntime and testedCs2Build remain the historical accepted baseline."
+    "notes": "MetaMod-only recovery after gameinfo.gi rewrite; acceptedRuntime and testedCs2Build remain the historical accepted baseline.",
+    "partialManualObservation": {
+      "date": "2026-10-02",
+      "result": "User reports cosmetics are effective again. CSS logs confirm InventorySimulator loaded in two sessions; complete gameplay/cosmetic acceptance is still pending.",
+      "evidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20261002-155843-posttest",
+      "cssLog": "log-cssharp20261002.txt: Finished loading plugin InventorySimulator at 15:41:19.969 and 15:42:41.738 +08:00; no ERROR/exception in this log.",
+      "fullManualGate": "pending; respawn/side change, all cosmetic categories, crash/HUD/audio/performance not individually confirmed"
+    }
   }
 }
