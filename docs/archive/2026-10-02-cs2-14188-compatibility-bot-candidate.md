@@ -214,3 +214,8 @@ Agent 未启动游戏，也未据未量化的 FPS 下降调整插件或 game cva
 恢复后新 session：CSS 在 17:48:35 startup，InventorySimulator 于 17:48:37.058 成功加载。
 证据：`E:\CS2MOD\diagnostics\cosmetics-lab\20261002-175546-posttest`。
 Agent 未再次安装 Bot；Human 的显式视觉饰品复核仍待补充。
+
+用户随后明确确认恢复后的枪皮、刀、手套、音乐盒“全部正常”。
+因此真实 restore 的文件身份核验、恢复后 InventorySimulator startup 和 Human 饰品实机复核均通过。
+本轮最终状态：Human compatibility recovery accepted；Bot 功能可用但性能 gate 未通过，
+仍为 candidate，实际机器保持 Human-only baseline。Bot 性能成因尚未定位，不追加组件升级或重构。

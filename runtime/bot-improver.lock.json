@@ -73,7 +73,7 @@
     "cssLog": "All nine installed managed plugin directories completed loading in sessions starting at 16:11 and 17:14 +08:00.",
     "restore": {
       "humanEvidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20261002-175546-posttest",
-      "result": "113 entries verified against original hashes; Human-only runtime restored; InventorySimulator successfully loaded at 17:48:37.058 +08:00; explicit visual cosmetic recheck pending.",
+      "result": "PASS: 113 entries verified against original hashes, post-restore InventorySimulator startup confirmed, and user explicitly confirms guns/knives/gloves/music kit all normal. Enhanced Bot remains uninstalled and candidate due to its unpassed performance gate.",
       "backup": "E:\\CS2MOD\\backups\\bot-baseline\\20261002-080357136-fb3c7037"
     },
     "performanceComparison": {
