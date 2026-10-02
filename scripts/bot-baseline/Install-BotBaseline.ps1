@@ -1,7 +1,7 @@
 #Requires -Version 7
 <#
 .SYNOPSIS
-    Installs the bot-baseline Lane A payload into the local CS2 installation
+    Installs the current-main Bot candidate into the local CS2 installation
     behind an explicit backup/restore contract.
 
 .DESCRIPTION
@@ -42,6 +42,8 @@ param(
     [string]$Cs2Root,
     [string]$BackupRoot = 'E:\CS2MOD\backups\bot-baseline',
     [switch]$IsolateHumanCosmetics,
+    [ValidateSet('Low','Medium','High')][string]$Difficulty = 'Medium',
+    [switch]$AllowFakeTree,
     [switch]$Apply
 )
 
@@ -80,10 +82,13 @@ foreach ($rel in $payloadFiles) {
     if ($actual -ne $expected) { $hashMismatches += $rel }
 }
 if ($hashMismatches.Count -gt 0) { throw ("Payload integrity check FAILED for: " + ($hashMismatches -join ', ')) }
+$sourcePaths = @{}
+foreach ($rel in $payloadFiles) { $sourcePaths[$rel] = $rel }
+if ($manifest.lane -eq 'bot-baseline-main') { $sourcePaths['overrides/botprofile.vpk'] = "overrides/$Difficulty/botprofile.vpk" }
 
 # Lane A active CSS plugin set (from the payload itself)
 $lanePluginSet = @(Get-ChildItem (Join-Path $payloadDir 'addons\counterstrikesharp\plugins') -Directory | ForEach-Object Name)
-$laneMetamodVdfs = @(Get-ChildItem (Join-Path $payloadDir 'addons\metamod') -Filter '*.vdf' -File | ForEach-Object Name)
+$laneMetamodVdfs = @('counterstrikesharp.vdf') + @(Get-ChildItem (Join-Path $payloadDir 'addons\metamod') -Filter '*.vdf' -File | ForEach-Object Name)
 
 # ---------------------------------------------------------------------------
 # Target validation
@@ -92,6 +97,18 @@ $cs2 = Find-Cs2Root -ExplicitRoot $Cs2Root
 if (-not $cs2) { throw 'CS2 installation root not found. Pass -Cs2Root explicitly.' }
 $csgo = Get-CsgoDir -Cs2Root $cs2
 Write-Host "CS2 root : $cs2"
+if ($AllowFakeTree -and (-not $Cs2Root -or (Test-Path -LiteralPath (Join-Path $cs2 'game/bin/win64/cs2.exe')))) {
+    throw '-AllowFakeTree requires an explicit fake root without a CS2 executable.'
+}
+if ($manifest.lane -eq 'bot-baseline-main' -and -not $AllowFakeTree) {
+    foreach ($component in @($manifest.sources.framework.metamod, $manifest.sources.framework.counterstrikesharp)) {
+        foreach ($p in $component.installedFiles.PSObject.Properties) {
+            if ((Get-FileSha256Lower (Resolve-BaselinePath $csgo $p.Name)) -ne $p.Value) {
+                throw "Shared framework prerequisite mismatch: $($p.Name). Recover Human framework separately."
+            }
+        }
+    }
+}
 
 if (Test-Cs2Running) {
     throw 'cs2.exe is currently RUNNING. Installation is intentionally skipped; close the game first.'
@@ -112,7 +129,12 @@ foreach ($rel in $payloadFiles) {
     # file is NEVER replaced wholesale - only the insertion below touches it
     if ($rel -eq 'gameinfo.gi') { continue }
     $targetPath = Resolve-BaselinePath $csgo $rel
-    $installedSha = $manifest.payloadFiles.$rel
+    $installedSha = $manifest.payloadFiles.($sourcePaths[$rel])
+    if ($rel -eq 'addons/counterstrikesharp/configs/core.json' -and (Test-Path -LiteralPath $targetPath -PathType Leaf)) {
+        $originalSha = Get-FileSha256Lower $targetPath
+        $entries.Add([pscustomobject]@{ relPath = $rel; action = 'retained'; originalSha256 = $originalSha; installedSha256 = $originalSha })
+        continue
+    }
     $sharedFramework = $rel -match '^addons/(metamod/bin/|counterstrikesharp/(api|bin|dotnet|gamedata|lang)/)' -or $rel -eq 'addons/metamod/counterstrikesharp.vdf'
     if ((Test-Path -LiteralPath $targetPath) -and (Get-FileSha256Lower $targetPath) -eq $installedSha) {
         $entries.Add([pscustomobject]@{ relPath = $rel; action = 'retained'; originalSha256 = $installedSha; installedSha256 = $installedSha })
@@ -174,7 +196,7 @@ if (Test-Path $metamodDir) {
 
 Write-Host ''
 Write-Host ('Payload files: {0}  (created: {1}, overwritten: {2})' -f `
-    @($entries | Where-Object { $_.action -eq 'created' }).Count, `
+    $payloadFiles.Count, `
     @($entries | Where-Object { $_.action -eq 'created' }).Count, `
     @($entries | Where-Object { $_.action -eq 'overwritten' }).Count)
 $isolated = @($entries | Where-Object { $_.action -eq 'isolated' })
@@ -207,7 +229,7 @@ function Save-BackupFile([string]$SourcePath, [string]$RelPath) {
 
 $stagedGameinfo = Join-Path $repoRoot ('temp/staging/gameinfo-' + [Guid]::NewGuid().ToString('N') + '.gi')
 New-Item -ItemType Directory -Force -Path (Split-Path $stagedGameinfo -Parent) | Out-Null
-New-BaselineGameinfo $gameinfoPath $stagedGameinfo @('csgo/overrides', 'csgo/addons/metamod')
+New-BaselineGameinfo $gameinfoPath $stagedGameinfo @('csgo/overrides/botprofile.vpk', 'csgo/addons/metamod')
 ($entries | Where-Object relPath -eq 'gameinfo.gi').installedSha256 = Get-FileSha256Lower $stagedGameinfo
 
 $record = [ordered]@{
@@ -220,6 +242,7 @@ $record = [ordered]@{
     # only the standalone <lane>.manifest.json next to the zip does
     releaseSha256 = if ($manifest.PSObject.Properties['releaseArtifact']) { $manifest.releaseArtifact.sha256 } else { $null }
     lane          = $manifest.lane
+    difficulty    = $Difficulty
     entries       = $entries
 }
 $record | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $backupDir 'install-record.json') -Encoding UTF8
@@ -230,6 +253,7 @@ foreach ($e in $entries) {
         'overwritten' { Save-BackupFile $targetPath $e.relPath }
         'modified'    { Save-BackupFile $targetPath $e.relPath }
         'isolated' {
+            if ((Get-BaselineIdentity $targetPath) -ne $e.originalSha256) { throw "Isolation target changed during preflight: $($e.relPath). Backup: $backupDir" }
             $dest = Join-Path $backupDir "isolated\$($e.relPath)"
             New-Item -ItemType Directory -Force -Path (Split-Path $dest -Parent) | Out-Null
             $null = Resolve-BaselinePath $BackupDir "isolated/$($e.relPath)"
@@ -243,17 +267,20 @@ foreach ($e in $entries) {
 foreach ($rel in $payloadFiles) {
     if ($rel -eq 'gameinfo.gi') { continue }
     if (@($entries | Where-Object { $_.relPath -eq $rel -and $_.action -eq 'retained' }).Count) { continue }
-    $targetPath = Join-Path $csgo $rel
+    $targetPath = Resolve-BaselinePath $csgo $rel
+    $planned = $entries | Where-Object relPath -eq $rel
+    if ((Get-BaselineIdentity $targetPath) -ne $planned.originalSha256) { throw "Install target changed during preflight: $rel. Backup: $backupDir" }
     New-Item -ItemType Directory -Force -Path (Split-Path $targetPath -Parent) | Out-Null
-    Copy-Item (Join-Path $payloadDir $rel) $targetPath -Force
+    Copy-Item -LiteralPath (Join-Path $payloadDir $sourcePaths[$rel]) -Destination $targetPath -Force
 }
 
+if ((Get-FileSha256Lower $gameinfoPath) -ne ($entries | Where-Object relPath -eq 'gameinfo.gi').originalSha256) { throw "gameinfo.gi changed during installation. Backup: $backupDir" }
 Copy-Item -LiteralPath $stagedGameinfo -Destination $gameinfoPath -Force
 foreach ($e in $entries | Where-Object { $_.action -in @('created','overwritten','modified') }) {
     if ((Get-FileSha256Lower (Join-Path $csgo $e.relPath)) -ne $e.installedSha256) { throw "Installed identity mismatch: $($e.relPath)" }
 }
 
 Write-Host ''
-Write-Host "INSTALLED : Lane A -> $csgo"
+Write-Host "INSTALLED : $($manifest.lane) ($Difficulty) -> $csgo"
 Write-Host "BACKUP    : $backupDir"
 Write-Host "RESTORE   : pwsh -File scripts\bot-baseline\Restore-BotBaseline.ps1 -BackupDir `"$backupDir`" -Apply"

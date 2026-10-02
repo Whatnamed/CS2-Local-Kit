@@ -2,10 +2,55 @@
   "schemaVersion": 1,
   "component": "CS2-Bot-Improver",
   "repository": "ed0ard/CS2-Bot-Improver",
-  "ref": "abb2c0fc34e48183048134cfca0d2021db6b8d45",
+  "ref": "9848ac892653db6a256c32524dddf6a05cf4383c",
   "status": "candidate",
   "testedCs2Build": null,
   "artifact": null,
   "license": "AGPL-3.0",
-  "notes": "Candidate current-main pin selected for isolated bot-baseline validation. Do not treat as accepted until real in-game testing passes."
+  "notes": "Current-main candidate with exact upstream gitlink refs; native releases must resolve to those refs. No real-game acceptance on CS2 1.41.8.8.",
+  "submodules": {
+    "addons/BotController": "451c7ba8ddb007eeb4d72edf291f6e0cbb051e56",
+    "addons/BotHider": "12069c25a756deedc72f8fc116ac3b18045d1223",
+    "addons/BotVision": "33ab01fc5ec4e27b6f07aff653d54638ad84ebcb",
+    "addons/counterstrikesharp/plugins/BotAI": "1bcd6dbe310fc059081baa9b56f6145b8a628967",
+    "addons/counterstrikesharp/plugins/BotAimImprover": "c3d10f5f5e31302589032bb579dfc342c9ea5639",
+    "addons/counterstrikesharp/plugins/BotBuy": "ff0f47750058f6b16344e7e1712db3b5e65d70b2",
+    "addons/counterstrikesharp/plugins/BotRandomizer": "5b16e1447f4e5d3032a1625ac368c90f81b929ac",
+    "addons/counterstrikesharp/plugins/BotState": "30e791f2f615452b3403f352e731116632a71887",
+    "addons/counterstrikesharp/plugins/NadeSystem": "21788dc3fb61ca62db6a14b9657fd61cbbc888f1"
+  },
+  "nativeAssets": [
+    {
+      "repository": "XBribo/CS2-Bot-Controller",
+      "ref": "451c7ba8ddb007eeb4d72edf291f6e0cbb051e56",
+      "tag": "v0.7.0",
+      "name": "BotController-MM-windows-0.7.0.zip",
+      "sha256": "75d5885fe8dbbf55773bc044740b08ce269afdd57007175c71f28204579ec743",
+      "url": "https://github.com/XBribo/CS2-Bot-Controller/releases/download/v0.7.0/BotController-MM-windows-0.7.0.zip"
+    },
+    {
+      "repository": "XBribo/CS2-Bot-Controller",
+      "ref": "451c7ba8ddb007eeb4d72edf291f6e0cbb051e56",
+      "tag": "v0.7.0",
+      "name": "BotController-CSS-API-0.7.0.zip",
+      "sha256": "5aa0ad73afa617e5c6b61f124d4af0719a972acf642c9dbe34ddaae2ae21ea35",
+      "url": "https://github.com/XBribo/CS2-Bot-Controller/releases/download/v0.7.0/BotController-CSS-API-0.7.0.zip"
+    },
+    {
+      "repository": "XBribo/CS2-Bot-Hider",
+      "ref": "12069c25a756deedc72f8fc116ac3b18045d1223",
+      "tag": "v0.5.1",
+      "name": "BotHider-Windows-0.5.1.zip",
+      "sha256": "9988286b9c6c849b2a75b5b252ee40734ff430c2a82ab56bc852866448cc507b",
+      "url": "https://github.com/XBribo/CS2-Bot-Hider/releases/download/v0.5.1/BotHider-Windows-0.5.1.zip"
+    },
+    {
+      "repository": "XBribo/CS2-Bot-Vision",
+      "ref": "33ab01fc5ec4e27b6f07aff653d54638ad84ebcb",
+      "tag": "v0.3.0",
+      "name": "BotVision-Windows-0.3.0.zip",
+      "sha256": "04fb6ebc8c1554a96fbdea1029e276785cda015e72ed4e9c489e2c08d8516618",
+      "url": "https://github.com/XBribo/CS2-Bot-Vision/releases/download/v0.3.0/BotVision-Windows-0.3.0.zip"
+    }
+  ]
 }
