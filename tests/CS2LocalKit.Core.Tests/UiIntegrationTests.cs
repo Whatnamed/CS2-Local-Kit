@@ -74,7 +74,7 @@ public sealed class UiIntegrationTests : IDisposable
 
         // Gameinfo
         var gameinfo = Path.Combine(_csgoDir, "gameinfo.gi");
-        File.WriteAllText(gameinfo, "Game_LowViolence\tcsgo_lv\r\nGame\tcsgo\r\nGame\tcsgo/addons/metamod\r\n");
+        File.WriteAllText(gameinfo, "SearchPaths\r\n{\r\nGame_LowViolence\tcsgo_lv\r\nGame\tcsgo\r\nGame\tcsgo/addons/metamod\r\n}\r\n");
 
         // Existing preset
         var minimal = HumanPresetTemplate.CreateMinimalValid();

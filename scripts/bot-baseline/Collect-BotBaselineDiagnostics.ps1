@@ -134,4 +134,5 @@ $snapshot | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $OutDir 'posttest.j
 Write-Host "DIAGNOSTICS_SNAPSHOT: $OutDir"
 Write-Host "CS2_RUNNING: $($snapshot.cs2Running)"
 Write-Host "CSS_API_VERSION: $($snapshot.counterstrikesharp.apiDllVersion)"
-Write-Host "ACTIVE_PLUGIN_DIRS: $(@($snapshot.counterstrikesharp.plugins).Count)"
+Write-Host "PLUGIN_DIRS: $(@($snapshot.counterstrikesharp.plugins).Count)"
+Write-Host "PLUGIN_DIRS_WITH_DLLS: $(@($snapshot.counterstrikesharp.plugins | Where-Object { $_.dlls.Count -gt 0 }).Count) (disk presence, not runtime load proof)"

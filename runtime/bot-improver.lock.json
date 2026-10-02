@@ -5,7 +5,14 @@
   "ref": "9848ac892653db6a256c32524dddf6a05cf4383c",
   "status": "candidate",
   "testedCs2Build": null,
-  "artifact": null,
+  "artifact": {
+    "status": "candidate",
+    "path": "E:\\CS2MOD\\releases\\bot-baseline\\bot-baseline-main-20261002-130601.zip",
+    "sha256": "58386f947880e38102e7021cd17f80d24b32d677b155ada53bd6ae4f64255248",
+    "payloadFileCount": 111,
+    "builtFromRepoHead": "4f008227e9e4ac2d9f87e5dbea3f9dddded273da",
+    "manifest": "E:\\CS2MOD\\releases\\bot-baseline\\bot-baseline-main-20261002-130601.manifest.json"
+  },
   "license": "AGPL-3.0",
   "notes": "Current-main candidate with exact upstream gitlink refs; native releases must resolve to those refs. No real-game acceptance on CS2 1.41.8.8.",
   "submodules": {
