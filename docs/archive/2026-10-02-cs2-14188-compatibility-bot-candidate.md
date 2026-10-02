@@ -175,3 +175,32 @@ ownership `safeRestoreAvailable=true`，9 个含 DLL 的 Bot plugin directories�
 当前真实环境为 **Bot candidate 单独测试**：Human 插件暂隔离，fixture/preset 不变。
 Agent 没有启动 CS2；Bot 游戏 gate 和 restore 后 Human 重测仍待用户执行。
 本节更新前面的时间点状态；先前“未测试/未安装”是初始 preflight 记录，不是当前状态。
+
+## Bot 用户反馈 / 实际 restore
+
+用户反馈“可以的，没问题，但是帧数还是有点下降，其余都没问题”，并询问 Human 饰品为何没有生效。
+本轮原本是 Bot-only baseline，InventorySimulator 插件显式隔离，并未删除 Human preset/fixture。
+这支持基本 Bot 功能可用的观察，但帧数下降尚无同地图/同 Bot 数量的量化对照；
+刀/drop probe 也未单独反馈。不将“其余没问题”扩大为完整的 Bot compatibility/performance PASS。
+Bot lock 继续为 candidate，将本次实际 build 和反馈记录在 manualObservation。
+
+本次日志保留在 `E:\CS2MOD\diagnostics\bot-baseline\20261002-manual-bot-feedback`。
+CSS 记录 16:11、17:14 两次 startup，9 个 installed managed plugin directories 均完成加载。
+这证明加载，不能单独证明每个 native hook/capability 都正常或没有性能回归。
+
+收集时 CS2 已关闭，所有 ownership preflight 通过，随后按确切 backup 执行真实 restore：
+97 created files 删除、15 modified/overwritten files 恢复、1 个 Human plugin directory 移回，
+**113 entries，0 failed verification**。未清理 runtime 自行生成且不在 install record 内的文件。
+当前仅 InventorySimulator 目录含 plugin DLL；MetaMod/CSS 仍是 accepted git1473/v1.0.376，
+gameinfo hash 恢复为 Bot 安装前值，patched DLL hash 与安装前 fixture hash 均匹配。
+
+Human restored disk snapshot：`E:\CS2MOD\diagnostics\cosmetics-lab\20261002-174331-posttest`。
+Runtime Status：tested build match、framework hash-match、patched DLL match；
+本次 restore 后**尚未重新启动游戏验证 Human**，不伪造这一道 PASS。
+Agent 未启动游戏，也未据未量化的 FPS 下降调整插件或 game cvars。
+
+用户补充 FPS：此前 Mirage 常见 180–200；本次增强 Bot 的 Train 常见 140–160，
+少数时候降至 100–120。此前没有记录未安装增强 Bot 时的 Train FPS，Bot 数量也未提供。
+因此目前是**缺少同地图性能对照**，尚不能把跨地图差异归因为 Bot 性能回归。
+增强 Bot 已撤下，Human-only baseline 保留，供用户在同 Train/同原生 Bot 数量/同画质下重测。
+不要同时移除所有原生 Bot 再把负载差异当作增强插件开销。

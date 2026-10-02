@@ -59,5 +59,32 @@
       "sha256": "04fb6ebc8c1554a96fbdea1029e276785cda015e72ed4e9c489e2c08d8516618",
       "url": "https://github.com/XBribo/CS2-Bot-Vision/releases/download/v0.3.0/BotVision-Windows-0.3.0.zip"
     }
-  ]
+  ],
+  "manualObservation": {
+    "date": "2026-10-02",
+    "observedCs2Build": {
+      "clientVersion": "2000922",
+      "patchVersion": "1.41.8.8",
+      "buildId": "25640462"
+    },
+    "result": "User reports normal Bot functionality. Prior Mirage FPS was 180-200; enhanced-Bot Train FPS was usually 140-160 with rare dips to 100-120. No Train baseline without enhanced plugins was recorded, so this does not establish a Bot performance regression.",
+    "status": "functional-observed-same-map-performance-comparison-pending",
+    "evidence": "E:\\CS2MOD\\diagnostics\\bot-baseline\\20261002-manual-bot-feedback",
+    "cssLog": "All nine installed managed plugin directories completed loading in sessions starting at 16:11 and 17:14 +08:00.",
+    "restore": {
+      "humanEvidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20261002-174331-posttest",
+      "result": "113 entries verified against original hashes; Human-only runtime restored; game retest pending",
+      "backup": "E:\\CS2MOD\\backups\\bot-baseline\\20261002-080357136-fb3c7037"
+    },
+    "performanceComparison": {
+      "priorMap": "Mirage",
+      "priorReportedFps": "180-200",
+      "candidateMap": "Train",
+      "candidateTypicalReportedFps": "140-160",
+      "candidateRareReportedFps": "100-120",
+      "sameMapBaseline": "not measured yet",
+      "botCounts": "not supplied; keep native Bot count equal across comparison",
+      "baselineState": "Enhanced Bot payload restored/uninstalled; Human baseline active"
+    }
+  }
 }
