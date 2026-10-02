@@ -147,3 +147,31 @@ Bot baseline stable 或无需等待 upstream。失败时按当前 session 日志
 InventorySimulator 分别于 15:41:19.969、15:42:41.738 完成加载，日志没有 ERROR/exception。
 这验证当前实际加载链，并支持用户的饰品生效观察；它不单独证明全部 gameplay 稳定性。
 采集时未检测到 cs2.exe，未执行 Bot install；新的 framework/build 继续保持 candidate。
+
+## 后续完整 Human PASS / Bot 实际安装
+
+用户随后明确回复“全部确认通过”，覆盖枪皮、刀、手套、音乐盒、重生、换边，
+以及无 crash、HUD/audio loop 或明显性能问题。结合本机 build/hash 与两次成功加载日志，
+Human 的 `1.41.8.8 + git1473 + CSS v1.0.376 + accepted patched InventorySimulator`
+现已按**用户实机反馈 + 本机只读核验**接受；不将证据升级为自动化视觉证明。
+
+Human lock 的 testedCs2Build 更新为 `1.41.8.8 / 2000922 / 25640462`，framework 更新为
+已验证的 git1473/CSS v1.0.376 及其 installed hashes；先前 framework 和 1.41.8.6
+验收记录保留在历史字段，accepted patched DLL/ref 不变。已移除 pending compatibilityCandidate。
+Runtime Status 对 accepted framework 仍核验 installed hashes，不能只因历史 PASS 忽略后续内容漂移。
+接受后的状态检查返回 tested build `match`、MetaMod/CSS `hash-match`；新增测试后 Release **156/156 PASS**。
+Bot build helper 同时支持 pending candidate 和 accepted Human framework prerequisite。
+
+核验 cs2.exe 已关闭后，按本任务安装 Bot candidate 为 Medium，显式隔离 Human 插件。
+本机真实安装结果：111 payload files，97 created、14 overwritten，加上 gameinfo 修改与
+1 个 isolated Human plugin directory。MetaMod/CSS core、gamedata 和 CSS VDF 不由 Bot 改写。
+Human fixture 保留为安装前 hash；隔离区 DLL 仍为 accepted patched hash。
+
+确切备份：`E:\CS2MOD\backups\bot-baseline\20261002-080357136-fb3c7037`。
+安装后全套 restore preview 通过：97 remove、15 restore-file、1 move-back，尚未执行真实 restore。
+诊断：`E:\CS2MOD\diagnostics\bot-baseline\20261002-installed-preflight`，
+ownership `safeRestoreAvailable=true`，9 个含 DLL 的 Bot plugin directories；这仍只是磁盘状态。
+
+当前真实环境为 **Bot candidate 单独测试**：Human 插件暂隔离，fixture/preset 不变。
+Agent 没有启动 CS2；Bot 游戏 gate 和 restore 后 Human 重测仍待用户执行。
+本节更新前面的时间点状态；先前“未测试/未安装”是初始 preflight 记录，不是当前状态。

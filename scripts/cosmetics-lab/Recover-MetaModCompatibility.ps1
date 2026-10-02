@@ -16,6 +16,7 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../bot-baseline/BotBaseline.Common.ps1')
 $repo = Get-RepoRoot
 $pin = Get-Content (Join-Path $repo 'runtime/inventory-simulator.lock.json') -Raw | ConvertFrom-Json
+if (-not $pin.PSObject.Properties['compatibilityCandidate']) { throw 'No pending compatibility candidate in lock. Do not reapply an accepted recovery.' }
 $candidate = $pin.compatibilityCandidate
 if ($candidate.status -ne 'candidate') { throw 'Expected an explicitly unaccepted compatibility candidate.' }
 if (Test-Cs2Running) { throw 'Close CS2 before framework recovery.' }

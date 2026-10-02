@@ -15,6 +15,8 @@ public sealed class InventorySimulatorLock
     public required string? PatchedDllSha256 { get; init; }
     public required string MetaModVersion { get; init; }
     public required string CounterStrikeSharpVersion { get; init; }
+    public IReadOnlyDictionary<string, string> MetaModFiles { get; init; } = new Dictionary<string, string>();
+    public IReadOnlyDictionary<string, string> CounterStrikeSharpFiles { get; init; } = new Dictionary<string, string>();
     public string? CandidatePatchVersion { get; init; }
     public string? CandidateClientVersion { get; init; }
     public string? CandidateBuildId { get; init; }
@@ -42,12 +44,15 @@ public sealed class InventorySimulatorLock
             patchedDll = pd.GetString();
 
         string metamod = "", css = "";
+        JsonElement acceptedMm = default, acceptedCss = default;
         if (r.TryGetProperty("framework", out var fw) && fw.ValueKind == JsonValueKind.Object)
         {
             if (fw.TryGetProperty("metamod", out var mm) && mm.TryGetProperty("version", out var mv))
                 metamod = mv.GetString() ?? "";
             if (fw.TryGetProperty("counterstrikesharp", out var cs) && cs.TryGetProperty("version", out var cv2))
                 css = cv2.GetString() ?? "";
+            fw.TryGetProperty("metamod", out acceptedMm);
+            fw.TryGetProperty("counterstrikesharp", out acceptedCss);
         }
 
         JsonElement candidate = default, candidateBuild = default, candidateMm = default, candidateCss = default;
@@ -74,6 +79,8 @@ public sealed class InventorySimulatorLock
             PatchedDllSha256 = patchedDll,
             MetaModVersion = metamod,
             CounterStrikeSharpVersion = css,
+            MetaModFiles = InstalledFiles(acceptedMm),
+            CounterStrikeSharpFiles = InstalledFiles(acceptedCss),
             CandidatePatchVersion = OptionalString(candidateBuild, "patchVersion"),
             CandidateClientVersion = OptionalString(candidateBuild, "clientVersion"),
             CandidateBuildId = OptionalString(candidateBuild, "buildId"),

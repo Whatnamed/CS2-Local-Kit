@@ -219,6 +219,32 @@ public sealed class RuntimeStatusTests : IDisposable
         Assert.Equal(RuntimeHealthLevel.Blocked, status.HealthLevel);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void AcceptedFramework_StillRequiresMatchingInstalledIdentity(bool tamper)
+    {
+        const string rel = "addons/metamod/bin/win64/metamod.2.cs2.dll";
+        var path = Path.Combine(_csgoDir, rel);
+        var sha = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path))).ToLowerInvariant();
+        var json = System.Text.Json.Nodes.JsonNode.Parse(LockWithDllSha())!;
+        json["framework"]!["metamod"]!["installedFiles"] = System.Text.Json.Nodes.JsonNode.Parse(JsonSerializer.Serialize(new Dictionary<string, string> { [rel] = sha }));
+        if (tamper) File.WriteAllText(path, "different-installed-loader");
+        var status = new RuntimeStatusService(new RuntimeStatusService.Options
+        {
+            Cs2Root = _cs2Root,
+            LockPath = WriteLock(json.ToJsonString()),
+            BackupsRoot = _backupsRoot,
+            PresetsRoot = _presetsRoot,
+            ActivePresetPath = _activePresetPath,
+            Cs2RunningProbe = () => false,
+        }).GetStatus();
+        Assert.False(status.FrameworkCandidate);
+        Assert.Equal("match", status.TestedBuildMatch);
+        Assert.Equal(tamper ? "hash-mismatch" : "hash-match (2.0.0-git1469)", status.MetaModNativeStatus);
+        if (tamper) Assert.Equal(RuntimeHealthLevel.Blocked, status.HealthLevel);
+    }
+
     [Fact]
     public void Status_ActivePreset_And_LatestApply()
     {

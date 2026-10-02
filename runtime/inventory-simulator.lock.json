@@ -7,9 +7,9 @@
   "license": "MIT",
   "status": "accepted-as-patched",
   "testedCs2Build": {
-    "patchVersion": "1.41.8.6",
-    "clientVersion": "2000919",
-    "buildId": "25588766"
+    "patchVersion": "1.41.8.8",
+    "clientVersion": "2000922",
+    "buildId": "25640462"
   },
   "exactUpstreamStatus": {
     "state": "startup-fail",
@@ -52,60 +52,60 @@
         "sequence": "the Apply at 21:37:43 wrote the fixture the game loaded in the 22:04:11 session, which is after this build's 08:01:06 update"
       }
     },
-    "release": "E:\\CS2MOD\\releases\\cosmetics-lab\\inventory-simulator-c1_1-patched-20260928-225604"
-  },
-  "framework": {
-    "metamod": {
-      "version": "2.0.0-git1469",
-      "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1469-windows.zip",
-      "sha256": "e1b3daa232b492f19922f260deac2a2caa50dbf975a9907a4e69684ce8dfa3e8"
-    },
-    "counterstrikesharp": {
-      "version": "v1.0.376",
-      "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
-      "url": "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v1.0.376/counterstrikesharp-with-runtime-windows-1.0.376.zip",
-      "sha256": "4f2777545a0940351450440288e7487509d539f770e66cf1c30cc2419084c5f8"
-    }
-  },
-  "notes": "status 'accepted-as-patched' means: the patched build listed under acceptedRuntime passed real-game acceptance on the testedCs2Build; it does NOT mark unpatched upstream 3.3.0 as accepted. Any upstream update must re-run the C1/C1.1 gate (see docs/COMPATIBILITY-WATCH.md) before changing this status.",
-  "compatibilityCandidate": {
-    "status": "candidate",
-    "targetCs2Build": {
-      "patchVersion": "1.41.8.8",
-      "clientVersion": "2000922",
-      "buildId": "25640462"
-    },
-    "framework": {
+    "release": "E:\\CS2MOD\\releases\\cosmetics-lab\\inventory-simulator-c1_1-patched-20260928-225604",
+    "previousFramework": {
+      "metamod": {
+        "version": "2.0.0-git1469",
+        "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1469-windows.zip",
+        "sha256": "e1b3daa232b492f19922f260deac2a2caa50dbf975a9907a4e69684ce8dfa3e8"
+      },
       "counterstrikesharp": {
         "version": "v1.0.376",
         "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
         "url": "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v1.0.376/counterstrikesharp-with-runtime-windows-1.0.376.zip",
-        "sha256": "4f2777545a0940351450440288e7487509d539f770e66cf1c30cc2419084c5f8",
-        "installedFiles": {
-          "addons/counterstrikesharp/bin/win64/counterstrikesharp.dll": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
-          "addons/counterstrikesharp/api/CounterStrikeSharp.API.dll": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
-          "addons/metamod/counterstrikesharp.vdf": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a"
-        }
-      },
-      "metamod": {
-        "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1473-windows.zip",
-        "ref": "9c49d4c9733d94605901fb80148ea8c553f059d3",
-        "version": "2.0.0-git1473",
-        "installedFiles": {
-          "addons/metamod/bin/win64/metamod.2.cs2.dll": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
-          "addons/metamod/bin/win64/server.dll": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba"
-        },
-        "sha256": "2b3cd479afd46c149fd1969d2688f6b565542dd94a323e0de81d7825791a23f7"
+        "sha256": "4f2777545a0940351450440288e7487509d539f770e66cf1c30cc2419084c5f8"
       }
     },
-    "gate": "manual-game-pending",
-    "notes": "MetaMod-only recovery after gameinfo.gi rewrite; acceptedRuntime and testedCs2Build remain the historical accepted baseline.",
-    "partialManualObservation": {
+    "compatibilityRecoveryAcceptance": {
       "date": "2026-10-02",
-      "result": "User reports cosmetics are effective again. CSS logs confirm InventorySimulator loaded in two sessions; complete gameplay/cosmetic acceptance is still pending.",
+      "cs2Build": {
+        "patchVersion": "1.41.8.8",
+        "clientVersion": "2000922",
+        "buildId": "25640462"
+      },
+      "result": "User explicitly confirms all guns/knives/gloves/music kit cosmetics normal, respawn and side change normal, no crash, HUD/audio loop or noticeable performance anomaly.",
+      "evidenceLevel": "User-reported full real-game acceptance plus read-only local build/hash verification and two successful InventorySimulator startup sessions; not automated visual proof.",
       "evidence": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20261002-155843-posttest",
-      "cssLog": "log-cssharp20261002.txt: Finished loading plugin InventorySimulator at 15:41:19.969 and 15:42:41.738 +08:00; no ERROR/exception in this log.",
-      "fullManualGate": "pending; respawn/side change, all cosmetic categories, crash/HUD/audio/performance not individually confirmed"
+      "framework": {
+        "metamod": "2.0.0-git1473",
+        "counterstrikesharp": "v1.0.376"
+      },
+      "patchedDllSha256": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+      "backup": "E:\\CS2MOD\\backups\\cosmetics-lab\\20261002-124834714-metamod-compatibility"
     }
-  }
+  },
+  "framework": {
+    "counterstrikesharp": {
+      "version": "v1.0.376",
+      "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+      "url": "https://github.com/roflmuffin/CounterStrikeSharp/releases/download/v1.0.376/counterstrikesharp-with-runtime-windows-1.0.376.zip",
+      "sha256": "4f2777545a0940351450440288e7487509d539f770e66cf1c30cc2419084c5f8",
+      "installedFiles": {
+        "addons/counterstrikesharp/bin/win64/counterstrikesharp.dll": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+        "addons/counterstrikesharp/api/CounterStrikeSharp.API.dll": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+        "addons/metamod/counterstrikesharp.vdf": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a"
+      }
+    },
+    "metamod": {
+      "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1473-windows.zip",
+      "ref": "9c49d4c9733d94605901fb80148ea8c553f059d3",
+      "version": "2.0.0-git1473",
+      "installedFiles": {
+        "addons/metamod/bin/win64/metamod.2.cs2.dll": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+        "addons/metamod/bin/win64/server.dll": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba"
+      },
+      "sha256": "2b3cd479afd46c149fd1969d2688f6b565542dd94a323e0de81d7825791a23f7"
+    }
+  },
+  "notes": "status 'accepted-as-patched' means: the patched build listed under acceptedRuntime passed real-game acceptance on the testedCs2Build; it does NOT mark unpatched upstream 3.3.0 as accepted. Any upstream update must re-run the C1/C1.1 gate (see docs/COMPATIBILITY-WATCH.md) before changing this status."
 }

@@ -12,7 +12,9 @@ $lock = Read-BotImproverLock $repo
 if (-not $Ref) { $Ref = $lock.ref }
 if ($Ref -ne $lock.ref) { throw 'Build ref must equal the candidate lock.' }
 $human = Get-Content (Join-Path $repo 'runtime/inventory-simulator.lock.json') -Raw | ConvertFrom-Json
-$framework = $human.compatibilityCandidate.framework
+$framework = if ($human.PSObject.Properties['compatibilityCandidate'] -and $human.compatibilityCandidate.status -eq 'candidate') {
+    $human.compatibilityCandidate.framework
+} else { $human.framework }
 $upstream = Join-Path $repo 'temp/upstream/CS2-Bot-Improver'
 $downloads = Join-Path $repo 'temp/downloads'
 $stage = Join-Path $repo ('temp/staging/bot-main-' + [Guid]::NewGuid().ToString('N'))
@@ -127,7 +129,7 @@ $manifest = [ordered]@{
     builtFromRepoHead=(git -C $repo rev-parse HEAD).Trim()
     sources=@{botImprover=@{repository=$lock.repository;ref=$Ref;submodules=$lock.submodules};nativeAssets=$lock.nativeAssets;framework=$framework;managedBuilds=$managedBuilds}
     configChanges=@{excludedSubclassHotkeys=$removedBindings; sharedFramework='prerequisite-only, never owned by Bot'; defaultDifficulty='Medium'; rushBehaviorTrees='source-only, not active in minimum baseline; mapping and game gate pending'}
-    targetCs2=$human.compatibilityCandidate.targetCs2Build
+    targetCs2=$(if ($human.PSObject.Properties['compatibilityCandidate']) { $human.compatibilityCandidate.targetCs2Build } else { $human.testedCs2Build })
     payloadFiles=$hashes
 }
 $manifest | ConvertTo-Json -Depth 14 | Set-Content (Join-Path $release 'baseline-manifest.json') -Encoding utf8
