@@ -129,6 +129,17 @@ GunCosmetics
 - release 与 restore 产物使用 `E:\CS2MOD` 持久目录；
 - 安装失败不应留下半套不可识别 runtime。
 
+### 7.1 MetaMod Startup-Entry Repair 合约
+
+游戏更新覆盖 `gameinfo.gi` 是常见的外部副作用。本项目为此定义了独立且窄范围的 MetaMod 启动项修复合约：
+- 仅在 CS2 关闭且 accepted framework（MetaMod、CSS、patched InventorySimulator）文件身份完全匹配时允许执行；
+- 仅修改 `game/csgo/gameinfo.gi` 中的 `SearchPaths` 块；
+- 写入前自动创建可校验备份与修复记录；
+- 写入后严格核验启动项与修改范围，失败自动回滚；
+- 重复执行严格幂等；
+- 结构异常或目标不唯一时 fail closed；
+- 不触碰 preset、fixture 或 framework 二进制文件。
+
 ## 8. Panel
 
 Panel 是配置与操作界面，不是 runtime coordinator 的隐式状态机。

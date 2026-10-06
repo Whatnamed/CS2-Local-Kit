@@ -82,6 +82,17 @@
       },
       "patchedDllSha256": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
       "backup": "E:\\CS2MOD\\backups\\cosmetics-lab\\20261002-124834714-metamod-compatibility"
+    },
+    "detectedBuildObservation": {
+      "date": "2026-10-06",
+      "cs2Build": {
+        "patchVersion": "1.41.8.9",
+        "clientVersion": "2000927",
+        "buildId": "25738536"
+      },
+      "status": "pending-real-game-retest",
+      "result": "CS2 update overwrote gameinfo.gi SearchPaths; MetaMod, CounterStrikeSharp and patched InventorySimulator DLL identities remain intact and identical to accepted hashes. Startup entry restored. Pending real-game retest by user before any acceptance claim.",
+      "evidenceLevel": "local build detection and file-identity verification; real gameplay acceptance remains pending."
     }
   },
   "framework": {
