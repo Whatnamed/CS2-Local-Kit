@@ -23,6 +23,7 @@ public class AppServices : IDisposable
     public ImageSourceProvider ImageSources { get; }
     public RuntimeStatusService RuntimeStatusService { get; }
     public FixtureApplier FixtureApplier { get; }
+    public MetaModStartupRepairService MetaModStartupRepairService { get; }
     public string PlayerStatePath { get; }
 
     public string GetSteamId64() => PlayerState.GetSteamId64(PlayerStatePath);
@@ -101,6 +102,14 @@ public class AppServices : IDisposable
             CsgoDir = csgoDir,
             BackupsRoot = bRoot,
             Catalog = Catalog,
+            Cs2RunningProbe = cs2RunningProbe,
+        });
+
+        MetaModStartupRepairService = new MetaModStartupRepairService(new MetaModStartupRepairOptions
+        {
+            Cs2Root = cs2Root,
+            LockPath = lPath,
+            BackupsRoot = Path.Combine(Cs2ModRoot, "backups", "metamod-startup-repair"),
             Cs2RunningProbe = cs2RunningProbe,
         });
     }

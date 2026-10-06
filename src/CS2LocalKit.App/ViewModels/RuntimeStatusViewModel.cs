@@ -101,6 +101,41 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public bool RollbackCanExecute => Status?.LatestApply?.RollbackCanExecute ?? false;
     public string RollbackReason => Status?.LatestApply?.RollbackBlockReason ?? (RollbackCanExecute ? "可安全恢复" : "不可恢复");
 
+    public bool IsAcceptedFrameworkValid =>
+        (Status?.MetaModNativeStatus?.StartsWith("hash-match") ?? false)
+        && (Status?.CounterStrikeSharpNativeStatus?.StartsWith("hash-match") ?? false)
+        && (Status?.InventorySimulatorPluginPresent ?? false)
+        && (Status?.PatchedDllMatch == "match");
+
+    public bool CanRepairMetaModStartup =>
+        Cs2Detected
+        && !Cs2Running
+        && !GameinfoHasMetamod
+        && IsAcceptedFrameworkValid;
+
+    public string RepairMetaModStartupToolTip
+    {
+        get
+        {
+            if (!Cs2Detected) return "未检测到 CS2 安装路径";
+            if (Cs2Running) return "CS2 正在运行，请先关闭游戏";
+            if (GameinfoHasMetamod) return "MetaMod 启动项已正确配置";
+            if (!IsAcceptedFrameworkValid)
+            {
+                if (!(Status?.MetaModNativeStatus?.StartsWith("hash-match") ?? false))
+                    return $"MetaMod 原生组件异常 ({MetaModStatus})，拒绝修复";
+                if (!(Status?.CounterStrikeSharpNativeStatus?.StartsWith("hash-match") ?? false))
+                    return $"CounterStrikeSharp 组件异常 ({CssStatus})，拒绝修复";
+                if (!InventorySimulatorPluginPresent)
+                    return "InventorySimulator 插件文件缺失，拒绝修复";
+                if (PatchedDllMatch != "match")
+                    return "InventorySimulator patched DLL 校验不匹配，拒绝修复";
+                return "运行组件身份未通过校验，拒绝修复启动项";
+            }
+            return "在 gameinfo.gi 的 SearchPaths 中恢复 MetaMod 启动项";
+        }
+    }
+
     public string StatusMessage
     {
         get => _statusMessage;
@@ -121,6 +156,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
 
     public RelayCommand RefreshCommand { get; }
     public RelayCommand RestoreLatestCommand { get; }
+    public RelayCommand RepairMetaModStartupCommand { get; }
 
     /// <summary>Local catalog snapshot state. Data preparation lives here, not in the game tree.</summary>
     public string CatalogCommit => CatalogSnapshot.PinnedCommit;
@@ -162,6 +198,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
 
         RefreshCommand = new RelayCommand(ExecuteRefresh);
         RestoreLatestCommand = new RelayCommand(ExecuteRestoreLatest, () => RollbackCanExecute);
+        RepairMetaModStartupCommand = new RelayCommand(ExecuteRepairMetaModStartup, () => CanRepairMetaModStartup);
 
         _manager.StatusRefreshed += (s, e) => RefreshProperties();
         _manager.WorkingPresetChanged += (s, e) => RefreshProperties();
@@ -179,6 +216,12 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     private void ExecuteRestoreLatest()
     {
         var result = _manager.RestoreLatest();
+        ShowFeedback(result.Success, result.Message);
+    }
+
+    private void ExecuteRepairMetaModStartup()
+    {
+        var result = _manager.RepairMetaModStartup();
         ShowFeedback(result.Success, result.Message);
     }
 
@@ -221,6 +264,9 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         OnPropertyChanged(nameof(BlockedByCs2Running));
         OnPropertyChanged(nameof(RollbackCanExecute));
         OnPropertyChanged(nameof(RollbackReason));
+        OnPropertyChanged(nameof(IsAcceptedFrameworkValid));
+        OnPropertyChanged(nameof(CanRepairMetaModStartup));
+        OnPropertyChanged(nameof(RepairMetaModStartupToolTip));
         OnPropertyChanged(nameof(CatalogAvailable));
         OnPropertyChanged(nameof(CatalogLocales));
         OnPropertyChanged(nameof(CatalogCounts));
@@ -230,6 +276,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         OnPropertyChanged(nameof(ImageCacheRoot));
 
         RestoreLatestCommand.RaiseCanExecuteChanged();
+        RepairMetaModStartupCommand.RaiseCanExecuteChanged();
     }
 
     private void ShowFeedback(bool success, string message)

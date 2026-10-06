@@ -837,6 +837,112 @@ public sealed class UiIntegrationTests : IDisposable
             rollback = "x",
         }));
     }
+
+    [Fact]
+    public void RuntimeStatusViewModel_MetaModStartupRepair_WhenMissing_EnablesCommandAndRepairs()
+    {
+        var mm1 = Path.Combine(_csgoDir, "addons", "metamod", "bin", "win64", "metamod.2.cs2.dll");
+        var mm2 = Path.Combine(_csgoDir, "addons", "metamod", "bin", "win64", "server.dll");
+        File.WriteAllText(mm1, "mm-dll-bytes");
+        File.WriteAllText(mm2, "mm-server-bytes");
+
+        var css1 = Path.Combine(_csgoDir, "addons", "counterstrikesharp", "bin", "win64", "counterstrikesharp.dll");
+        var css2 = Path.Combine(_csgoDir, "addons", "counterstrikesharp", "api", "CounterStrikeSharp.API.dll");
+        var css3 = Path.Combine(_csgoDir, "addons", "metamod", "counterstrikesharp.vdf");
+        Directory.CreateDirectory(Path.GetDirectoryName(css2)!);
+        File.WriteAllText(css1, "css-dll-bytes");
+        File.WriteAllText(css2, "css-api-bytes");
+        File.WriteAllText(css3, "css-vdf-bytes");
+
+        var isDll = Path.Combine(_csgoDir, "addons", "counterstrikesharp", "plugins", "InventorySimulator", "InventorySimulator.dll");
+        var isSha = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(isDll))).ToLowerInvariant();
+        string HashOf(string p) => Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(p))).ToLowerInvariant();
+
+        var lockObj = new
+        {
+            testedCs2Build = new { patchVersion = "1.41.8.5", clientVersion = "2000918", buildId = (string?)null },
+            acceptedRuntime = new { patchedDllSha256 = isSha },
+            framework = new
+            {
+                metamod = new
+                {
+                    version = "2.0.0-git1473",
+                    installedFiles = new Dictionary<string, string>
+                    {
+                        ["addons/metamod/bin/win64/metamod.2.cs2.dll"] = HashOf(mm1),
+                        ["addons/metamod/bin/win64/server.dll"] = HashOf(mm2),
+                    }
+                },
+                counterstrikesharp = new
+                {
+                    version = "v1.0.376",
+                    installedFiles = new Dictionary<string, string>
+                    {
+                        ["addons/counterstrikesharp/bin/win64/counterstrikesharp.dll"] = HashOf(css1),
+                        ["addons/counterstrikesharp/api/CounterStrikeSharp.API.dll"] = HashOf(css2),
+                        ["addons/metamod/counterstrikesharp.vdf"] = HashOf(css3),
+                    }
+                }
+            }
+        };
+        File.WriteAllText(_lockPath, JsonSerializer.Serialize(lockObj));
+
+        var gameinfo = Path.Combine(_csgoDir, "gameinfo.gi");
+        File.WriteAllText(gameinfo, "SearchPaths\r\n{\r\n\tGame\tcsgo\r\n}\r\n");
+
+        using var services = CreateTestServices();
+        var manager = new PresetManagerService(services, new MockDialogService());
+        var vm = new RuntimeStatusViewModel(manager);
+
+        Assert.False(vm.GameinfoHasMetamod);
+        Assert.True(vm.IsAcceptedFrameworkValid);
+        Assert.True(vm.CanRepairMetaModStartup);
+        Assert.True(vm.RepairMetaModStartupCommand.CanExecute(null));
+
+        vm.RepairMetaModStartupCommand.Execute(null);
+
+        Assert.True(vm.IsStatusSuccess);
+        Assert.True(vm.GameinfoHasMetamod);
+        Assert.False(vm.CanRepairMetaModStartup);
+        Assert.False(vm.RepairMetaModStartupCommand.CanExecute(null));
+        Assert.Equal("MetaMod 启动项已正确配置", vm.RepairMetaModStartupToolTip);
+    }
+
+    [Fact]
+    public void RuntimeStatusViewModel_MetaModStartupRepair_DisabledWhenCs2RunningOrFrameworkInvalid()
+    {
+        var gameinfo = Path.Combine(_csgoDir, "gameinfo.gi");
+        File.WriteAllText(gameinfo, "SearchPaths\r\n{\r\n\tGame\tcsgo\r\n}\r\n");
+
+        using var runningServices = CreateTestServices(cs2RunningProbe: () => true);
+        var runningManager = new PresetManagerService(runningServices, new MockDialogService());
+        var runningVm = new RuntimeStatusViewModel(runningManager);
+        Assert.False(runningVm.CanRepairMetaModStartup);
+        Assert.False(runningVm.RepairMetaModStartupCommand.CanExecute(null));
+        Assert.Contains("正在运行", runningVm.RepairMetaModStartupToolTip);
+
+        var lockObj = new
+        {
+            testedCs2Build = new { patchVersion = "1.41.8.5", clientVersion = "2000918", buildId = (string?)null },
+            acceptedRuntime = new { patchedDllSha256 = "deadbeef" },
+            framework = new
+            {
+                metamod = new
+                {
+                    version = "2.0.0-git1473",
+                    installedFiles = new Dictionary<string, string> { ["addons/metamod/bin/win64/server.dll"] = "expected" }
+                }
+            }
+        };
+        File.WriteAllText(_lockPath, JsonSerializer.Serialize(lockObj));
+
+        using var invalidServices = CreateTestServices(cs2RunningProbe: () => false);
+        var invalidManager = new PresetManagerService(invalidServices, new MockDialogService());
+        var invalidVm = new RuntimeStatusViewModel(invalidManager);
+        Assert.False(invalidVm.CanRepairMetaModStartup);
+        Assert.False(invalidVm.RepairMetaModStartupCommand.CanExecute(null));
+        Assert.Contains("拒绝修复", invalidVm.RepairMetaModStartupToolTip);
+    }
 }
 
 public sealed class MockDialogService : IDialogService

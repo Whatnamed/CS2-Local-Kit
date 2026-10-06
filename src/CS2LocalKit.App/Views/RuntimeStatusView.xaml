@@ -64,6 +64,12 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
                         <Button Content="刷新状态" Command="{Binding RefreshCommand}"/>
+                        <Button Content="修复 MetaMod 启动项" Margin="10,0,0,0"
+                                Command="{Binding RepairMetaModStartupCommand}">
+                            <Button.ToolTip>
+                                <TextBlock MaxWidth="280" Text="{Binding RepairMetaModStartupToolTip}" TextWrapping="Wrap"/>
+                            </Button.ToolTip>
+                        </Button>
                         <Button Content="恢复上一次应用" Style="{StaticResource DangerButton}" Margin="10,0,0,0"
                                 Command="{Binding RestoreLatestCommand}">
                             <Button.ToolTip>

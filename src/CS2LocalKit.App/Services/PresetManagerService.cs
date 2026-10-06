@@ -384,6 +384,30 @@ public class PresetManagerService : ViewModelBase
         }
     }
 
+    public OperationResult RepairMetaModStartup()
+    {
+        RefreshRuntimeStatus();
+        if (Cs2Running)
+            return OperationResult.Failed("CS2 正在运行，无法修复启动项。请先关闭 CS2 游戏。");
+
+        try
+        {
+            var result = _services.MetaModStartupRepairService.Repair();
+            RefreshRuntimeStatus();
+            return OperationResult.Succeeded(result.Message);
+        }
+        catch (MetaModStartupRepairException ex)
+        {
+            RefreshRuntimeStatus();
+            return OperationResult.Failed($"修复 MetaMod 启动项失败: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            RefreshRuntimeStatus();
+            return OperationResult.Failed($"修复发生异常: {ex.Message}");
+        }
+    }
+
     public void SetActive(string presetName)
     {
         _services.ActivePresetState.SetActive(presetName);

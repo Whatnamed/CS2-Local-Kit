@@ -30,6 +30,7 @@ public static class Program
                 "apply" => RunApply(args[1..]),
                 "restore-latest" => RunRestoreLatest(),
                 "status" => RunStatus(args[1..]),
+                "repair-metamod" or "repair-metamod-startup" => RunRepairMetaModStartup(args[1..]),
                 _ => Usage($"unknown command '{args[0]}'"),
             };
         }
@@ -55,6 +56,7 @@ public static class Program
         Console.WriteLine("  apply [--preset <name>] [--steamid <id>]");
         Console.WriteLine("  restore-latest");
         Console.WriteLine("  status [--lock <path>]");
+        Console.WriteLine("  repair-metamod [--lock <path>]");
     }
 
     private static int RunPresets(string[] args)
@@ -181,6 +183,26 @@ public static class Program
         Console.WriteLine($"fixture installed : {status.FixtureInstalled}, sha256: {status.FixtureSha256 ?? "-"}");
         Console.WriteLine($"active preset     : {status.ActivePreset ?? "(none set)"}{(status.ActivePreset is null || status.ActivePresetExists ? "" : " (MISSING FILE)")}");
         Console.WriteLine($"latest apply      : {(status.LatestApply is null ? "(none)" : $"{status.LatestApply.CreatedAt} projection={status.LatestApply.ProjectedSha256} rollbackAvailable={status.LatestApply.RollbackAvailable}")}");
+        return 0;
+    }
+
+    private static int RunRepairMetaModStartup(string[] args)
+    {
+        string? lockPath = null;
+        var lockIdx = Array.IndexOf(args, "--lock");
+        if (lockIdx >= 0 && lockIdx + 1 < args.Length) lockPath = args[lockIdx + 1];
+        lockPath ??= FindLockPath();
+
+        var service = new MetaModStartupRepairService(new MetaModStartupRepairOptions
+        {
+            LockPath = lockPath,
+        });
+
+        var result = service.Repair();
+        Console.WriteLine(result.Message);
+        if (result.BackupPath is not null) Console.WriteLine($"  backup  : {result.BackupPath}");
+        if (result.RepairedSha256 is not null) Console.WriteLine($"  sha256  : {result.RepairedSha256}");
+        Console.WriteLine($"  modified: {result.Modified}");
         return 0;
     }
 
