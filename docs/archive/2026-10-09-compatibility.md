@@ -4,6 +4,54 @@
 worktree：`E:\Projects\CS2-Local-Kit\wt-compat-20261009`；branch：`codex/compat-20261009`。
 本归档记录本次证据；accepted/candidate 状态仍由 runtime locks 定义。
 
+## 目标 build 更新后的收口结果
+
+用户完成 CS2 更新后，在同一分支继续核验。实际 `steam.inf` / `appmanifest_730.acf` 已确认：
+**1.41.9.0 / ClientVersion 2000930 / BuildId 25815307**，CS2 关闭。
+以下为目标 build 的最终结果；后续章节保留首轮旧 build 调查，不能将首轮阻塞当作当前状态。
+
+| Binary | 目标 build SHA256 |
+|---|---|
+| game/csgo/bin/win64/server.dll | `9f31fc84164f7822e015dcd95ea958f9dd33d02308a646a2bee5c9b39bd6fc28` |
+| game/bin/win64/engine2.dll | `4b8fe29ecdef4f492a602d9013cbfe5226561c9c0ba4361ce82e6f46d4f9bc04` |
+
+现有 scanner 在目标 binary 上重跑的结果：
+
+| Human signature | 旧 pattern 匹配数 | 新 pattern 匹配数 |
+|---|---|---|
+| CCSPlayer_ItemServices::SetWearables | 0 | 1 |
+| CCSPlayerPawn::SetModelFromClass | 2 | 1 |
+
+staged gamedata 的全部 **14/14 relevant Windows patterns 唯一匹配**；完整 upstream 3.5.2
+对照也为 18/18，额外 pet 条目不安装。详见 `2026-10-09-compatibility/human-target-signature-scan.json`，
+含 candidate identity、相关条目集合、原始 patterns、RVA 与 binary hashes。
+
+Human gamedata-only update 已安装。仅精确替换上述两条 Windows 字符串，保留原文件格式，
+不改其他 signatures、Linux、offsets 或 entry 集合。
+安装文件 SHA256 为 `f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a`，与 staged candidate 一致。
+原文件 hash 为 `0492cdc6b0e2e6b92406b2838f18c4a06a9e70359a2dc05bc0e6a209a6d478cb`。
+写入前备份目录：`E:\CS2MOD\backups\cosmetics-lab\20261009-202147692-14190-gamedata`。
+其中 `Restore-Gamedata.ps1` 仅在 CS2 关闭、live/backup hashes 匹配记录时恢复该单文件；
+已用临时文件验证恢复 round trip，未恢复真实安装。安装记录见 `2026-10-09-compatibility/gamedata-install-record.json`。
+
+游戏更新确实移除了 MetaMod startup entry。使用已有 Controller `repair-metamod --lock runtime/inventory-simulator.lock.json`
+恢复；备份为 `E:\CS2MOD\backups\metamod-startup-repair\20261009-202219941-90188681\gameinfo.gi`。
+移除唯一插入行后与备份 byte-for-byte 相同。
+修复记录见 `2026-10-09-compatibility/target-startup-repair.json`。
+MetaMod git1473、CSS 1.0.376、C1.1 patched DLL 和 private fixture hashes 前后均一致；未使用 3.5.2 DLL。
+
+Bot 只重跑先前相同扫描范围：目标 build **107/107 patterns 唯一匹配、42/42 patch original-byte checks PASS**。
+证据见 `2026-10-09-compatibility/bot-target-signature-scan.json`。
+只更新 lock 的 upstreamCompatibilityReview target evidence；Bot pin/artifact/candidate/manualObservation 未变，
+performance gate 仍未通过。未生成、安装或 promotion 新 Bot baseline。
+
+收口验证：Core/UI Release tests **173/173 PASS**；Controller Release build **0 warnings / 0 errors**；
+JSON/lock 边界检查、原 patch replay 与安装 hash 等价、backup 恢复临时文件 round trip、startup insertion-only
+检查及 `git diff --check` 通过。没有启动 CS2。
+Human target staticValidation 已为 passed，status 保持 **pending-real-game-retest**；历史 accepted tested build 仍为 1.41.8.8。
+用户唯一待验收项目为 Human 单独真实游戏回测：枪、刀模型/动画/饰面、手套、音乐盒，respawn/side change，
+以及 crash、HUD/audio loop 和明显性能异常；本次不进行 Bot 实机验收。
+
 ## 必须区分目标 build 与本机 build
 
 用户指定目标为 `1.41.9.0 / BuildId 25815307`，但本机实际安装的

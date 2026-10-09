@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "action": "repair-metamod-startup",
+  "createdAtUtc": "2026-10-09T12:22:19.9458343Z",
+  "targetPath": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\gameinfo.gi",
+  "backupPath": "E:\\CS2MOD\\backups\\metamod-startup-repair\\20261009-202219941-90188681\\gameinfo.gi",
+  "originalSha256": "b12c8f4514d7dbf7029917481dcc13c35f6e664eeb930028ab372c23699c1a0b",
+  "insertedEntry": "Game\tcsgo/addons/metamod",
+  "repairedSha256": "ef6e30f4de7cc2ce1eea39bfdcb0a804332a25663a402b65b0280a8725b1e236",
+  "entryCount": 1,
+  "insertionOnlyVerified": true
+}

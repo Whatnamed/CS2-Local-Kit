@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "action": "human-gamedata-only-14190",
+  "target": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\gamedata\\inventory-simulator.json",
+  "backup": "E:\\CS2MOD\\backups\\cosmetics-lab\\20261009-202147692-14190-gamedata\\inventory-simulator.json",
+  "originalSha256": "0492cdc6b0e2e6b92406b2838f18c4a06a9e70359a2dc05bc0e6a209a6d478cb",
+  "installedSha256": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a",
+  "changedSignatures": [
+    "CCSPlayer_ItemServices::SetWearables",
+    "CCSPlayerPawn::SetModelFromClass"
+  ],
+  "protectedFiles": {
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\metamod\\bin\\win64\\metamod.2.cs2.dll": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\metamod\\bin\\win64\\server.dll": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba",
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\bin\\win64\\counterstrikesharp.dll": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\api\\CounterStrikeSharp.API.dll": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\metamod\\counterstrikesharp.vdf": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a",
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\plugins\\InventorySimulator\\InventorySimulator.dll": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\configs\\plugins\\InventorySimulator\\inventories.json": "807b4f8f8f9b031756e2944b686defc6665d51c6c03b8c205616f66615e9c5d3"
+  },
+  "installed": true
+}
