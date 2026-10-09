@@ -118,5 +118,37 @@
       "sha256": "2b3cd479afd46c149fd1969d2688f6b565542dd94a323e0de81d7825791a23f7"
     }
   },
-  "notes": "status 'accepted-as-patched' means: the patched build listed under acceptedRuntime passed real-game acceptance on the testedCs2Build; it does NOT mark unpatched upstream 3.3.0 as accepted. Any upstream update must re-run the C1/C1.1 gate (see docs/COMPATIBILITY-WATCH.md) before changing this status."
+  "notes": "status 'accepted-as-patched' means: the patched build listed under acceptedRuntime passed real-game acceptance on the testedCs2Build; it does NOT mark unpatched upstream 3.3.0 as accepted. Any upstream update must re-run the C1/C1.1 gate (see docs/COMPATIBILITY-WATCH.md) before changing this status.",
+  "gamedataCompatibilityCandidate": {
+    "date": "2026-10-09",
+    "status": "pending-real-game-retest",
+    "targetCs2Build": {
+      "patchVersion": "1.41.9.0",
+      "buildId": "25815307"
+    },
+    "observedLocalCs2Build": {
+      "patchVersion": "1.41.8.9",
+      "clientVersion": "2000927",
+      "buildId": "25738536"
+    },
+    "staticValidation": "blocked-target-build-not-installed",
+    "installed": false,
+    "baseRef": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "signatureReference": {
+      "repository": "ianlucas/cs2-css-inventory-simulator",
+      "tag": "3.5.2",
+      "ref": "3c7eec5b923eba202543c425e1cf25555219546d"
+    },
+    "patch": "experiments/cosmetics-lab/inventory-simulator/compatibility/cs2-14190-windows-signatures.patch",
+    "changedWindowsSignatures": [
+      "CCSPlayer_ItemServices::SetWearables",
+      "CCSPlayerPawn::SetModelFromClass"
+    ],
+    "artifact": {
+      "path": "E:\\CS2MOD\\releases\\cosmetics-lab\\inventory-simulator-gamedata-20261009-14190\\inventory-simulator.json",
+      "sha256": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a"
+    },
+    "evidence": "docs/archive/2026-10-09-compatibility/human-signature-scan.json",
+    "notes": "Only two Windows signatures over pinned 3.3.0; retains Linux signatures, offsets and C1.1 patched DLL. New SetWearables matches zero times in actual local 1.41.8.9. Do not install until target binary is available and static scan passes. Historical accepted status/testedCs2Build remain unchanged; target build is not accepted."
+  }
 }

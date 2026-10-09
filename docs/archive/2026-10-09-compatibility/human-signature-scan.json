@@ -1,0 +1,425 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "c98cc7ea3095a32683fc37fea804537b3ea6d89836fd4f5e55d593a82bb54ee3"
+    },
+    "engine2": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\engine2.dll",
+      "sha256": "f6bf9808f6642b95fbf135c5f152af0b80f11dec27eea48ea1bfa8098c5ac42b"
+    }
+  },
+  "results": [
+    {
+      "name": "Human/old/CAttributeList::SetOrAddAttributeValueByName",
+      "library": "server",
+      "pattern": "48 89 4C 24 ? 53 41 55 41 56",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x106cd50",
+          "fileOffset": "0x106c150"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CCSPlayerPawn::IsAbleToApplySpray",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 78 ? 55 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 4C 89 70",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xacb190",
+          "fileOffset": "0xaca590"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CCSPlayerController::ProcessUsercmds",
+      "library": "server",
+      "pattern": "48 8B C4 44 88 48 20 44 89 40 18 48 89 50 10 53",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb616a0",
+          "fileOffset": "0xb60aa0"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CServerSideClientBase::ActivatePlayer",
+      "library": "engine2",
+      "pattern": "40 53 48 83 EC ? 48 89 6C 24 ? 48 8B D9 48 89 74 24 ? 48 89 7C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbde10",
+          "fileOffset": "0xbd210"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CCSPlayerInventory::GetItemInLoadout",
+      "library": "server",
+      "pattern": "48 8B C4 56 48 83 EC ? 49 63 F0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa2e0d0",
+          "fileOffset": "0xa2d4d0"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CEconItemView::CEconItemView",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 48 8B F9 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x105e470",
+          "fileOffset": "0x105d870"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CEconItemView::operator=",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 48 83 EC ? 48 8B F9 48 8B F2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x105f460",
+          "fileOffset": "0x105e860"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CCSPlayerInventory::SendInventoryUpdateEvent",
+      "library": "server",
+      "pattern": "83 79 ? ? 0F 10 49",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1054dd0",
+          "fileOffset": "0x10541d0"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CCSPlayer_ItemServices::SetWearables",
+      "library": "server",
+      "pattern": "40 55 41 56 48 83 EC ? 48 83 79",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xac12c0",
+          "fileOffset": "0xac06c0"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CCSPlayerPawn::SetModelFromClass",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 56 57 41 56 48 83 EC ? 48 8B D9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1e6580",
+          "fileOffset": "0x1e5980"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CCSPlayerPawn::SetModelFromLoadout",
+      "library": "server",
+      "pattern": "40 56 57 41 54 48 83 EC ? 48 8B F9 45 33 E4",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1c1cc0",
+          "fileOffset": "0x1c10c0"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/GetItemSchema",
+      "library": "server",
+      "pattern": "48 83 EC ? 48 8B 05 ? ? ? ? 48 85 C0 0F 85 ? ? ? ? 48 89 5C 24 ? B9 ? ? ? ? 48 89 7C 24 ? E8 ? ? ? ? 33 FF 48 8B D8 48 85 C0 74 ? 48 8D 05 ? ? ? ? 48 89 7B ? B9 ? ? ? ? 48 89 03 E8 ? ? ? ? 48 85 C0 74 ? 48 8B C8 E8 ? ? ? ? 48 8B F8 48 8D 05 ? ? ? ? 48 89 7B ? 48 89 03 48 8B C7 48 8B 7C 24 ? 48 89 1D ? ? ? ? 48 8B 5C 24 ? 48 83 C4 ? C3 48 8B 47 ? 48 8B 5C 24 ? 48 89 3D ? ? ? ? 48 8B 7C 24 ? 48 83 C4 ? C3 48 8B 40 ? 48 83 C4 ? C3 CC CC CC CC CC CC CC CC CC CC CC CC 48 8B 41",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x10263a0",
+          "fileOffset": "0x10257a0"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CEconItemSchema::GetItemDefinitionByName",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 80 B9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1025ba0",
+          "fileOffset": "0x1024fa0"
+        }
+      ]
+    },
+    {
+      "name": "Human/old/CEconItemSchema::GetItemDefinition",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B D9 89 54 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1025b00",
+          "fileOffset": "0x1024f00"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CAttributeList::SetOrAddAttributeValueByName",
+      "library": "server",
+      "pattern": "48 89 4C 24 ? 53 41 55 41 56",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x106cd50",
+          "fileOffset": "0x106c150"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayerPawn::IsAbleToApplySpray",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 78 ? 55 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 4C 89 70",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xacb190",
+          "fileOffset": "0xaca590"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayerController::ProcessUsercmds",
+      "library": "server",
+      "pattern": "48 8B C4 44 88 48 20 44 89 40 18 48 89 50 10 53",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb616a0",
+          "fileOffset": "0xb60aa0"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CServerSideClientBase::ActivatePlayer",
+      "library": "engine2",
+      "pattern": "40 53 48 83 EC ? 48 89 6C 24 ? 48 8B D9 48 89 74 24 ? 48 89 7C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbde10",
+          "fileOffset": "0xbd210"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayerInventory::GetItemInLoadout",
+      "library": "server",
+      "pattern": "48 8B C4 56 48 83 EC ? 49 63 F0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa2e0d0",
+          "fileOffset": "0xa2d4d0"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CEconItemView::CEconItemView",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 48 8B F9 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x105e470",
+          "fileOffset": "0x105d870"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CEconItemView::operator=",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 48 83 EC ? 48 8B F9 48 8B F2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x105f460",
+          "fileOffset": "0x105e860"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayerInventory::SendInventoryUpdateEvent",
+      "library": "server",
+      "pattern": "83 79 ? ? 0F 10 49",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1054dd0",
+          "fileOffset": "0x10541d0"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayer_ItemServices::SetWearables",
+      "library": "server",
+      "pattern": "40 55 56 48 83 EC ? 48 83 79",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "Human/new/CCSPlayerPawn::SetModelFromClass",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 56 57 41 56 48 83 EC ? 48 8B D9 48 81 C1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1e6580",
+          "fileOffset": "0x1e5980"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayerPawn::SetModelFromLoadout",
+      "library": "server",
+      "pattern": "40 56 57 41 54 48 83 EC ? 48 8B F9 45 33 E4",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1c1cc0",
+          "fileOffset": "0x1c10c0"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/GetItemSchema",
+      "library": "server",
+      "pattern": "48 83 EC ? 48 8B 05 ? ? ? ? 48 85 C0 0F 85 ? ? ? ? 48 89 5C 24 ? B9 ? ? ? ? 48 89 7C 24 ? E8 ? ? ? ? 33 FF 48 8B D8 48 85 C0 74 ? 48 8D 05 ? ? ? ? 48 89 7B ? B9 ? ? ? ? 48 89 03 E8 ? ? ? ? 48 85 C0 74 ? 48 8B C8 E8 ? ? ? ? 48 8B F8 48 8D 05 ? ? ? ? 48 89 7B ? 48 89 03 48 8B C7 48 8B 7C 24 ? 48 89 1D ? ? ? ? 48 8B 5C 24 ? 48 83 C4 ? C3 48 8B 47 ? 48 8B 5C 24 ? 48 89 3D ? ? ? ? 48 8B 7C 24 ? 48 83 C4 ? C3 48 8B 40 ? 48 83 C4 ? C3 CC CC CC CC CC CC CC CC CC CC CC CC 48 8B 41",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x10263a0",
+          "fileOffset": "0x10257a0"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CEconItemSchema::GetItemDefinitionByName",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 80 B9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1025ba0",
+          "fileOffset": "0x1024fa0"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CEconItemSchema::GetItemDefinition",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B D9 89 54 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1025b00",
+          "fileOffset": "0x1024f00"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CChicken::InitPet",
+      "library": "server",
+      "pattern": "40 55 56 41 56 48 83 EC ? 48 8B E9 4C 8B F2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x349420",
+          "fileOffset": "0x348820"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayerController::GetPetChicken",
+      "library": "server",
+      "pattern": "8B 91 ? ? ? ? 45 33 D2 83 FA ? 74 ? 48 8B 0D ? ? ? ? 48 85 C9 74 ? 83 FA ? 74 ? 8B C2 25 ? ? ? ? 44 8B C0 48 C1 E8 ? 4C 8B 0C C1 4D 85 C9 74 ? 41 81 E0 ? ? ? ? 49 6B C0 ? 49 03 C1 74 ? 39 50 ? 49 0F 45 C2 EB ? 49 8B C2 48 85 C0 74 ? 48 8B 00 C3 49 8B C2 C3 CC E9 ? ? ? ? CC CC CC CC CC CC CC CC CC CC CC 41 0F B7 40",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa73c70",
+          "fileOffset": "0xa73070"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSPlayerController::SetPetChicken",
+      "library": "server",
+      "pattern": "4C 8B C9 48 85 D2 74 ? 48 8B 42 ? 48 85 C0 74 ? 8B 50 ? B9 ? ? ? ? 8B 40 ? 44 8B C2 83 E0 ? 41 C1 E8 ? 44 2B C0 8B C2 23 C1 41 C1 E0 ? 83 FA ? 0F 45 C8 44 0B C1 45 89 81 ? ? ? ? C3 C7 81 ? ? ? ? ? ? ? ? C3 CC CC CC 40 55 41 56",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa94ba0",
+          "fileOffset": "0xa93fa0"
+        }
+      ]
+    },
+    {
+      "name": "Human/new/CCSChickenManager::ServerGamePostSimulate",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 83 3D ? ? ? ? ? 48 8B D9 0F 84",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3352e0",
+          "fileOffset": "0x3346e0"
+        }
+      ]
+    }
+  ]
+}

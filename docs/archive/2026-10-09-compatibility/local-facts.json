@@ -1,0 +1,49 @@
+{
+  "gameinfoSha256": "1d169ea5695ee9da13e9baab18c16d101a8f1a11dcbc181975bfb2ceab90ac8f",
+  "inventoryGamedataSha256": "0492cdc6b0e2e6b92406b2838f18c4a06a9e70359a2dc05bc0e6a209a6d478cb",
+  "cs2Root": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive",
+  "date": "2026-10-09",
+  "cs2Running": false,
+  "patchVersion": "1.41.8.9",
+  "startupEntryCount": 1,
+  "files": [
+    {
+      "path": "addons/metamod/bin/win64/metamod.2.cs2.dll",
+      "expected": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+      "actual": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+      "matches": true
+    },
+    {
+      "path": "addons/metamod/bin/win64/server.dll",
+      "expected": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba",
+      "actual": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba",
+      "matches": true
+    },
+    {
+      "path": "addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+      "expected": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+      "actual": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+      "matches": true
+    },
+    {
+      "path": "addons/counterstrikesharp/api/CounterStrikeSharp.API.dll",
+      "expected": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+      "actual": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+      "matches": true
+    },
+    {
+      "path": "addons/metamod/counterstrikesharp.vdf",
+      "expected": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a",
+      "actual": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a",
+      "matches": true
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll",
+      "expected": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+      "actual": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+      "matches": true
+    }
+  ],
+  "buildId": "25738536",
+  "clientVersion": "2000927"
+}
