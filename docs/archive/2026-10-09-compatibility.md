@@ -52,10 +52,56 @@ Windows Git replay 可能转换 CRLF；内容按 LF 归一化后与候选 hash �
 必须在目标 build binary 上重新扫描成功后才可应用 gamedata；之后仍需用户实机检验枪、刀、手套、音乐盒、
 respawn、side change、HUD/audio、crash 和性能。没有用户实机证据不能标记 accepted。
 
+## Bot：审查 main，保留现有 candidate
+
+[umbrella main 72adfc2](https://github.com/ed0ard/CS2-Bot-Improver/compare/9848ac892653db6a256c32524dddf6a05cf4383c...72adfc283faad3b8fbe974533d55c49d48691333)
+相对现有 candidate 9848ac8 前进 29 个 commits。精确 gitlinks 与组件 diff/commit 清单见
+`2026-10-09-compatibility/bot-upstream-review.json`。
+
+| Component | umbrella ref | 相对旧 candidate 的主要变化 |
+|---|---|---|
+| BotController | 0ae8f18 | 0.7.1：Linux spdlog ABI/build 修复；Windows gamedata 未变 |
+| BotAI | a23f7e2 | Windows patch targets/expected bytes、game-state/FOV/offset 修正及 Linux patches；API 更新 |
+| BotState | ce28e5c | 拆分源码、signature 更新、自定义 3D FOV/visibility hooks、Rush antenna；API 更新 |
+| BotAimImprover | 17e895b | signature 更新、body mode HSR、target selection、API 更新 |
+| BotBuy | 11884e0 | delayed timer controller validity、Rush 支持、API 更新 |
+| BotRandomizer | 024f314 | signature/catalog 自动维护改造；当前 Windows 两条内嵌 bindings 仍与旧 pin 一致 |
+| NadeSystem | 009ce03 | projectile Create signatures 更新 |
+| BotHider / BotVision | 12069c2 / 33ab01f | gitlinks 未变 |
+
+单独组件最新 main 尚未完全整合进 umbrella：
+
+- [BotController 4d8441a](https://github.com/XBribo/CS2-Bot-Controller/compare/0ae8f18fd6872a369cb984e0e95e5a352be092fe...4d8441a13fc8f2eeeae3a97bfe1ede928aeb7126)：
+  普通 weapon selection 尊重已有 hooks，内部 replay 才用 raw bypass；没有 gamedata 变化。
+- [BotRandomizer 7b168a3](https://github.com/ed0ard/CS2-Bot-Randomizer/compare/024f314b782433daf1150eba700a7b381e99baa1...7b168a30b9976f4a1de344d87c72c9bddf8c60da)：
+  commit 标题虽为 Update signatures and cosmetic database，实际 diff 只有 catalog 和两份 package 文件；
+  `BotRandomizer.cs` 在两 refs 的 blob SHA 都是 `9783a460252980df2617291d43508a98cc340d5b`。
+  不能把标题当成 Windows signature 已修复的证据，也不把这两项擅自混入 umbrella pin。
+
+实际旧 build 上 107/107 Windows patterns 唯一匹配：29 条 native Bot gamedata、28 条 installed CSS、
+40 条 BotAI patch signatures、4 条 BotState FOV signatures/patches、1 条 aim、2 条 randomizer、3 条 nade bindings。
+BotAI **40/40** 和 BotState **2/2** patch 位移处原始字节匹配（含 wildcard），只是只读检查，未写 patch。
+完整输入、RVA 与 expected/actual bytes 见 `2026-10-09-compatibility/bot-signature-scan.json`。
+这扩大了此前 JSON-only probe 的覆盖，但仍不能证明目标 build、schema offsets 或实际 hook 行为。
+BotAI a23f7e2 精确源码（GitHub blobs；临时源码未提交）Release build 通过，0 warnings / 0 errors。
+没有对全套 Bot/native runtime 宣称 build 或运行验收通过。
+
+[#172](https://github.com/ed0ard/CS2-Bot-Improver/issues/172) 和
+[#181](https://github.com/ed0ard/CS2-Bot-Improver/issues/181) 查询时仍为 open，分别报告 Windows listen-server
+stutter 和 FPS/1% low 问题。#172 的日志含 rendering stall 和额外 RayTrace 错误，不能直接归因到本项目组件；
+#181 报告关闭 mod 后不发生。结合本项目既有同地图回退对照，performance gate 仍未通过；
+upstream 更新没有提供本机受控性能验收证据。
+
+结论：**尚不值得把这套 main 作为可直接进入下一次实机 baseline 的候选包**。
+目标 build binary 缺失，静态 target gate 未过；未准备新的 Bot artifact、未安装、未接受新 baseline。
+保留现有 `ref=9848ac8`、artifact、manualObservation、`status=candidate`、`testedCs2Build=null`；
+新增独立 upstreamCompatibilityReview，避免把审查中的 main 和历史 artifact 身份混在一起。
+
 ## 验证与重放
 
 - .NET SDK 10.0.401：Core/UI Release tests **173/173 PASS**。
 - Controller Release build：**0 warnings / 0 errors**。
+- BotAI a23f7e2 Release build：**0 warnings / 0 errors**；40 条 patch 原始字节静态检查通过。
 - gamedata patch apply/replay、JSON 差异范围检查通过；所有实机 binary 保持原样。
 
 静态报告可直接重放。先从报告 `results` 提取输入（下面以 Human 为例），再运行 scanner：

@@ -87,5 +87,55 @@
       "baselineState": "Enhanced Bot payload restored/uninstalled; Human baseline active",
       "stabilityFeedback": "Restored baseline more stable; enhanced Bot sometimes has deep FPS drops and brief stutter."
     }
+  },
+  "upstreamCompatibilityReview": {
+    "date": "2026-10-09",
+    "ref": "72adfc283faad3b8fbe974533d55c49d48691333",
+    "status": "reviewed-not-promoted",
+    "targetCs2Build": {
+      "patchVersion": "1.41.9.0",
+      "buildId": "25815307"
+    },
+    "observedLocalCs2Build": {
+      "patchVersion": "1.41.8.9",
+      "clientVersion": "2000927",
+      "buildId": "25738536"
+    },
+    "targetStaticValidation": "blocked-target-build-not-installed",
+    "localStaticPatterns": {
+      "total": 107,
+      "unique": 107,
+      "botAiPatchOriginalBytesPassed": 40,
+      "botStatePatchOriginalBytesPassed": 2
+    },
+    "performanceGate": "not-passed",
+    "readyForNextRealGameBaseline": false,
+    "artifactPrepared": false,
+    "installed": false,
+    "submodules": {
+      "addons/BotHider": "12069c25a756deedc72f8fc116ac3b18045d1223",
+      "addons/BotController": "0ae8f18fd6872a369cb984e0e95e5a352be092fe",
+      "addons/BotVision": "33ab01fc5ec4e27b6f07aff653d54638ad84ebcb",
+      "addons/counterstrikesharp/plugins/BotState": "ce28e5c1359e9be910a3578694c94e5e8715d2a4",
+      "addons/counterstrikesharp/plugins/BotAimImprover": "17e895b68e0c5c365d5c6fea12f1f74342724ce8",
+      "addons/counterstrikesharp/plugins/BotAI": "a23f7e24bd485cc23e0d9340ba74e8d8aa3ba6e0",
+      "addons/counterstrikesharp/plugins/BotRandomizer": "024f314b782433daf1150eba700a7b381e99baa1",
+      "addons/counterstrikesharp/plugins/NadeSystem": "009ce03005af68ba68dae62967bddc8e92ad172c",
+      "addons/counterstrikesharp/plugins/BotBuy": "11884e0564b8b57bee5f4729a5fca781bd5e6749"
+    },
+    "unintegrated": [
+      {
+        "repository": "XBribo/CS2-Bot-Controller",
+        "ref": "4d8441a13fc8f2eeeae3a97bfe1ede928aeb7126",
+        "change": "Respect weapon-selection hooks; no gamedata change"
+      },
+      {
+        "repository": "ed0ard/CS2-Bot-Randomizer",
+        "ref": "7b168a30b9976f4a1de344d87c72c9bddf8c60da",
+        "change": "Cosmetic catalog/package update only; BotRandomizer.cs blob unchanged despite commit title"
+      }
+    ],
+    "evidence": "docs/archive/2026-10-09-compatibility.md",
+    "notes": "Current candidate ref and artifact preserved. Local scans do not validate target 1.41.9.0. Issues #172/#181 remain open. No new Bot artifact or game installation; current BotAI source compiles but native ABI and real-game/performance gates are unverified."
   }
 }

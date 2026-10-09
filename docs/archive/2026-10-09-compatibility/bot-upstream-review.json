@@ -1,0 +1,452 @@
+{
+  "date": "2026-10-09",
+  "umbrella": {
+    "repository": "ed0ard/CS2-Bot-Improver",
+    "ref": "72adfc283faad3b8fbe974533d55c49d48691333",
+    "base": "9848ac892653db6a256c32524dddf6a05cf4383c",
+    "aheadBy": 29
+  },
+  "components": [
+    {
+      "path": "addons/BotHider",
+      "repo": "XBribo/CS2-Bot-Hider",
+      "ref": "12069c25a756deedc72f8fc116ac3b18045d1223"
+    },
+    {
+      "path": "addons/BotController",
+      "repo": "XBribo/CS2-Bot-Controller",
+      "ref": "0ae8f18fd6872a369cb984e0e95e5a352be092fe"
+    },
+    {
+      "path": "addons/BotVision",
+      "repo": "XBribo/CS2-Bot-Vision",
+      "ref": "33ab01fc5ec4e27b6f07aff653d54638ad84ebcb"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotState",
+      "repo": "ed0ard/CS2-Smarter-Bot",
+      "ref": "ce28e5c1359e9be910a3578694c94e5e8715d2a4"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAimImprover",
+      "repo": "ed0ard/CS2-Bullseye-Bot",
+      "ref": "17e895b68e0c5c365d5c6fea12f1f74342724ce8"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAI",
+      "repo": "ed0ard/CS2-BotAI",
+      "ref": "a23f7e24bd485cc23e0d9340ba74e8d8aa3ba6e0"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotRandomizer",
+      "repo": "ed0ard/CS2-Bot-Randomizer",
+      "ref": "024f314b782433daf1150eba700a7b381e99baa1"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/NadeSystem",
+      "repo": "ed0ard/CS2-Bot-NadeSystem",
+      "ref": "009ce03005af68ba68dae62967bddc8e92ad172c"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotBuy",
+      "repo": "ed0ard/CS2-Bot-Buy",
+      "ref": "11884e0564b8b57bee5f4729a5fca781bd5e6749"
+    }
+  ],
+  "unintegrated": [
+    {
+      "repository": "XBribo/CS2-Bot-Controller",
+      "ref": "4d8441a13fc8f2eeeae3a97bfe1ede928aeb7126",
+      "change": "Respect weapon-selection hooks; no gamedata change"
+    },
+    {
+      "repository": "ed0ard/CS2-Bot-Randomizer",
+      "ref": "7b168a30b9976f4a1de344d87c72c9bddf8c60da",
+      "change": "Cosmetic catalog/package update only; BotRandomizer.cs blob unchanged despite commit title"
+    }
+  ],
+  "componentChanges": [
+    {
+      "repository": "XBribo/CS2-Bot-Controller",
+      "ref": "0ae8f18fd6872a369cb984e0e95e5a352be092fe",
+      "commits": [
+        {
+          "sha": "e595ad814ea8bda0532a05007e25d8f7b9d81c3d",
+          "message": "fix(build): build spdlog with the pre-C++11 string ABI on Linux"
+        },
+        {
+          "sha": "62107b4b6ced4b760f4ad0fed61b64ca393d48c1",
+          "message": "Merge pull request #16 from stevefan1999-personal/fix/linux-spdlog-string-abi"
+        },
+        {
+          "sha": "0ae8f18fd6872a369cb984e0e95e5a352be092fe",
+          "message": "Bump version"
+        }
+      ],
+      "files": [
+        "CMakeLists.txt"
+      ]
+    },
+    {
+      "repository": "ed0ard/CS2-Smarter-Bot",
+      "ref": "ce28e5c1359e9be910a3578694c94e5e8715d2a4",
+      "commits": [
+        {
+          "sha": "a82e8ee6287882018234e4c7ee279bbb79c30027",
+          "message": "docs: Updated README.md"
+        },
+        {
+          "sha": "1abef18785379ebba21f9e3282d7dd83ba27c9c1",
+          "message": "refactor: Refactor code"
+        },
+        {
+          "sha": "e6b209a887b204279facd0a862b50c7b091e020a",
+          "message": "fix: Update sig"
+        },
+        {
+          "sha": "e47f4d4ed4c1a46c83e4e88a762ae8bf2cd06a01",
+          "message": "fix: Update sig"
+        },
+        {
+          "sha": "6f9b12443e6a86b2d5d3f26b83991c0bf957abd8",
+          "message": "Updated version"
+        },
+        {
+          "sha": "e406fbfcf571072e3393e55553fcff3621364e34",
+          "message": "feat: add configurable 3D FOV for native bots"
+        },
+        {
+          "sha": "f31fc12794e025b4ac507bf6c6e6b87af7cfd112",
+          "message": "feat: support independent horizontal and vertical bot FOV"
+        },
+        {
+          "sha": "91c39b32fe75e2df3df40c0a6578d09ff09893c5",
+          "message": "Merge pull request #6 from XBribo/main"
+        },
+        {
+          "sha": "73c42eda6bda07203cfff6215009d71e41fdc1a1",
+          "message": "Deleted tests"
+        },
+        {
+          "sha": "7aeab239c46fad3791d17b555049b08ebe41011f",
+          "message": "Deleted tests"
+        },
+        {
+          "sha": "e27b809c30e34245c784f6b2649d0444cfef080d",
+          "message": "feat: add read-only Rush antenna status command"
+        },
+        {
+          "sha": "443300a9682e7524926ee7f2fe71fda1f2672011",
+          "message": "feat: simplify FOV defaults and add Linux visibility hooks"
+        },
+        {
+          "sha": "0bb3b150a487de3ada4dc3855ee8ffa5625e93c6",
+          "message": "feat: show raw antenna element color in status output"
+        },
+        {
+          "sha": "9e5c6e19f916a939129267353c7a18e4329f62aa",
+          "message": "Updated CSS package version"
+        },
+        {
+          "sha": "baac9049edfe3db255056e3dce78ab41c0f5dcdb",
+          "message": "Updated README.md"
+        },
+        {
+          "sha": "76eb3a08d3853f9af28c3a0f060a0f7bfacf66c5",
+          "message": "Added info_target entity"
+        },
+        {
+          "sha": "4a3b3398e4183a527b5c309a6726d9470779704d",
+          "message": "Added RushAntennaPublisher in lifecycle"
+        },
+        {
+          "sha": "a7f2f9703f61848b52c1801a2c0260b91b3e17c2",
+          "message": "Updated version"
+        },
+        {
+          "sha": "ce28e5c1359e9be910a3578694c94e5e8715d2a4",
+          "message": "Merge pull request #7 from unicbm/feat/add-custom-fov"
+        }
+      ],
+      "files": [
+        "BotFov.cs",
+        "BotFovHooks.cs",
+        "BotFovSignatures.cs",
+        "BotState.Behavior.cs",
+        "BotState.Bomb.cs",
+        "BotState.Combat.cs",
+        "BotState.Controller.cs",
+        "BotState.CustomFov.cs",
+        "BotState.Flashbang.cs",
+        "BotState.FovPatches.cs",
+        "BotState.Lifecycle.cs",
+        "BotState.Movement.cs",
+        "BotState.RushAntenna.cs",
+        "BotState.SmokeReveal.cs",
+        "BotState.Tick.cs",
+        "BotState.Weapons.cs",
+        "BotState.cs",
+        "BotState.csproj",
+        "README.md"
+      ]
+    },
+    {
+      "repository": "ed0ard/CS2-Bullseye-Bot",
+      "ref": "17e895b68e0c5c365d5c6fea12f1f74342724ce8",
+      "commits": [
+        {
+          "sha": "bf2d1ddbc7f5f33076447b6df10cd5e160fd61cb",
+          "message": "fix: Update sig"
+        },
+        {
+          "sha": "032134f9f74fb31114a7317a1075d1074c574ac6",
+          "message": "fix: update sig"
+        },
+        {
+          "sha": "9c61817d0ff026d70fd9c7e3d10ae40d0d8e1ff4",
+          "message": "Update BotAimImprover.cs"
+        },
+        {
+          "sha": "49d3ffb69e356d89cc3961ea73d8b50012ec59d9",
+          "message": "Updated README.md"
+        },
+        {
+          "sha": "04860fdbb2fce59a6867d60fd888a99dab8c03d6",
+          "message": "Lowered the HSR of body mode"
+        },
+        {
+          "sha": "737274bf01b0c5a0e33da7f333cb0ac0c21a65bd",
+          "message": "Merge branch 'ed0ard:main' into main"
+        },
+        {
+          "sha": "57852ccbb9d85d2be0203dea7883a78360e5eb86",
+          "message": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "ec7f3c53c5556e75d851919d85bd33e5bfd16863",
+          "message": "Fixed the target selection logic"
+        },
+        {
+          "sha": "17e895b68e0c5c365d5c6fea12f1f74342724ce8",
+          "message": "Merge pull request #7 from XBribo/main"
+        }
+      ],
+      "files": [
+        "BotAimImprover.cs",
+        "BotAimImprover.csproj",
+        "README.md"
+      ]
+    },
+    {
+      "repository": "ed0ard/CS2-BotAI",
+      "ref": "a23f7e24bd485cc23e0d9340ba74e8d8aa3ba6e0",
+      "commits": [
+        {
+          "sha": "e847af4a2c8cbaa2922a15d8740b444e133240f2",
+          "message": "fix: Update sig"
+        },
+        {
+          "sha": "4854258ac5b651885d59c112c1a7338f3cfe2427",
+          "message": "Fixed AttackState_SkipSniperSpreadCheck"
+        },
+        {
+          "sha": "715ee57116153e166af68940ba006c18ad03153f",
+          "message": "Corrected two patches"
+        },
+        {
+          "sha": "dea57ad6f42dabf8363245c858f1b0315025f18c",
+          "message": "Merge pull request #7 from XBribo/main"
+        },
+        {
+          "sha": "65b16651502229ec2e8b81c7bfe2ea5fbed1b274",
+          "message": "fix: update Linux bot signatures and combat jump patch"
+        },
+        {
+          "sha": "27759ca69d011af5050745efbadafcc2930be3a8",
+          "message": "fix: strengthen Linux signature context"
+        },
+        {
+          "sha": "e812f0b9d30419bd6cf52b50a6b2f5605ead2b68",
+          "message": "Fix Windows patch targets and verify bot state offsets"
+        },
+        {
+          "sha": "2c81888fcc1f2fba4f8a1e608f55fad8f5fc8ea5",
+          "message": "Remove standalone Windows audit notes"
+        },
+        {
+          "sha": "d1f95ddb02b6b4efe1c94cacef790a1ca541bdfa",
+          "message": "Preserve Windows spawn handling with corrected game-state offset"
+        },
+        {
+          "sha": "e1a0e16350aced70f0dcf8fdf89623956042b86e",
+          "message": "Align verified Windows and Linux game-state offsets"
+        },
+        {
+          "sha": "a3334deedd0d74a0e08d0339af2b454bfbfe6d8a",
+          "message": "Align verified Windows and Linux game-state offsets"
+        },
+        {
+          "sha": "7d5b4f1f2c4067e71a6113c80333429044f772e6",
+          "message": "Relocate Windows FOV and game-state reset patches"
+        },
+        {
+          "sha": "66fd2adea29012f7020cfeac76198b80609830ef",
+          "message": "Relocate Linux bot patches to their verified behavior paths"
+        },
+        {
+          "sha": "c5f7d0d0eea9826bdb5ba7432680eb80d811fded",
+          "message": "Add Linux bot view drift patches matching Windows"
+        },
+        {
+          "sha": "1bef9fb49157f86ab6fbcbb322c59cd3a039cc35",
+          "message": "Merge pull request #12 from unicbm/fix/windows-patch-targets"
+        },
+        {
+          "sha": "5370961f5fa8ad4179f8f31b30c6a7b69fb645da",
+          "message": "Merge pull request #11 from unicbm/fix/linux-signatures"
+        },
+        {
+          "sha": "032e0b96759068c8e2bbba3912bbd603b88fbd50",
+          "message": "Updated patches for Linux"
+        },
+        {
+          "sha": "3dd95c599e917bc8af16a418b4a08f29219d71bb",
+          "message": "Updated README.md"
+        },
+        {
+          "sha": "923a80ca34d92af0bb2e5bc3afba4b71e935573d",
+          "message": "Updated patches for Windows"
+        },
+        {
+          "sha": "4640fb95de787164d92f63d7b8617307e39a6946",
+          "message": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "a23f7e24bd485cc23e0d9340ba74e8d8aa3ba6e0",
+          "message": "Updated version"
+        }
+      ],
+      "files": [
+        "BotAI.cs",
+        "BotAI.csproj",
+        "LinuxDisplacementFixups.cs",
+        "LinuxPatchDefinitions.cs",
+        "README.md",
+        "WindowsPatchDefinitions.cs"
+      ]
+    },
+    {
+      "repository": "ed0ard/CS2-Bot-Randomizer",
+      "ref": "024f314b782433daf1150eba700a7b381e99baa1",
+      "commits": [
+        {
+          "sha": "5b53bb617c43113963650b5136cbef5e5a63d094",
+          "message": "Keep hardcoding"
+        },
+        {
+          "sha": "9b2acf7cc87dc62d9c7922d267ef629d45fdfef7",
+          "message": "Restored hardcoding"
+        },
+        {
+          "sha": "7b347b84fc68d7506f14b28972827d249eb1b490",
+          "message": "Restored hardcoding"
+        },
+        {
+          "sha": "e569793bc18ef06c3cb3533507cc9cd2660a22b7",
+          "message": "Simplify maintenance to automatic signature and database updates"
+        },
+        {
+          "sha": "dbbdd48153158f8f16b9317a99d965090d7dc282",
+          "message": "Consolidate signature and catalog maintenance into one script"
+        },
+        {
+          "sha": "024f314b782433daf1150eba700a7b381e99baa1",
+          "message": "Merge pull request #9 from unicbm"
+        }
+      ],
+      "files": [
+        ".github/workflows/build.yml",
+        ".github/workflows/catalog-update.yml",
+        ".github/workflows/update.yml",
+        "BotRandomizer.cs",
+        "BotRandomizer.csproj",
+        "gamedata/botrandomizer.json",
+        "packages.lock.json",
+        "tests/BotRandomizer.Tests.csproj",
+        "tests/Program.cs",
+        "tools/build.ps1",
+        "tools/catalog/catalog.test.mjs",
+        "tools/catalog/generate.mjs",
+        "tools/catalog/package.json",
+        "tools/catalog/policy.json",
+        "tools/catalog/source.json",
+        "tools/catalog/source.mjs",
+        "tools/catalog/update.mjs",
+        "tools/update-catalog.ps1"
+      ]
+    },
+    {
+      "repository": "ed0ard/CS2-Bot-NadeSystem",
+      "ref": "009ce03005af68ba68dae62967bddc8e92ad172c",
+      "commits": [
+        {
+          "sha": "f05d9bf79c67eda74a156921b7f139a58c84c0d8",
+          "message": "fix: Update sig"
+        },
+        {
+          "sha": "0ad693a967ea5d0bda06392855b97d24e0f591e1",
+          "message": "chore: Update comments"
+        },
+        {
+          "sha": "009ce03005af68ba68dae62967bddc8e92ad172c",
+          "message": "Merge pull request #5 from XBribo/main"
+        }
+      ],
+      "files": [
+        "NadeSystem.cs"
+      ]
+    },
+    {
+      "repository": "ed0ard/CS2-Bot-Buy",
+      "ref": "11884e0564b8b57bee5f4729a5fca781bd5e6749",
+      "commits": [
+        {
+          "sha": "a4e8fded12dda5353e5c36eb2ff8cddd11d5193e",
+          "message": "fix: skip controllers that went away before the delayed buy timers"
+        },
+        {
+          "sha": "4dabe91787ef57e2e9cb06583b00a7cf19283994",
+          "message": "Merge pull request #5 from stevefan1999-personal"
+        },
+        {
+          "sha": "8c9ef283dac7663cdfc39989975550d0c5e37c56",
+          "message": "Updated CounterStrikeSharp.API package version to 1.0.376"
+        },
+        {
+          "sha": "11884e0564b8b57bee5f4729a5fca781bd5e6749",
+          "message": "Added Rush mode compatibility"
+        }
+      ],
+      "files": [
+        "BotBuy.cs",
+        "BotBuy.csproj"
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "number": 172,
+      "state": "open",
+      "title": "[Bug] Occasional frame drops after update 更新后，游玩时偶发掉帧",
+      "updatedAt": "2026-10-05T08:34:38Z",
+      "url": "https://github.com/ed0ard/CS2-Bot-Improver/issues/172"
+    },
+    {
+      "number": 181,
+      "state": "open",
+      "title": "[Bug] Bots and FPS issues",
+      "updatedAt": "2026-10-08T05:37:19Z",
+      "url": "https://github.com/ed0ard/CS2-Bot-Improver/issues/181"
+    }
+  ]
+}

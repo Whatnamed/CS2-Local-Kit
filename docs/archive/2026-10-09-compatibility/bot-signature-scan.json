@@ -1,0 +1,1614 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "c98cc7ea3095a32683fc37fea804537b3ea6d89836fd4f5e55d593a82bb54ee3"
+    },
+    "engine2": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\engine2.dll",
+      "sha256": "f6bf9808f6642b95fbf135c5f152af0b80f11dec27eea48ea1bfa8098c5ac42b"
+    }
+  },
+  "results": [
+    {
+      "name": "BotController/CCSBot::EquipBestWeapon",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B D9 84 D2 75 ? 4C 8D 81 ? ? ? ? 48 8D 0D ? ? ? ? 48 8D 54 24 ? E8 ? ? ? ? 80 38 ? 75 ? 48 8D 54 24 ? 48 8D 8B ? ? ? ? E8 ? ? ? ? 48 8D 93 ? ? ? ? 48 8B C8 E8 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 87 ? ? ? ? 48 8B 43 ? 33 D2 41 B8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2bdc60",
+          "fileOffset": "0x2bd060"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::EquipPistol",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B D9 84 D2 75 ? 4C 8D 81 ? ? ? ? 48 8D 0D ? ? ? ? 48 8D 54 24 ? E8 ? ? ? ? 80 38 ? 75 ? 48 8D 54 24 ? 48 8D 8B ? ? ? ? E8 ? ? ? ? 48 8D 93 ? ? ? ? 48 8B C8 E8 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 87 ? ? ? ? 48 8B 05 ? ? ? ? 80 78 ? ? 0F 84",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2be160",
+          "fileOffset": "0x2bd560"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayer_WeaponServices::SelectItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 41 8B E8 48 8B DA 48 8B F9 E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 48 8B CF E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb1cec0",
+          "fileOffset": "0xb1c2c0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC ? 45 33 E4 45 8B F0 44 8B FA 48 8B E9 41 8B FC 44 39 61",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc7f780",
+          "fileOffset": "0xc7eb80"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::Update",
+      "library": "server",
+      "pattern": "40 55 56 57 41 54 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? C6 81 ? ? ? ? ? 48 89 44 24 ? 4C 8D 45 ? 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e2450",
+          "fileOffset": "0x2e1850"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::Upkeep",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 83 EC ? 4C 8B F1 33 ED 48 8B 49 ? 48 39 A9 ? ? ? ? 0F 85 ? ? ? ? 48 8B 49 ? 48 8B 01 FF 90",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e18f0",
+          "fileOffset": "0x2e0cf0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/BuyState::OnUpdate",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 48 89 4C 24 ? 55 53 41 55 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 4C 8B EA 48 8B D9 80 B8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32b920",
+          "fileOffset": "0x32ad20"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::UpdateLookAngles",
+      "library": "server",
+      "pattern": "40 55 53 56 41 56 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? 4C 8D 45 ? 0F 10 45 ? 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e4300",
+          "fileOffset": "0x2e3700"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayerPawn::SetEyeAngles",
+      "library": "server",
+      "pattern": "48 89 7C 24 ? 55 48 8B EC 48 81 EC ? ? ? ? 48 8B F9 48 8D 4D ? E8 ? ? ? ? F2 0F 10 87 ? ? ? ? 48 8B CF 8B 87 ? ? ? ? F2 0F 11 87",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xd0b2d0",
+          "fileOffset": "0xd0a6d0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayer_MovementServices::ProcessMovement",
+      "library": "server",
+      "pattern": "40 57 41 57 48 81 EC ? ? ? ? 48 83 79 ? ? 4C 8B FA 48 8B F9 75 ? E8 ? ? ? ? 4C 8B 4F ? 41 8B 91 ? ? ? ? 83 FA ? 0F 84",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xad89b0",
+          "fileOffset": "0xad7db0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CBasePlayerController::OnSimulateUserCommands",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 55 41 56 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 4C 8B F1 48 C7 44 24 ? ? ? ? ? 48 8D 1D ? ? ? ? 45 33 ED 48 89 5C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb5f9c0",
+          "fileOffset": "0xb5edc0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/DropReleasePose::OuterDrop",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 4C 89 4C 24 ? 44 89 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xaface0",
+          "fileOffset": "0xafa0e0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/DropReleasePose::BuildTransform",
+      "library": "server",
+      "pattern": "48 89 74 24 ? 55 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 4C 8B EA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa1ee80",
+          "fileOffset": "0xa1e280"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D ? ? ? ?",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc29d70",
+          "fileOffset": "0xc29170"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CCSBotManager::MaintainBotQuota",
+      "library": "server",
+      "pattern": "40 55 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4C 8B F9 FF 15",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cf170",
+          "fileOffset": "0x2ce570"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CBaseIssue::CountPotentialVoters",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC ? 48 8B 05 ? ? ? ? 45 33 F6",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x21e810",
+          "fileOffset": "0x21dc10"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CCSPlayerController::HandleCommand_JoinTeam",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 3D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa76a70",
+          "fileOffset": "0xa75e70"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/MpHumanTeam_ApplyRestriction",
+      "library": "server",
+      "pattern": "40 55 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 8D 0D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x93daf0",
+          "fileOffset": "0x93cef0"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CNetworkGameServer::PackEntities",
+      "library": "engine2",
+      "pattern": "4C 89 4C 24 ? 44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? B8 ? ? ? ? E8 ? ? ? ? 48 2B E0 4C 8B E9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xe8ad0",
+          "fileOffset": "0xe7ed0"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CCSGameRules::EndMatchState",
+      "library": "server",
+      "pattern": "48 8B C4 55 41 57 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 80 3D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x90ed30",
+          "fileOffset": "0x90e130"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CBotManager::IsVisibleThroughSmoke",
+      "library": "server",
+      "pattern": "4C 8B DC 49 89 5B ? 49 89 6B ? 49 89 73 ? 49 89 7B ? 41 54 41 56 41 57 48 81 EC ? ? ? ? 49 C7 43 ? ? ? ? ? 48 8D 05 ? ? ? ? 49 89 43 ? 49 8B E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x323ec0",
+          "fileOffset": "0x3232c0"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/g_AutoList_SmokeProj_Head_Server",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 8B EA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x346214",
+          "fileOffset": "0x345614"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/GetSmokeDensityInLine",
+      "library": "server",
+      "pattern": "40 55 53 56 41 55 41 57 48 8D 6C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9b9410",
+          "fileOffset": "0x9b8810"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CHEGrenadeProjectile::Detonate",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC A8 00 00 00 48 89 58 ? 48 89 70",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x39e330",
+          "fileOffset": "0x39d730"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/BulletPelletTrace",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 55 56 41 57",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa713c0",
+          "fileOffset": "0xa707c0"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/BulletPelletTraceResult",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B E9 0F 29 74 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa6dce0",
+          "fileOffset": "0xa6d0e0"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 20 45 33 E4 45 8B F0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc7f780",
+          "fileOffset": "0xc7eb80"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CCSBot::IsVisiblePos",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC A0 01 00 00 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd3d0",
+          "fileOffset": "0x2cc7d0"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CCSBot::IsVisiblePlayer",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC 90 00 00 00",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd6a0",
+          "fileOffset": "0x2ccaa0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/UTIL_ClientPrintAll",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 8B E9 49 8B D9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xfe2fc0",
+          "fileOffset": "0xfe23c0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/ClientPrint",
+      "library": "server",
+      "pattern": "48 85 C9 0F 84 ? ? ? ? 48 89 5C 24 ? 55",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x981820",
+          "fileOffset": "0x980c20"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayerController_SwitchTeam",
+      "library": "server",
+      "pattern": "40 53 57 48 81 EC ? ? ? ? 48 8B D9 8B FA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa95bc0",
+          "fileOffset": "0xa94fc0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBasePlayerController_SetPawn",
+      "library": "server",
+      "pattern": "44 88 4C 24 ? 53 57 41 54",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb6f650",
+          "fileOffset": "0xb6ea50"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayerPawnBase_PostThink",
+      "library": "server",
+      "pattern": "40 55 56 41 54 48 8B EC 48 83 EC ? 4C 89 AC 24 ? ? ? ? 48 8B F1 E8 ? ? ? ? 80 BE ? ? ? ? ?",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1dc160",
+          "fileOffset": "0x1db560"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CGameEventManager_Init",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B 01 48 8B D9 FF 50 ? 48 8B 03",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbfdf20",
+          "fileOffset": "0xbfd320"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/GiveNamedItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 44 89 44 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xab19f0",
+          "fileOffset": "0xab0df0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc29d70",
+          "fileOffset": "0xc29170"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseModelEntity_SetModel",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B D9 4C 8B C2 48 8B 0D ? ? ? ? 48 8D 54 24 ? 48 8B 01 FF 50 ? 48 8B 54 24 ? 48 8B CB E8 ? ? ? ? 48 83 C4 ? 5B C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC 48 89 5C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb6ef50",
+          "fileOffset": "0xb6e350"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayer_WeaponServices_CanUse",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 54 41 56 41 57 48 83 EC ? 48 8B 01 48 8B FA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xafb810",
+          "fileOffset": "0xafac10"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayer_ItemServices_CanAcquire",
+      "library": "server",
+      "pattern": "44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8B EC",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xab2a20",
+          "fileOffset": "0xab1e20"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/GetCSWeaponDataFromKey",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 33 FF 4C 8B CA 8B D9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x542bd0",
+          "fileOffset": "0x541fd0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSGameRules_TerminateRound",
+      "library": "server",
+      "pattern": "48 8B C4 4C 89 48 ? 48 89 48 ? 55 41 54",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x95e6f0",
+          "fileOffset": "0x95daf0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/UTIL_CreateEntityByName",
+      "library": "server",
+      "pattern": "48 83 EC ? C6 44 24 ? ? 4C 8B C1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbe8790",
+          "fileOffset": "0xbe7b90"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseEntity_DispatchSpawn",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 48 85 C9 0F 84 ? ? ? ? 48 85 D2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xca3780",
+          "fileOffset": "0xca2b80"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseEntity_EmitSoundFilter",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 4C 89 4C 24 ? 48 8B D9 45 8B C8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xf62a50",
+          "fileOffset": "0xf61e50"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CEntityInstance_AcceptInput",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 81 EC ? ? ? ? 4D 8B F0 48 8B F1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13a6930",
+          "fileOffset": "0x13a5d30"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CEntitySystem_AddEntityIOEvent",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 49 8B F1 48 8B F9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1378ec0",
+          "fileOffset": "0x13782c0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/LegacyGameEventListener",
+      "library": "server",
+      "pattern": "48 8B 15 ? ? ? ? 48 85 D2 74 ? 85 C9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbfbbf0",
+          "fileOffset": "0xbfaff0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBasePlayerPawn_RemovePlayerItem",
+      "library": "server",
+      "pattern": "48 85 D2 0F 84 ? ? ? ? 48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xafdb90",
+          "fileOffset": "0xafcf90"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseEntity_TakeDamageOld",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 54 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4D 8B E0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3e6ad0",
+          "fileOffset": "0x3e5ed0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseTrigger_StartTouch",
+      "library": "server",
+      "pattern": "40 57 41 56 48 83 EC ? 48 8B 01",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3e6790",
+          "fileOffset": "0x3e5b90"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseTrigger_EndTouch",
+      "library": "server",
+      "pattern": "40 53 41 55 48 83 EC ? 83 BA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x14a9590",
+          "fileOffset": "0x14a8990"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CEntityIOOutput_FireOutputInternal",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 48 ? 55",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x138fea0",
+          "fileOffset": "0x138f2a0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/IGameSystem_InitAllSystems_pFirst",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 85 DB 0F 84 ? ? ? ? BD",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x53ea03",
+          "fileOffset": "0x53de03"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/NetworkStateChanged",
+      "library": "server",
+      "pattern": "4C 8B C2 48 8B D1 48 8B 09",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13a9e00",
+          "fileOffset": "0x13a9200"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/Host_Say",
+      "library": "server",
+      "pattern": "44 89 4C 24 ? 44 88 44 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xcf3d20",
+          "fileOffset": "0xcf3120"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSNavArea_IsValidNavMesh",
+      "library": "server",
+      "pattern": "48 83 3D ? ? ? ? ? 0F 95 C0 C3 CC CC CC CC C2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xdd4680",
+          "fileOffset": "0xdd3a80"
+        }
+      ]
+    },
+    {
+      "name": "BotAI/HasVisitedEnemySpawn",
+      "library": "server",
+      "pattern": "4C 89 B7 ? ? 00 00 48 8D 8C 24 ? ? ? ? 44 88 B7 FD 05 00 00 E8 ? ? ? ? F3 0F 10 87 ? ? 00 00 48 8B F0",
+      "replacement": "C6 87 FD 05 00 00 01",
+      "expectedOriginal": "44 88 B7 FD 05 00 00",
+      "patchOffset": 15,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2db419",
+          "fileOffset": "0x2da819",
+          "originalBytes": "44 88 B7 FD 05 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/GameState_Reset",
+      "library": "server",
+      "pattern": "48 8D 4C 24 ? 45 33 F6 44 89 77 0C E8 ? ? ? ? F3 0F 10 47 18 48 8B F0 0F 2E 00",
+      "replacement": "90 90 90 90",
+      "expectedOriginal": "44 89 77 0C",
+      "patchOffset": 8,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2da82b",
+          "fileOffset": "0x2d9c2b",
+          "originalBytes": "44 89 77 0C",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Idle_IsSafeAlwaysFalse",
+      "library": "server",
+      "pattern": "74 28 33 D2 48 8B CE E8 ? ? ? ? 84 C0 75 1A",
+      "replacement": "EB 28",
+      "expectedOriginal": "74 28",
+      "patchOffset": 0,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32f19d",
+          "fileOffset": "0x32e59d",
+          "originalBytes": "74 28",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "C6 83 ? ? 00 00 00 C6 83 ? ? 00 00 00 48 83 C4 20 5B E9",
+      "replacement": "C3 90 90 90 90",
+      "expectedOriginal": "E9 ? ? ? ?",
+      "patchOffset": 19,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329d3d",
+          "fileOffset": "0x32913d",
+          "originalBytes": "E9 EB 42 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnUpdate_NoEquipKnife",
+      "library": "server",
+      "pattern": "75 0F 48 8B 5C 24 50 48 83 C4 40 5F E9 ? ? ? ? E8 ? ? ? ?",
+      "replacement": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32ca62",
+          "fileOffset": "0x32be62",
+          "originalBytes": "E8 C8 15 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromFlames_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "48 8B CB 40 88 BB ? ? 00 00 40 88 BB ? ? 00 00 E8 ? ? ? ? F3 0F 10 0D",
+      "replacement": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329e25",
+          "fileOffset": "0x329225",
+          "originalBytes": "E8 05 42 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/PlantBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 F3 0F 10 0D",
+      "replacement": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32a8ac",
+          "fileOffset": "0x329cac",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 4C 8B C7",
+      "replacement": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c8d6",
+          "fileOffset": "0x32bcd6",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBomb_SkipIsVisibleCheck",
+      "library": "server",
+      "pattern": "0F 2F C8 0F 86 ? ? ? ? 45 33 C9 45 33 C0 48 8B D3 48 8B CE E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 48 8B CE",
+      "replacement": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 84 D9 00 00 00",
+      "patchOffset": 28,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33183f",
+          "fileOffset": "0x330c3f",
+          "originalBytes": "0F 84 D9 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipFireRateCheck",
+      "library": "server",
+      "pattern": "0F 2F 8B ? ? 00 00 0F 82",
+      "replacement": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 82 87 00 00 00",
+      "patchOffset": 7,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x300360",
+          "fileOffset": "0x2ff760",
+          "originalBytes": "0F 82 87 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SprayAllDistances_ForceHoldTrigger",
+      "library": "server",
+      "pattern": "76 12 48 8B 05 ? ? ? ? 0F 2F 40 30 76 05 40 B5 01 EB 03 40 32 ED",
+      "replacement": "40 32 ED",
+      "expectedOriginal": "40 B5 01",
+      "patchOffset": 15,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2febd3",
+          "fileOffset": "0x2fdfd3",
+          "originalBytes": "40 B5 01",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipSteadyFireShortcut",
+      "library": "server",
+      "pattern": "0F B6 F0 84 C0 74 3C 48 8B 4B 18 48 8B 11 FF 92 90 00 00 00",
+      "replacement": "90 90",
+      "expectedOriginal": "74 3C",
+      "patchOffset": 5,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ffb90",
+          "fileOffset": "0x2fef90",
+          "originalBytes": "74 3C",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipZoomFireShortcut",
+      "library": "server",
+      "pattern": "FF 90 ? ? 00 00 84 C0 74 15 48 8D 8B ? ? 00 00 48 89 AB",
+      "replacement": "90 90",
+      "expectedOriginal": "74 15",
+      "patchOffset": 8,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ffbb4",
+          "fileOffset": "0x2fefb4",
+          "originalBytes": "74 15",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipSniperSpreadCheck",
+      "library": "server",
+      "pattern": "84 C0 74 0A F3 0F 10 ? ? ? ? ? EB 08 F3 0F 10 ? ? ? ? ? ? 0F 2F ? 0F 87 ? ? ? ?",
+      "replacement": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 87 ? ? ? ?",
+      "patchOffset": 26,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2c1d1d",
+          "fileOffset": "0x2c111d",
+          "originalBytes": "0F 87 34 02 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_DodgeDuringReload",
+      "library": "server",
+      "pattern": "E9 ? ? ? ? 0F 2F BB ? 00 00 00 76 74",
+      "replacement": "EB 74",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3003ef",
+          "fileOffset": "0x2ff7ef",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SniperCrouchDodge_jb",
+      "library": "server",
+      "pattern": "0F 2F BB ? 00 00 00 0F 28 7C 24 30 76 74",
+      "replacement": "90 90",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3004db",
+          "fileOffset": "0x2ff8db",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/LowSKill_JumpChance0",
+      "library": "server",
+      "pattern": "0F 57 C9 48 8B CF E8 ? ? ? ? BA 03 00 00 00 84 C0 74 05 BA 02 00 00 00 33 C9 FF 15 ? ? ? ? 80 7D 43 00",
+      "replacement": "BA 02 00 00 00",
+      "expectedOriginal": "BA 03 00 00 00",
+      "patchOffset": 11,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x328912",
+          "fileOffset": "0x327d12",
+          "originalBytes": "BA 03 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_DodgeChance100_Always",
+      "library": "server",
+      "pattern": "0F 28 F0 F3 0F 59 35 ? ? ? ? 76 ?",
+      "replacement": "EB 11",
+      "expectedOriginal": "76 ?",
+      "patchOffset": 11,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3298c0",
+          "fileOffset": "0x328cc0",
+          "originalBytes": "76 14",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_RetreatOnSniper_Disable",
+      "library": "server",
+      "pattern": "74 ? 48 8B CE E8 ? ? ? ? 84 C0 74 ? 48 8B CE E8 ? ? ? ? 84 C0",
+      "replacement": "EB",
+      "expectedOriginal": "74",
+      "patchOffset": 0,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32afd8",
+          "fileOffset": "0x32a3d8",
+          "originalBytes": "74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AllSkill_KeepMoving_WhenSeeSniper",
+      "library": "server",
+      "pattern": "0F 2F 05 ? ? ? ? 76 0D 80 BF ? ? 00 00 00 0F 85",
+      "replacement": "90 90",
+      "expectedOriginal": "76 0D",
+      "patchOffset": 7,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d952f",
+          "fileOffset": "0x2d892f",
+          "originalBytes": "76 0D",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_CanStrafe_jne",
+      "library": "server",
+      "pattern": "0F 2F 8B ? ? 00 00 0F 82 ? ? ? ? 48 8B CB E8 ? ? ? ? 84 C0 74 7B",
+      "replacement": "90 90",
+      "expectedOriginal": "74 7B",
+      "patchOffset": 23,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x300360",
+          "fileOffset": "0x2ff760",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SniperDodge_SkipIsSniper_DodgeA",
+      "library": "server",
+      "pattern": "84 F6 75 6A 48 8B 05",
+      "replacement": "90 90",
+      "expectedOriginal": "75 6A",
+      "patchOffset": 2,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30046d",
+          "fileOffset": "0x2ff86d",
+          "originalBytes": "75 6A",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_AlwaysWatchApproachPoints",
+      "library": "server",
+      "pattern": "80 BF ? ? 00 00 00 75 25 0F 2F",
+      "replacement": "EB 25",
+      "expectedOriginal": "75 25",
+      "patchOffset": 7,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32884d",
+          "fileOffset": "0x327c4d",
+          "originalBytes": "75 25",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipSkillCheck",
+      "library": "server",
+      "pattern": "F3 0F 10 40 0C 0F 2F ? 76 ?",
+      "replacement": "90 90",
+      "expectedOriginal": "76 ?",
+      "patchOffset": 8,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32889d",
+          "fileOffset": "0x327c9d",
+          "originalBytes": "76 33",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipHidingSpotCheck",
+      "library": "server",
+      "pattern": "80 BF ? 5C 00 00 00 74 ?",
+      "replacement": "90 90",
+      "expectedOriginal": "74 ?",
+      "patchOffset": 7,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3288a7",
+          "fileOffset": "0x327ca7",
+          "originalBytes": "74 2A",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_SkipIsMovingGate",
+      "library": "server",
+      "pattern": "0F 2F 35 ? ? ? ? 77 ? 49 8B ? 48 8B CF E8 ? ? ? ? 84 C0 75 ?",
+      "replacement": "90 90",
+      "expectedOriginal": "77 ?",
+      "patchOffset": 7,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x328856",
+          "fileOffset": "0x327c56",
+          "originalBytes": "77 0F",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_AlwaysEnterApproachBody",
+      "library": "server",
+      "pattern": "84 C0 75 ? ? C7 ? 08 00 00 00 00 E9 ? ? ? ?",
+      "replacement": "EB",
+      "expectedOriginal": "75",
+      "patchOffset": 2,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32886a",
+          "fileOffset": "0x327c6a",
+          "originalBytes": "75",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/IsNoticable_AlwaysTrue",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 56 57 41 56 48 81 EC ? ? 00 00 0F 29 74 24 ? 4C 8B F1 0F 29 7C 24 ? 48 8B CA 44 0F 29 44 24 ? 41 0F B6 D8 44 0F 29 4C 24 ? 48 8B F2 E8",
+      "replacement": "B0 01 C3",
+      "expectedOriginal": "48 89 5C",
+      "patchOffset": 0,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cc000",
+          "fileOffset": "0x2cb400",
+          "originalBytes": "48 89 5C",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Upkeep_BotCOS_ZeroDrift",
+      "library": "server",
+      "pattern": "F3 0F 10 35 ? ? ? ? 48 8B 05 ? ? ? ? F3 0F 10 40 30 F3 0F 59 05 ? ? ? ? E8 ? ? ? ? F3 0F 59 C6 F3 0F 58 87 ? ? 00 00 F3 0F 11 87 ? ? 00 00",
+      "replacement": "0F 57 C0 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 28,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e727f",
+          "fileOffset": "0x2e667f",
+          "originalBytes": "E8 30 84 03 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Upkeep_BotSIN_ZeroDrift",
+      "library": "server",
+      "pattern": "F3 0F 11 87 ? ? 00 00 48 8B 05 ? ? ? ? F3 0F 10 40 30 F3 0F 59 05 ? ? ? ? E8 ? ? ? ? F3 0F 59 C6 F3 0F 58 87 ? ? 00 00 F3 0F 11 87 ? ? 00 00",
+      "replacement": "0F 57 C0 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 28,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e72ac",
+          "fileOffset": "0x2e66ac",
+          "originalBytes": "E8 43 84 03 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/InvestigateNoise_SkipSelfDefenseCheck",
+      "library": "server",
+      "pattern": "83 BB ? ? 00 00 02 74 1E",
+      "replacement": "90 90",
+      "expectedOriginal": "74 1E",
+      "patchOffset": 7,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32853f",
+          "fileOffset": "0x32793f",
+          "originalBytes": "74 1E",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/TBot_BombsiteSearch_UseKnownPlantedSite",
+      "library": "server",
+      "pattern": "48 8B 8E ? ? 00 00 E8 ? ? ? ? 48 8B CB E8 ? ? ? ? 4C 8B 05 ? ? ? ? 85 C0",
+      "replacement": "E8 30 57 F9 FF",
+      "expectedOriginal": "E8 40 51 F9 FF",
+      "patchOffset": 15,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33017c",
+          "fileOffset": "0x32f57c",
+          "originalBytes": "E8 40 51 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/BombBeep_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "0F 2F ? 76 67 48 8B ? 18 80 B8 44 03 00 00 03",
+      "replacement": "90 90",
+      "expectedOriginal": "76 67",
+      "patchOffset": 3,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d1837",
+          "fileOffset": "0x2d0c37",
+          "originalBytes": "76 67",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/BombPickup_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "0F 2F ? 76 23 48 8B ? ? 5E 00 00 E8",
+      "replacement": "90 90",
+      "expectedOriginal": "76 23",
+      "patchOffset": 3,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d21f3",
+          "fileOffset": "0x2d15f3",
+          "originalBytes": "76 23",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/OnAudibleEvent_GlobalHearRange",
+      "library": "server",
+      "pattern": "F3 44 0F 51 CA EB 0C 0F 28 C2 E8 ? ? ? ? 44 0F 28 C8 45 0F 2F D1 0F 86 ? ? ? ?",
+      "replacement": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 86 ? ? ? ?",
+      "patchOffset": 23,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d0ec3",
+          "fileOffset": "0x2d02c3",
+          "originalBytes": "0F 86 65 03 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/OnBombPlanted_AllBotsLearnSite",
+      "library": "server",
+      "pattern": "80 BA ? ? 00 00 02 0F 85 ? ? ? ? 48 85 DB 0F 84 ? ? ? ?",
+      "replacement": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 85 ? ? ? ?",
+      "patchOffset": 7,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d2406",
+          "fileOffset": "0x2d1806",
+          "originalBytes": "0F 85 8E 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/CT_Defuse_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "C7 86 ? ? 00 00 03 00 00 00 BA 02 00 00 00 48 8B CE",
+      "replacement": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 10,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3304f8",
+          "fileOffset": "0x32f8f8",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnUpdate_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 8D 8A ? ? 00 00 48 8B DA E8 ? ? ? ? BA 02 00 00 00 48 8B CB",
+      "replacement": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 15,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c87a",
+          "fileOffset": "0x32bc7a",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnEnter_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 89 5C 24 08 57 48 83 EC 20 48 8B DA BA 02 00 00 00 48 8B CB",
+      "replacement": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 13,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329c70",
+          "fileOffset": "0x329070",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/FlashbangAvoidance_Disable",
+      "library": "server",
+      "pattern": "E8 ? ? ? ? 49 8B 06 C6 80 ? 5C 00 00 00 32 C0",
+      "replacement": "90 90 90 90 90 90 90 90 90 90 90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ? 49 8B 06 C6 80 ? 5C 00 00 00",
+      "patchOffset": 0,
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2b35c1",
+          "fileOffset": "0x2b29c1",
+          "originalBytes": "E8 7A A4 02 00 49 8B 06 C6 80 74 5C 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotState/WindowsPlayer",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? ? ? ? ? 0F 10 45 ? 48 8D 05 ? ? ? ? 4C 8B F2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd6a0",
+          "fileOffset": "0x2ccaa0"
+        }
+      ]
+    },
+    {
+      "name": "BotState/WindowsPosition",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? ? ? ? ? 0F 10 45 ? 48 8D 05 ? ? ? ? 4C 8B E2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd3d0",
+          "fileOffset": "0x2cc7d0"
+        }
+      ]
+    },
+    {
+      "name": "BotState/IsVisiblePos_IgnoreFOV",
+      "library": "server",
+      "pattern": "48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? 45 0F B6 E8",
+      "patchOffset": 19,
+      "expectedOriginal": "45 0F B6 E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd3f7",
+          "fileOffset": "0x2cc7f7",
+          "originalBytes": "45 0F B6 E8",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotState/IsVisiblePlayer_IgnoreFOV",
+      "library": "server",
+      "pattern": "48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? 41 0F B6 D8",
+      "patchOffset": 19,
+      "expectedOriginal": "41 0F B6 D8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd6c1",
+          "fileOffset": "0x2ccac1",
+          "originalBytes": "41 0F B6 D8",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAimImprover/PickNewAimSpot",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC ? ? ? ? 48 8B F9 0F 29 70 ? 8B 89 ? ? ? ? 83 F9 FF",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d8380",
+          "fileOffset": "0x2d7780"
+        }
+      ]
+    },
+    {
+      "name": "BotRandomizer/WindowsBinding/0",
+      "library": "server",
+      "pattern": "48 89 4C 24 ? 53 41 55 41 56",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x106cd50",
+          "fileOffset": "0x106c150"
+        }
+      ]
+    },
+    {
+      "name": "BotRandomizer/WindowsBinding/1",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 48 8B F9 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x105e470",
+          "fileOffset": "0x105d870"
+        }
+      ]
+    },
+    {
+      "name": "NadeSystem/WindowsBinding/0",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 68 ? 48 89 70 ? 57 41 56 41 57 48 81 EC ? ? ? ? 48 8B B4 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9b0b70",
+          "fileOffset": "0x9aff70"
+        }
+      ]
+    },
+    {
+      "name": "NadeSystem/WindowsBinding/1",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B AC 24 ? ? ? ? 49 8B F8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x39dc30",
+          "fileOffset": "0x39d030"
+        }
+      ]
+    },
+    {
+      "name": "NadeSystem/WindowsBinding/2",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 78 ? 4C 89 40 ? 55 41 54 41 55 41 56 41 57 48 8D 6C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9b02a0",
+          "fileOffset": "0x9af6a0"
+        }
+      ]
+    }
+  ]
+}
