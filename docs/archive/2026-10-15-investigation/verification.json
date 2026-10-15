@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-15",
+  "gameBinaryChanges": 0,
+  "runtimeLockDiff": [],
+  "beforeManifestSha256": "96a6a4e6ab0231081df29ffa8c237c9ef830899b87c79f1bf5bb0b28d10193e1",
+  "protectedPathSetDifferenceCount": 0,
+  "protectedFileCount": 614,
+  "scope": "Archive-only changes; static scans/build evidence, no runtime or rendering acceptance",
+  "protectedScope": "All existing files under game/csgo/addons and E:/CS2MOD/presets, gameinfo.gi, steam.inf; five game binary hashes separately checked",
+  "cs2Running": false,
+  "changedProtectedFiles": 0
+}

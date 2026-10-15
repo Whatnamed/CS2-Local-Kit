@@ -1,0 +1,28 @@
+{
+  "fixtureSha256": "7c333f21fced5692e29541af98d998b2fe04cc8bdf8fc3f4d1c6cba2334daead",
+  "playerCount": 1,
+  "players": [
+    {
+      "gloves": {
+        "3": {
+          "def": 5030,
+          "paint": 10073,
+          "seed": 0,
+          "wear": 0.06
+        },
+        "2": {
+          "def": 5030,
+          "paint": 10073,
+          "seed": 0,
+          "wear": 0.06
+        }
+      },
+      "hasAgents": false
+    }
+  ],
+  "cfg": {
+    "fallbackTeam": false,
+    "minModels": 1,
+    "source": "game/csgo/cfg/cosmeticslab_c1.cfg; file values only, not live convar proof"
+  }
+}

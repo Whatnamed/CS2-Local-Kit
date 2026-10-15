@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-15",
+  "serverSha256": "09e8c04c5f44040155d04fa79a3f43491d542a386f45807ed77785729e5925a9",
+  "method": "Read-only PE static schema registration data: class-name pointer, class size at +24, field count +28, field-table pointer +40; 32-byte field records with name pointer +0, offset +16. Validate every field name and offset within class size, require unique matching class registration. Never load DLL. Static corroboration only; no live SchemaSystem query or CCSBot internal-layout proof.",
+  "classes": [
+    {
+      "name": "CCSPlayerPawn",
+      "classSize": "0x15c0",
+      "fieldCount": 106,
+      "classNameRefFileOffset": "0x1d95928",
+      "fieldTableVa": "0x181d98ad0",
+      "fieldStride": 32,
+      "fields": [
+        {
+          "name": "m_EconGloves",
+          "offset": "0x1060",
+          "fieldIndex": 38,
+          "recordFileOffset": "0x1d96990",
+          "recordVa": "0x181d98f90",
+          "rawRecord": "50 e5 78 81 01 00 00 00 00 00 00 00 00 00 00 00 60 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nEconGlovesChanged",
+          "offset": "0x1448",
+          "fieldIndex": 39,
+          "recordFileOffset": "0x1d969b0",
+          "recordVa": "0x181d98fb0",
+          "rawRecord": "60 e5 78 81 01 00 00 00 07 00 00 00 00 00 00 f0 48 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_pBot",
+          "offset": "0x14f8",
+          "fieldIndex": 77,
+          "recordFileOffset": "0x1d96e70",
+          "recordVa": "0x181d99470",
+          "rawRecord": "a0 c3 78 81 01 00 00 00 00 00 00 00 00 00 00 00 f8 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBaseEntity",
+      "classSize": "0x4a8",
+      "fieldCount": 85,
+      "classNameRefFileOffset": "0x1dd4bf8",
+      "fieldTableVa": "0x181dd6320",
+      "fieldStride": 32,
+      "fields": [
+        {
+          "name": "m_iTeamNum",
+          "offset": "0x344",
+          "fieldIndex": 40,
+          "recordFileOffset": "0x1dd4220",
+          "recordVa": "0x181dd6820",
+          "rawRecord": "28 68 7e 81 01 00 00 00 07 00 00 00 00 00 00 f0 44 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fFlags",
+          "offset": "0x388",
+          "fieldIndex": 48,
+          "recordFileOffset": "0x1dd4320",
+          "recordVa": "0x181dd6920",
+          "rawRecord": "d0 25 7a 81 01 00 00 00 0b 00 00 00 00 00 00 f0 88 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSPlayerController",
+      "classSize": "0xab8",
+      "fieldCount": 93,
+      "classNameRefFileOffset": "0x1e0ad58",
+      "fieldTableVa": "0x181e0c780",
+      "fieldStride": 32,
+      "fields": [
+        {
+          "name": "m_hPlayerPawn",
+          "offset": "0x8ec",
+          "fieldIndex": 53,
+          "recordFileOffset": "0x1e0a820",
+          "recordVa": "0x181e0ce20",
+          "rawRecord": "f8 6b 91 81 01 00 00 00 00 00 00 00 00 00 00 00 ec 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    }
+  ]
+}

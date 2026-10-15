@@ -1,0 +1,1080 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "09e8c04c5f44040155d04fa79a3f43491d542a386f45807ed77785729e5925a9"
+    },
+    "engine2": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\engine2.dll",
+      "sha256": "6456df18d8f954394024c2c07da8c848df15a5ace74ce7390d78970ceb39ee21"
+    }
+  },
+  "results": [
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSBot::EquipBestWeapon",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B D9 84 D2 75 ? 4C 8D 81 ? ? ? ? 48 8D 0D ? ? ? ? 48 8D 54 24 ? E8 ? ? ? ? 80 38 ? 75 ? 48 8D 54 24 ? 48 8D 8B ? ? ? ? E8 ? ? ? ? 48 8D 93 ? ? ? ? 48 8B C8 E8 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 87 ? ? ? ? 48 8B 43 ? 33 D2 41 B8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2bd930",
+          "fileOffset": "0x2bcd30"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSBot::EquipPistol",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B D9 84 D2 75 ? 4C 8D 81 ? ? ? ? 48 8D 0D ? ? ? ? 48 8D 54 24 ? E8 ? ? ? ? 80 38 ? 75 ? 48 8D 54 24 ? 48 8D 8B ? ? ? ? E8 ? ? ? ? 48 8D 93 ? ? ? ? 48 8B C8 E8 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 87 ? ? ? ? 48 8B 05 ? ? ? ? 80 78 ? ? 0F 84",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2bde30",
+          "fileOffset": "0x2bd230"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSPlayer_WeaponServices::SelectItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 41 8B E8 48 8B DA 48 8B F9 E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 48 8B CF E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb1bf30",
+          "fileOffset": "0xb1b330"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC ? 45 33 E4 45 8B F0 44 8B FA 48 8B E9 41 8B FC 44 39 61",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc7e7e0",
+          "fileOffset": "0xc7dbe0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSBot::Update",
+      "library": "server",
+      "pattern": "40 55 56 57 41 54 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? C6 81 ? ? ? ? ? 48 89 44 24 ? 4C 8D 45 ? 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e2120",
+          "fileOffset": "0x2e1520"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSBot::Upkeep",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 83 EC ? 4C 8B F1 33 ED 48 8B 49 ? 48 39 A9 ? ? ? ? 0F 85 ? ? ? ? 48 8B 49 ? 48 8B 01 FF 90",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e15c0",
+          "fileOffset": "0x2e09c0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BuyState::OnUpdate",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 48 89 4C 24 ? 55 53 41 55 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 4C 8B EA 48 8B D9 80 B8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32b5f0",
+          "fileOffset": "0x32a9f0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSBot::UpdateLookAngles",
+      "library": "server",
+      "pattern": "40 55 53 56 41 56 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? 4C 8D 45 ? 0F 10 45 ? 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e3fd0",
+          "fileOffset": "0x2e33d0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSPlayerPawn::SetEyeAngles",
+      "library": "server",
+      "pattern": "48 89 7C 24 ? 55 48 8B EC 48 81 EC ? ? ? ? 48 8B F9 48 8D 4D ? E8 ? ? ? ? F2 0F 10 87 ? ? ? ? 48 8B CF 8B 87 ? ? ? ? F2 0F 11 87",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xd0a330",
+          "fileOffset": "0xd09730"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSPlayer_MovementServices::ProcessMovement",
+      "library": "server",
+      "pattern": "40 57 41 57 48 81 EC ? ? ? ? 48 83 79 ? ? 4C 8B FA 48 8B F9 75 ? E8 ? ? ? ? 4C 8B 4F ? 41 8B 91 ? ? ? ? 83 FA ? 0F 84",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xad7a20",
+          "fileOffset": "0xad6e20"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CBasePlayerController::OnSimulateUserCommands",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 55 41 56 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 4C 8B F1 48 C7 44 24 ? ? ? ? ? 48 8D 1D ? ? ? ? 45 33 ED 48 89 5C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb5ea20",
+          "fileOffset": "0xb5de20"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/DropReleasePose::OuterDrop",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 4C 89 4C 24 ? 44 89 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xaf9d50",
+          "fileOffset": "0xaf9150"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/DropReleasePose::BuildTransform",
+      "library": "server",
+      "pattern": "48 89 74 24 ? 55 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 4C 8B EA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa1dcd0",
+          "fileOffset": "0xa1d0d0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D ? ? ? ?",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc28dd0",
+          "fileOffset": "0xc281d0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CCSBotManager::MaintainBotQuota",
+      "library": "server",
+      "pattern": "40 55 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4C 8B F9 FF 15",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cee40",
+          "fileOffset": "0x2ce240"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CBaseIssue::CountPotentialVoters",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC ? 48 8B 05 ? ? ? ? 45 33 F6",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x21db70",
+          "fileOffset": "0x21cf70"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CCSPlayerController::HandleCommand_JoinTeam",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 3D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa758f0",
+          "fileOffset": "0xa74cf0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/MpHumanTeam_ApplyRestriction",
+      "library": "server",
+      "pattern": "40 55 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 8D 0D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x93c830",
+          "fileOffset": "0x93bc30"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CNetworkGameServer::PackEntities",
+      "library": "engine2",
+      "pattern": "4C 89 4C 24 ? 44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? B8 ? ? ? ? E8 ? ? ? ? 48 2B E0 4C 8B E9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xe8af0",
+          "fileOffset": "0xe7ef0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CCSGameRules::EndMatchState",
+      "library": "server",
+      "pattern": "48 8B C4 55 41 57 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 80 3D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x90d9b0",
+          "fileOffset": "0x90cdb0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/CBotManager::IsVisibleThroughSmoke",
+      "library": "server",
+      "pattern": "4C 8B DC 49 89 5B ? 49 89 6B ? 49 89 73 ? 49 89 7B ? 41 54 41 56 41 57 48 81 EC ? ? ? ? 49 C7 43 ? ? ? ? ? 48 8D 05 ? ? ? ? 49 89 43 ? 49 8B E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x323b90",
+          "fileOffset": "0x322f90"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/g_AutoList_SmokeProj_Head_Server",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 8B EA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x345ef4",
+          "fileOffset": "0x3452f4"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/GetSmokeDensityInLine",
+      "library": "server",
+      "pattern": "40 55 53 56 41 55 41 57 48 8D 6C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9b8270",
+          "fileOffset": "0x9b7670"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/CHEGrenadeProjectile::Detonate",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC A8 00 00 00 48 89 58 ? 48 89 70",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x39e010",
+          "fileOffset": "0x39d410"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/BulletPelletTrace",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 55 56 41 57",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa70240",
+          "fileOffset": "0xa6f640"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/BulletPelletTraceResult",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B E9 0F 29 74 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa6cb40",
+          "fileOffset": "0xa6bf40"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 20 45 33 E4 45 8B F0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc7e7e0",
+          "fileOffset": "0xc7dbe0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/CCSBot::IsVisiblePos",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC A0 01 00 00 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd0a0",
+          "fileOffset": "0x2cc4a0"
+        }
+      ]
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/CCSBot::IsVisiblePlayer",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC 90 00 00 00",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd370",
+          "fileOffset": "0x2cc770"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/UTIL_ClientPrintAll",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 8B E9 49 8B D9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xfe2020",
+          "fileOffset": "0xfe1420"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/ClientPrint",
+      "library": "server",
+      "pattern": "48 85 C9 0F 84 ? ? ? ? 48 89 5C 24 ? 55",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x980680",
+          "fileOffset": "0x97fa80"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayerController_SwitchTeam",
+      "library": "server",
+      "pattern": "40 53 57 48 81 EC ? ? ? ? 48 8B D9 8B FA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa94a50",
+          "fileOffset": "0xa93e50"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBasePlayerController_SetPawn",
+      "library": "server",
+      "pattern": "44 88 4C 24 ? 53 57 41 54",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb6e6b0",
+          "fileOffset": "0xb6dab0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayerPawnBase_PostThink",
+      "library": "server",
+      "pattern": "40 55 56 41 54 48 8B EC 48 83 EC ? 4C 89 AC 24 ? ? ? ? 48 8B F1 E8 ? ? ? ? 80 BE ? ? ? ? ?",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1db7b0",
+          "fileOffset": "0x1dabb0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CGameEventManager_Init",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B 01 48 8B D9 FF 50 ? 48 8B 03",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbfcf80",
+          "fileOffset": "0xbfc380"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/GiveNamedItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 44 89 44 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xab0830",
+          "fileOffset": "0xaafc30"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc28dd0",
+          "fileOffset": "0xc281d0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseModelEntity_SetModel",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B D9 4C 8B C2 48 8B 0D ? ? ? ? 48 8D 54 24 ? 48 8B 01 FF 50 ? 48 8B 54 24 ? 48 8B CB E8 ? ? ? ? 48 83 C4 ? 5B C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC 48 89 5C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb6dfb0",
+          "fileOffset": "0xb6d3b0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayer_WeaponServices_CanUse",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 54 41 56 41 57 48 83 EC ? 48 8B 01 48 8B FA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xafa880",
+          "fileOffset": "0xaf9c80"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSPlayer_ItemServices_CanAcquire",
+      "library": "server",
+      "pattern": "44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8B EC",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xab1860",
+          "fileOffset": "0xab0c60"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/GetCSWeaponDataFromKey",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 33 FF 4C 8B CA 8B D9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x5428b0",
+          "fileOffset": "0x541cb0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSGameRules_TerminateRound",
+      "library": "server",
+      "pattern": "48 8B C4 4C 89 48 ? 48 89 48 ? 55 41 54",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x95d500",
+          "fileOffset": "0x95c900"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/UTIL_CreateEntityByName",
+      "library": "server",
+      "pattern": "48 83 EC ? C6 44 24 ? ? 4C 8B C1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbe77f0",
+          "fileOffset": "0xbe6bf0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseEntity_DispatchSpawn",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 48 85 C9 0F 84 ? ? ? ? 48 85 D2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xca27e0",
+          "fileOffset": "0xca1be0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseEntity_EmitSoundFilter",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 4C 89 4C 24 ? 48 8B D9 45 8B C8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xf61ab0",
+          "fileOffset": "0xf60eb0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CEntityInstance_AcceptInput",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 81 EC ? ? ? ? 4D 8B F0 48 8B F1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13a14f0",
+          "fileOffset": "0x13a08f0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CEntitySystem_AddEntityIOEvent",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 49 8B F1 48 8B F9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1373a80",
+          "fileOffset": "0x1372e80"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/LegacyGameEventListener",
+      "library": "server",
+      "pattern": "48 8B 15 ? ? ? ? 48 85 D2 74 ? 85 C9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbfac50",
+          "fileOffset": "0xbfa050"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBasePlayerPawn_RemovePlayerItem",
+      "library": "server",
+      "pattern": "48 85 D2 0F 84 ? ? ? ? 48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xafcc00",
+          "fileOffset": "0xafc000"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseEntity_TakeDamageOld",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 54 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4D 8B E0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3e67b0",
+          "fileOffset": "0x3e5bb0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseTrigger_StartTouch",
+      "library": "server",
+      "pattern": "40 57 41 56 48 83 EC ? 48 8B 01",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3e6470",
+          "fileOffset": "0x3e5870"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CBaseTrigger_EndTouch",
+      "library": "server",
+      "pattern": "40 53 41 55 48 83 EC ? 83 BA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x14a4550",
+          "fileOffset": "0x14a3950"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CEntityIOOutput_FireOutputInternal",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 48 ? 55",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x138aa60",
+          "fileOffset": "0x1389e60"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/IGameSystem_InitAllSystems_pFirst",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 85 DB 0F 84 ? ? ? ? BD",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x53e6e3",
+          "fileOffset": "0x53dae3"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/NetworkStateChanged",
+      "library": "server",
+      "pattern": "4C 8B C2 48 8B D1 48 8B 09",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13a49c0",
+          "fileOffset": "0x13a3dc0"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/Host_Say",
+      "library": "server",
+      "pattern": "44 89 4C 24 ? 44 88 44 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xcf2d80",
+          "fileOffset": "0xcf2180"
+        }
+      ]
+    },
+    {
+      "name": "installedCSS/CCSNavArea_IsValidNavMesh",
+      "library": "server",
+      "pattern": "48 83 3D ? ? ? ? ? 0F 95 C0 C3 CC CC CC CC C2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xdd05f0",
+          "fileOffset": "0xdcf9f0"
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "pin": "9848ac892653db6a256c32524dddf6a05cf4383c",
+    "payload": "E:\\CS2MOD\\releases\\bot-baseline\\bot-baseline-main-20261002-130601\\payload",
+    "scope": "Native packaged JSON gamedata and installed CSS; excludes embedded managed signatures and patches. See separate 107-pattern review scan for explicitly different source scope.",
+    "artifactSha256": "58386f947880e38102e7021cd17f80d24b32d677b155ada53bd6ae4f64255248",
+    "artifactHashMatchesLock": true
+  },
+  "configuredOffsets": [
+    {
+      "name": "addons\\BotController\\gamedata.json/CBaseEntity_Teleport",
+      "windows": 165,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BuyState::InitialDelay",
+      "windows": 8,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BuyState::DoneBuying",
+      "windows": 24,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSBot::Profile",
+      "windows": 8,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::Aggression",
+      "windows": 8,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::Skill",
+      "windows": 12,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::Teamwork",
+      "windows": 16,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::WeaponPref",
+      "windows": 36,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::WeaponPrefCount",
+      "windows": 68,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::Cost",
+      "windows": 72,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::Difficulty",
+      "windows": 80,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::ReactionTime",
+      "windows": 88,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::AttackDelay",
+      "windows": 92,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::LookAngleMaxAccelAttacking",
+      "windows": 120,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::LookAngleStiffnessAttacking",
+      "windows": 124,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/BotProfile::LookAngleDampingAttacking",
+      "windows": 128,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CEntityIdentity::EHandle",
+      "windows": 16,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CCSPlayer_MovementServices::Pawn",
+      "windows": 56,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CMoveData::Velocity",
+      "windows": 56,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/CMoveData::AbsOrigin",
+      "windows": 200,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/vtidx::PlayerRunCommand",
+      "windows": 25,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/vtidx::FinishMove",
+      "windows": 38,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/vtidx::DropWeapon",
+      "windows": 28,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotController\\gamedata.json/vtidx::ControllerCommandSetup",
+      "windows": 240,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::SetName",
+      "windows": 61,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CEntitySystem::m_EntityList",
+      "windows": 16,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CEntityIdentity::Size",
+      "windows": 112,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CEntityIdentity::m_pInstance",
+      "windows": 0,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CEntityIdentity::m_designerName",
+      "windows": 32,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CNetworkGameServerBase::m_Clients",
+      "windows": 616,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_UserIDString",
+      "windows": 56,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_Name",
+      "windows": 64,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_nClientSlot",
+      "windows": 72,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_nEntityIndex",
+      "windows": 76,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_Server",
+      "windows": 80,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_NetChannel",
+      "windows": 88,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_nConnectionTypeFlags",
+      "windows": 96,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_nSignonState",
+      "windows": 100,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_pAttachedTo",
+      "windows": 144,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_bFakePlayer",
+      "windows": 160,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_UserID",
+      "windows": 168,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_SteamID",
+      "windows": 171,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_SteamIDMirror",
+      "windows": 179,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotHider\\gamedata.json/CServerSideClient::m_bIsHLTV",
+      "windows": 322,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/CNavPhysicsInterface::TraceShape",
+      "windows": 3,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "addons\\BotVision\\gamedata.json/Bot::m_pPlayer",
+      "windows": 24,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CCSPlayerController_ChangeTeam",
+      "windows": 105,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CCSPlayerController_Respawn",
+      "windows": 274,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CCSPlayer_ItemServices_GiveNamedItem",
+      "windows": 23,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CCSPlayer_ItemServices_DropActivePlayerWeapon",
+      "windows": 26,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CCSPlayer_ItemServices_RemoveWeapons",
+      "windows": 27,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CGameSceneNode_GetSkeletonInstance",
+      "windows": 12,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CCSGameRules_FindPickerEntity",
+      "windows": 25,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CTakeDamageInfo_HitGroup",
+      "windows": 104,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CBaseEntity_IsPlayerPawn",
+      "windows": 171,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CBasePlayerPawn_CommitSuicide",
+      "windows": 387,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CBaseEntity_Teleport",
+      "windows": 165,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/GameEntitySystem",
+      "windows": 88,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/GameEventManager",
+      "windows": 93,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CEntityResourceManifest_AddResource",
+      "windows": 2,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/CheckTransmitPlayerSlot",
+      "windows": 576,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/SetStateChanged",
+      "windows": 28,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    },
+    {
+      "name": "installedCSS/ISource2GameEntities::CheckTransmit",
+      "windows": 12,
+      "verification": "Configured value only; not a binary offset/vtable proof"
+    }
+  ]
+}

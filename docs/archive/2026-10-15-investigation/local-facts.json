@@ -1,0 +1,131 @@
+{
+  "date": "2026-10-15",
+  "baseline": "66dc587dbefaa34cff9ab16fbf1b7596a267c01c",
+  "cs2Running": false,
+  "steamInf": [
+    "ClientVersion=2000932",
+    "ServerVersion=2000932",
+    "PatchVersion=1.41.9.1",
+    "ProductName=cs2",
+    "appID=730",
+    "ServerAppID=2347773",
+    "SourceRevision=11131657",
+    "VersionDate=Oct 14 2026",
+    "VersionTime=16:57:53"
+  ],
+  "buildId": "25947352",
+  "appmanifestLastUpdated": "2026-10-15T10:34:20.0000000+08:00",
+  "appmanifestLastPlayed": "2026-10-14T18:49:55.0000000+08:00",
+  "startupEntryCount": 0,
+  "files": [
+    {
+      "path": "addons/metamod/counterstrikesharp.vdf",
+      "expected": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a",
+      "actual": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a",
+      "matches": true
+    },
+    {
+      "path": "addons/counterstrikesharp/gamedata/inventory-simulator.json",
+      "expected": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a",
+      "actual": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a",
+      "matches": true
+    },
+    {
+      "path": "addons/metamod/bin/win64/metamod.2.cs2.dll",
+      "expected": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+      "actual": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+      "matches": true
+    },
+    {
+      "path": "addons/metamod/bin/win64/server.dll",
+      "expected": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba",
+      "actual": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba",
+      "matches": true
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll",
+      "expected": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+      "actual": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+      "matches": true
+    },
+    {
+      "path": "addons/counterstrikesharp/api/CounterStrikeSharp.API.dll",
+      "expected": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+      "actual": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+      "matches": true
+    },
+    {
+      "path": "addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+      "expected": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+      "actual": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+      "matches": true
+    }
+  ],
+  "gameBinaries": [
+    {
+      "path": "csgo/bin/win64/server.dll",
+      "sha256": "09e8c04c5f44040155d04fa79a3f43491d542a386f45807ed77785729e5925a9",
+      "length": 34628248
+    },
+    {
+      "path": "bin/win64/engine2.dll",
+      "sha256": "6456df18d8f954394024c2c07da8c848df15a5ace74ce7390d78970ceb39ee21",
+      "length": 6829720
+    },
+    {
+      "path": "csgo/bin/win64/client.dll",
+      "sha256": "659940c1db362ed981d1df10637cec8c2a3d99409b77fc3b73e435e4649e36b0",
+      "length": 39205528
+    },
+    {
+      "path": "bin/win64/schemasystem.dll",
+      "sha256": "d2a9b5164cb68953e77d0ef424c1263d2cc452a75e935316bc8b4c4500e63648",
+      "length": 445592
+    },
+    {
+      "path": "bin/win64/cs2.exe",
+      "sha256": "8614097aaa2761b0a7157c0045861713e769fb1e8235f50fc68f411294dd60cf",
+      "length": 2967704
+    }
+  ],
+  "managedPluginDlls": [
+    "csgo\\addons\\counterstrikesharp\\plugins\\InventorySimulator\\InventorySimulator.dll"
+  ],
+  "installedHumanOffsets": [
+    {
+      "offsets": {
+        "windows": 28,
+        "linux": 29
+      },
+      "name": "CCSPlayer_WeaponServices::DropWeapon"
+    },
+    {
+      "offsets": {
+        "windows": 104,
+        "linux": 104
+      },
+      "name": "CCSPlayerInventory::m_pSOCache"
+    },
+    {
+      "offsets": {
+        "windows": 40,
+        "linux": 40
+      },
+      "name": "CGCClientSharedObjectCache::m_Owner"
+    },
+    {
+      "offsets": {
+        "linux": 112,
+        "windows": 112
+      },
+      "name": "CCSPlayerController_InventoryServices::m_pInventory"
+    },
+    {
+      "offsets": {
+        "linux": 168,
+        "windows": 168
+      },
+      "name": "CServerSideClientBase::m_UserID"
+    }
+  ]
+}

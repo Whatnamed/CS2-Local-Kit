@@ -1,0 +1,47 @@
+{
+  "cliHome": "task worktree temp/dotnet-home",
+  "date": "2026-10-15",
+  "nativeBuild": "not-run: no configured s2sdk/metamod/protobuf prerequisites; managed success does not prove native ABI",
+  "dotnetExe": "E:/Projects/CS2-Local-Kit/CS2-Local-Kit/temp/tooling/dotnet/dotnet.exe",
+  "sdk": "10.0.401",
+  "installed": false,
+  "packageCreated": false,
+  "builds": [
+    {
+      "errors": 0,
+      "component": "BotAimImprover",
+      "ref": "7157ff94dee6d0a0b2701c0c44dd0f2e6c9b988d",
+      "repository": "ed0ard/CS2-Bullseye-Bot",
+      "restoreCommand": "dotnet restore temp/aim/BotAimImprover.csproj --source C:/Users/hasee/.nuget/packages -p:NuGetAudit=false",
+      "outputs": [
+        {
+          "sha256": "d30c5cdaf4592811cc77b9f8be396e6370dee4033e4ce6f70c6f5e1880a13e5d",
+          "path": "temp/aim/bin/Release/net10.0/BotAimImprover.dll"
+        }
+      ],
+      "warnings": 0,
+      "log": "aim-build.log",
+      "buildCommand": "dotnet build temp/aim/BotAimImprover.csproj -c Release --no-restore"
+    },
+    {
+      "errors": 0,
+      "component": "BotHiderImpl+API",
+      "ref": "2a7e958ea7c81a01e7b787678dd1f7f3addde3b3",
+      "repository": "XBribo/CS2-Bot-Hider",
+      "restoreCommand": "dotnet restore temp/hider/csharp/BotHiderImpl/BotHiderImpl.csproj --source C:/Users/hasee/.nuget/packages -p:NuGetAudit=false",
+      "outputs": [
+        {
+          "sha256": "a50c5bee8d866d4d2d2d9bcc9d48be9da93eea2e96fe50ee5e676bb3106876f4",
+          "path": "temp/hider/csharp/BotHiderImpl/bin/Release/net10.0/BotHiderImpl.dll"
+        },
+        {
+          "sha256": "a6fe9becd7e43f4145ff46722973e86017d9d380de5ce042b5537a802aecbb62",
+          "path": "temp/hider/csharp/BotHiderApi/bin/Release/net10.0/BotHiderApi.dll"
+        }
+      ],
+      "warnings": 0,
+      "log": "hider-build.log",
+      "buildCommand": "dotnet build temp/hider/csharp/BotHiderImpl/BotHiderImpl.csproj -c Release --no-restore"
+    }
+  ]
+}

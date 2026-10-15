@@ -1,0 +1,249 @@
+{
+  "date": "2026-10-15",
+  "umbrella": {
+    "repository": "ed0ard/CS2-Bot-Improver",
+    "ref": "55772a6a6a332e4f896223adbc7d2000749cfa1b",
+    "sinceOctober9": "Three README-only commits; all nine gitlinks unchanged"
+  },
+  "components": [
+    {
+      "umbrellaRef": "12069c25a756deedc72f8fc116ac3b18045d1223",
+      "latestRef": "2a7e958ea7c81a01e7b787678dd1f7f3addde3b3",
+      "latestDate": "2026-10-13T04:56:01Z",
+      "repository": "XBribo/CS2-Bot-Hider",
+      "latestTitle": "Merge pull request #39 from unicbm/fix/reduce-hider-hot-path-overhead"
+    },
+    {
+      "umbrellaRef": "0ae8f18fd6872a369cb984e0e95e5a352be092fe",
+      "latestRef": "6eac19328f6536088d6a659cdfc97681aec349ea",
+      "latestDate": "2026-10-13T02:08:15Z",
+      "repository": "XBribo/CS2-Bot-Controller",
+      "latestTitle": "fix: New s2sdk"
+    },
+    {
+      "umbrellaRef": "33ab01fc5ec4e27b6f07aff653d54638ad84ebcb",
+      "latestRef": "bed1c898df3030f515971ed755b803dcebc27077",
+      "latestDate": "2026-10-13T02:09:23Z",
+      "repository": "XBribo/CS2-Bot-Vision",
+      "latestTitle": "fix: New s2sdk"
+    },
+    {
+      "umbrellaRef": "ce28e5c1359e9be910a3578694c94e5e8715d2a4",
+      "latestRef": "962743f26273ddc9b4e88de6d1d945ddffad3eee",
+      "latestDate": "2026-10-11T11:40:11Z",
+      "repository": "ed0ard/CS2-Smarter-Bot",
+      "latestTitle": "Updated version"
+    },
+    {
+      "umbrellaRef": "17e895b68e0c5c365d5c6fea12f1f74342724ce8",
+      "latestRef": "7157ff94dee6d0a0b2701c0c44dd0f2e6c9b988d",
+      "latestDate": "2026-10-11T05:56:27Z",
+      "repository": "ed0ard/CS2-Bullseye-Bot",
+      "latestTitle": "Merge pull request #10 from unicbm/fix/windows-pbot-offset-1.41.9.0"
+    },
+    {
+      "umbrellaRef": "a23f7e24bd485cc23e0d9340ba74e8d8aa3ba6e0",
+      "latestRef": "a23f7e24bd485cc23e0d9340ba74e8d8aa3ba6e0",
+      "latestDate": "2026-10-02T19:06:49Z",
+      "repository": "ed0ard/CS2-BotAI",
+      "latestTitle": "Updated version"
+    },
+    {
+      "umbrellaRef": "024f314b782433daf1150eba700a7b381e99baa1",
+      "latestRef": "f3be4e23bb9ccf650ccb6e9c0641a74d4da6ae36",
+      "latestDate": "2026-10-14T12:08:12Z",
+      "repository": "ed0ard/CS2-Bot-Randomizer",
+      "latestTitle": "Update signatures and cosmetic database"
+    },
+    {
+      "umbrellaRef": "009ce03005af68ba68dae62967bddc8e92ad172c",
+      "latestRef": "009ce03005af68ba68dae62967bddc8e92ad172c",
+      "latestDate": "2026-10-01T09:05:47Z",
+      "repository": "ed0ard/CS2-Bot-NadeSystem",
+      "latestTitle": "Merge pull request #5 from XBribo/main"
+    },
+    {
+      "umbrellaRef": "11884e0564b8b57bee5f4729a5fca781bd5e6749",
+      "latestRef": "11884e0564b8b57bee5f4729a5fca781bd5e6749",
+      "latestDate": "2026-10-01T17:42:47Z",
+      "repository": "ed0ard/CS2-Bot-Buy",
+      "latestTitle": "Added Rush mode compatibility"
+    }
+  ],
+  "controllerDiff": {
+    "commits": [
+      {
+        "message": "fix: respect hooks for ordinary weapon selection",
+        "sha": "03d958e37f00a726730569bf2a35917425e5b217"
+      },
+      {
+        "message": "Merge pull request #17 from unicbm/fix/respect-weapon-selection-hooks\n\nfix/ respect weapon selection hooks",
+        "sha": "4d8441a13fc8f2eeeae3a97bfe1ede928aeb7126"
+      },
+      {
+        "message": "fix: New s2sdk",
+        "sha": "6eac19328f6536088d6a659cdfc97681aec349ea"
+      }
+    ],
+    "files": [
+      {
+        "filename": ".github/workflows/build.yml",
+        "status": "modified"
+      },
+      {
+        "filename": "CMakeLists.txt",
+        "status": "modified"
+      },
+      {
+        "filename": "src/bridge/dispatch.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/core/commands.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/core/cs2_sdk/metamod/eiface.h",
+        "status": "added"
+      },
+      {
+        "filename": "src/core/cs2_sdk/schema.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/core/interfaces.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/features/buy/BuyController.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/features/recorder/MotionRecorder.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/features/voice/VoiceSender.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/features/weapons/WeaponLocker.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/features/weapons/WeaponLocker.h",
+        "status": "modified"
+      }
+    ]
+  },
+  "visionDiff": {
+    "commits": [
+      {
+        "message": "fix: New s2sdk",
+        "sha": "bed1c898df3030f515971ed755b803dcebc27077"
+      }
+    ],
+    "files": [
+      {
+        "filename": ".github/workflows/build.yml",
+        "status": "modified"
+      },
+      {
+        "filename": "CMakeLists.txt",
+        "status": "modified"
+      },
+      {
+        "filename": "src/core/commands.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/core/cs2_sdk/metamod/eiface.h",
+        "status": "added"
+      },
+      {
+        "filename": "src/core/cs2_sdk/schema.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/core/game_time.cpp",
+        "status": "modified"
+      },
+      {
+        "filename": "src/plugin.cpp",
+        "status": "modified"
+      }
+    ]
+  },
+  "stateDiff": {
+    "commits": [
+      {
+        "message": "Enhanced bots' situational awareness",
+        "sha": "661d541bed8f8ec654841b46e27f0095e14ed610"
+      },
+      {
+        "message": "Fixed a bug that may alter bots' blinded state",
+        "sha": "ea575cf228ac51982ace48e0cd318c2733689538"
+      },
+      {
+        "message": "Updated version",
+        "sha": "962743f26273ddc9b4e88de6d1d945ddffad3eee"
+      }
+    ],
+    "files": [
+      {
+        "filename": "BotFov.cs",
+        "patch": "@@ -5,7 +5,7 @@ namespace BotState;\n public sealed record BotFovOptions\n {\n     public bool Enabled { get; init; } = true;\n-    public float HorizontalDegrees { get; init; } = 120;\n+    public float HorizontalDegrees { get; init; } = 180;\n     public float VerticalDegrees { get; init; } = 180;\n \n     // Resolve the command's one-angle shorthand once; runtime state always"
+      },
+      {
+        "filename": "BotState.Flashbang.cs",
+        "patch": "@@ -39,6 +39,8 @@ private struct FlashDecision\n     }\n     private readonly Dictionary<(int bot, uint flash), FlashDecision> _flashDecisions = new();\n     private readonly HashSet<(int bot, uint flash)> _flashRejectLogged = new();\n+    // While this window is open, later flashes are not rolled and cannot clear the effect for this bot.\n+    private readonly Dictionary<int, float> _flashBlindUntil = new();\n \n     // Debug logging (toggle with `css_botstate_flashdebug`)\n     private bool _debugFlash = false;\n@@ -111,7 +113,8 @@ private HookResult OnPlayerBlind(EventPlayerBlind @event, GameEventInfo info)\n             isImmune = false;\n         }\n \n-        if (isImmune)\n+        bool committed = InCommittedBlind(bidx, matchNow);\n+        if (isImmune && !committed)\n         {\n             @event.BlindDuration = 0f;\n             var pawn = player.PlayerPawn?.Value;\n@@ -130,6 +133,12 @@ private HookResult OnPlayerBlind(EventPlayerBlind @event, GameEventInfo info)\n                 flashMaxAlpha = 0f;\n             }\n         }\n+        else if (!isImmune && origBlind > 0f)\n+        {\n+            float until = matchNow + origBlind;\n+            if (!_flashBlindUntil.TryGetValue(bidx, out float current) || until > current)\n+                _flashBlindUntil[bidx] = until;\n+        }\n \n         if (_debugFlash)\n         {\n@@ -143,8 +152,10 @@ private HookResult OnPlayerBlind(EventPlayerBlind @event, GameEventInfo info)\n             {\n                 detail = \"no tracked flash (out of FOV / occluded entire flight)\";\n             }\n+            if (isImmune && committed)\n+                detail += \"; kept prior blind\";\n             BroadcastDebug(\n-                $\"[Smarter-Bot/Flash] blind event bot={player.PlayerName} immune={isImmune} origDur={origBlind:F2}s ({detail})\");\n+                $\"[Smarter-Bot/Flash] blind event bot={player.PlayerName} immune={isImmune && !committed} origDur={origBlind:F2}s ({detail})\");\n         }\n \n         return HookResult.Continue;\n@@ -238,6 +249,9 @@ private HookResult OnBotBlindPre(DynamicHook hook)\n                 return HookResult.Continue;\n \n             int botIndex = (int)player.Index;\n+            if (InCommittedBlind(botIndex, Server.CurrentTime))\n+                return HookResult.Continue;\n+\n             if (!TryMatchFlashDecision(\n                     botIndex,\n                     Server.CurrentTime,\n@@ -353,6 +367,9 @@ private void ProcessFlashbangAvoidance()\n             if (pawn == null || !pawn.IsValid || pawn.LifeState != (byte)LifeState_t.LIFE_ALIVE) continue;\n \n             int bidx = (int)bot.Index;\n+            if (InCommittedBlind(bidx, now))\n+                continue;\n+\n             if (!_flashRolledByBot.TryGetValue(bidx, out var rolled))\n             {\n                 rolled = new HashSet<uint>();\n@@ -490,5 +507,10 @@ private void ResetFlashbangRoundState()\n         _flashRolledByBot.Clear();\n         _flashDecisions.Clear();\n         _flashRejectLogged.Clear();\n+        _flashBlindUntil.Clear();\n     }\n+\n+    // A flash that was not avoided owns the bot until CurrentTime + that event's BlindDuration.\n+    private bool InCommittedBlind(int botIndex, float now)\n+        => _flashBlindUntil.TryGetValue(botIndex, out float until) && now < until;\n }"
+      },
+      {
+        "filename": "BotState.cs",
+        "patch": "@@ -6,7 +6,7 @@ namespace BotState;\n public partial class BotState : BasePlugin\n {\n     public override string ModuleName => \"Smarter-Bot\";\n-    public override string ModuleVersion => \"1.10.0\";\n+    public override string ModuleVersion => \"1.10.2\";\n     public override string ModuleAuthor => \"ed0ard & XBribo & unicbm\";\n     public override string ModuleDescription => \"Make bots smarter\";\n "
+      }
+    ]
+  },
+  "randomizerDiff": {
+    "commits": [
+      {
+        "message": "Update signatures and cosmetic database",
+        "sha": "7b168a30b9976f4a1de344d87c72c9bddf8c60da"
+      },
+      {
+        "message": "Update signatures and cosmetic database",
+        "sha": "4628750f5dbdfe28a4411e64d4a54f0addf9fb49"
+      },
+      {
+        "message": "Upgraded version",
+        "sha": "932a4474e8a4c5cb3ef2727f3d33e635eb70f8c7"
+      },
+      {
+        "message": "Update signatures and cosmetic database",
+        "sha": "8fbe16318e76b2f5ce059794d87eefdcd9c06b51"
+      },
+      {
+        "message": "Update signatures and cosmetic database",
+        "sha": "f3be4e23bb9ccf650ccb6e9c0641a74d4da6ae36"
+      }
+    ],
+    "files": [
+      {
+        "filename": "BotRandomizer.cs",
+        "status": "modified"
+      },
+      {
+        "filename": "cosmetic_catalog.json",
+        "status": "modified"
+      },
+      {
+        "filename": "tools/catalog/package-lock.json",
+        "status": "modified"
+      },
+      {
+        "filename": "tools/catalog/package.json",
+        "status": "modified"
+      }
+    ]
+  }
+}
