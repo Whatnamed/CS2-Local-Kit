@@ -65,7 +65,10 @@ def run(candidate,manifest_sha):
     tx.require(tx.inventory(home/'private-presets')==private,'Private preset changed')
     from collections import Counter
     result={'status':'PASS','candidate':str(candidate),'manifestSha256':manifest_sha,'actualPayloadFiles':len(m['files']),'publicEntry':'candidate/tools/Invoke-BotExperiment.ps1','actions':dict(Counter(e['action'] for e in preview['entries'])),'syntheticBaselineFiles':sum(v['kind']=='file' for v in before.values()),'installId':installed['installId'],'backupDir':str(backup),'byteForByteRestored':True,'previewWrites':0,'restorePreviewWrites':0,'realTargetApplied':False}
-    write(tx.REPO/'temp/actual-candidate-test.json',tx.json_bytes(result));print(json.dumps(result,indent=2))
+    result['profile']=m.get('profile')
+    write(tx.REPO/'temp/actual-candidate-test.json',tx.json_bytes(result))
+    write(tx.REPO/f"temp/actual-candidate-{m.get('defaultDifficulty','Medium')}-test.json",tx.json_bytes(result))
+    print(json.dumps(result,indent=2))
 
 
 if __name__=='__main__':

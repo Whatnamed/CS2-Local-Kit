@@ -94,6 +94,58 @@ class TransactionTests(unittest.TestCase):
         tx.restore(backup,apply=True,fake=True)
         self.assertEqual(before,self.snap())
 
+    def set_profile(self, level):
+        db=self.release/f'profiles/{level}/botprofile.db'
+        write(db, f'// synthetic {level} fixture\nDefault\n Skill = {dict(Low=10,Medium=50,High=90)[level]}\nEnd\n')
+        vpk=self.release/'bot/overrides/botprofile.vpk'
+        helper=self.home/'pack-test-profile.ps1'
+        write(helper,'param($Common,$Db,$Out)\n. $Common\nNew-BotProfileVpk -DbPath $Db -OutPath $Out\nif (-not (Test-BotProfileVpkEmbedsDb $Out $Db)) { throw "Profile mismatch" }\n')
+        subprocess.run(['pwsh','-NoProfile','-File',str(helper),'-Common',str(tx.REPO/'scripts/bot-baseline/BotBaseline.Common.ps1'),'-Db',str(db),'-Out',str(vpk)],check=True,capture_output=True)
+        self.manifest['defaultDifficulty']=level
+        self.manifest['profile']={'difficulty':level,'upstreamPath':f'overrides/{level}/botprofile.db','dbSource':f'profiles/{level}/botprofile.db','dbSha256':tx.sha(db),'vpkSha256':tx.sha(vpk)}
+        next(e for e in self.manifest['files'] if e['target'].endswith('/botprofile.vpk'))['sha256']=tx.sha(vpk)
+        self.seal()
+
+    def test_three_profiles_roundtrip_and_explicit_record(self):
+        hashes=set()
+        for level in ['Low','Medium','High']:
+            self.set_profile(level);before=self.snap();hashes.add(self.manifest['profile']['vpkSha256'])
+            result=self.run_install();backup=Path(result['backupDir'])
+            self.assertEqual(tx.read_json(backup/'install-record.json')['profile'],self.manifest['profile'])
+            tx.restore(backup,apply=True,fake=True);self.assertEqual(before,self.snap())
+        self.assertEqual(len(hashes),3)
+
+    def test_profile_drift_and_selected_source_refused(self):
+        self.set_profile('High')
+        self.manifest['profile']['difficulty']='Low';self.seal()
+        self.assert_rejected(lambda:self.run_install())
+        self.set_profile('High');entry=next(e for e in self.manifest['files'] if e['target'].endswith('/botprofile.vpk'))
+        write(self.release/entry['source'],b'invalid VPK')
+        entry['sha256']=self.manifest['profile']['vpkSha256']=tx.sha(self.release/entry['source']);self.seal()
+        self.assert_rejected(lambda:self.run_install())
+
+    def test_profile_record_and_installed_vpk_drift_refused(self):
+        self.set_profile('Low');result=self.run_install();backup=Path(result['backupDir'])
+        live=self.root/'game/csgo/overrides/botprofile.vpk';original=live.read_bytes();write(live,b'user changed profile')
+        self.assert_rejected(lambda:tx.restore(backup,apply=True,fake=True))
+        write(live,original)
+        record=tx.read_json(backup/'install-record.json');record['profile']['difficulty']='High'
+        write(backup/'install-record.json',tx.json_bytes(record))
+        self.assert_rejected(lambda:tx.restore(backup,apply=True,fake=True))
+
+    def test_each_profile_failure_interruption_and_retry(self):
+        for level in ['Low','Medium','High']:
+            self.set_profile(level)
+            for surface in ['framework','isolation','bot','gameinfo']:
+                before=self.snap()
+                with self.assertRaisesRegex(RuntimeError,'rolled back'):self.run_install(fault=surface)
+                self.assertEqual(before,self.snap())
+                with self.assertRaises(KeyboardInterrupt):self.run_install(fault=surface+'-interrupt')
+                active=[p.parent for p in self.backups.glob('*/install-record.json') if tx.read_json(p)['state']=='installing']
+                self.assertEqual(len(active),1)
+                tx.restore(active[0],apply=True,fake=True);self.assertEqual(before,self.snap())
+            result=self.run_install();tx.restore(Path(result['backupDir']),apply=True,fake=True)
+
     def test_fault_rollback_all_four_surfaces(self):
         for surface in ['framework','isolation','bot','gameinfo']:
             with self.subTest(surface=surface):

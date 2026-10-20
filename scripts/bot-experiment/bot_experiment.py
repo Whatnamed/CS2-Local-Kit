@@ -170,7 +170,39 @@ def load_candidate(release, expected_sha, fake=False):
     require({e['target'][len('game/csgo/'):] for e in m['files'] if e['surface']=='framework'} == MM_FILES, 'Incomplete framework overlay')
     for path in m['baselineFiles']:
         relative(path)
+    validate_profile(release, m)
     return release, m
+
+
+def validate_profile(release, m):
+    # Original Medium-only schema-1 bundles remain readable; extended variants
+    # explicitly bind source DB, immutable VPK and the selected difficulty.
+    if 'profile' not in m:
+        require(m.get('defaultDifficulty', 'Medium') == 'Medium', 'Profile metadata required')
+        return
+    p = m['profile']; level = p['difficulty']
+    require(level in {'Low','Medium','High'} and m['defaultDifficulty'] == level, 'Profile selection mismatch')
+    require(p['upstreamPath'] == f'overrides/{level}/botprofile.db' and p['dbSource'] == f'profiles/{level}/botprofile.db', 'Profile source mismatch')
+    db = under(release, p['dbSource'])
+    require(sha(db) == p['dbSha256'], 'Profile DB hash mismatch')
+    entries = [e for e in m['files'] if e['target'] == 'game/csgo/overrides/botprofile.vpk']
+    require(len(entries) == 1 and entries[0]['sha256'] == p['vpkSha256'], 'Profile VPK selection mismatch')
+    # Validate the exact VPK v2 layout emitted by the existing project packer.
+    import struct
+    data = under(release, entries[0]['source']).read_bytes()
+    require(len(data) >= 28 and struct.unpack_from('<II', data) == (0x55AA1234,2), 'Invalid profile VPK')
+    size = struct.unpack_from('<I', data,8)[0]
+    expected = db.read_bytes()
+    import zlib
+    tree = data[28:28+size]
+    prefix = b'db\x00 \x00botprofile\x00'
+    require(tree.startswith(prefix), 'Unexpected profile VPK entry')
+    offset = len(prefix)
+    crc,preload,archive,entry_offset,length,terminator = struct.unpack_from('<IHHIIH',tree,offset)
+    require(crc == zlib.crc32(expected) and preload == 0 and archive == 0x7fff and entry_offset == 0 and length == len(expected) and terminator == 0xffff, 'Profile VPK metadata mismatch')
+    require(struct.unpack_from('<IIII',data,12)==(len(expected),0,48,0) and tree[offset+18:]==b'\x00\x00\x00' and data[28+size:28+size+length]==expected and len(data)==28+size+length+48, 'Profile VPK does not embed exact DB')
+    hashes=data[-48:]
+    require(hashes[:16]==hashlib.md5(tree).digest() and hashes[16:32]==hashlib.md5(b'').digest() and hashes[32:]==hashlib.md5(data[:-16]).digest(), 'Profile VPK checksum mismatch')
 
 
 def module_inventory(root):
@@ -292,6 +324,11 @@ def preflight_restore(root, backup, record, partial=False):
     require(record['cs2Root']==str(root) and record['installId']==backup.name, 'Install ID / root mismatch')
     require(record['state'] in {'installed','installing','restoring','restore-failed'}, 'Transaction is not active')
     require(sha(under(backup,'candidate-manifest.json'))==record['manifestSha256'], 'Backup manifest corrupted')
+    candidate = read_json(under(backup,'candidate-manifest.json'))
+    require(record.get('profile') == candidate.get('profile'), 'Recorded profile mismatch')
+    if record.get('profile'):
+        selected = [e for e in record['entries'] if e['target']=='game/csgo/overrides/botprofile.vpk']
+        require(len(selected)==1 and selected[0]['after']['sha256']==record['profile']['vpkSha256'], 'Recorded VPK mismatch')
     if not partial:
         require(module_inventory(root)==record['moduleInventoryAfter'], 'Installed plugin/module inventory drift')
     targets=set()
@@ -376,6 +413,7 @@ def install(release, manifest_sha, root, backup_root, apply=False, fake=False, i
     backup.mkdir(parents=True)
     shutil.copyfile(release/'experiment-manifest.json',backup/'candidate-manifest.json')
     record={'schemaVersion':1,'lane':'bot-experiment','installId':install_id,'cs2Root':str(root),'manifestSha256':manifest_sha,'testFixture':fake,'state':'installing','entries':entries,'createdDirectories':[],'baselineFiles':m['baselineFiles']}
+    if 'profile' in m: record['profile']=m['profile']
     # Copy and verify every preimage before the first mutation of the target.
     for e in entries:
         if e['before'] is not None and e['action']!='retained':

@@ -30,7 +30,8 @@ def save(path,data):
     path.write_bytes(data)
 
 
-def build(evidence_worktree,archive,cs2_root,releases_root,dotnet):
+def build(evidence_worktree,archive,cs2_root,releases_root,dotnet,difficulty='Medium'):
+    tx.require(difficulty in {'Low','Medium','High'}, 'Unsupported difficulty')
     tx.ensure_closed()
     repo=tx.REPO;freeze=tx.read_json(repo/'experiments/bot-experiment/candidate-20261020.json')
     evidence=tx.no_links(evidence_worktree);upstream=evidence/'temp/upstream'
@@ -145,13 +146,15 @@ def build(evidence_worktree,archive,cs2_root,releases_root,dotnet):
                 tx.require('subclass_create' not in cleaned.lower(),'Unremoved subclass_create command')
                 data=cleaned.encode('utf-8')
             asset(None,entry,'bot',data)
-    # Medium only: no live difficulty mutation and no Rush behavior trees.
-    db=stage/'Medium/botprofile.db';save(db,tracked(upstream,ref,'overrides/Medium/botprofile.db'))
-    vpk=stage/'Medium/botprofile.vpk'
+    # Immutable per-difficulty variant: selection never mutates an installed VPK.
+    db=stage/difficulty/'botprofile.db';save(db,tracked(upstream,ref,f'overrides/{difficulty}/botprofile.db'))
+    save(release/f'profiles/{difficulty}/botprofile.db',db.read_bytes())
+    vpk=stage/difficulty/'botprofile.vpk'
     helper=stage/'pack-profile.ps1'
     save(helper,('param([string]$Common,[string]$Db,[string]$Out)\n. $Common\nNew-BotProfileVpk -DbPath $Db -OutPath $Out\nif (-not (Test-BotProfileVpkEmbedsDb $Out $Db)) { throw "VPK verification failed" }\n').encode())
     subprocess.run(['pwsh','-NoProfile','-File',str(helper),'-Common',str(repo/'scripts/bot-baseline/BotBaseline.Common.ps1'),'-Db',str(db),'-Out',str(vpk)],check=True)
     asset(vpk,'overrides/botprofile.vpk','bot')
+    profile={'difficulty':difficulty,'upstreamPath':f'overrides/{difficulty}/botprofile.db','dbSource':f'profiles/{difficulty}/botprofile.db','dbSha256':tx.sha(db),'vpkSha256':tx.sha(vpk)}
     # Corresponding sources and licenses: deduplicate exact recursive repositories/refs.
     sources=[{'path':'','ref':ref}]+freeze['recursiveSubmodules'];seen_sources={}
     for item in sources:
@@ -186,6 +189,8 @@ def build(evidence_worktree,archive,cs2_root,releases_root,dotnet):
     baseline.update(binaries)
     for rel in ['game/csgo/gameinfo.gi','game/csgo/steam.inf']:baseline[rel]=tx.sha(root/rel)
     manifest={'schemaVersion':1,'lane':'bot-experiment','status':'candidate','testFixture':False,'botRef':ref,'submodules':freeze['submodules'],'recursiveSubmodules':freeze['recursiveSubmodules'],'metamod':freeze['metamod'],'cssVersion':'1.0.376','targetBuild':{'PatchVersion':'1.41.9.1','ClientVersion':'2000933','buildId':'25966348'},'gameBinaries':binaries,'baselineFiles':baseline,'moduleInventory':tx.module_inventory(root),'files':files,'components':components,'excludedModules':freeze['excludedModules'],'excludedSubclassBindings':excluded_bindings,'defaultDifficulty':'Medium','rushActive':False,'builderHead':git(repo,'rev-parse','HEAD').decode().strip(),'bundleFiles':{p:v['sha256'] for p,v in tx.inventory(release).items() if v['kind']=='file'}}
+    manifest['defaultDifficulty']=difficulty
+    manifest['profile']=profile
     save(release/'experiment-manifest.json',tx.json_bytes(manifest))
     manifest_sha=tx.sha(release/'experiment-manifest.json');save(release/'MANIFEST.sha256',(manifest_sha+'  experiment-manifest.json\n').encode())
     tx.load_candidate(release,manifest_sha)
@@ -214,4 +219,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--evidence-worktree',required=True);p.add_argument('--metamod-archive',required=True);p.add_argument('--cs2-root',required=True)
     p.add_argument('--releases-root',default=r'E:\CS2MOD\releases\bot-experiment');p.add_argument('--dotnet',required=True)
-    a=p.parse_args();build(a.evidence_worktree,a.metamod_archive,a.cs2_root,a.releases_root,a.dotnet)
+    p.add_argument('--difficulty',choices=['Low','Medium','High'],default='Medium')
+    a=p.parse_args();build(a.evidence_worktree,a.metamod_archive,a.cs2_root,a.releases_root,a.dotnet,a.difficulty)

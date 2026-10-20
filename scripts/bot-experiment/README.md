@@ -5,14 +5,16 @@
 CSS 1.0.376 保留原样；正式 Bot/Human locks 不参与候选升级。
 
 需要已有 PowerShell 7 和 Python 3.12+。脚本不下载依赖、不启动或结束 CS2。
-默认 preview；只有 `Install` / `Restore` 加 `-Apply` 才写入。此轮交付没有应用真实安装。
+默认 preview；只有 `Install` / `Restore` 加 `-Apply` 才写入。构建候选不会应用真实安装；安装事实以精确事务 record 和 Diagnostics 为准。
 
 ## 候选身份与 ownership
 
 - `experiment-manifest.json` schema 1 / lane `bot-experiment`：精确 Bot ref/递归 gitlinks、MetaMod 官方 ZIP URL/hash/选中文件、CSS host、五项游戏 binary/build、模块 inventory、基线 preimages、bundle 完整文件 hash 表。
 - `MANIFEST.sha256` 是便捷副本。运行前与交付报告中的 manifest SHA256 和 ZIP SHA256 交叉核对；命令必须显式提供 manifest digest，不自动选择“最新包”。
 - `framework/` 仅有经完整 ZIP 路径审查的 CS2 x64 `metamod.2.cs2.dll` 和 loader `server.dll`；其他游戏、平台及 loader declarations 不整树覆盖。原文件逐项备份，事务临时负责其恢复。
-- `bot/` 包含三项 native、八项 managed entry projects、相应 APIs/Harmony、NadeSystem data、非 Rush cfg 和 Medium profile。`subclass_create` 快捷键被剔除；RoundDamageRecap、Rush trees、Panel、Human runtime 不部署。
+- `bot/` 包含三项 native、八项 managed entry projects、相应 APIs/Harmony、NadeSystem data、非 Rush cfg 和选中难度的 profile。`subclass_create` 快捷键被剔除；RoundDamageRecap、Rush trees、Panel、Human runtime 不部署。
+- `Build-BotExperiment.ps1 -Difficulty Low|Medium|High` 分别生成全新不可变候选（默认 Medium）。每包仅有一个安装 VPK，`profiles/<level>/botprofile.db` 来自固定上游 Git blob；manifest `profile` 绑定 difficulty、source DB hash 和 VPK hash，校验 VPK 结构、嵌入 DB 与 checksum。该信息进入 install record 和恢复 preflight。原 Medium-only 历史包保持不变。
+- 安装后不直接更改难度/VPK。先按精确 ID 恢复，再选择新候选安装；用户偏好不写入 active transaction。瞄准/道具仅生成 `bot_aim mixed|head|body; bot_nades off|less|normal|more|max`，需用户在本地控制台执行；复制不代表生效。
 - preview 枚举 `created / overwritten / modified / isolated / retained`。所有 CSS/Human 原内容只核验/保留或隔离，不修改其 DLL、fixture、私人预设。
 - 独立 `install-record.json` schema 1 保存 install ID、root、候选 digest、每项 pre/post hash/type、created directories 和状态。`preimages/` 在第一项 live 写入之前全部备齐；`isolated/` 保存移动出的原插件树。
 - 默认备份 `E:\CS2MOD\backups\bot-experiment\<install-id>`；active marker 关联唯一事务。不得改用旧 Bot/Human restore 或靠最近时间猜 backup。
@@ -20,7 +22,7 @@ CSS 1.0.376 保留原样；正式 Bot/Human locks 不参与候选升级。
 
 ## 将来手动操作
 
-以下命令是未来实机测试入口。首次操作前先关闭 CS2；本轮只在 fake tree 执行过 Apply。
+以下是显式手动入口。首次操作前先关闭 CS2；具体交付是否已安装以带日期证据和精确 install ID 为准。
 
 ```powershell
 $candidate = 'E:\CS2MOD\releases\bot-experiment\<exact-candidate-id>'
@@ -63,3 +65,5 @@ pwsh -File $tool -Action Restore -InstallId '<exact-install-id>' -Apply
 构建使用 `Build-BotExperiment.ps1` 的显式 evidence worktree、官方 archive、目标 root 和已有 .NET SDK；
 它对历史输出先验证 SHA256，再组装，缺失的 API hash 通过精确 source 的离线重建补齐。source/许可证随包保留。
 正式 `scripts/bot-baseline` 未放宽或改写。
+
+Controller「人机」页使用编译进程序的精确候选白名单，校验完整 bundle 后调用包内同一入口。安装/恢复按钮先预览，再独立确认；每次 Apply 内再次完整预检。偏好保存在 `app-data/bot-experiment/preferences.json`，操作 stdout/stderr 保存在 `diagnostics/bot-experiment/`。存在活动实验（包括 marker 缺失的未恢复历史）时，Human Apply/Restore 和 MetaMod1473 启动修复被阻止；不能用旧恢复路径覆盖活动实验。
