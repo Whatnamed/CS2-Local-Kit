@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "candidate": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-73ce542bf7ec",
+  "manifestSha256": "b653450b5566c4a2539e1a274c3166c22aa82526ff6cd06f83b095d2fe5eabdc",
+  "actualPayloadFiles": 105,
+  "publicEntry": "candidate/tools/Invoke-BotExperiment.ps1",
+  "actions": {
+    "isolated": 5,
+    "overwritten": 14,
+    "created": 91,
+    "modified": 1,
+    "retained": 515
+  },
+  "syntheticBaselineFiles": 539,
+  "installId": "7a8a735f42524bd4a0fa8dbcb865c696",
+  "backupDir": "E:\\Projects\\CS2-Local-Kit\\wt-bot-experiment-20261020\\temp\\bot-experiment-tests\\actual-payload-djlb7pem\\backups\\7a8a735f42524bd4a0fa8dbcb865c696",
+  "byteForByteRestored": true,
+  "previewWrites": 0,
+  "restorePreviewWrites": 0,
+  "realTargetApplied": false
+}

@@ -1,0 +1,401 @@
+{
+  "releaseDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-73ce542bf7ec",
+  "zip": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-73ce542bf7ec.zip",
+  "zipSha256": "b39c37f127eab4a8e5170a665ee53c505cd41be7dd7990c83e09e1432aa9f6f8",
+  "manifestSha256": "b653450b5566c4a2539e1a274c3166c22aa82526ff6cd06f83b095d2fe5eabdc",
+  "payloadFileCount": 105,
+  "installed": false,
+  "realGameAccepted": false,
+  "schemaVersion": 1,
+  "lane": "bot-experiment",
+  "status": "candidate",
+  "botRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+  "submodules": {
+    "addons/BotController": "582e9132c10b9729e3cce8f0670a9273eb7a49bd",
+    "addons/BotHider": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+    "addons/BotVision": "9884848b340434c906ecd1b0f7a0d1d5e8ca140c",
+    "addons/counterstrikesharp/plugins/BotAI": "0c46c6757b03e74eb1b42219a9786101c93b954f",
+    "addons/counterstrikesharp/plugins/BotAimImprover": "d796572b6d258b938a9d8db3c5d4c802a46049f7",
+    "addons/counterstrikesharp/plugins/BotBuy": "11884e0564b8b57bee5f4729a5fca781bd5e6749",
+    "addons/counterstrikesharp/plugins/BotRandomizer": "1c7c3ebad4b984bf8c4c75511b71cc109ab820bd",
+    "addons/counterstrikesharp/plugins/BotState": "9e9f8f1b2fd2f04b216c7398bdcb4736327946b5",
+    "addons/counterstrikesharp/plugins/NadeSystem": "009ce03005af68ba68dae62967bddc8e92ad172c"
+  },
+  "recursiveSubmodules": [
+    {
+      "path": "addons/BotController",
+      "ref": "582e9132c10b9729e3cce8f0670a9273eb7a49bd"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk",
+      "ref": "b973e57b5d2f2c8c258e7bdf6a48d97553d357ab"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/json",
+      "ref": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source",
+      "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/hl2sdk-manifests",
+      "ref": "ebd6e1064d64c89b19afca236656640a5ac6fde8"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl",
+      "ref": "285b4f853c0003023838140113e3ec066bd800c6"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl/third_party/googletest",
+      "ref": "a651a4d44e65b749467fa3dddf93819a22f0cc4a"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook",
+      "ref": "31463169ec9deeb600836596d8460e7facdfee39"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/googletest",
+      "ref": "73a63ea05dc8ca29ec1d2c1d66481dd0de1950f1"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/gtest-parallel",
+      "ref": "cd488bdedc1d2cffb98201a17afc1b298b0b90f1"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/safetyhook",
+      "ref": "ec3f698a1d9936d72c57c639536fbbedab6d7c8a"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/s2sdk",
+      "ref": "b85301c79b6320f3cbf7d519dd334795c227426b"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/spdlog",
+      "ref": "79524ddd08a4ec981b7fea76afd08ee05f83755d"
+    },
+    {
+      "path": "addons/BotHider",
+      "ref": "9a77fbaf1ee106ec45a451f482e64f26127f2f21"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk",
+      "ref": "b973e57b5d2f2c8c258e7bdf6a48d97553d357ab"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/json",
+      "ref": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source",
+      "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/hl2sdk-manifests",
+      "ref": "ebd6e1064d64c89b19afca236656640a5ac6fde8"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl",
+      "ref": "285b4f853c0003023838140113e3ec066bd800c6"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl/third_party/googletest",
+      "ref": "a651a4d44e65b749467fa3dddf93819a22f0cc4a"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook",
+      "ref": "31463169ec9deeb600836596d8460e7facdfee39"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/googletest",
+      "ref": "73a63ea05dc8ca29ec1d2c1d66481dd0de1950f1"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/gtest-parallel",
+      "ref": "cd488bdedc1d2cffb98201a17afc1b298b0b90f1"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/safetyhook",
+      "ref": "ec3f698a1d9936d72c57c639536fbbedab6d7c8a"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/s2sdk",
+      "ref": "b85301c79b6320f3cbf7d519dd334795c227426b"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/spdlog",
+      "ref": "79524ddd08a4ec981b7fea76afd08ee05f83755d"
+    },
+    {
+      "path": "addons/BotVision",
+      "ref": "9884848b340434c906ecd1b0f7a0d1d5e8ca140c"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk",
+      "ref": "b973e57b5d2f2c8c258e7bdf6a48d97553d357ab"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/json",
+      "ref": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source",
+      "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/hl2sdk-manifests",
+      "ref": "ebd6e1064d64c89b19afca236656640a5ac6fde8"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl",
+      "ref": "285b4f853c0003023838140113e3ec066bd800c6"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl/third_party/googletest",
+      "ref": "a651a4d44e65b749467fa3dddf93819a22f0cc4a"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook",
+      "ref": "31463169ec9deeb600836596d8460e7facdfee39"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/googletest",
+      "ref": "73a63ea05dc8ca29ec1d2c1d66481dd0de1950f1"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/gtest-parallel",
+      "ref": "cd488bdedc1d2cffb98201a17afc1b298b0b90f1"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/safetyhook",
+      "ref": "ec3f698a1d9936d72c57c639536fbbedab6d7c8a"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/s2sdk",
+      "ref": "b85301c79b6320f3cbf7d519dd334795c227426b"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/spdlog",
+      "ref": "79524ddd08a4ec981b7fea76afd08ee05f83755d"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAI",
+      "ref": "0c46c6757b03e74eb1b42219a9786101c93b954f"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAimImprover",
+      "ref": "d796572b6d258b938a9d8db3c5d4c802a46049f7"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotBuy",
+      "ref": "11884e0564b8b57bee5f4729a5fca781bd5e6749"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotRandomizer",
+      "ref": "1c7c3ebad4b984bf8c4c75511b71cc109ab820bd"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotState",
+      "ref": "9e9f8f1b2fd2f04b216c7398bdcb4736327946b5"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/NadeSystem",
+      "ref": "009ce03005af68ba68dae62967bddc8e92ad172c"
+    }
+  ],
+  "metamod": {
+    "build": 1481,
+    "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43",
+    "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1481-windows.zip",
+    "archiveSha256": "c4f825ed226635ce13d4c822fcf837e036baf83d30233ba54dde3b303d30379c",
+    "selectedFiles": [
+      "addons/metamod/bin/win64/metamod.2.cs2.dll",
+      "addons/metamod/bin/win64/server.dll"
+    ]
+  },
+  "cssVersion": "1.0.376",
+  "targetBuild": {
+    "PatchVersion": "1.41.9.1",
+    "ClientVersion": "2000933",
+    "buildId": "25966348"
+  },
+  "gameBinaries": {
+    "game/csgo/bin/win64/server.dll": "09e8c04c5f44040155d04fa79a3f43491d542a386f45807ed77785729e5925a9",
+    "game/bin/win64/engine2.dll": "6456df18d8f954394024c2c07da8c848df15a5ace74ce7390d78970ceb39ee21",
+    "game/csgo/bin/win64/client.dll": "659940c1db362ed981d1df10637cec8c2a3d99409b77fc3b73e435e4649e36b0",
+    "game/bin/win64/schemasystem.dll": "d2a9b5164cb68953e77d0ef424c1263d2cc452a75e935316bc8b4c4500e63648",
+    "game/bin/win64/cs2.exe": "8614097aaa2761b0a7157c0045861713e769fb1e8235f50fc68f411294dd60cf"
+  },
+  "components": [
+    {
+      "name": "BotController",
+      "ref": "582e9132c10b9729e3cce8f0670a9273eb7a49bd",
+      "version": "0.8.0",
+      "nativeSha256": "a86185de9b1acd4af8001631bb47d2a03dedb68321838458833775204a7977be"
+    },
+    {
+      "name": "BotHider",
+      "ref": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+      "version": "0.6.0",
+      "nativeSha256": "505a93b30b261b7504743f03218852d322a8925e10c17818d0ce4406b90f594d"
+    },
+    {
+      "name": "BotVision",
+      "ref": "9884848b340434c906ecd1b0f7a0d1d5e8ca140c",
+      "version": "0.4.0",
+      "nativeSha256": "12f46ddbab79a715e99ecc2708b4d87d190f1fd2b9821be6a1c786fdad879816"
+    },
+    {
+      "name": "BotAI",
+      "ref": "0c46c6757b03e74eb1b42219a9786101c93b954f",
+      "managedSha256": "8e5c41245e15a8ab5c48da76f2cef6328126a8addc9910a5622e7b6b22f7a640",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.376"
+      ]
+    },
+    {
+      "name": "BotAimImprover",
+      "ref": "d796572b6d258b938a9d8db3c5d4c802a46049f7",
+      "managedSha256": "4609de4f69aa1dbd2def1431a7e3bdf205aadf61d76c1f1feb3fdc0ff43e419e",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.376"
+      ]
+    },
+    {
+      "name": "BotBuy",
+      "ref": "11884e0564b8b57bee5f4729a5fca781bd5e6749",
+      "managedSha256": "7553b657227161391fc1c297c2693135ab19a864dcca2f0e732060a0077441bb",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.376"
+      ]
+    },
+    {
+      "name": "BotRandomizer",
+      "ref": "1c7c3ebad4b984bf8c4c75511b71cc109ab820bd",
+      "managedSha256": "ae931fd66d76ed73534db3b54b267eca1109afd696d3b7b71995db5e5d737954",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.376"
+      ]
+    },
+    {
+      "name": "BotState",
+      "ref": "9e9f8f1b2fd2f04b216c7398bdcb4736327946b5",
+      "managedSha256": "b5127ecad425132b18cb963f52bf65434e8488237dc92dbf7d57b8db159ed7a2",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.376"
+      ]
+    },
+    {
+      "name": "NadeSystem",
+      "ref": "009ce03005af68ba68dae62967bddc8e92ad172c",
+      "managedSha256": "6969cfc7df31c4a13d1fcb217fe4a48111ac37d7e81fe9b1c73740c438bdfc33",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.373"
+      ]
+    },
+    {
+      "name": "BotHiderImpl",
+      "ref": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+      "managedSha256": "5d566318799e661ba397c98b81e0e7be9f2aaa0f8d85775b27f30c2ba4f70924",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.375"
+      ]
+    },
+    {
+      "name": "BotControllerImpl",
+      "ref": "582e9132c10b9729e3cce8f0670a9273eb7a49bd",
+      "managedSha256": "c9d6ff648e9cd7f563a05ca28b36f63cbdc380e3f45ab035ca26f9088860e908",
+      "targetFramework": "net10.0",
+      "apiReferences": [
+        "1.0.375"
+      ]
+    },
+    {
+      "name": "BotControllerApi",
+      "ref": "582e9132c10b9729e3cce8f0670a9273eb7a49bd",
+      "sha256": "4d8464873e5e747e11b33072f5837a2978d4f4e382d76225de9b24c42a479f21",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "E:\\Projects\\CS2-Local-Kit\\wt-bot-experiment-20261020\\temp\\bot-experiment-build\\bot-experiment-e18c029-73ce542bf7ec\\BotController\\csharp\\BotControllerApi\\BotControllerApi.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "E:\\Projects\\CS2-Local-Kit\\wt-bot-experiment-20261020\\temp\\bot-experiment-build\\bot-experiment-e18c029-73ce542bf7ec\\BotController\\csharp\\BotControllerApi\\BotControllerApi.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:SourceRevisionId=582e9132c10b9729e3cce8f0670a9273eb7a49bd"
+        ]
+      ]
+    },
+    {
+      "name": "BotHiderApi",
+      "ref": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+      "sha256": "2baf5ea120415cb8494bf7344de51a0ecbce9d65300ced58ec27524da57f950e",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "E:\\Projects\\CS2-Local-Kit\\wt-bot-experiment-20261020\\temp\\bot-experiment-build\\bot-experiment-e18c029-73ce542bf7ec\\BotHider\\csharp\\BotHiderApi\\BotHiderApi.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "E:\\Projects\\CS2-Local-Kit\\wt-bot-experiment-20261020\\temp\\bot-experiment-build\\bot-experiment-e18c029-73ce542bf7ec\\BotHider\\csharp\\BotHiderApi\\BotHiderApi.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:SourceRevisionId=9a77fbaf1ee106ec45a451f482e64f26127f2f21"
+        ]
+      ]
+    },
+    {
+      "name": "Lib.Harmony",
+      "version": "2.4.2",
+      "sha256": "fd77b88724f4104440df0cf979a851d35eec75ea3a7e86297d04abe47c71aff6",
+      "source": "existing local NuGet cache; MIT license included"
+    }
+  ],
+  "excludedModules": [
+    "RoundDamageRecap",
+    "Rush behavior trees",
+    "Panel",
+    "Human cosmetics"
+  ],
+  "excludedSubclassBindings": [
+    "cfg/my_bot_ffa_config.cfg",
+    "cfg/my_bot_ffa_config_rules_unchanged.cfg",
+    "cfg/my_bot_normal_config.cfg",
+    "cfg/my_bot_normal_config_rules_unchanged.cfg"
+  ],
+  "defaultDifficulty": "Medium",
+  "rushActive": false,
+  "builderHead": "18782f94c8bda1ae28fb61859e666abd46083465",
+  "bundleFileCount": 162,
+  "tests": {
+    "transactionTests": 28,
+    "transactionStatus": "PASS",
+    "actualPayloadIntegration": "PASS",
+    "byteForByteRestored": true,
+    "realProtectionFileCount": 6028,
+    "realTargetApplied": false
+  }
+}

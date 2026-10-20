@@ -1,0 +1,632 @@
+[
+  {
+    "target": "game/csgo/addons/metamod/bin/win64/metamod.2.cs2.dll",
+    "source": "framework/addons/metamod/bin/win64/metamod.2.cs2.dll",
+    "sha256": "0c78ee2571d19cbbc070ba360c3c0b7665d572ad8791df531a755d7c8c226c6c",
+    "surface": "framework"
+  },
+  {
+    "target": "game/csgo/addons/metamod/bin/win64/server.dll",
+    "source": "framework/addons/metamod/bin/win64/server.dll",
+    "sha256": "42e359ce6937379f468ee15cfe885bb961013e02426b426a0a9122ab180f96c7",
+    "surface": "framework"
+  },
+  {
+    "target": "game/csgo/addons/BotController/bin/win64/BotController.dll",
+    "source": "bot/addons/BotController/bin/win64/BotController.dll",
+    "sha256": "a86185de9b1acd4af8001631bb47d2a03dedb68321838458833775204a7977be",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotController/gamedata.json",
+    "source": "bot/addons/BotController/gamedata.json",
+    "sha256": "b126a312ef19c937941d1d50595e6089fdac14cc18ef6f414c7803bf3985d102",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/metamod/BotController.vdf",
+    "source": "bot/addons/metamod/BotController.vdf",
+    "sha256": "ff186f07a8a6cb13b7bafd89048e3533c80cb39c18c3a8f34c858e685748d24f",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotHider/bin/win64/BotHider.dll",
+    "source": "bot/addons/BotHider/bin/win64/BotHider.dll",
+    "sha256": "505a93b30b261b7504743f03218852d322a8925e10c17818d0ce4406b90f594d",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotHider/bot_info.json",
+    "source": "bot/addons/BotHider/bot_info.json",
+    "sha256": "549850eb45c98d4211a3cdad15711bec238d1752eff2f30035c6ec1fdf27d416",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotHider/config.json",
+    "source": "bot/addons/BotHider/config.json",
+    "sha256": "87d02bb9600d536334eadb6539652d347b445363d0a5e6a937a8a6ebb9397720",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotHider/gamedata.json",
+    "source": "bot/addons/BotHider/gamedata.json",
+    "sha256": "7e8e4ec32044e50d85f562cde8e3096f8d04ddfaad36e89caa57bf37827a8eef",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/metamod/BotHider.vdf",
+    "source": "bot/addons/metamod/BotHider.vdf",
+    "sha256": "8c4766472418871c530b842e1d1835ecd65a637aea2bfb3b239868a61331fef0",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotVision/bin/win64/BotVision.dll",
+    "source": "bot/addons/BotVision/bin/win64/BotVision.dll",
+    "sha256": "12f46ddbab79a715e99ecc2708b4d87d190f1fd2b9821be6a1c786fdad879816",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotVision/config.json",
+    "source": "bot/addons/BotVision/config.json",
+    "sha256": "7db9667c0873a2a2c30fc9d66a087a925175f4128e887d39fa9dc73791de88b3",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/BotVision/gamedata.json",
+    "source": "bot/addons/BotVision/gamedata.json",
+    "sha256": "60430509d1de57e122aeae5109d1abeecd6d6eec7a02f8f3f5268065996ab1df",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/metamod/BotVision.vdf",
+    "source": "bot/addons/metamod/BotVision.vdf",
+    "sha256": "375eaedadd623fbfe1fb7a1d94c14684f1b4f8bad64a455a25c55ef90af96e3a",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotAI/BotAI.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotAI/BotAI.deps.json",
+    "sha256": "0967a0b388a2f40613c9788a586b44bd4175dbe0454664d8a2f332ed31bfc527",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+    "sha256": "8e5c41245e15a8ab5c48da76f2cef6328126a8addc9910a5622e7b6b22f7a640",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.deps.json",
+    "sha256": "4f517c58e96582c2ac5b2bbfdd478f50b79020adf3f030811d72e8c338e00f7b",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll",
+    "sha256": "4609de4f69aa1dbd2def1431a7e3bdf205aadf61d76c1f1feb3fdc0ff43e419e",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotBuy/BotBuy.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotBuy/BotBuy.deps.json",
+    "sha256": "899b74d2a0f532db819adc7fcfa58f50fca4fba52586dc5f877418fc9a7ed546",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotBuy/BotBuy.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/BotBuy/BotBuy.dll",
+    "sha256": "7553b657227161391fc1c297c2693135ab19a864dcca2f0e732060a0077441bb",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.deps.json",
+    "sha256": "63b4cc4ea7badc61328d57ffb522a0c7d2518d961da18cce541cec1d8738891f",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.dll",
+    "sha256": "ae931fd66d76ed73534db3b54b267eca1109afd696d3b7b71995db5e5d737954",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/charm_placements.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotRandomizer/charm_placements.json",
+    "sha256": "6c2660cf41b62e2d79f693d3735fe9da91a975a116596839e0ab553491935b1c",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/cosmetic_catalog.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotRandomizer/cosmetic_catalog.json",
+    "sha256": "3a56b589e8048ae1e33f9e6b174f757bbdb81b60f676daf87bacac6cf779ce72",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotState/BotState.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotState/BotState.deps.json",
+    "sha256": "5bfda524b8cba8178a06d511ac4a0f9dc78abc764e7cd3af484fa02b48fe13ab",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotState/BotState.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/BotState/BotState.dll",
+    "sha256": "b5127ecad425132b18cb963f52bf65434e8488237dc92dbf7d57b8db159ed7a2",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.deps.json",
+    "sha256": "4483c91952aff344ac05a6962280867b1bba441f65d5eb87b687c64061fdb021",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.dll",
+    "sha256": "6969cfc7df31c4a13d1fcb217fe4a48111ac37d7e81fe9b1c73740c438bdfc33",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotHiderImpl/BotHiderImpl.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotHiderImpl/BotHiderImpl.deps.json",
+    "sha256": "01d6910c40a428597eae0cbbe1991cb1b2579adbcc3b79c1140907b7c3d7ea82",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotHiderImpl/BotHiderImpl.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/BotHiderImpl/BotHiderImpl.dll",
+    "sha256": "5d566318799e661ba397c98b81e0e7be9f2aaa0f8d85775b27f30c2ba4f70924",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.deps.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.deps.json",
+    "sha256": "8099426e27ac88d4aa615286d3d17025c19b93163d1dcd83a3c193893b18514f",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.dll",
+    "source": "bot/addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.dll",
+    "sha256": "c9d6ff648e9cd7f563a05ca28b36f63cbdc380e3f45ab035ca26f9088860e908",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.runtimeconfig.json",
+    "source": "bot/addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.runtimeconfig.json",
+    "sha256": "2e1693f8326910b07be4292d78dceba9cb49952c500afab1860d09b4d5e54047",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.deps.json",
+    "source": "bot/addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.deps.json",
+    "sha256": "5c2f7778b63f0d6a70c35f00745dd4e1c3af31b78500da4b272a6f3559cedacb",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.dll",
+    "source": "bot/addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.dll",
+    "sha256": "4d8464873e5e747e11b33072f5837a2978d4f4e382d76225de9b24c42a479f21",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.runtimeconfig.json",
+    "source": "bot/addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.runtimeconfig.json",
+    "sha256": "2e1693f8326910b07be4292d78dceba9cb49952c500afab1860d09b4d5e54047",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/shared/BotHiderApi/BotHiderApi.deps.json",
+    "source": "bot/addons/counterstrikesharp/shared/BotHiderApi/BotHiderApi.deps.json",
+    "sha256": "66cd354a081474c74befa315b58f07be2bd444be608b78f7c4d7baad917f61c8",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/shared/BotHiderApi/BotHiderApi.dll",
+    "source": "bot/addons/counterstrikesharp/shared/BotHiderApi/BotHiderApi.dll",
+    "sha256": "2baf5ea120415cb8494bf7344de51a0ecbce9d65300ced58ec27524da57f950e",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/shared/0Harmony/0Harmony.dll",
+    "source": "bot/addons/counterstrikesharp/shared/0Harmony/0Harmony.dll",
+    "sha256": "fd77b88724f4104440df0cf979a851d35eec75ea3a7e86297d04abe47c71aff6",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_flash.json",
+    "sha256": "30f5c043d196528f099a7084d3d09d4d215bd5995c4b5eb995ec403a9474866c",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_he.json",
+    "sha256": "68be970bdf57b097c58035154a8332e5bfdb2315c2b803ec1fe0693718a64fde",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_molotov.json",
+    "sha256": "70f6d128fe516c2abf8feebb31fe2fce8b9988e7233e89064842a0f932f8695d",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_italy_smoke.json",
+    "sha256": "16b200ee9b9420c431f57dd64f3f54bac4292bfda1f1484d884b15c1375b2e5c",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_flash.json",
+    "sha256": "61b958d7aa0f00f3a6d342ca23d96c55bdce44cadb07f5d94d96261396e87a56",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_he.json",
+    "sha256": "55fec45bd594330ded92601c8af0dfde6936fb83ccc428473b1861dc8ba88751",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_molotov.json",
+    "sha256": "64337e46b8fb1fbed86039fe10896e685972e7c724127eddcd39cffee0d91f4d",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/cs_office_smoke.json",
+    "sha256": "e46dcced6ec8d0f972a19d48320e31e098ea38ee171a3b38a17993ab4150e41a",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_flash.json",
+    "sha256": "790b2028dae25f9b93510111328b7cd53d01790e8d371e272101d3103c56d7e8",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_he.json",
+    "sha256": "88189b51a79f9192c4e45192e92afde02f70e82fce0ed315a820c02db5862389",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_molotov.json",
+    "sha256": "a291ea77231b4e42cf0dbda63bc0b1bbc0c87545b92f9dfb0024afb36278aea4",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_ancient_smoke.json",
+    "sha256": "f42c7c5cb88abfb3bc536df50e7fc4d724b1154234d2499462b920010009e32d",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_flash.json",
+    "sha256": "e32f5320fd693df78647d89e722045e365e368f441283fe0f55a9a1a00870389",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_he.json",
+    "sha256": "77b12610692474c727267ef3a40bed07b1b0eb80a3602069db7c006ee05dbd57",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_molotov.json",
+    "sha256": "165b096a7500bad6d8a2d694d63014c3b4b9520a795cff96ab2aded45bf23741",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_anubis_smoke.json",
+    "sha256": "f9245824a9809dff6b2af2e4d8ca1e641b24e4580d316399ec893e8a1494c29f",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_flash.json",
+    "sha256": "0939d9207a8269daf812953e85a19a37eaf6a19310ce4743a71b7b1d580bd2b7",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_he.json",
+    "sha256": "11d1d395cb3c5a220847b50ea081ed98fbadc83681654ef588d495658d446580",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_molotov.json",
+    "sha256": "2a58cb233cff9e6c0f837e5569d770b7f5544bf379c3f37d23a8989a16d5eb94",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_cache_smoke.json",
+    "sha256": "7d42b72a04d79ea6cf84958e7dffc5018f3c63c65450e7dc73c8a86046e6b663",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_flash.json",
+    "sha256": "d4c740a63448b50ea871b7a98e3dac8acfd4a1d035d29f7726667784a1bb17a3",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_he.json",
+    "sha256": "cf8c82e45dc2057876b4be5111a91124cbfec2d76d513034889484953e83be3a",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_molotov.json",
+    "sha256": "173fd6c1b42e232809726a1fa5419a53808aee2cbd6a28cac48a8e8dc15b366f",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_dust2_smoke.json",
+    "sha256": "6430cc3e2443286ff2ad91691d80ffdabec5d9bff125b035e4466fb95e50427e",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_flash.json",
+    "sha256": "f9bd38394c52649e0d3b7ff36a19d34e1b28278960543e04f2b14a9a72142f51",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_he.json",
+    "sha256": "997a4165000d4de79053041631ec38a9980550861154fac07cc0538cf25c9061",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_molotov.json",
+    "sha256": "79cd7431bd68907696dcf4e70edc3eb453fb803da78239acc1d4612070acb54a",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_inferno_smoke.json",
+    "sha256": "fc7d75be9a0cd7a794e829e7ccb3a94fb205ee10b348efea5790debf8423c211",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_flash.json",
+    "sha256": "d0c0e068100d14952c187a9f19ab5815fa4a72805e303401341b1941141d0bd9",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_he.json",
+    "sha256": "a1d55415a3f60f98b50871fc4df1bd18905b457774f0ede19493e08511ed81c6",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_molotov.json",
+    "sha256": "e86c35c22d838a0835599c5fc86bd9d304f6088573e2e0a0bb985ce387af185a",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_mirage_smoke.json",
+    "sha256": "416a6285c30e910f1072bbad4d690135ef2301351e9531a7a0c9aa68cdcfaf43",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_flash.json",
+    "sha256": "4b9148a670926d499e3ead91bbfc3767b540c6f656c4346c3145d99134df3067",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_he.json",
+    "sha256": "66c6ff526e12cc7172d3dc17e2e7c940deb75b2532a3a99c635d17486520e5e6",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_molotov.json",
+    "sha256": "04a74b25e9a204467b341dd7b6e978d8a2fc8db68e1b29649a2683f7fefc58e9",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_nuke_smoke.json",
+    "sha256": "c72d045af816eb8f3c118c5de9f8f50d83b411d417678833d44f6083c1887f7d",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_flash.json",
+    "sha256": "cc74dadb709cfe342852458d56b8d7076f0cf65c981f548d8412ca435e05d301",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_he.json",
+    "sha256": "1b3ab8a029e8d708da2ee65da106da5a9fad4bdc2956031b7a84a508ff76fd2e",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_molotov.json",
+    "sha256": "ace3264b0768c692fbb65b1b2772188dda5a3aaa1cab2dac64119d184dc91bc4",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_overpass_smoke.json",
+    "sha256": "837b8b19b71a309e6fa01a47455c64316f3e96d6ab71d8d066432ba9c254611f",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_flash.json",
+    "sha256": "af5c51839e2c8e69df0418e80f7d9f76a8c0273db575230fe6f9209e7f2aea19",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_he.json",
+    "sha256": "e6d26089990f43563d5ae6818caac1fd0f9f063162569bb5d917eb6877839f6e",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_molotov.json",
+    "sha256": "d5727d5215cfbcce93cbaedef91bbdcd74e2fd7b691b56c314d78828335e0387",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_train_smoke.json",
+    "sha256": "6108b1046534a941c39cd01ac395c1974bd5d6f44a82186d49b08331ef53583f",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_flash.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_flash.json",
+    "sha256": "51f514429f02deaea88126a0d2b253867402f91e7c4102553f312039d145759c",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_he.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_he.json",
+    "sha256": "0feec1aba6a928ec3a0a374295591dd146fde6df821bbec0e3ff2c1e75cc93ec",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_molotov.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_molotov.json",
+    "sha256": "03939293c87c945c4335cc3fc6cd260a6ea26bdce27e74c3ba8375ef5de7dc85",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_smoke.json",
+    "source": "bot/addons/counterstrikesharp/data/NadeSystem/grenades/de_vertigo_smoke.json",
+    "sha256": "de07bbdc3067cf15fb405e2d4319a3cfa59b5565984230e81475ad2686d2b032",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/bot_buy.cfg",
+    "source": "bot/cfg/bot_buy.cfg",
+    "sha256": "675ed21a347e12499274544d4cb5f3d8fefa2e24752e0e22328a670b0138fcae",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_armsrace.cfg",
+    "source": "bot/cfg/gamemode_armsrace.cfg",
+    "sha256": "036c0a9a3160031c539c71f692bd62e3256c951de57e3a438616019ec7f4966a",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_casual.cfg",
+    "source": "bot/cfg/gamemode_casual.cfg",
+    "sha256": "5c28268c1a1b031537fa465f624790b3ee233d13761202e8578ca674a50e4062",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_competitive.cfg",
+    "source": "bot/cfg/gamemode_competitive.cfg",
+    "sha256": "55363290369906d33990fc741cbf84fb5e0c1d4503c02b9e7cb3ffcc1ecc6cfa",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_competitive2v2.cfg",
+    "source": "bot/cfg/gamemode_competitive2v2.cfg",
+    "sha256": "8753cf0fade1d80f8a8a60776951a41bb32d7605b25fe77ab0f6f8bdf8249795",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_competitive2v2_offline.cfg",
+    "source": "bot/cfg/gamemode_competitive2v2_offline.cfg",
+    "sha256": "a3a25dc47869d93a99353ec33d788fa695959e6c9a0675ef78332da23e896868",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_competitive_offline.cfg",
+    "source": "bot/cfg/gamemode_competitive_offline.cfg",
+    "sha256": "84deb359b25e77cb44793d9025434de06e9d296c6341dd936cfda429dbac40a1",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_custom.cfg",
+    "source": "bot/cfg/gamemode_custom.cfg",
+    "sha256": "4a2ec3831fa7fe01ec631098d8c110426fd6aac38d05ad203f8acfcf1e29c022",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_deathmatch.cfg",
+    "source": "bot/cfg/gamemode_deathmatch.cfg",
+    "sha256": "7ff68874a14e7172fc90458922d76765bcb0a8495373b0ab3513c9279f2a8b9c",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_dm_freeforall.cfg",
+    "source": "bot/cfg/gamemode_dm_freeforall.cfg",
+    "sha256": "663b05b159385e72402e2ea8c954a6f896f3806e85305e107a60a57c1680009b",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_retakecasual.cfg",
+    "source": "bot/cfg/gamemode_retakecasual.cfg",
+    "sha256": "c293c444121db9d532a7f82813adc2b593d860cddd369e15d5ac1d36958685dc",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_teamdeathmatch.cfg",
+    "source": "bot/cfg/gamemode_teamdeathmatch.cfg",
+    "sha256": "720d80641664f81d333ac5903d713c13f44ac891bb58a7d06720fe8f2ab16113",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/gamemode_workshop.cfg",
+    "source": "bot/cfg/gamemode_workshop.cfg",
+    "sha256": "7f8f2b4b129d45131f6b62a503731243308767e406d6aa5fd56161699b719270",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/my_bot_ffa_config.cfg",
+    "source": "bot/cfg/my_bot_ffa_config.cfg",
+    "sha256": "50e3c669bb6f54d7b56aaa3a82d87f7a870f3a1dd3ea247de61aeaecabad9959",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/my_bot_ffa_config_rules_unchanged.cfg",
+    "source": "bot/cfg/my_bot_ffa_config_rules_unchanged.cfg",
+    "sha256": "5c8cad8a6268b9dfec040af1b2cccee2a8a31f298aa62421bf5ab6ceddefeafe",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/my_bot_normal_config.cfg",
+    "source": "bot/cfg/my_bot_normal_config.cfg",
+    "sha256": "0093668727ecffb909d093409e01cb3eaf07e6a99e82bebbe6871b6a0b26cffe",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/cfg/my_bot_normal_config_rules_unchanged.cfg",
+    "source": "bot/cfg/my_bot_normal_config_rules_unchanged.cfg",
+    "sha256": "60375c839697db5721e48b9be9a4812afa0def2dc6d151fde6ea816cbbe7652a",
+    "surface": "bot"
+  },
+  {
+    "target": "game/csgo/overrides/botprofile.vpk",
+    "source": "bot/overrides/botprofile.vpk",
+    "sha256": "ada94c66acfb78695d5b2d2f5a897842bb8378c618e48be865070e840b7c6a01",
+    "surface": "bot"
+  }
+]

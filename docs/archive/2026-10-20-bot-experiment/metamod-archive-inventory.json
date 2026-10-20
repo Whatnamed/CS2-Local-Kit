@@ -1,0 +1,260 @@
+[
+  {
+    "path": "addons/",
+    "length": 0,
+    "sha256": null,
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/",
+    "length": 0,
+    "sha256": null,
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/",
+    "length": 0,
+    "sha256": null,
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.bgt.dll",
+    "length": 1069056,
+    "sha256": "ac1a187a9f95a05c2d3f8955da9a4c5175e9f2c13e0f331744b1a27c0f0cff66",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.blade.dll",
+    "length": 1069056,
+    "sha256": "90f5d85682d5100f8745c5e5820e47c21df49e31cf1f7344789b0f27f054be06",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.bms.dll",
+    "length": 1102336,
+    "sha256": "dd02a5fc64e29e635d7d121aeb8a36bbf17b3e96d35abf27596114519f67168b",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.contagion.dll",
+    "length": 1069568,
+    "sha256": "2fb69e8791bf0e479537c860af9d8de2cfcb5663cab500d6fd52e85d968376db",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.csgo.dll",
+    "length": 1069056,
+    "sha256": "96f5ab4ec7c84ca5b80ee9c1e2641dbad29b63fffb423203eeb33498785ffbf4",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.css.dll",
+    "length": 1218560,
+    "sha256": "b1164771092a8d8a2b9ffb161c4442d192e1e5840f3db541007b8fb30962faaf",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.darkm.dll",
+    "length": 1068032,
+    "sha256": "f25cc2e9dc7df2cc759c6d556283f73322d3c7366cd3fcb7cf997dfc697ef8c3",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.dods.dll",
+    "length": 1218560,
+    "sha256": "8b1b12234348388387934e7ad8f1647aa6b880dd986d6d3f7ad3e3a66a6ba731",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.doi.dll",
+    "length": 1071104,
+    "sha256": "81e6e2bb07a780646ad8404ff8c8c25b34ad0a7e02a9be299c1f9a830f0d58fd",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.ep1.dll",
+    "length": 1068032,
+    "sha256": "90c85c3cd2f06edfab7dc8b27807d7c2af349f3c1079019bd0011d1fda0bbdf2",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.ep2.dll",
+    "length": 1069056,
+    "sha256": "a9d4cb392174a97a1173d8af5e0405e480a4d0828b8d97c3bc47c386c0f19494",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.eye.dll",
+    "length": 1069056,
+    "sha256": "61e25fafa629ad4f0c3e3c95a14f82f1f4ecc26c95c3858c33629181e78ca79e",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.hl2dm.dll",
+    "length": 1219072,
+    "sha256": "f21c8466664e979f3034727b5cc6a2a76ccba989c0b57c1cebe30eebd61117a5",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.insurgency.dll",
+    "length": 1071104,
+    "sha256": "53b451da74e7f5b843c0986c4a1487d102a1298f5c2b390c67b9b1022845519b",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.l4d.dll",
+    "length": 1069568,
+    "sha256": "930ad7b2fcfb0a052cc696bb4f8c745e3feec68dd385a173f69b4ae7f76ea803",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.l4d2.dll",
+    "length": 1137664,
+    "sha256": "734ff9090155fe2b07242ff63a8315e1cde247f45ad37ae176d582a8b7ce61ae",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.nd.dll",
+    "length": 1069568,
+    "sha256": "ec065515f392fc3024884d14f84cac9d1b7dda00167a91122da187be0cb30977",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.pvkii.dll",
+    "length": 1214976,
+    "sha256": "60e71e675b053084460fa2080c579246831789e508256e687a34f9bd91d0f22b",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.sdk2013.dll",
+    "length": 1072128,
+    "sha256": "b43ee303dd0d034e7d3165e93ade5e7c392e6d633e5d1289b3511d9143217fb2",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.swarm.dll",
+    "length": 1084416,
+    "sha256": "0c7bb6700a0fd73cc060d1d9a82c48d71f32c3327114ae26d32a98f18344e3b3",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/metamod.2.tf2.dll",
+    "length": 1218560,
+    "sha256": "a48109db6fffa0af46cb006ef5d5c3f2db55e9756753c67ef359b9f7b0a4ec9b",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/server.dll",
+    "length": 169472,
+    "sha256": "03c2d2447e8405e4407d2b1c50a43ea54f7219c91d97f3afdab1415162dd5f71",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/",
+    "length": 0,
+    "sha256": null,
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.blade.dll",
+    "length": 1249792,
+    "sha256": "3dc87cc5d982c56bb0080e0413e3f6b93bde2c208bf0263d47d9e6eda272158e",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.cs2.dll",
+    "length": 2306048,
+    "sha256": "0c78ee2571d19cbbc070ba360c3c0b7665d572ad8791df531a755d7c8c226c6c",
+    "selected": true
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.css.dll",
+    "length": 1420288,
+    "sha256": "58c51b3fd34a2119055bb9f67268d7c23e68141becc4a3e4566927b4a2a8da6d",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.deadlock.dll",
+    "length": 2306048,
+    "sha256": "2ec9c80e477111e52dc6ee084afaa2eb2637c7a9bf5fb6e98ce25151f931169c",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.dods.dll",
+    "length": 1420288,
+    "sha256": "ecca8e2be3135b92027c22e53893d844ddf75256d56e9c6122fb34a14f339798",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.doi.dll",
+    "length": 1251328,
+    "sha256": "01086f75972b9f630c9dcfabccae8bc464369f2a76ef10d0891ca6fa7eb92c4c",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.dota.dll",
+    "length": 2311168,
+    "sha256": "0dfbabbe752d99b10d1b87147b9dcd6f56722f672e5ce8fbb66280479b343a1f",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.hl2dm.dll",
+    "length": 1419776,
+    "sha256": "21f3c7aee41375e00edcd95596a8a910fc2d40ef097205654b4e5280f14baaaa",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.insurgency.dll",
+    "length": 1251328,
+    "sha256": "12e552ed131ad2596de97490f5b46a8edb8201e0ffd8acbbf14d84f989ed0eb9",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.mcv.dll",
+    "length": 1249792,
+    "sha256": "e2bddd16bc67ea674ad53fbbe15cfae4e4b5b721c736258089faa9edacbb5f4b",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.pvkii.dll",
+    "length": 1414144,
+    "sha256": "9e7fc84e12815762b606b8f47acff79beab41c9d28286de4daef377b6def8501",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/metamod.2.tf2.dll",
+    "length": 1420288,
+    "sha256": "f45f8bdbb51834e24daddabcd32265ab95a104bd28f590ca86e2b46a7de76cdc",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/bin/win64/server.dll",
+    "length": 218624,
+    "sha256": "42e359ce6937379f468ee15cfe885bb961013e02426b426a0a9122ab180f96c7",
+    "selected": true
+  },
+  {
+    "path": "addons/metamod/metaplugins.ini",
+    "length": 573,
+    "sha256": "d32d862096e70fdb4ea60edfa78a50c5b11ca262644287596f18d62dfc903540",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod/README.txt",
+    "length": 112,
+    "sha256": "beefa6adcfe74722375701798b1bb991715bf9d419574472eb85766e1ac6e5db",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod.vdf",
+    "length": 55,
+    "sha256": "333b1e594cff06326c1175261eaf3556d9d7cab06a3e2691c659b3f054125db0",
+    "selected": false
+  },
+  {
+    "path": "addons/metamod_x64.vdf",
+    "length": 61,
+    "sha256": "ec4ce540f57aa42bd94240226148d2989443b76f76a69e4eed5cd967f9cb9fcd",
+    "selected": false
+  }
+]

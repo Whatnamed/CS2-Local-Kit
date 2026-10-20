@@ -1,0 +1,8 @@
+{
+  "verifiedAtUtc": "2026-10-20T02:38:31.811694+00:00",
+  "beforeFileCount": 6028,
+  "afterFileCount": 6028,
+  "changedPaths": [],
+  "realTargetInstalled": false,
+  "scope": "Entire real CS2 game tree plus Steam manifest; E:/CS2MOD presets/app-data/preexisting backups; both formal runtime locks. Only this task releases outputs were permitted outside the worktree."
+}
