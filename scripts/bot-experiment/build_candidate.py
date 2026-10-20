@@ -180,7 +180,7 @@ def build(evidence_worktree,archive,cs2_root,releases_root,dotnet):
         start=root/'game/csgo'/folder
         if not start.exists():continue
         for path,value in tx.inventory(start).items():
-            if value['kind']=='file' and not path.startswith(('counterstrikesharp/logs/','counterstrikesharp/dotnet/shared/Microsoft.NETCore.App/')):
+            if value['kind']=='file' and not path.startswith('counterstrikesharp/logs/'):
                 baseline['game/csgo/'+folder+'/'+path]=value['sha256']
     binaries={'game/'+e['path']:e['sha256'] for e in old['gameBinaries']}
     baseline.update(binaries)
