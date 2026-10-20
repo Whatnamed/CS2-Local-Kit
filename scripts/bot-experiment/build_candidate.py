@@ -48,9 +48,10 @@ def build(evidence_worktree,archive,cs2_root,releases_root,dotnet):
     for e in old['gameBinaries']:
         tx.require(tx.sha(root/'game'/e['path'])==e['sha256'],'Target binary drift: '+e['path'])
     tx.gameinfo_bytes(root)
-    release=tx.no_links(releases_root)/('bot-experiment-e18c029-'+uuid.uuid4().hex[:12])
-    tx.require(not release.exists(),'Release already exists');release.mkdir(parents=True)
-    stage=repo/'temp/bot-experiment-build'/release.name;stage.mkdir(parents=True)
+    destination=tx.no_links(releases_root)/('bot-experiment-e18c029-'+uuid.uuid4().hex[:12])
+    tx.require(not destination.exists(),'Release already exists')
+    stage=repo/'temp/bot-experiment-build'/destination.name;stage.mkdir(parents=True)
+    release=stage/'bundle';release.mkdir()
     files=[];components=[]
     def asset(source,target,surface,data=None):
         tx.require(tx.payload_allowed('game/csgo/'+target,surface),'Unexpected payload target: '+target)
@@ -102,8 +103,11 @@ def build(evidence_worktree,archive,cs2_root,releases_root,dotnet):
             if p.is_file() and p.suffix in {'.dll','.json'} and not p.name.startswith(('CounterStrikeSharp.API','Microsoft.','System.')):
                 if p.suffix=='.json' and not p.name.endswith(('.deps.json','.runtimeconfig.json')):
                     source=project.parent
-                    tx.require(tx.digest(tracked(source,'HEAD',p.name))==tx.sha(p),'Managed data output drift: '+p.name)
-                asset(p,'addons/counterstrikesharp/plugins/'+name+'/'+p.name,'bot')
+                    data=tracked(source,'HEAD',p.name)
+                    tx.require(data.replace(b'\r\n',b'\n')==p.read_bytes().replace(b'\r\n',b'\n'),'Managed data output drift: '+p.name)
+                    asset(None,'addons/counterstrikesharp/plugins/'+name+'/'+p.name,'bot',data)
+                else:
+                    asset(p,'addons/counterstrikesharp/plugins/'+name+'/'+p.name,'bot')
         components.append({'name':name,'ref':freeze['submodules'][next(p for p in freeze['submodules'] if p.endswith('/'+row['component']))],'managedSha256':spec['sha256'],'targetFramework':xml.findtext('.//TargetFramework'),'apiReferences':[n.attrib['Version'] for n in xml.findall('.//PackageReference') if n.attrib.get('Include')=='CounterStrikeSharp.API']})
     # API outputs were not all hashed in the earlier report. Rebuild their exact source locally.
     env=os.environ.copy();env.update(DOTNET_CLI_HOME=str(stage/'dotnet-home'),DOTNET_CLI_TELEMETRY_OPTOUT='1',DOTNET_NOLOGO='1',DOTNET_CLI_UI_LANGUAGE='en')
@@ -188,6 +192,14 @@ def build(evidence_worktree,archive,cs2_root,releases_root,dotnet):
     # Validate the actual live preflight without applying it or creating a backup.
     tx.make_plan(release,manifest_sha,root,Path(r'E:\CS2MOD\backups\bot-experiment'),isolate_human=True)
     tx.ensure_closed()
+    # Publish only a fully validated stage. Both absolute paths are task-owned and
+    # checked before the same-volume directory rename; no preexisting output is replaced.
+    tx.require(release.is_relative_to(repo/'temp/bot-experiment-build') and destination.parent==tx.no_links(releases_root),'Release path escaped task roots')
+    tx.no_links(release);tx.no_links(destination)
+    destination.parent.mkdir(parents=True,exist_ok=True)
+    tx.require(not destination.exists(),'Release destination appeared during build')
+    os.rename(release,destination)
+    release=destination
     zip_path=Path(str(release)+'.zip')
     with zipfile.ZipFile(zip_path,'x',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:
         for p,value in tx.inventory(release).items():
