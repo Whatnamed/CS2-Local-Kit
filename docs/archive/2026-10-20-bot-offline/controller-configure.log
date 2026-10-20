@@ -13,7 +13,7 @@
 -- Looking for pthread_create in pthread
 -- Looking for pthread_create in pthread - not found
 -- Found Threads: TRUE
--- Build type: 
+-- Build type:
 -- Looking for _fwrite_nolock
 -- Looking for _fwrite_nolock - found
 -- Configuring done (6.7s)
