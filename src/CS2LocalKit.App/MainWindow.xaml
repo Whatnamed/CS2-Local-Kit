@@ -210,7 +210,7 @@
                             <Button Content="应用到 CS2" Style="{StaticResource PrimaryButton}" MinWidth="120"
                                     Command="{Binding Header.ApplyCommand}">
                                 <Button.ToolTip>
-                                    <TextBlock Text="CS2 正在运行时无法应用，请先关闭游戏。" MaxWidth="220"/>
+                                    <TextBlock Text="{Binding Header.ApplyHint}" MaxWidth="220"/>
                                 </Button.ToolTip>
                             </Button>
                         </StackPanel>

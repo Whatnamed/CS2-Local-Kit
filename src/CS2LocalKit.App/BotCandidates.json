@@ -1,1 +1,17 @@
-[]
+[
+  {
+    "Difficulty": 0,
+    "Directory": "bot-experiment-e18c029-37ce3ef2465c",
+    "ManifestSha256": "4de43c63d71492c9a3954193f378980145ce80da5c2efd8dce84b8352dc5ee71"
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "bot-experiment-e18c029-b45f4f543985",
+    "ManifestSha256": "e6f028042b7fc778d62df9a17211ea9701b6e8bab034da4b3170e8331b3483b4"
+  },
+  {
+    "Difficulty": 2,
+    "Directory": "bot-experiment-e18c029-60697f7d93f2",
+    "ManifestSha256": "6b879f841088de02ebf10d7710a10f1a4f8a1cd681b2ba116db61e788936cc52"
+  }
+]

@@ -98,6 +98,15 @@ public sealed class BotViewModel : ViewModelBase
             }
         }
         else if (wasActive) { _state = "已恢复 · Human 实机呈现仍需检查"; _installedDifficulty = "—"; }
+        else if (_installId is not null)
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(File.ReadAllText(Path.Combine(BackupPath,"install-record.json")));
+                if (doc.RootElement.GetProperty("state").GetString() is "restored" or "rolled-back") _state = "已恢复 · Human 实机呈现仍需检查";
+            }
+            catch { /* Historical pointer is not evidence of an active installation. */ }
+        }
         if (_blocked) _state = "文件漂移 / 条件阻断（见下方反馈）";
         Notify();
     }

@@ -57,6 +57,13 @@ public sealed class BotIntegrationTests : IDisposable
         Assert.Contains("尚未确认游戏中生效",vm.Feedback);Assert.Empty(_runner.Calls);
         var reloaded = Service().LoadPreferences();Assert.Equal(BotAim.Head,reloaded.Aim); Assert.Equal(BotNades.Max,reloaded.Nades);
     }
+    [Fact] public void ShippedCandidateCatalogHasAllThreeExactVariants()
+    {
+        var service=new BotExperimentService(_home,Root,()=>false,_runner);
+        Assert.Equal(3,service.Candidates.Count);
+        Assert.Equal(3,service.Candidates.Select(c=>c.Difficulty).Distinct().Count());
+        Assert.All(service.Candidates,c=>Assert.Matches("^[0-9a-f]{64}$",c.ManifestSha256));
+    }
     [Fact] public async Task ExactPublicEntryUsesArgumentListAndFreshPreviewBeforeApply()
     {
         await Service().ExecuteAsync("Install",BotDifficulty.Medium,true);

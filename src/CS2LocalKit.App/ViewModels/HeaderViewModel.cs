@@ -100,6 +100,7 @@ public sealed class HeaderViewModel : ViewModelBase
 
     public bool Cs2Running => _manager.Cs2Running;
     public string Cs2StatusText => _manager.Cs2Running ? "CS2 正在运行" : "CS2 已关闭";
+    public string ApplyHint => _manager.HumanWritesBlocked ? "Bot 实验暂时隔离 Human，请先在人机页精确恢复。" : "CS2 正在运行时无法应用，请先关闭游戏。";
     public RuntimeHealthLevel HealthLevel => _manager.RuntimeHealth;
     public string HealthSummary => _manager.RuntimeSummary;
 
@@ -127,6 +128,7 @@ public sealed class HeaderViewModel : ViewModelBase
         OnPropertyChanged(nameof(InstalledConfigDetail));
         OnPropertyChanged(nameof(IsEditingSameAsActive));
         OnPropertyChanged(nameof(InstalledHashText));
+        OnPropertyChanged(nameof(ApplyHint));
         SaveCommand.RaiseCanExecuteChanged();
         DiscardCommand.RaiseCanExecuteChanged();
     }

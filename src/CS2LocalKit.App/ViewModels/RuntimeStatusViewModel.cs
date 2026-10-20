@@ -31,7 +31,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
 
     // Components
     public bool GameinfoHasMetamod => Status?.GameinfoHasMetamod ?? false;
-    public string MetaModStatus => Status?.MetaModNativeStatus ?? "missing";
+    public string MetaModStatus => _manager.HumanWritesBlocked ? "实验占用（身份/恢复见人机页）" : Status?.MetaModNativeStatus ?? "missing";
     public string CssStatus => Status?.CounterStrikeSharpNativeStatus ?? "missing";
     public bool InventorySimulatorPluginPresent => Status?.InventorySimulatorPluginPresent ?? false;
     public string InventorySimulatorStatusText => _manager.HumanWritesBlocked ? "Bot 实验隔离 / 先恢复实验" : InventorySimulatorPluginPresent ? "已安装" : "未安装";
