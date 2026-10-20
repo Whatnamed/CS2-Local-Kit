@@ -11,6 +11,7 @@ public sealed class MetaModStartupRepairOptions
     public string? LockPath { get; init; }
     public string? BackupsRoot { get; init; }
     public Func<bool>? Cs2RunningProbe { get; init; }
+    public string? BotExperimentBackupRoot { get; init; }
 }
 
 public sealed class MetaModStartupRepairResult
@@ -57,6 +58,8 @@ public sealed class MetaModStartupRepairService
             throw new MetaModStartupRepairException("未检测到 CS2 安装路径。");
 
         // 2. CS2 running probe (must be closed)
+        var experiment = BotExperimentIdentity.Inspect(cs2Root, _options.BotExperimentBackupRoot);
+        if (experiment.BlocksHuman) throw new MetaModStartupRepairException(experiment.Reason);
         var isRunning = (_options.Cs2RunningProbe ?? Cs2Locator.IsCs2Running)();
         if (isRunning)
             throw new MetaModStartupRepairException("CS2 正在运行，必须先关闭 CS2 才能修复启动项。");

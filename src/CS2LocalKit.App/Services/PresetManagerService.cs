@@ -129,6 +129,8 @@ public class PresetManagerService : ViewModelBase
         private set => SetProperty(ref _lastStatus, value);
     }
 
+    public bool HumanWritesBlocked => LastStatus?.BotExperiment.BlocksHuman == true;
+
     public event EventHandler? WorkingPresetChanged;
     public event EventHandler? StatusRefreshed;
     public event EventHandler? CatalogReloaded;
@@ -322,6 +324,7 @@ public class PresetManagerService : ViewModelBase
         RefreshRuntimeStatus();
         if (Cs2Running)
             return OperationResult.Failed("CS2 正在运行，无法应用修改。请先关闭 CS2 游戏。");
+        if (HumanWritesBlocked) return OperationResult.Failed(LastStatus!.BotExperiment.Reason);
 
         if (_services.Catalog is null)
             return OperationResult.Failed("皮肤数据清单不可用，无法应用饰品配置");
@@ -364,6 +367,7 @@ public class PresetManagerService : ViewModelBase
         RefreshRuntimeStatus();
         if (Cs2Running)
             return OperationResult.Failed("CS2 正在运行，无法恢复上一次配置。请关闭 CS2 后再试。");
+        if (HumanWritesBlocked) return OperationResult.Failed(LastStatus!.BotExperiment.Reason);
 
         if (!RollbackCanExecute)
         {
@@ -389,6 +393,7 @@ public class PresetManagerService : ViewModelBase
         RefreshRuntimeStatus();
         if (Cs2Running)
             return OperationResult.Failed("CS2 正在运行，无法修复启动项。请先关闭 CS2 游戏。");
+        if (HumanWritesBlocked) return OperationResult.Failed(LastStatus!.BotExperiment.Reason);
 
         try
         {
@@ -419,6 +424,7 @@ public class PresetManagerService : ViewModelBase
     {
         var status = _services.RuntimeStatusService.GetStatus();
         LastStatus = status;
+        OnPropertyChanged(nameof(HumanWritesBlocked));
 
         Cs2Running = status.Cs2Running;
         InstalledProjectionSha256 = status.FixtureSha256;

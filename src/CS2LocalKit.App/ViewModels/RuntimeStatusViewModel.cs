@@ -34,7 +34,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public string MetaModStatus => Status?.MetaModNativeStatus ?? "missing";
     public string CssStatus => Status?.CounterStrikeSharpNativeStatus ?? "missing";
     public bool InventorySimulatorPluginPresent => Status?.InventorySimulatorPluginPresent ?? false;
-    public string InventorySimulatorStatusText => InventorySimulatorPluginPresent ? "已安装" : "未安装";
+    public string InventorySimulatorStatusText => _manager.HumanWritesBlocked ? "Bot 实验隔离 / 先恢复实验" : InventorySimulatorPluginPresent ? "已安装" : "未安装";
     public string PatchedDllMatch => Status?.PatchedDllMatch ?? "unknown";
     public string PatchedDllHash => Status?.InventorySimulatorDllSha256 ?? "-";
     public bool FixtureInstalled => Status?.FixtureInstalled ?? false;
@@ -98,7 +98,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public bool CurrentMatchesLatestHash => Status?.LatestApply?.CurrentMatchesNewSha256 ?? false;
     public string LatestHashStatusText => !LatestApplyExists ? "无应用记录" : CurrentMatchesLatestHash ? "匹配" : "不匹配";
     public bool BlockedByCs2Running => Status?.LatestApply?.BlockedByCs2Running ?? false;
-    public bool RollbackCanExecute => Status?.LatestApply?.RollbackCanExecute ?? false;
+    public bool RollbackCanExecute => !_manager.HumanWritesBlocked && (Status?.LatestApply?.RollbackCanExecute ?? false);
     public string RollbackReason => Status?.LatestApply?.RollbackBlockReason ?? (RollbackCanExecute ? "可安全恢复" : "不可恢复");
 
     public bool IsAcceptedFrameworkValid =>
@@ -109,6 +109,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
 
     public bool CanRepairMetaModStartup =>
         Cs2Detected
+        && !_manager.HumanWritesBlocked
         && !Cs2Running
         && !GameinfoHasMetamod
         && IsAcceptedFrameworkValid;
@@ -117,6 +118,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     {
         get
         {
+            if (_manager.HumanWritesBlocked) return "请先在人机页恢复 Bot 实验；Human 基线并非损坏";
             if (!Cs2Detected) return "未检测到 CS2 安装路径";
             if (Cs2Running) return "CS2 正在运行，请先关闭游戏";
             if (GameinfoHasMetamod) return "MetaMod 启动项已正确配置";

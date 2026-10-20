@@ -73,6 +73,13 @@
                         </RadioButton>
 
                         <RadioButton Style="{StaticResource RailItem}" GroupName="nav"
+                                     AutomationProperties.AutomationId="NavigateBot"
+                                     IsChecked="{Binding Navigation.IsBotSelected, Mode=OneWay}"
+                                     Command="{Binding Navigation.NavigateBotCommand}">
+                            <StackPanel><TextBlock Text="◇" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,2"/><TextBlock Text="人机" HorizontalAlignment="Center"/></StackPanel>
+                        </RadioButton>
+
+                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav"
                                      IsChecked="{Binding Navigation.IsPresetsSelected, Mode=OneWay}"
                                      Command="{Binding Navigation.NavigatePresetsCommand}">
                             <StackPanel>
@@ -119,7 +126,7 @@
                                    Margin="0,3,0,0"/>
                     </StackPanel>
 
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Visibility="{Binding Navigation.IsHumanPage, Converter={StaticResource BoolToVis}}">
                         <StackPanel Margin="0,0,18,0">
                             <TextBlock Text="正在编辑" FontSize="10.5" Foreground="{StaticResource BrushTextTertiary}"/>
                             <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
@@ -164,6 +171,7 @@
 
                 <!-- action bar: dirty state and the two operations that change the world -->
                 <Border DockPanel.Dock="Bottom" Background="{StaticResource BrushBgSurface}"
+                        Visibility="{Binding Navigation.IsHumanPage, Converter={StaticResource BoolToVis}}"
                         BorderBrush="{StaticResource BrushBorderSubtle}" BorderThickness="0,1,0,0"
                         Padding="28,12">
                     <Grid>
@@ -210,6 +218,8 @@
                 </Border>
 
                 <Grid Margin="0">
+                    <views:BotView DataContext="{Binding Bot}"
+                        Visibility="{Binding DataContext.Navigation.IsBotSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}"/>
                     <views:CosmeticsView DataContext="{Binding Cosmetics}"
                         Visibility="{Binding DataContext.Navigation.IsCosmeticsSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}"/>
                     <views:PresetsView DataContext="{Binding Presets}"

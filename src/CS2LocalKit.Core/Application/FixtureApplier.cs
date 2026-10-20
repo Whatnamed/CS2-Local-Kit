@@ -19,6 +19,7 @@ public sealed class FixtureApplierOptions
     /// RestoreLatest share the same policy: refuse while CS2 runs.
     /// </summary>
     public Func<bool>? Cs2RunningProbe { get; init; }
+    public string? BotExperimentBackupRoot { get; init; }
     /// <summary>
     /// Pinned catalog snapshot used for preset validation. Apply must run catalog
     /// membership validation; without a catalog it fails closed.
@@ -48,6 +49,13 @@ public class FixtureApplier
     private bool Cs2Running =>
         !_options.SkipCs2ProcessCheck && (_options.Cs2RunningProbe ?? Cs2Locator.IsCs2Running)();
 
+    private void EnsureNoBotExperiment()
+    {
+        var csgo = _options.CsgoDir ?? Cs2Locator.FindCsgoDir();
+        var experiment = BotExperimentIdentity.Inspect(Path.GetFullPath(Path.Combine(csgo, "..", "..")), _options.BotExperimentBackupRoot);
+        if (experiment.BlocksHuman) throw new ApplyException(experiment.Reason);
+    }
+
     public string InstalledFixturePath
     {
         get
@@ -59,6 +67,7 @@ public class FixtureApplier
 
     public ApplyRecord Apply(HumanPreset preset, string steamId64, string? presetPath = null)
     {
+        EnsureNoBotExperiment();
         if (Cs2Running)
             throw new ApplyException("cs2.exe is running. Close CS2, then re-run.");
         // Mutation boundary: the caller may hold an in-memory preset that never went
@@ -169,6 +178,7 @@ public class FixtureApplier
     /// </summary>
     public ApplyRecord RestoreLatest()
     {
+        EnsureNoBotExperiment();
         if (Cs2Running)
             throw new ApplyException("cs2.exe is running. Close CS2, then re-run.");
 

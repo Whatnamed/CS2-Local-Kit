@@ -150,6 +150,8 @@ E:\CS2MOD\app-data\cosmetics-lab\         Controller 内部 app state
 machine-readable 的默认值以 `src/CS2LocalKit.Core/CorePaths.cs` 为准；`CS2LOCALKIT_CS2MOD_ROOT`
 环境变量可整体覆盖数据根目录，测试用显式路径覆盖。
 
+Bot 实验 lane 另用 `app-data/bot-experiment/preferences.json` 保存安装前难度与待执行命令偏好，`backups/bot-experiment/<install-id>` 保存精确事务，`diagnostics/bot-experiment/` 保存入口结果。它们不复用 Human preset 或 apply record，不修改用户饰品预设。
+
 不要每轮实验生成一个难以发现的新 cache 路径。
 
 ## 8. Legacy

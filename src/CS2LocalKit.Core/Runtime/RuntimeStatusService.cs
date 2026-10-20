@@ -18,6 +18,7 @@ public sealed partial class RuntimeStatusService
         public string? PresetsRoot { get; init; }
         public string? ActivePresetPath { get; init; }
         public Func<bool>? Cs2RunningProbe { get; init; }
+        public string? BotExperimentBackupRoot { get; init; }
     }
 
     private readonly Options _options;
@@ -57,6 +58,7 @@ public sealed partial class RuntimeStatusService
         if (cs2Root is not null)
         {
             var csgoDir = Path.Combine(cs2Root, "game", "csgo");
+            status.BotExperiment = BotExperimentIdentity.Inspect(cs2Root, _options.BotExperimentBackupRoot);
 
             var steamInf = Path.Combine(csgoDir, "steam.inf");
             if (File.Exists(steamInf))
@@ -241,6 +243,7 @@ public enum RuntimeHealthLevel
 
 public sealed class RuntimeStatus
 {
+    public BotExperimentIdentity BotExperiment { get; set; } = new(false, "");
     public bool Cs2Detected { get; set; }
     public string? Cs2Root { get; set; }
     public bool Cs2Running { get; set; }
@@ -282,6 +285,7 @@ public sealed class RuntimeStatus
         get
         {
             var list = new List<string>();
+            if (BotExperiment.BlocksHuman) return new[] { BotExperiment.Reason };
             if (!Cs2Detected) list.Add("未检测到 CS2 安装路径");
             if (!GameinfoHasMetamod && Cs2Detected) list.Add("gameinfo.gi 未配置 MetaMod 启动项");
             if (MetaModNativeStatus == "missing" && Cs2Detected) list.Add("MetaMod 原生组件缺失");

@@ -19,7 +19,7 @@ public sealed class HeaderViewModel : ViewModelBase
     {
         _manager = manager;
         SaveCommand = new RelayCommand(onSave, () => _manager.Draft is not null);
-        ApplyCommand = new RelayCommand(onApply, () => !_manager.Cs2Running && _manager.Draft is not null);
+        ApplyCommand = new RelayCommand(onApply, () => !_manager.Cs2Running && !_manager.HumanWritesBlocked && _manager.Draft is not null);
         DiscardCommand = new RelayCommand(Discard, () => _manager.IsDirty && _manager.WorkingPresetName is not null);
 
         _manager.PropertyChanged += (_, e) =>
@@ -33,7 +33,9 @@ public sealed class HeaderViewModel : ViewModelBase
                 case nameof(PresetManagerService.LatestAppliedTime):
                 case nameof(PresetManagerService.LatestAppliedHash):
                 case nameof(PresetManagerService.LastStatus):
+                case nameof(PresetManagerService.HumanWritesBlocked):
                     RaisePresetFacts();
+                    ApplyCommand.RaiseCanExecuteChanged();
                     break;
                 case nameof(PresetManagerService.Cs2Running):
                     OnPropertyChanged(nameof(Cs2Running));
@@ -69,7 +71,7 @@ public sealed class HeaderViewModel : ViewModelBase
 
     public InstalledConfigLevel InstalledConfigLevel => InstalledConfig.Level;
 
-    public string InstalledConfigName => InstalledConfig.Level switch
+    public string InstalledConfigName => _manager.HumanWritesBlocked ? "Human 已隔离 / 实验占用" : InstalledConfig.Level switch
     {
         InstalledConfigLevel.Verified => Friendly(InstalledConfig.PresetPath),
         InstalledConfigLevel.Drifted => "已漂移",

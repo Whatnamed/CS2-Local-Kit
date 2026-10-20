@@ -153,6 +153,8 @@ Panel 允许：
 
 Panel 不通过“隐藏模式切换”批量启停无关插件来制造产品状态。
 
+Controller 的「人机」实验页通过固定候选白名单和参数列表调用包内版本明确的实验事务，不在 C# 复制安装器。难度由不可变 profile 变体决定，切换需先恢复再安装。瞄准/道具只生成用户待执行的控制台命令。活动实验暂时隔离 Human，且阻止 Human Apply/Restore 与 MetaMod1473 启动修复；恢复只能使用实验事务的精确 install ID。
+
 ## 9. 数据与 catalog
 
 项目自己的 preset schema 与第三方 catalog 分离。

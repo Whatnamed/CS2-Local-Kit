@@ -16,6 +16,7 @@ public sealed class MainViewModel : ViewModelBase
     public CosmeticsViewModel Cosmetics { get; }
     public PresetsViewModel Presets { get; }
     public RuntimeStatusViewModel RuntimeStatus { get; }
+    public BotViewModel Bot { get; }
 
     public MainViewModel(AppServices services, IDialogService dialogService)
     {
@@ -34,6 +35,8 @@ public sealed class MainViewModel : ViewModelBase
             onApply: () => Cosmetics.ExecuteApply());
 
         Navigation = new NavigationViewModel();
+        Bot = new BotViewModel(services.BotExperiment, dialogService, Manager.RefreshRuntimeStatus);
+        Manager.StatusRefreshed += (_, _) => Bot.Observe();
 
         SyncCatalogCommand = new RelayCommand(() => _ = SyncCatalogAsync(), () => !IsSyncingCatalog);
     }

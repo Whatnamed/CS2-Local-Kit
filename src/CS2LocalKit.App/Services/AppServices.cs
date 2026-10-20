@@ -25,6 +25,7 @@ public class AppServices : IDisposable
     public FixtureApplier FixtureApplier { get; }
     public MetaModStartupRepairService MetaModStartupRepairService { get; }
     public string PlayerStatePath { get; }
+    public BotExperimentService BotExperiment { get; }
 
     public string GetSteamId64() => PlayerState.GetSteamId64(PlayerStatePath);
 
@@ -43,6 +44,10 @@ public class AppServices : IDisposable
         Func<bool>? cs2RunningProbe = null)
     {
         Cs2ModRoot = cs2ModRoot ?? CorePaths.Cs2ModRoot;
+        string botRoot;
+        try { botRoot = cs2Root ?? (csgoDir is null ? Cs2Locator.FindCs2Root() : Path.GetFullPath(Path.Combine(csgoDir,"..",".."))); }
+        catch { botRoot = Path.Combine(Cs2ModRoot,"unavailable-cs2"); }
+        BotExperiment = new BotExperimentService(Cs2ModRoot, botRoot, cs2RunningProbe);
 
         var actPresetPath = activePresetPath ?? CorePaths.ActivePresetPath;
         ActivePresetState = new ActivePresetState(actPresetPath);
@@ -90,6 +95,7 @@ public class AppServices : IDisposable
         RuntimeStatusService = new RuntimeStatusService(new RuntimeStatusService.Options
         {
             Cs2Root = cs2Root,
+            BotExperimentBackupRoot = BotExperiment.BackupRoot,
             LockPath = lPath,
             BackupsRoot = bRoot,
             PresetsRoot = pRoot,
@@ -100,6 +106,7 @@ public class AppServices : IDisposable
         FixtureApplier = new FixtureApplier(new FixtureApplierOptions
         {
             CsgoDir = csgoDir,
+            BotExperimentBackupRoot = BotExperiment.BackupRoot,
             BackupsRoot = bRoot,
             Catalog = Catalog,
             Cs2RunningProbe = cs2RunningProbe,
@@ -107,6 +114,7 @@ public class AppServices : IDisposable
 
         MetaModStartupRepairService = new MetaModStartupRepairService(new MetaModStartupRepairOptions
         {
+            BotExperimentBackupRoot = BotExperiment.BackupRoot,
             Cs2Root = cs2Root,
             LockPath = lPath,
             BackupsRoot = Path.Combine(Cs2ModRoot, "backups", "metamod-startup-repair"),
