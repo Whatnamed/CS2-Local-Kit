@@ -46,3 +46,14 @@
   在 fake tree 验证 preview、漂移拒绝、shared host/Human baseline 保存及恢复。
   `Collect-BotBaselineDiagnostics.ps1 -BackupDir <exact backup>` 只读记录当前身份和 restore 可用性；
   旧日志或文件存在不代表本次实机 PASS。
+
+## Independent Bot experiment
+
+- `bot-experiment/Build-BotExperiment.ps1`：使用独立实验描述和已验证输出组装候选，
+  不修改正式 locks，不调用旧 installer。官方 MetaMod 1481 的两项 CS2 x64 文件与 Bot 同属一条实验事务。
+- `bot-experiment/Invoke-BotExperiment.ps1`：默认 preview；显式 `Install/Restore -Apply` 才写入。
+  强制候选 digest、具名游戏 binary/build、accepted preimages 和插件/module inventory。
+  Human 隔离需 `-IsolateHumanCosmetics`；backup/record 关联唯一 install ID，restore 先全量验证再恢复。
+- `bot-experiment/Test-BotExperiment.py`：worktree temp 中的完整往返、故障回滚、中断续做和漂移拒绝测试。
+  `Test-BotExperimentCandidate.py` 另外把实际候选 payload 应用于合成树；不执行任何 DLL。
+  需要现有 Python 3.12+、PowerShell 7；使用方法与后续实机 gate 见该目录 README/MANUAL-TEST。

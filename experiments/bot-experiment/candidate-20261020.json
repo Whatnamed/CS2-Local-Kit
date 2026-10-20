@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "status": "experimental-candidate-only",
+  "botRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+  "submodules": {
+    "addons/BotController": "582e9132c10b9729e3cce8f0670a9273eb7a49bd",
+    "addons/BotHider": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+    "addons/BotVision": "9884848b340434c906ecd1b0f7a0d1d5e8ca140c",
+    "addons/counterstrikesharp/plugins/BotAI": "0c46c6757b03e74eb1b42219a9786101c93b954f",
+    "addons/counterstrikesharp/plugins/BotAimImprover": "d796572b6d258b938a9d8db3c5d4c802a46049f7",
+    "addons/counterstrikesharp/plugins/BotBuy": "11884e0564b8b57bee5f4729a5fca781bd5e6749",
+    "addons/counterstrikesharp/plugins/BotRandomizer": "1c7c3ebad4b984bf8c4c75511b71cc109ab820bd",
+    "addons/counterstrikesharp/plugins/BotState": "9e9f8f1b2fd2f04b216c7398bdcb4736327946b5",
+    "addons/counterstrikesharp/plugins/NadeSystem": "009ce03005af68ba68dae62967bddc8e92ad172c"
+  },
+  "recursiveSubmodules": [
+    {
+      "path": "addons/BotController",
+      "ref": "582e9132c10b9729e3cce8f0670a9273eb7a49bd"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk",
+      "ref": "b973e57b5d2f2c8c258e7bdf6a48d97553d357ab"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/json",
+      "ref": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source",
+      "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/hl2sdk-manifests",
+      "ref": "ebd6e1064d64c89b19afca236656640a5ac6fde8"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl",
+      "ref": "285b4f853c0003023838140113e3ec066bd800c6"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl/third_party/googletest",
+      "ref": "a651a4d44e65b749467fa3dddf93819a22f0cc4a"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook",
+      "ref": "31463169ec9deeb600836596d8460e7facdfee39"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/googletest",
+      "ref": "73a63ea05dc8ca29ec1d2c1d66481dd0de1950f1"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/gtest-parallel",
+      "ref": "cd488bdedc1d2cffb98201a17afc1b298b0b90f1"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/safetyhook",
+      "ref": "ec3f698a1d9936d72c57c639536fbbedab6d7c8a"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/s2sdk",
+      "ref": "b85301c79b6320f3cbf7d519dd334795c227426b"
+    },
+    {
+      "path": "addons/BotController/src/core/cs2_sdk/libraries/spdlog",
+      "ref": "79524ddd08a4ec981b7fea76afd08ee05f83755d"
+    },
+    {
+      "path": "addons/BotHider",
+      "ref": "9a77fbaf1ee106ec45a451f482e64f26127f2f21"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk",
+      "ref": "b973e57b5d2f2c8c258e7bdf6a48d97553d357ab"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/json",
+      "ref": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source",
+      "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/hl2sdk-manifests",
+      "ref": "ebd6e1064d64c89b19afca236656640a5ac6fde8"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl",
+      "ref": "285b4f853c0003023838140113e3ec066bd800c6"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl/third_party/googletest",
+      "ref": "a651a4d44e65b749467fa3dddf93819a22f0cc4a"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook",
+      "ref": "31463169ec9deeb600836596d8460e7facdfee39"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/googletest",
+      "ref": "73a63ea05dc8ca29ec1d2c1d66481dd0de1950f1"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/gtest-parallel",
+      "ref": "cd488bdedc1d2cffb98201a17afc1b298b0b90f1"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/safetyhook",
+      "ref": "ec3f698a1d9936d72c57c639536fbbedab6d7c8a"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/s2sdk",
+      "ref": "b85301c79b6320f3cbf7d519dd334795c227426b"
+    },
+    {
+      "path": "addons/BotHider/src/core/cs2_sdk/libraries/spdlog",
+      "ref": "79524ddd08a4ec981b7fea76afd08ee05f83755d"
+    },
+    {
+      "path": "addons/BotVision",
+      "ref": "9884848b340434c906ecd1b0f7a0d1d5e8ca140c"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk",
+      "ref": "b973e57b5d2f2c8c258e7bdf6a48d97553d357ab"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/json",
+      "ref": "55f93686c01528224f448c19128836e7df245f72"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source",
+      "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/hl2sdk-manifests",
+      "ref": "ebd6e1064d64c89b19afca236656640a5ac6fde8"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl",
+      "ref": "285b4f853c0003023838140113e3ec066bd800c6"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/amtl/third_party/googletest",
+      "ref": "a651a4d44e65b749467fa3dddf93819a22f0cc4a"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook",
+      "ref": "31463169ec9deeb600836596d8460e7facdfee39"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/googletest",
+      "ref": "73a63ea05dc8ca29ec1d2c1d66481dd0de1950f1"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/gtest-parallel",
+      "ref": "cd488bdedc1d2cffb98201a17afc1b298b0b90f1"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/metamod-source/third_party/khook/third_party/safetyhook",
+      "ref": "ec3f698a1d9936d72c57c639536fbbedab6d7c8a"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/s2sdk",
+      "ref": "b85301c79b6320f3cbf7d519dd334795c227426b"
+    },
+    {
+      "path": "addons/BotVision/src/core/cs2_sdk/libraries/spdlog",
+      "ref": "79524ddd08a4ec981b7fea76afd08ee05f83755d"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAI",
+      "ref": "0c46c6757b03e74eb1b42219a9786101c93b954f"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAimImprover",
+      "ref": "d796572b6d258b938a9d8db3c5d4c802a46049f7"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotBuy",
+      "ref": "11884e0564b8b57bee5f4729a5fca781bd5e6749"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotRandomizer",
+      "ref": "1c7c3ebad4b984bf8c4c75511b71cc109ab820bd"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotState",
+      "ref": "9e9f8f1b2fd2f04b216c7398bdcb4736327946b5"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/NadeSystem",
+      "ref": "009ce03005af68ba68dae62967bddc8e92ad172c"
+    }
+  ],
+  "metamod": {
+    "build": 1481,
+    "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43",
+    "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1481-windows.zip",
+    "archiveSha256": "c4f825ed226635ce13d4c822fcf837e036baf83d30233ba54dde3b303d30379c",
+    "selectedFiles": [
+      "addons/metamod/bin/win64/metamod.2.cs2.dll",
+      "addons/metamod/bin/win64/server.dll"
+    ]
+  },
+  "cssVersion": "1.0.376",
+  "excludedModules": [
+    "RoundDamageRecap",
+    "Rush behavior trees",
+    "Panel",
+    "Human cosmetics"
+  ],
+  "evidence": "docs/archive/2026-10-20-bot-offline"
+}
