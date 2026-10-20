@@ -1,0 +1,359 @@
+{
+  "sdk": "10.0.401",
+  "source": "existing local NuGet cache only; no installed SDK/dependencies or network restore",
+  "builds": [
+    {
+      "component": "BotAI",
+      "project": "addons/counterstrikesharp/plugins/BotAI/BotAI.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotAI\\BotAI.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotAI\\BotAI.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botai-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botai-managed-build.log"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\counterstrikesharp\\plugins\\BotAI\\bin\\Release\\net10.0\\BotAI.dll",
+          "sha256": "8e5c41245e15a8ab5c48da76f2cef6328126a8addc9910a5622e7b6b22f7a640"
+        }
+      ],
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 0
+    },
+    {
+      "component": "BotAimImprover",
+      "project": "addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotAimImprover\\BotAimImprover.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotAimImprover\\BotAimImprover.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botaimimprover-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botaimimprover-managed-build.log"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\counterstrikesharp\\plugins\\BotAimImprover\\bin\\Release\\net10.0\\BotAimImprover.dll",
+          "sha256": "4609de4f69aa1dbd2def1431a7e3bdf205aadf61d76c1f1feb3fdc0ff43e419e"
+        }
+      ],
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 0
+    },
+    {
+      "component": "BotBuy",
+      "project": "addons/counterstrikesharp/plugins/BotBuy/BotBuy.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotBuy\\BotBuy.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotBuy\\BotBuy.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botbuy-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botbuy-managed-build.log"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\counterstrikesharp\\plugins\\BotBuy\\bin\\Release\\net10.0\\BotBuy.dll",
+          "sha256": "7553b657227161391fc1c297c2693135ab19a864dcca2f0e732060a0077441bb"
+        }
+      ],
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 0
+    },
+    {
+      "component": "BotRandomizer",
+      "project": "addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotRandomizer\\BotRandomizer.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotRandomizer\\BotRandomizer.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botrandomizer-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botrandomizer-managed-build.log"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\counterstrikesharp\\plugins\\BotRandomizer\\bin\\Release\\net10.0\\BotRandomizer.dll",
+          "sha256": "ae931fd66d76ed73534db3b54b267eca1109afd696d3b7b71995db5e5d737954"
+        }
+      ],
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 0
+    },
+    {
+      "component": "BotState",
+      "project": "addons/counterstrikesharp/plugins/BotState/BotState.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotState\\BotState.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\BotState\\BotState.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botstate-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "log": "botstate-managed-build-paired-api.log",
+          "warnings": [
+            "CS0414 BotState._isFreezeTime assigned but never used"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\counterstrikesharp\\plugins\\BotState\\bin\\Release\\net10.0\\BotState.dll",
+          "sha256": "b5127ecad425132b18cb963f52bf65434e8488237dc92dbf7d57b8db159ed7a2"
+        }
+      ],
+      "initialAttempt": {
+        "exitCode": 1,
+        "taskLocalLog": "temp/build-logs/botstate-managed-build.log"
+      },
+      "prerequisite": "Stage the BotControllerApi.dll built from exact umbrella BotController gitlink into the documented libs/ HintPath; no csproj or source changes.",
+      "pairedApiSha256": "75644fad18332576e1a041faa5ed1c72d684749d6a7720183fd2193df5fdd7d3",
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 1
+    },
+    {
+      "component": "NadeSystem",
+      "project": "addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\NadeSystem\\NadeSystem.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\counterstrikesharp\\plugins\\NadeSystem\\NadeSystem.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/nadesystem-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/nadesystem-managed-build.log"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\counterstrikesharp\\plugins\\NadeSystem\\bin\\Release\\net10.0\\NadeSystem.dll",
+          "sha256": "6969cfc7df31c4a13d1fcb217fe4a48111ac37d7e81fe9b1c73740c438bdfc33"
+        }
+      ],
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 0
+    },
+    {
+      "component": "BotHider",
+      "project": "addons/BotHider/csharp/BotHiderImpl/BotHiderImpl.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\BotHider\\csharp\\BotHiderImpl\\BotHiderImpl.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\BotHider\\csharp\\BotHiderImpl\\BotHiderImpl.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/bothider-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/bothider-managed-build.log"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\BotHider\\csharp\\BotHiderImpl\\bin\\Release\\net10.0\\BotHiderImpl.dll",
+          "sha256": "5d566318799e661ba397c98b81e0e7be9f2aaa0f8d85775b27f30c2ba4f70924"
+        }
+      ],
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 0
+    },
+    {
+      "component": "BotController",
+      "project": "addons/BotController/csharp/BotControllerImpl/BotControllerImpl.csproj",
+      "commands": [
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "restore",
+          "temp\\upstream\\addons\\BotController\\csharp\\BotControllerImpl\\BotControllerImpl.csproj",
+          "--source",
+          "C:\\Users\\hasee\\.nuget\\packages",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ],
+        [
+          "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+          "build",
+          "temp\\upstream\\addons\\BotController\\csharp\\BotControllerImpl\\BotControllerImpl.csproj",
+          "-c",
+          "Release",
+          "--no-restore",
+          "-p:NuGetAudit=false",
+          "-p:RestoreFallbackFolders="
+        ]
+      ],
+      "steps": [
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botcontroller-managed-restore.log"
+        },
+        {
+          "exitCode": 0,
+          "taskLocalLog": "temp/build-logs/botcontroller-managed-build.log"
+        }
+      ],
+      "outputs": [
+        {
+          "path": "addons\\BotController\\csharp\\BotControllerImpl\\bin\\Release\\BotControllerImpl.dll",
+          "sha256": "c9d6ff648e9cd7f563a05ca28b36f63cbdc380e3f45ab035ca26f9088860e908"
+        }
+      ],
+      "finalBuildErrors": 0,
+      "finalBuildWarnings": 0
+    }
+  ]
+}

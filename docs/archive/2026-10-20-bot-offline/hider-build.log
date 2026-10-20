@@ -1,0 +1,69 @@
+适用于 .NET Framework MSBuild 版本 17.14.60+43b635718
+
+  Checking File Globs
+  1>Checking Build System
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-bot-offline-20261020/temp/upstream/addons/BotHider/src/core/cs2_sdk/libraries/spdlog/CMakeLists.txt
+  spdlog.cpp
+  stdout_sinks.cpp
+  color_sinks.cpp
+  file_sinks.cpp
+  async.cpp
+  cfg.cpp
+  bundled_fmtlib_format.cpp
+  正在生成代码...
+  spdlog.vcxproj -> E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\spdlog\Release\spdlog.lib
+  Generating pinned s2sdk protobuf messages
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: network_connection.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: networkbasetypes.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: valveextensions.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+networkbasetypes.proto(3,1): warning G4EC7C31A: Import network_connection.proto is unused. [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: source2_steam_stats.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: netmessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: usercmd.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: cs_usercmd.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.vcxproj]
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-bot-offline-20261020/temp/upstream/addons/BotHider/src/core/cs2_sdk/CMakeLists.txt
+  schema.cpp
+  memory_module.cpp
+  module_view.cpp
+  gameconfig.cpp
+  log.cpp
+  memory.cpp
+  rtti.cpp
+  platform.cpp
+  interfaces.cpp
+  memoverride.cpp
+  keyvalues3.cpp
+  convar.cpp
+  network_connection.pb.cc
+  networkbasetypes.pb.cc
+  source2_steam_stats.pb.cc
+  netmessages.pb.cc
+  valveextensions.pb.cc
+  usercmd.pb.cc
+  cs_usercmd.pb.cc
+  正在生成代码...
+  cs2_sdk.vcxproj -> E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\src\core\cs2_sdk\cs2_sdk.dir\Release\cs2_sdk.lib
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-bot-offline-20261020/temp/upstream/addons/BotHider/CMakeLists.txt
+  plugin.cpp
+  config.cpp
+  interfaces.cpp
+  gamedata.cpp
+  avatar_override.cpp
+  bot_info.cpp
+  clan_tag.cpp
+  personas.cpp
+  steamid_provider.cpp
+  ping_display.cpp
+  fake_client_manager.cpp
+  client_hooks.cpp
+  command_hooks.cpp
+  identity_hooks.cpp
+  identity_runtime.cpp
+  identity_state.cpp
+  slot_publisher.cpp
+  entity_access.cpp
+  offsets.cpp
+  正在生成代码...
+    正在创建库 E:/Projects/CS2-Local-Kit/wt-bot-offline-20261020/temp/native-build/BotHider/Release/BotHider.lib 和对象 E:/Projects/CS2-Local-Kit/wt-bot-offline-20261020/temp/native-build/BotHider/Release/BotHider.exp
+  BotHider.vcxproj -> E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\native-build\BotHider\package\addons\BotHider\bin\win64\BotHider.dll
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-bot-offline-20261020/temp/upstream/addons/BotHider/CMakeLists.txt

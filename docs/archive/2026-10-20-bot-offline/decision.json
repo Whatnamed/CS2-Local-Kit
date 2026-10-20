@@ -1,0 +1,37 @@
+{
+  "result": "can-prepare-isolated-reversible-experimental-candidate",
+  "build": {
+    "patchVersion": "1.41.9.1",
+    "clientVersion": "2000933",
+    "buildId": "25966348"
+  },
+  "upstreamRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+  "candidateSignatureCount": 81,
+  "candidateUnique": 81,
+  "cssInstalledSignatureCount": 28,
+  "patchDefinitions": 42,
+  "allPatchBytesPass": true,
+  "previousBotAiAmbiguity": "resolved upstream; one match at RVA 0x32856d; original bytes 76 33",
+  "aimOffsets": {
+    "CCSPlayerPawn.m_pBot": "0x14F8",
+    "CCSBot.m_targetSpot": "0x5994",
+    "CCSBot.m_enemy": "0x5A00",
+    "CCSBot.m_isEnemyVisible": "0x5A04"
+  },
+  "nativeSchemaBindings": 40,
+  "runtimeUnknowns": [
+    "Live schema initialization and returned addresses",
+    "45 configured native offsets/vtable entries and non-schema private structures, including BotAI m_gameState=0x5120 and CSGameState members",
+    "KHook relocation, IPC/native-managed runtime handshakes, optional trace/smoke/HE/shotgun behavior",
+    "CSS 1.0.376 behavior with isolated MetaMod 1481+",
+    "FPS/frame pacing/TAB/score/halftime/crash and restoration in a real session"
+  ],
+  "installationBlockers": [
+    "Accepted installed MetaMod 1473 does not satisfy 1481+; never load this candidate there.",
+    "Existing Bot package/restore scripts exclude shared framework ownership and the builder requires the formal lock; they cannot certify rollback of a MetaMod experiment. A separate experimental manifest/root and verified framework restoration boundary are required before any install."
+  ],
+  "upstreamFixRequiredByThisRound": false,
+  "packageCreated": false,
+  "installed": false,
+  "performanceGate": "still not passed; no real-game execution"
+}

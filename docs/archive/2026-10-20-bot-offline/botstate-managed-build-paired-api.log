@@ -1,0 +1,10 @@
+E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\upstream\addons\counterstrikesharp\plugins\BotState\BotState.Lifecycle.cs(12,18): warning CS0414: 字段“BotState._isFreezeTime”已被赋值，但从未使用过它的值 [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\upstream\addons\counterstrikesharp\plugins\BotState\BotState.csproj]
+  BotState -> E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\upstream\addons\counterstrikesharp\plugins\BotState\bin\Release\net10.0\BotState.dll
+
+已成功生成。
+
+E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\upstream\addons\counterstrikesharp\plugins\BotState\BotState.Lifecycle.cs(12,18): warning CS0414: 字段“BotState._isFreezeTime”已被赋值，但从未使用过它的值 [E:\Projects\CS2-Local-Kit\wt-bot-offline-20261020\temp\upstream\addons\counterstrikesharp\plugins\BotState\BotState.csproj]
+    1 个警告
+    0 个错误
+
+已用时间 00:00:00.94

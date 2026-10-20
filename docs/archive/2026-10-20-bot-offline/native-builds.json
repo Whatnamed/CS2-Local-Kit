@@ -1,0 +1,119 @@
+{
+  "toolchain": {
+    "msvc": "19.44.35229.0 / tools 14.44.35207",
+    "windowsSdk": "10.0.26100.0",
+    "generator": "Visual Studio 17 2022",
+    "protoc": "3.21.8 from exact s2sdk submodule",
+    "dotnet": "10.0.401 pre-existing SDK",
+    "cmake": "3.31.6-msvc6"
+  },
+  "offlineBuild": true,
+  "sourceAcquisition": "Source gitlinks fetched before builds; CMake/MSBuild did not fetch or install packages. NuGet restore used existing local cache only.",
+  "native": [
+    {
+      "component": "BotController",
+      "sourceRef": "582e9132c10b9729e3cce8f0670a9273eb7a49bd",
+      "configureCommand": [
+        "E:/Dev/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe",
+        "-S",
+        "temp/upstream/addons/BotController",
+        "-B",
+        "temp/native-build/BotController",
+        "-G",
+        "Visual Studio 17 2022",
+        "-A",
+        "x64",
+        "-DCMAKE_GENERATOR_INSTANCE=E:/Dev/BuildTools"
+      ],
+      "buildCommand": [
+        "E:/Dev/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe",
+        "--build",
+        "temp/native-build/BotController",
+        "--config",
+        "Release",
+        "--parallel",
+        "2"
+      ],
+      "configureExitCode": 0,
+      "buildExitCode": 0,
+      "configureLog": "controller-configure.log",
+      "buildLog": "controller-build.log",
+      "output": {
+        "path": "temp\\native-build\\BotController\\package\\addons\\BotController\\bin\\win64\\BotController.dll",
+        "sha256": "a86185de9b1acd4af8001631bb47d2a03dedb68321838458833775204a7977be"
+      },
+      "warnings": "Pinned protobuf inputs omit syntax and contain an unused import; generator defaults to proto2. No source patch applied."
+    },
+    {
+      "component": "BotHider",
+      "sourceRef": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+      "configureCommand": [
+        "E:/Dev/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe",
+        "-S",
+        "temp/upstream/addons/BotHider",
+        "-B",
+        "temp/native-build/BotHider",
+        "-G",
+        "Visual Studio 17 2022",
+        "-A",
+        "x64",
+        "-DCMAKE_GENERATOR_INSTANCE=E:/Dev/BuildTools"
+      ],
+      "buildCommand": [
+        "E:/Dev/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe",
+        "--build",
+        "temp/native-build/BotHider",
+        "--config",
+        "Release",
+        "--parallel",
+        "2"
+      ],
+      "configureExitCode": 0,
+      "buildExitCode": 0,
+      "configureLog": "hider-configure.log",
+      "buildLog": "hider-build.log",
+      "output": {
+        "path": "temp\\native-build\\BotHider\\package\\addons\\BotHider\\bin\\win64\\BotHider.dll",
+        "sha256": "505a93b30b261b7504743f03218852d322a8925e10c17818d0ce4406b90f594d"
+      },
+      "warnings": "Pinned protobuf inputs omit syntax and contain an unused import; generator defaults to proto2. No source patch applied."
+    },
+    {
+      "component": "BotVision",
+      "sourceRef": "9884848b340434c906ecd1b0f7a0d1d5e8ca140c",
+      "configureCommand": [
+        "E:/Dev/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe",
+        "-S",
+        "temp/upstream/addons/BotVision",
+        "-B",
+        "temp/native-build/BotVision",
+        "-G",
+        "Visual Studio 17 2022",
+        "-A",
+        "x64",
+        "-DCMAKE_GENERATOR_INSTANCE=E:/Dev/BuildTools"
+      ],
+      "buildCommand": [
+        "E:/Dev/BuildTools/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe",
+        "--build",
+        "temp/native-build/BotVision",
+        "--config",
+        "Release",
+        "--parallel",
+        "2"
+      ],
+      "configureExitCode": 0,
+      "buildExitCode": 0,
+      "configureLog": "vision-configure.log",
+      "buildLog": "vision-build.log",
+      "output": {
+        "path": "temp\\native-build\\BotVision\\package\\addons\\BotVision\\bin\\win64\\BotVision.dll",
+        "sha256": "12f46ddbab79a715e99ecc2708b4d87d190f1fd2b9821be6a1c786fdad879816"
+      },
+      "warnings": "Pinned protobuf inputs omit syntax and contain an unused import; generator defaults to proto2. No source patch applied."
+    }
+  ],
+  "installed": false,
+  "fullExperimentPackageCreated": false,
+  "formalPinChanged": false
+}
