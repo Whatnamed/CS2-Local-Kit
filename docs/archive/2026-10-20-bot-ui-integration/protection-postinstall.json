@@ -1,0 +1,17 @@
+{
+  "verifiedAtUtc": "2026-10-20T03:24:04.598506+00:00",
+  "status": "PASS",
+  "beforeProtectedFileCount": 6711,
+  "expectedPostInstallFileCount": 6797,
+  "observedPostInstallFileCount": 6797,
+  "unexpectedChanges": [],
+  "excludedNewOwnedData": [
+    "app-data/bot-experiment/preferences.json",
+    "E:\\CS2MOD\\backups\\bot-experiment\\45ca2c5899234180aad9b8927a338862"
+  ],
+  "allRecordedInstalledImagesVerified": true,
+  "userPresetsAndHumanFixtureUnchanged": true,
+  "formalLocksUnchanged": true,
+  "preexistingBackupsUnchanged": true,
+  "gameStarted": false
+}

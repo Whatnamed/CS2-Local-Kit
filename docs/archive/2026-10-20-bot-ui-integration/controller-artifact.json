@@ -1,0 +1,24 @@
+{
+  "directory": "E:\\CS2MOD\\releases\\controller\\controller-bot-ui-20261020-46185b1",
+  "executable": "E:\\CS2MOD\\releases\\controller\\controller-bot-ui-20261020-46185b1\\payload\\CS2LocalKit.App.exe",
+  "sourceHead": "46185b14300078db961a84a4853949f35dd950aa",
+  "releaseManifestSha256": "f55f49f84c36b389239a88003a9379af155e45114b9eadcc56b64ebd01ea41e7",
+  "selfContained": true,
+  "runtimeIdentifier": "win-x64",
+  "payloadFiles": 404,
+  "executableSha256": "6c08db25a043d0ff852d4cd7ee1c95ca3aedf04d950598a8451b61e65e0d2317",
+  "uiAutomationSmoke": {
+    "nativeWpf": true,
+    "navigation": true,
+    "difficultySelections": [
+      "Low",
+      "High",
+      "Medium"
+    ],
+    "aimNadesClipboardCombinations": 15,
+    "realInstallationPreview": "PASS",
+    "humanApplyFooterHiddenOnBotPage": true,
+    "gameStarted": false
+  },
+  "computerUseRuntime": "unavailable; Windows UI Automation and DPI-aware app-only input fallback used"
+}

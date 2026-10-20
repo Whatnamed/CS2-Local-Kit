@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "installId": "45ca2c5899234180aad9b8927a338862",
+  "difficultyImmutable": true,
+  "humanApplyBlocked": true,
+  "acceptedRepairBlocked": true,
+  "guiExactRecoveryPreview": "PASS",
+  "restoreApplied": false,
+  "cs2Started": false
+}

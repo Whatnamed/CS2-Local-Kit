@@ -1,0 +1,17 @@
+[
+  "bot_aim mixed; bot_nades off",
+  "bot_aim mixed; bot_nades less",
+  "bot_aim mixed; bot_nades normal",
+  "bot_aim mixed; bot_nades more",
+  "bot_aim mixed; bot_nades max",
+  "bot_aim head; bot_nades off",
+  "bot_aim head; bot_nades less",
+  "bot_aim head; bot_nades normal",
+  "bot_aim head; bot_nades more",
+  "bot_aim head; bot_nades max",
+  "bot_aim body; bot_nades off",
+  "bot_aim body; bot_nades less",
+  "bot_aim body; bot_nades normal",
+  "bot_aim body; bot_nades more",
+  "bot_aim body; bot_nades max"
+]

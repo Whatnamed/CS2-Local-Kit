@@ -1,0 +1,32 @@
+[
+  {
+    "releaseDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-37ce3ef2465c",
+    "zip": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-37ce3ef2465c.zip",
+    "zipSha256": "604b1b74c174ed34d284e8202f3cba2859946e45546f0b16b567770a9ec8a860",
+    "manifestSha256": "4de43c63d71492c9a3954193f378980145ce80da5c2efd8dce84b8352dc5ee71",
+    "payloadFileCount": 105,
+    "installed": false,
+    "realGameAccepted": false,
+    "difficulty": "Low"
+  },
+  {
+    "releaseDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-b45f4f543985",
+    "zip": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-b45f4f543985.zip",
+    "zipSha256": "cbf7e2d030fad3ad7cbff41359a294b4c0eaebef37bf3415e13cc7a0e52730c8",
+    "manifestSha256": "e6f028042b7fc778d62df9a17211ea9701b6e8bab034da4b3170e8331b3483b4",
+    "payloadFileCount": 105,
+    "installed": false,
+    "realGameAccepted": false,
+    "difficulty": "Medium"
+  },
+  {
+    "releaseDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-60697f7d93f2",
+    "zip": "E:\\CS2MOD\\releases\\bot-experiment\\bot-experiment-e18c029-60697f7d93f2.zip",
+    "zipSha256": "b79110330376a22f30578bfe13eb81920df7dab0297a22a6edeec0eb0c9b8e1e",
+    "manifestSha256": "6b879f841088de02ebf10d7710a10f1a4f8a1cd681b2ba116db61e788936cc52",
+    "payloadFileCount": 105,
+    "installed": false,
+    "realGameAccepted": false,
+    "difficulty": "High"
+  }
+]
