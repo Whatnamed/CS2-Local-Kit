@@ -91,6 +91,7 @@ Computer Use Sky runtime 不可用，改用限定本任务 Controller 窗口的 
 可执行文件：`payload\CS2LocalKit.App.exe`，self-contained `win-x64`；源码 HEAD `65798bf262c7e6dd490b0bc2cf5dcf1816ee78af`。
 Release manifest SHA256：`dc97d3c0e4de70a699ca0f49df89d1731d3ce39919aaba657e83b7710d76c6ef`。
 完整 [release manifest](2026-10-22-bot-toggle-human/controller-release-manifest.json)、[publish log](2026-10-22-bot-toggle-human/controller-publish.log)、[验证摘要](2026-10-22-bot-toggle-human/validation-summary.json)与[证据校验表](2026-10-22-bot-toggle-human/evidence-sha256.json)一并归档。
+归档 JSON/log 固定使用 LF，避免 checkout 换行转换使证据摘要失效；归档副本按证据表校验。上述 release manifest SHA256 指发布目录内的原始文件，归档副本仅规范换行，payload 身份表内容不变。
 
 真实游戏的 addons/cfg、五项 binary、gameinfo、steam.inf/Steam manifest，以及 `E:\CS2MOD` 的全部 presets/app-data/backups 和仓库 runtime locks 前后相同。
 root-level 私人 preset 不在任何写入路径，未打开其内容；发布物不包含私人预设或游戏备份。
