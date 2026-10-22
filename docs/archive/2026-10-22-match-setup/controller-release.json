@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "directory": "E:\\CS2MOD\\releases\\controller\\controller-match-setup-20261022-6024230",
+  "executable": "E:\\CS2MOD\\releases\\controller\\controller-match-setup-20261022-6024230\\payload\\CS2LocalKit.App.exe",
+  "gitHead": "6024230ed5cddf78f4ea1b6cd89c7e5de3d34374",
+  "payloadFiles": 404,
+  "exeSha256": "b51ba1e5151848730a3e8e088fc4b2145e9193aca96b04fe305ec89524fc4c09",
+  "manifestSha256": "ff5844fd9bdb5999049fb3497482e5bb76accb04e6134c7af455842833110bf6",
+  "completeFileSetAndHashesVerified": true,
+  "privateJsonBoundary": "PASS",
+  "selfContained": true,
+  "actualInstallOrRestore": false
+}

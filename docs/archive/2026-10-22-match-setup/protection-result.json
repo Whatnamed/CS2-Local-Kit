@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "protectedRoots": 16,
+  "protectedEntries": 2551,
+  "snapshotSha256": "817eef374027d945f2b92e38ddb65b20e06732e11804c319560478eb5813c51f",
+  "unexpectedChanges": [],
+  "originalCandidateBundlesVerified": 6,
+  "originalActiveInstallId": "b613a8c709c7440998346cb802bb790f",
+  "actualInstallOrRestore": false,
+  "cs2Launched": false
+}

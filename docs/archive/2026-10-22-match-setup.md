@@ -56,3 +56,11 @@ Controller 保留安装状态与精确恢复入口，新增双侧战队/历史�
 ## 固定完整候选与白名单
 
 完整三档均为 108-file payload，包含独立 adapter、Core/embedded catalog 和两个最小 patched managed 组件。对应适配层源码 HEAD 为 `c556b665b19f2d965b7e5c67c7c6a0222ed00f3b`；source ZIP 与其 SHA、各源文件 before/after hash 随 manifest 固定。精确路径/digest 见 `2026-10-22-match-setup/fixed-candidates.json`。三个候选通过各自公开 PowerShell 工具的完整真实 payload 合成 Install/Diagnostics/Restore roundtrip，恢复后路径/类型/hash 完全一致，两个 preview 零写入，未指向真实游戏目录。原六包完整保留，Controller 新增三项白名单并优先选开局配置候选，旧事务仍按原 digest 恢复；相应 .NET 验证总数 **252/252 PASS**。
+
+## 最终本地交付与保护结果
+
+Self-contained Windows Controller：`E:\CS2MOD\releases\controller\controller-match-setup-20261022-6024230\payload\CS2LocalKit.App.exe`，代码 HEAD `6024230ed5cddf78f4ea1b6cd89c7e5de3d34374`。404 个 payload 文件与 release manifest 的完整集合/hash 独立复核通过，JSON 私人数据边界通过；manifest SHA256 `ff5844fd9bdb5999049fb3497482e5bb76accb04e6134c7af455842833110bf6`。实际发布 exe 在隔离数据根启动，原生点击导航后新配置页可见；未点击游戏/安装/恢复动作，窗口已关闭。源码、候选和 Controller 的 HEAD 不同是分阶段产物；最终只增加证据文档，无二进制行为改动。
+
+最终 **252 .NET / 40 transaction / 3 × 108-file roundtrip PASS**。40 项事务测试耗时 275.359 秒，覆盖拒绝/漂移/中断/回滚、三档与 preserve-Human。原活动包公开入口的 Diagnostics 与精确 Restore preview 再次通过；原六个 bundle 完整验证，16 处保护根的 2,551 项文件/目录与开始快照完全相同，`unexpectedChanges=[]`。活动 ID 仍为 `b613a8c709c7440998346cb802bb790f`，全部原备份、Human 与 preset 保留。完整结构化摘要见 [delivery.json](2026-10-22-match-setup/delivery.json)，包含候选身份、Controller manifest、自动化和 pending gates；原始私人目录清单及完整活动 record 没有提交。
+
+主源码 worktree 仍为 `codex/bot-e18c029-human-20261022` / `88ce715bca4f2c1cfaa9ffddb576b03f0df22233`，tracked status clean；远端 main 仍为 `bf03b042d5f3be90201894cc5d50921521e19b16`。执行 worktree 为 `E:\Projects\CS2-Local-Kit\wt-match-setup-20261022` / `codex/match-setup-20261022`。各实现阶段已分开 commit/push，未 merge；此记录提交后的最终 HEAD 由 Git branch 确定。

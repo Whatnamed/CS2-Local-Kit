@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "selfContainedExeStarted": true,
+  "pid": 32504,
+  "matchPage": true,
+  "draftState": "当前编辑尚未排队",
+  "queueEnabled": true,
+  "navigation": "native mouse click after same-process hit test",
+  "dataRoot": "isolated temp/published-controller-smoke",
+  "gameActionsInvoked": false
+}
