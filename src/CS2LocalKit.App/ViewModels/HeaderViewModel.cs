@@ -100,7 +100,7 @@ public sealed class HeaderViewModel : ViewModelBase
 
     public bool Cs2Running => _manager.Cs2Running;
     public string Cs2StatusText => _manager.Cs2Running ? "CS2 正在运行" : "CS2 已关闭";
-    public string ApplyHint => _manager.HumanWritesBlocked ? _manager.LastStatus!.BotExperiment.Reason : "CS2 正在运行时无法应用，请先关闭游戏。";
+    public string ApplyHint => _manager.HumanWritesBlocked ? _manager.LastStatus!.BotExperiment.Reason : _manager.Cs2Running ? "CS2 正在运行，请先关闭游戏。" : "确认目标后写入游戏运行文件；写入前创建备份，实际呈现仍需游戏内验收。";
     public RuntimeHealthLevel HealthLevel => _manager.RuntimeHealth;
     public string HealthSummary => _manager.RuntimeSummary;
 

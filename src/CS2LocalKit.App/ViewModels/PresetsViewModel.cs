@@ -16,6 +16,10 @@ public sealed class PresetsViewModel : ViewModelBase
     private bool _isStatusVisible;
     private string _newPresetNameInput = "";
 
+    private string _presetSearchText = "";
+    public string PresetSearchText { get => _presetSearchText; set { if(SetProperty(ref _presetSearchText,value)) { OnPropertyChanged(nameof(VisiblePresets));OnPropertyChanged(nameof(EmptyLibrary)); } } }
+    public IEnumerable<PresetItemViewModel> VisiblePresets => Presets.Where(p=>p.FriendlyName.Contains(PresetSearchText,StringComparison.OrdinalIgnoreCase));
+    public bool EmptyLibrary => !VisiblePresets.Any();
     public PresetManagerService Manager => _manager;
 
     public ObservableCollection<PresetItemViewModel> Presets { get; } = new();
@@ -72,6 +76,7 @@ public sealed class PresetsViewModel : ViewModelBase
     public PresetsViewModel(PresetManagerService manager)
     {
         _manager = manager;
+        Presets.CollectionChanged += (_, _) => { OnPropertyChanged(nameof(VisiblePresets));OnPropertyChanged(nameof(EmptyLibrary)); };
 
         LoadPresetCommand = new RelayCommand(ExecuteLoadPreset, () => SelectedPreset != null);
         SetActiveCommand = new RelayCommand(ExecuteSetActive, () => SelectedPreset != null && !SelectedPreset.IsActive);

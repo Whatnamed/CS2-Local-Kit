@@ -5,37 +5,20 @@ namespace CS2LocalKit.App.Common;
 
 public class WpfDialogService : IDialogService
 {
+    private static Views.DecisionWindow Dialog(string title,string message,bool unsaved=false,bool informational=false)
+    {
+        var dialog = new Views.DecisionWindow(title,message,unsaved,informational);
+        if(Application.Current?.MainWindow is { IsVisible:true } owner) dialog.Owner=owner;
+        return dialog;
+    }
     public UnsavedChangesResolution ConfirmUnsavedChanges(string presetName)
     {
-        var result = MessageBox.Show(
-            $"预设 \"{presetName}\" 已修改但尚未保存。\n\n是否在切换前保存当前修改？\n- 点击“是”：保存并切换\n- 点击“否”：放弃修改并切换\n- 点击“取消”：留在当前预设",
-            "未保存的更改",
-            MessageBoxButton.YesNoCancel,
-            MessageBoxImage.Warning);
-
-        return result switch
-        {
-            MessageBoxResult.Yes => UnsavedChangesResolution.SaveAndSwitch,
-            MessageBoxResult.No => UnsavedChangesResolution.DiscardAndSwitch,
-            _ => UnsavedChangesResolution.Cancel,
-        };
+        var dialog=Dialog("未保存的更改",$"预设「{presetName}」有未保存的修改。\n\n保存并切换：保留修改后载入目标预设。\n放弃并切换：放弃当前草稿，载入目标预设。\n取消：继续编辑当前草稿。",unsaved:true);
+        dialog.ShowDialog();return dialog.Resolution;
     }
-
-    public bool Confirm(string title, string message)
-    {
-        var result = MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
-        return result == MessageBoxResult.Yes;
-    }
-
-    public void ShowError(string title, string message)
-    {
-        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
-    }
-
-    public void ShowInfo(string title, string message)
-    {
-        MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
-    }
+    public bool Confirm(string title,string message) => Dialog(title,message).ShowDialog()==true;
+    public void ShowError(string title,string message) => Dialog(title,message,informational:true).ShowDialog();
+    public void ShowInfo(string title,string message) => Dialog(title,message,informational:true).ShowDialog();
 
     public string? ShowSaveFileDialog(string defaultName, string filter)
     {

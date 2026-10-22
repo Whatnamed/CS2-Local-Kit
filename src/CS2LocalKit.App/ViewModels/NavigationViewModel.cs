@@ -32,19 +32,19 @@ public sealed class NavigationViewModel : ViewModelBase
         }
     }
 
-    public bool IsMatchSetupSelected => CurrentPage == PageType.MatchSetup;
-    public bool IsCosmeticsSelected => CurrentPage == PageType.Cosmetics;
-    public bool IsBotSelected => CurrentPage == PageType.Bot;
+    public bool IsMatchSetupSelected { get => CurrentPage == PageType.MatchSetup; set { if(value) CurrentPage=PageType.MatchSetup; } }
+    public bool IsCosmeticsSelected { get => CurrentPage == PageType.Cosmetics; set { if(value) CurrentPage=PageType.Cosmetics; } }
+    public bool IsBotSelected { get => CurrentPage == PageType.Bot; set { if(value) CurrentPage=PageType.Bot; } }
     public bool IsHumanPage => IsCosmeticsSelected || IsPresetsSelected;
-    public bool IsPresetsSelected => CurrentPage == PageType.Presets;
-    public bool IsRuntimeStatusSelected => CurrentPage == PageType.RuntimeStatus;
+    public bool IsPresetsSelected { get => CurrentPage == PageType.Presets; set { if(value) CurrentPage=PageType.Presets; } }
+    public bool IsRuntimeStatusSelected { get => CurrentPage == PageType.RuntimeStatus; set { if(value) CurrentPage=PageType.RuntimeStatus; } }
 
     public string PageTitle => CurrentPage switch
     {
         PageType.MatchSetup => "准备下一局",
         PageType.Cosmetics => "真人饰品",
         PageType.Bot => "Bot 安装",
-        PageType.Presets => "预设",
+        PageType.Presets => "饰品预设",
         PageType.RuntimeStatus => "环境与恢复",
         _ => "",
     };

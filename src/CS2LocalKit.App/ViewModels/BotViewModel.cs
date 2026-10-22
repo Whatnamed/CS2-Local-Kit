@@ -56,6 +56,12 @@ public sealed class BotViewModel : ViewModelBase
     public string StateText => _running ? "游戏运行不可切换" : _busy ? "检查 / 切换中…" : _state;
     public string CurrentMode => _active ? _identity.RecoveryRequired ? "需恢复 · 事务未完整结束" : _identity.PreservesHuman ? "增强人机 + 我的饰品（文件安装态）" : "旧隔离实验 · Human 暂时隔离" : _readiness.HumanFilesValid ? "普通人机 + 我的饰品" : "环境身份尚未确认";
     public string AvailabilityText => _readiness.Reason;
+    public string AvailabilitySummary => _readiness.CanEnable ? "候选与环境条件已通过预检；仍须检查本次切换预览。"
+        : _running ? "CS2 正在运行，文件操作已阻断。"
+        : !_readiness.HumanFilesValid ? "Human / framework 身份未通过检查。请查看「环境与恢复」，并展开阻断详情。"
+        : "候选或安装条件未通过检查。展开阻断详情核对版本与文件身份。";
+    public string ActionSummary => !_readiness.CanEnable && !_active && !_running && TargetMode == LocalPlayMode.EnhancedHuman
+        ? "预览通过后才允许切换；当前不会写入游戏文件。" : ActionHint;
     public string HumanStatusText => _active ? _identity.PreservesHuman ? "Human 文件与预设保留；先恢复普通模式再写入饰品配置。" : "旧实验隔离了 Human，请通过原事务恢复。" : _readiness.HumanFilesValid ? "Human 文件身份匹配；当前 build 的实机呈现尚未重新验收。" : "Human 文件身份未通过检查，请查看运行状态。";
     public string ProcessText => _running ? "CS2 正在运行" : "CS2 已关闭";
     public string CandidateIdentity
@@ -180,7 +186,7 @@ public sealed class BotViewModel : ViewModelBase
     }
     private void Notify()
     {
-        foreach (var name in new[] { nameof(TargetMode),nameof(CurrentMode),nameof(CanSelectMode),nameof(AvailabilityText),nameof(HumanStatusText),nameof(SwitchButtonText),nameof(Difficulty),nameof(Aim),nameof(Nades),nameof(IsBusy),nameof(CanSelectDifficulty),nameof(CanEditCommands),nameof(StateText),nameof(ProcessText),nameof(TargetBuild),nameof(CandidateIdentity),nameof(InstalledDifficulty),nameof(InstallId),nameof(BackupPath),nameof(Feedback),nameof(PlanText),nameof(ConsoleCommands),nameof(DifficultyHint),nameof(ActionHint) }) OnPropertyChanged(name);
+        foreach (var name in new[] { nameof(TargetMode),nameof(CurrentMode),nameof(CanSelectMode),nameof(AvailabilityText),nameof(AvailabilitySummary),nameof(ActionSummary),nameof(HumanStatusText),nameof(SwitchButtonText),nameof(Difficulty),nameof(Aim),nameof(Nades),nameof(IsBusy),nameof(CanSelectDifficulty),nameof(CanEditCommands),nameof(StateText),nameof(ProcessText),nameof(TargetBuild),nameof(CandidateIdentity),nameof(InstalledDifficulty),nameof(InstallId),nameof(BackupPath),nameof(Feedback),nameof(PlanText),nameof(ConsoleCommands),nameof(DifficultyHint),nameof(ActionHint) }) OnPropertyChanged(name);
         foreach (var cmd in new[] { PreviewCommand,InstallCommand,DiagnosticsCommand,RestoreCommand,CopyCommandsCommand,PreviewModeCommand,SwitchModeCommand,RefreshCommand }) cmd.RaiseCanExecuteChanged();
     }
 }

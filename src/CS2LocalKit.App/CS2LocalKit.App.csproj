@@ -10,6 +10,7 @@
     <AssemblyName>CS2LocalKit.App</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Licenses\*" CopyToOutputDirectory="PreserveNewest" />
     <EmbeddedResource Include="BotCandidates.json" LogicalName="CS2LocalKit.App.BotCandidates.json" />
     <None Include="..\..\runtime\*.lock.json" Link="runtime\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

@@ -62,7 +62,7 @@ public sealed class BotIntegrationTests : IDisposable
     [Fact] public void NavigationAndCommandsAreExplicitPendingFacts()
     {
         var nav = new NavigationViewModel(); nav.NavigateBotCommand.Execute(null);
-        Assert.True(nav.IsBotSelected); Assert.False(nav.IsHumanPage); Assert.Equal("人机",nav.PageTitle);
+        Assert.True(nav.IsBotSelected); Assert.False(nav.IsHumanPage); Assert.Equal("Bot 安装",nav.PageTitle);
         var vm = new BotViewModel(Service(),new MockDialogService(),()=>{},text=>Assert.Equal("bot_aim head; bot_nades max",text));
         Assert.Equal(BotDifficulty.Medium,vm.Difficulty);
         Assert.Equal(3,vm.DifficultyChoices.Count); Assert.Equal(3,vm.AimChoices.Count); Assert.Equal(5,vm.NadesChoices.Count);

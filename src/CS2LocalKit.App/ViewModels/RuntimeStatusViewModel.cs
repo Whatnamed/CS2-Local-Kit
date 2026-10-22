@@ -18,6 +18,15 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
 
     public RuntimeHealthLevel HealthLevel => _manager.RuntimeHealth;
     public string HealthSummary => _manager.RuntimeSummary;
+    public string HealthTitle => HealthLevel switch
+    {
+        RuntimeHealthLevel.Blocked => $"存在阻断 · {Status?.BlockedReasons.Count ?? 0} 项需要处理",
+        RuntimeHealthLevel.Attention => "环境需要核查",
+        _ => "文件检查通过",
+    };
+    public string HealthNextStep => HealthLevel == RuntimeHealthLevel.Blocked
+        ? "先查看下方阻断项；恢复与修复入口会按原有安全条件开放。"
+        : "文件状态与实际游戏表现分别验收；更多身份与路径见文件证据。";
 
     // CS2
     public bool Cs2Detected => Status?.Cs2Detected ?? false;
@@ -232,6 +241,8 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
         OnPropertyChanged(nameof(Status));
         OnPropertyChanged(nameof(HealthLevel));
         OnPropertyChanged(nameof(HealthSummary));
+        OnPropertyChanged(nameof(HealthTitle));
+        OnPropertyChanged(nameof(HealthNextStep));
         OnPropertyChanged(nameof(Cs2Detected));
         OnPropertyChanged(nameof(Cs2Path));
         OnPropertyChanged(nameof(Cs2Running));

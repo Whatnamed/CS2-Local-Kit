@@ -506,6 +506,26 @@ public sealed class UiIntegrationTests : IDisposable
 
     // C4.1 Regression Tests:
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void HumanApplyConfirmationOwnsTheWriteDecision(bool accepted)
+    {
+        using var services = CreateTestServices();
+        var dialogs = new MockDialogService { ConfirmToReturn = accepted };
+        var manager = new PresetManagerService(services, dialogs);
+        var vm = new CosmeticsViewModel(manager);
+        var before = File.ReadAllText(Path.Combine(_csgoDir, "addons", "counterstrikesharp", "configs", "plugins", "InventorySimulator", "inventories.json"));
+        vm.ExecuteApply();
+        Assert.Equal(accepted, manager.LastStatus?.LatestApply is not null);
+        if (!accepted)
+        {
+            Assert.Equal(before, File.ReadAllText(Path.Combine(_csgoDir, "addons", "counterstrikesharp", "configs", "plugins", "InventorySimulator", "inventories.json")));
+            Assert.False(vm.IsStatusVisible);
+        }
+        else Assert.True(vm.IsStatusSuccess);
+    }
+
     // 15. Process state monitor transition updates runtime status and command CanExecute
     [Fact]
     public void ProcessStateMonitor_TransitionUpdatesRuntimeStatusAndCommandCanExecute()

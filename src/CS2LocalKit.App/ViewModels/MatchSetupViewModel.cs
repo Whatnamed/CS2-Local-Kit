@@ -17,8 +17,11 @@ public sealed record PersonaChoice(PlayerIdentity Player)
 public sealed class SlotEditorViewModel : ViewModelBase
 {
     private string _name;private string? _personaId;
+    private string _participation = "Bot";
+    public string Participation { get => _participation; set => SetProperty(ref _participation, value); }
     public int Index { get; }
     public string Label => $"席位 {Index+1}";
+    public string Number => $"{Index+1:00}";
     public SlotEditorViewModel(int index,PlayerSlot slot) { Index=index;_name=slot.Name;_personaId=slot.PersonaId; }
     public string Name { get=>_name;set { if(SetProperty(ref _name,value)) { _personaId=null;OnPropertyChanged(nameof(PersonaHint)); } } }
     public string PersonaHint => _personaId is null?"名称匹配 / 无唯一 ID 时降级":"persona "+_personaId;
@@ -43,7 +46,7 @@ public sealed class RosterEditorViewModel : ViewModelBase
     }
     public IEnumerable<RosterTeamChoice> Teams => new[]{new RosterTeamChoice("random","普通 / 随机")}
         .Concat(_catalog.Teams.Where(t=>(_all||t.Recommended||!string.IsNullOrWhiteSpace(_query))&&t.Name.Contains(_query,StringComparison.OrdinalIgnoreCase)).OrderBy(t=>t.Name).Select(t=>new RosterTeamChoice(t.Id,t.Name)))
-        .Concat(_library().CustomRosters.Select(c=>new RosterTeamChoice(c.Id,"自定义 · "+c.Name)));
+        .Concat(_library().CustomRosters.Where(c=>c.Name.Contains(_query,StringComparison.OrdinalIgnoreCase)).Select(c=>new RosterTeamChoice(c.Id,"自定义 · "+c.Name)));
     public bool ShowAll { get=>_all;set { if(SetProperty(ref _all,value))OnPropertyChanged(nameof(Teams)); } }
     public string TeamQuery { get=>_query;set { if(SetProperty(ref _query,value))OnPropertyChanged(nameof(Teams)); } }
     public string TeamId
@@ -60,6 +63,7 @@ public sealed class RosterEditorViewModel : ViewModelBase
         }
     }
     public IEnumerable<RosterVersionChoice> Versions => _catalog.Rosters.Where(r=>r.TeamId==_teamId).OrderByDescending(r=>r.RepresentativeDate).Select(r=>new RosterVersionChoice(r.Id,r.Name,r.Source,r.Event));
+    public bool HasVersions => Versions.Any();
     public RosterVersionChoice? Version
     {
         get=>_version;
@@ -74,7 +78,8 @@ public sealed class RosterEditorViewModel : ViewModelBase
     public string CustomName { get=>_customName;set=>SetProperty(ref _customName,value); }
     public int SelectedSeat { get=>_selectedSeat;set=>SetProperty(ref _selectedSeat,value); }
     public BotChoice<int>[] SeatChoices { get; }=Enumerable.Range(0,5).Select(i=>new BotChoice<int>(i,$"席位 {i+1}")).ToArray();
-    public string PlayerQuery { get=>_search;set { if(SetProperty(ref _search,value))OnPropertyChanged(nameof(Personas)); } }
+    public string PlayerQuery { get=>_search;set { if(SetProperty(ref _search,value)) { SelectedPersona=null;OnPropertyChanged(nameof(Personas));OnPropertyChanged(nameof(PlayerResultText)); } } }
+    public string PlayerResultText => !Personas.Any() ? "没有匹配的选手；可直接编辑席位名称" : $"显示 {Personas.Count()} 项 · 最多 60 项，输入名称或完整 persona ID 缩小范围";
     public IEnumerable<PersonaChoice> Personas => _catalog.Search(_search).Select(p=>new PersonaChoice(p));
     public PersonaChoice? SelectedPersona { get=>_selectedPersona;set { SetProperty(ref _selectedPersona,value);ReplaceCommand.RaiseCanExecuteChanged(); } }
     public RelayCommand ReplaceCommand { get; }
@@ -97,10 +102,10 @@ public sealed class RosterEditorViewModel : ViewModelBase
         foreach(var slot in Slots)slot.PropertyChanged-=SlotChanged;Slots.Clear();
         for(int i=0;i<values.Length;i++) { var s=new SlotEditorViewModel(i,values[i]);s.PropertyChanged+=SlotChanged;Slots.Add(s); }
     }
-    private void SlotChanged(object? sender,System.ComponentModel.PropertyChangedEventArgs e)=>_changed();
+    private void SlotChanged(object? sender,System.ComponentModel.PropertyChangedEventArgs e) { if(e.PropertyName != nameof(SlotEditorViewModel.Participation)) _changed(); }
     private void Changed()
     {
-        foreach(var p in new[]{nameof(TeamId),nameof(Versions),nameof(Version),nameof(SourceText),nameof(Name),nameof(CustomName),nameof(Slots),nameof(Teams)})OnPropertyChanged(p);
+        foreach(var p in new[]{nameof(TeamId),nameof(HasVersions),nameof(Versions),nameof(Version),nameof(SourceText),nameof(Name),nameof(CustomName),nameof(Slots),nameof(Teams)})OnPropertyChanged(p);
         DeleteCustomCommand.RaiseCanExecuteChanged();_changed();
     }
     private void Randomize()
@@ -182,6 +187,8 @@ public sealed class MatchSetupViewModel : ViewModelBase
         _basis=p;_name=p.Name;_side=p.HumanSide;_friendly=p.FriendlyBots;_enemy=p.EnemyBots;_replacement=p.ReplacedSlot;_favorite=p.Favorite;_profile=p.Profile;_aim=p.Aim;_nades=p.Nades;
         Friendly.LoadSelection(p.Friendly);Enemy.LoadSelection(p.Enemy);Notify();RefreshPreview();
     }
+    public string FriendlySummary => $"{HumanSide} · 我 + {FriendlyBots} Bot";
+    public string EnemySummary => $"{(HumanSide==MatchSide.CT ? MatchSide.T : MatchSide.CT)} · {EnemyBots} Bot";
     private void RefreshPreview()
     {
         if(Friendly is null||Enemy is null)return;
@@ -192,6 +199,11 @@ public sealed class MatchSetupViewModel : ViewModelBase
             if(lineup.Warnings.Length>0)_preview+="\n"+string.Join("\n",lineup.Warnings.Distinct());
         }
         catch(Exception ex) { _preview="配置不可应用："+ex.Message; }
+        var friendlySeats=Enumerable.Range(0,5).Where(i=>i!=ReplacedSlot).Take(FriendlyBots).ToHashSet();
+        foreach(var slot in Friendly.Slots) slot.Participation=slot.Index==ReplacedSlot ? "我 · 真人" : friendlySeats.Contains(slot.Index) ? "Bot" : "不出场";
+        foreach(var slot in Enemy.Slots) slot.Participation=slot.Index<EnemyBots ? "Bot" : "不出场";
+        OnPropertyChanged(nameof(FriendlySummary));
+        OnPropertyChanged(nameof(EnemySummary));
         OnPropertyChanged(nameof(Preview));
         OnPropertyChanged(nameof(DraftState));
     }

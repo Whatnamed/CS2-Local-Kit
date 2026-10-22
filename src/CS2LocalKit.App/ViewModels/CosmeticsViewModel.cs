@@ -114,10 +114,10 @@ public sealed class CosmeticsViewModel : ViewModelBase
         }
     }
 
-    public bool IsWeaponsSection => _section == CosmeticsSection.Weapons;
-    public bool IsKnivesSection => _section == CosmeticsSection.Knives;
-    public bool IsGlovesSection => _section == CosmeticsSection.Gloves;
-    public bool IsMusicKitSection => _section == CosmeticsSection.MusicKit;
+    public bool IsWeaponsSection { get => _section == CosmeticsSection.Weapons; set { if(value) Section=CosmeticsSection.Weapons; } }
+    public bool IsKnivesSection { get => _section == CosmeticsSection.Knives; set { if(value) Section=CosmeticsSection.Knives; } }
+    public bool IsGlovesSection { get => _section == CosmeticsSection.Gloves; set { if(value) Section=CosmeticsSection.Gloves; } }
+    public bool IsMusicKitSection { get => _section == CosmeticsSection.MusicKit; set { if(value) Section=CosmeticsSection.MusicKit; } }
 
     /// <summary>Music kits are global, so the CT/T context is hidden there.</summary>
     public bool ShowsTeamContext => _section != CosmeticsSection.MusicKit;
@@ -806,6 +806,8 @@ public sealed class CosmeticsViewModel : ViewModelBase
 
     public void ExecuteApply()
     {
+        if (!_manager.DialogService.Confirm("应用真人饰品配置",
+            $"预设：{_manager.WorkingPresetName}\n目标：{_manager.LastStatus?.Cs2Root ?? "未检测到 CS2"}\n\n将当前草稿投影到游戏运行文件；未保存的修改会先保存。写入前创建可恢复备份，运行中的 CS2 或活动 Bot 事务会阻止操作。\n\n确认继续？")) return;
         var result = _manager.Apply();
         ShowFeedback(result.Success, result.Message);
     }
