@@ -14,7 +14,8 @@ public sealed class BotIntegrationTests : IDisposable
     private readonly string _home = Path.Combine(Path.GetTempPath(), "cs2-bot-ui-" + Guid.NewGuid().ToString("N"));
     private readonly Runner _runner = new();
     private BotCandidate _candidate = null!;
-    private string Root => Path.Combine(_home,"game-root");
+    private string Root => Path.Combine(_home,"steamapps","common","cs2");
+    private string HumanLock => Path.Combine(_home,"human-lock.json");
     private const string Id = "1234567890abcdef1234567890abcdef";
     private bool _running;
     public BotIntegrationTests()
@@ -23,16 +24,28 @@ public sealed class BotIntegrationTests : IDisposable
         File.WriteAllText(Path.Combine(release,"tools","Invoke-BotExperiment.ps1"),"# synthetic, never executed");
         File.WriteAllText(Path.Combine(release,"tools","bot_experiment.py"),"# synthetic, never executed");
         var bundle = Directory.GetFiles(release,"*",SearchOption.AllDirectories).ToDictionary(p => Path.GetRelativePath(release,p).Replace('\\','/'),BotExperimentService.HashFile);
-        File.WriteAllText(Path.Combine(release,"experiment-manifest.json"),JsonSerializer.Serialize(new {schemaVersion=1,lane="bot-experiment",testFixture=false,botRef="e18c029a76b7515ea5cb15cb08c41f03de4c0a57",metamod=new {build=1481},cssVersion="1.0.376",profile=new {difficulty="Medium"},bundleFiles=bundle}));
-        _candidate = new(BotDifficulty.Medium,"fixed-Medium",BotExperimentService.HashFile(Path.Combine(release,"experiment-manifest.json")));
+        var targetBuild = new { PatchVersion="1.41.9.1",ClientVersion="2000933",buildId="25966348" };
+        File.WriteAllText(Path.Combine(release,"experiment-manifest.json"),JsonSerializer.Serialize(new {schemaVersion=1,lane="bot-experiment",testFixture=false,botRef="e18c029a76b7515ea5cb15cb08c41f03de4c0a57",metamod=new {build=1481},cssVersion="1.0.376",profile=new {difficulty="Medium"},bundleFiles=bundle,targetBuild,humanPolicy="preserve",coexistence=new {status="ready-for-manual-test",reviewedBuild=targetBuild}}));
+        _candidate = new(BotDifficulty.Medium,"fixed-Medium",BotExperimentService.HashFile(Path.Combine(release,"experiment-manifest.json")),true);
         Directory.CreateDirectory(Path.Combine(Root,"game","csgo"));
+        File.WriteAllText(Path.Combine(Root,"game/csgo/steam.inf"),"PatchVersion=1.41.9.1\nClientVersion=2000933\n");
+        File.WriteAllText(Path.Combine(Root,"game/csgo/gameinfo.gi"),"SearchPaths\n{\n Game csgo/addons/metamod\n}\n");
+        File.WriteAllText(Path.GetFullPath(Path.Combine(Root,"../..","appmanifest_730.acf")),"\"AppState\" { \"StateFlags\" \"4\" \"buildid\" \"25966348\" }");
+        string Seed(string path)
+        {
+            var file=Path.Combine(Root,"game/csgo",path);Directory.CreateDirectory(Path.GetDirectoryName(file)!);File.WriteAllText(file,"synthetic-"+path);return BotExperimentService.HashFile(file);
+        }
+        var mm=new Dictionary<string,string>{["addons/metamod/bin/win64/metamod.2.cs2.dll"]=Seed("addons/metamod/bin/win64/metamod.2.cs2.dll"),["addons/metamod/bin/win64/server.dll"]=Seed("addons/metamod/bin/win64/server.dll")};
+        var css=new Dictionary<string,string>{["addons/counterstrikesharp/bin/win64/counterstrikesharp.dll"]=Seed("addons/counterstrikesharp/bin/win64/counterstrikesharp.dll"),["addons/counterstrikesharp/api/CounterStrikeSharp.API.dll"]=Seed("addons/counterstrikesharp/api/CounterStrikeSharp.API.dll"),["addons/metamod/counterstrikesharp.vdf"]=Seed("addons/metamod/counterstrikesharp.vdf")};
+        var human=Seed("addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll");
+        File.WriteAllText(HumanLock,JsonSerializer.Serialize(new {repository="synthetic",@ref="synthetic",tag="test",status="accepted-as-patched",acceptedRuntime=new {patchedDllSha256=human},framework=new {metamod=new {version="1473",installedFiles=mm},counterstrikesharp=new {version="376",installedFiles=css}}}));
     }
-    private BotExperimentService Service(IReadOnlyList<BotCandidate>? candidates=null) => new(_home,Root,()=>_running,_runner,candidates ?? [_candidate]);
-    private void Active(BotExperimentService service, string state="installed", bool marker=true)
+    private BotExperimentService Service(IReadOnlyList<BotCandidate>? candidates=null) => new(_home,Root,()=>_running,_runner,candidates ?? [_candidate],HumanLock);
+    private void Active(BotExperimentService service, string state="installed", bool marker=true, bool preservesHuman=true)
     {
         var backup = Path.Combine(service.BackupRoot,Id); Directory.CreateDirectory(backup);
-        File.WriteAllText(Path.Combine(backup,"install-record.json"),JsonSerializer.Serialize(new {schemaVersion=1,lane="bot-experiment",installId=Id,cs2Root=Root,manifestSha256=_candidate.ManifestSha256,state,profile=new {difficulty="Medium"}}));
-        if (marker) File.WriteAllText(Path.Combine(Root,"game","csgo",".cs2-local-kit-bot-experiment.json"),JsonSerializer.Serialize(new {installId=Id,backupRoot=service.BackupRoot,manifestSha256=_candidate.ManifestSha256}));
+        File.WriteAllText(Path.Combine(backup,"install-record.json"),JsonSerializer.Serialize(new {schemaVersion=1,lane="bot-experiment",installId=Id,cs2Root=Root,manifestSha256=_candidate.ManifestSha256,state,profile=new {difficulty="Medium"},humanPolicy=preservesHuman?"preserve":"isolate"}));
+        if (marker) File.WriteAllText(Path.Combine(Root,"game","csgo",".cs2-local-kit-bot-experiment.json"),JsonSerializer.Serialize(new {installId=Id,backupRoot=service.BackupRoot,manifestSha256=_candidate.ManifestSha256,humanPolicy=preservesHuman?"preserve":"isolate"}));
     }
     public void Dispose() { Directory.Delete(_home,true); }
     private sealed class Runner : IBotProcessRunner
@@ -63,13 +76,84 @@ public sealed class BotIntegrationTests : IDisposable
         Assert.Equal(3,service.Candidates.Count);
         Assert.Equal(3,service.Candidates.Select(c=>c.Difficulty).Distinct().Count());
         Assert.All(service.Candidates,c=>Assert.Matches("^[0-9a-f]{64}$",c.ManifestSha256));
+        Assert.All(service.Candidates,c=>Assert.False(c.PreservesHuman));
+    }
+    [Fact] public async Task LegacyIsolationCandidateCannotEnableDailyJointMode()
+    {
+        var service=Service([_candidate with {PreservesHuman=false}]);
+        Assert.False(service.Readiness(BotDifficulty.Medium).CanEnable);
+        var vm=new BotViewModel(service,new MockDialogService(),()=>{},_=>{});
+        vm.TargetMode=LocalPlayMode.EnhancedHuman;
+        Assert.Contains("普通人机 + 我的饰品",vm.CurrentMode);
+        Assert.Contains("隔离 Human",vm.AvailabilityText);
+        Assert.False(vm.PreviewModeCommand.CanExecute(null));Assert.False(vm.SwitchModeCommand.CanExecute(null));
+        await Assert.ThrowsAsync<InvalidOperationException>(()=>service.ExecuteAsync("Install",BotDifficulty.Medium,true));
+        Assert.Empty(_runner.Calls);
+    }
+    [Fact] public void TargetPreferenceAndRestoredHistoryDoNotClaimActiveMode()
+    {
+        var service=Service();Active(service,"restored",false);
+        service.SavePreferences(new(LastInstallId:Id,TargetMode:LocalPlayMode.EnhancedHuman));
+        var vm=new BotViewModel(service,new MockDialogService(),()=>{},_=>{});
+        Assert.Equal(LocalPlayMode.EnhancedHuman,vm.TargetMode);
+        Assert.Equal("普通人机 + 我的饰品",vm.CurrentMode);Assert.Equal("—",vm.InstallId);
+        Assert.False(vm.DiagnosticsCommand.CanExecute(null));
+        Assert.False(service.Identity.BlocksHuman);
+    }
+    [Fact] public async Task BuildDriftAndSteamUpdateBlockBeforeAnyExternalProcess()
+    {
+        var steam=Path.GetFullPath(Path.Combine(Root,"../..","appmanifest_730.acf"));
+        var original=File.ReadAllText(steam);
+        File.WriteAllText(steam,original.Replace("25966348","26087496"));
+        Assert.Contains("过期",Service().Readiness(BotDifficulty.Medium).Reason);
+        await Assert.ThrowsAsync<InvalidOperationException>(()=>Service().ExecuteAsync("Preview",BotDifficulty.Medium));
+        File.WriteAllText(steam,original.Replace("\"4\"","\"1026\""));
+        Assert.False(Service().SteamState.Idle);
+        await Assert.ThrowsAsync<InvalidOperationException>(()=>Service().ExecuteAsync("Restore",BotDifficulty.Medium,true,Id));
+        Assert.Empty(_runner.Calls);
+    }
+    [Fact] public async Task GameStartingAfterPreviewCannotReachApply()
+    {
+        _runner.Handler=_=>{_running=true;return Task.FromResult(new BotProcessResult(0,"{\"entries\":[]}",""));};
+        await Assert.ThrowsAsync<InvalidOperationException>(()=>Service().ExecuteAsync("Install",BotDifficulty.Medium,true));
+        Assert.DoesNotContain(_runner.Calls,c=>c.Args.Contains("-Apply"));
+    }
+    [Fact] public async Task SuccessfulProcessWithoutInstalledRecordIsNotSuccessfulSwitch()
+    {
+        _runner.Handler=_=>Task.FromResult(new BotProcessResult(0,$"{{\"state\":\"installed\",\"installId\":\"{Id}\"}}",""));
+        var error=await Assert.ThrowsAsync<InvalidDataException>(()=>Service().ExecuteAsync("Install",BotDifficulty.Medium,true));
+        Assert.Contains("磁盘/事务状态未确认",error.Message);Assert.False(Service().Identity.BlocksHuman);
+    }
+    [Fact] public void JointIdentityKeepsHumanButFreezesItsWritesUntilExactRestore()
+    {
+        var service=Service();Active(service);
+        Assert.True(service.Identity.PreservesHuman);Assert.True(service.Identity.BlocksHuman);
+        var vm=new BotViewModel(service,new MockDialogService(),()=>{},_=>{});
+        Assert.Contains("增强人机 + 我的饰品",vm.CurrentMode);Assert.Contains("Human 保留",vm.StateText);
+        var applier=new FixtureApplier(new(){CsgoDir=Path.Combine(Root,"game/csgo"),BotExperimentBackupRoot=service.BackupRoot,Cs2RunningProbe=()=>false});
+        Assert.Throws<ApplyException>(()=>applier.Apply(HumanPresetTemplate.CreateMinimalValid(),TestFixtures.FakeSteamId64));
+        Assert.Contains("先恢复普通模式",service.Identity.Reason);
+    }
+    [Theory] [InlineData("0")] [InlineData("1026")] [InlineData("6")]
+    public void SteamStateFailsClosedForNonIdleStates(string flags)
+    {
+        var path=Path.GetFullPath(Path.Combine(Root,"../..","appmanifest_730.acf"));
+        File.WriteAllText(path,File.ReadAllText(path).Replace("\"4\"","\""+flags+"\""));
+        Assert.False(SteamInstallState.Inspect(Root).Idle);
     }
     [Fact] public async Task ExactPublicEntryUsesArgumentListAndFreshPreviewBeforeApply()
     {
-        await Service().ExecuteAsync("Install",BotDifficulty.Medium,true);
-        var calls=_runner.Calls.Where(c=>c.Exe=="pwsh").ToArray();Assert.Equal(2,calls.Length);
+        var service=Service();
+        _runner.Handler=args=>
+        {
+            if(args.Contains("-Apply")) {Active(service);return Task.FromResult(new BotProcessResult(0,$"{{\"state\":\"installed\",\"installId\":\"{Id}\"}}",""));}
+            return Task.FromResult(new BotProcessResult(0,"{\"entries\":[]}",""));
+        };
+        await service.ExecuteAsync("Install",BotDifficulty.Medium,true);
+        var calls=_runner.Calls.Where(c=>c.Exe=="pwsh").ToArray();Assert.Equal(3,calls.Length);
         Assert.DoesNotContain("-Apply",calls[0].Args);Assert.Contains("-Apply",calls[1].Args);
-        Assert.Contains("-IsolateHumanCosmetics",calls[0].Args);Assert.Contains(_candidate.ManifestSha256,calls[0].Args);
+        Assert.Contains("-PreserveHumanCosmetics",calls[0].Args);Assert.DoesNotContain("-IsolateHumanCosmetics",calls[0].Args);Assert.Contains(_candidate.ManifestSha256,calls[0].Args);
+        Assert.Contains("Diagnostics",calls[2].Args);
         Assert.Contains(Root,calls[0].Args);Assert.Contains("-File",calls[0].Args);
         Assert.DoesNotContain(calls[0].Args,a=>a is "-Command" or "-AllowFakeTree");
     }
@@ -109,9 +193,16 @@ public sealed class BotIntegrationTests : IDisposable
     [Fact] public async Task ViewModelPreviewInvalidationAndBusyGate()
     {
         var vm=new BotViewModel(Service(),new MockDialogService(),()=>{},_=>{});
-        Assert.False(vm.InstallCommand.CanExecute(null));await vm.PreviewAsync();Assert.True(vm.InstallCommand.CanExecute(null));
+        Assert.False(vm.InstallCommand.CanExecute(null));await vm.PreviewAsync();Assert.True(vm.InstallCommand.CanExecute(null));Assert.Contains("待切换",vm.StateText);
         vm.Difficulty=BotDifficulty.High;Assert.False(vm.InstallCommand.CanExecute(null));
         await vm.PreviewAsync();Assert.Contains("阻断",vm.StateText);Assert.Contains("没有已固定候选",vm.Feedback);
+    }
+    [Fact] public void CorruptMarkerShowsRecoveryWithoutClaimingInstalledMode()
+    {
+        File.WriteAllText(Path.Combine(Root,"game/csgo/.cs2-local-kit-bot-experiment.json"),"{broken");
+        var vm=new BotViewModel(Service(),new MockDialogService(),()=>{},_=>{});
+        Assert.Contains("需恢复",vm.CurrentMode);Assert.Equal("—",vm.InstallId);
+        Assert.False(vm.SwitchModeCommand.CanExecute(null));
     }
     [Fact] public async Task ActiveInterruptedAndDriftStatesDoNotClaimLoadedOrPermitHumanWrites()
     {
@@ -148,7 +239,7 @@ public sealed class BotIntegrationTests : IDisposable
     }
     [Fact] public void HumanCoreMutationAndStatusHonorActiveExperiment()
     {
-        var service=Service();Active(service);
+        var service=Service();Active(service,preservesHuman:false);
         var applier=new FixtureApplier(new(){CsgoDir=Path.Combine(Root,"game","csgo"),BotExperimentBackupRoot=service.BackupRoot,Cs2RunningProbe=()=>false});
         Assert.Throws<ApplyException>(()=>applier.Apply(HumanPresetTemplate.CreateMinimalValid(),TestFixtures.FakeSteamId64));
         Assert.Throws<ApplyException>(()=>applier.RestoreLatest());

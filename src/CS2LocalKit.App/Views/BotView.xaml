@@ -10,14 +10,25 @@
                         <TextBlock DockPanel.Dock="Right" Text="{Binding ProcessText}" Style="{StaticResource MutedText}"/>
                         <TextBlock Text="{Binding StateText}" Style="{StaticResource SectionTitle}" TextWrapping="Wrap"/>
                     </DockPanel>
-                    <TextBlock Margin="0,10,0,0" Text="临时 MetaMod 1481 + Bot · CSS 1.0.376 保持原样。Human 在实验期间隔离，恢复后回到 MetaMod 1473。" TextWrapping="Wrap"/>
-                    <TextBlock Margin="0,7,0,0" Text="候选未通过实机验收；安装成功只代表文件事务完成。" Style="{StaticResource HintText}"/>
-                    <TextBlock Margin="0,12,0,0" Text="{Binding CandidateIdentity}" Style="{StaticResource MonoText}"/>
+                    <TextBlock Margin="0,10,0,0" Text="{Binding CurrentMode}" FontSize="18" FontWeight="SemiBold" AutomationProperties.AutomationId="CurrentLocalMode"/>
+                    <TextBlock Margin="0,7,0,0" Text="{Binding HumanStatusText}" Style="{StaticResource HintText}"/>
+                    <TextBlock Margin="0,7,0,0" Text="两种模式都用于离线本地游玩；文件安装态不等于游戏内效果已验收。" Style="{StaticResource HintText}"/>
                     <TextBlock Margin="0,6,0,0" Text="{Binding TargetBuild}" Style="{StaticResource HintText}"/>
                 </StackPanel>
             </Border>
 
-            <TextBlock Text="核心设置" Style="{StaticResource SectionTitle}" Margin="0,24,0,12"/>
+            <TextBlock Text="切换本地模式" Style="{StaticResource SectionTitle}" Margin="0,24,0,12"/>
+            <ComboBox AutomationProperties.AutomationId="TargetLocalMode" ItemsSource="{Binding ModeChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding TargetMode}" IsEnabled="{Binding CanSelectMode}"/>
+            <TextBlock Text="{Binding AvailabilityText}" TextWrapping="Wrap" Foreground="{StaticResource BrushWarning}" Margin="0,10,0,8" AutomationProperties.AutomationId="JointModeAvailability"/>
+            <TextBlock Text="{Binding ActionHint}" Style="{StaticResource HintText}" Margin="0,0,0,12"/>
+            <WrapPanel>
+                <Button Content="刷新状态" Command="{Binding RefreshCommand}" Margin="0,0,10,8"/>
+                <Button Content="检查切换预览" Command="{Binding PreviewModeCommand}" Margin="0,0,10,8" AutomationProperties.AutomationId="PreviewLocalMode"/>
+                <Button Content="{Binding SwitchButtonText}" Command="{Binding SwitchModeCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,0,8" AutomationProperties.AutomationId="ApplyLocalMode"/>
+            </WrapPanel>
+            <TextBlock Text="{Binding Feedback}" TextWrapping="Wrap" Margin="0,8,0,12" Foreground="{StaticResource BrushWarning}" AutomationProperties.AutomationId="BotFeedback"/>
+
+            <TextBlock Text="增强人机设置" Style="{StaticResource SectionTitle}" Margin="0,20,0,12"/>
             <Grid>
                 <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions>
                 <StackPanel Margin="0,0,16,0">
@@ -40,15 +51,11 @@
                 <TextBox IsReadOnly="True" Text="{Binding ConsoleCommands, Mode=OneWay}" VerticalContentAlignment="Center" AutomationProperties.AutomationId="BotConsoleCommands"/>
             </DockPanel>
 
-            <TextBlock Text="安装与恢复" Style="{StaticResource SectionTitle}" Margin="0,24,0,12"/>
-            <TextBlock Text="{Binding ActionHint}" Style="{StaticResource HintText}" Margin="0,0,0,12"/>
+            <TextBlock Text="候选与精确恢复" Style="{StaticResource SectionTitle}" Margin="0,24,0,12"/>
+            <TextBlock Text="{Binding CandidateIdentity}" Style="{StaticResource MonoText}" Margin="0,0,0,12"/>
             <WrapPanel>
-                <Button Content="检查/预览安装" Command="{Binding PreviewCommand}" Margin="0,0,10,8"/>
-                <Button Content="安装实验版" Command="{Binding InstallCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,22,8"/>
                 <Button Content="检查恢复条件" Command="{Binding DiagnosticsCommand}" Margin="0,0,10,8"/>
-                <Button Content="恢复原环境" Command="{Binding RestoreCommand}" Margin="0,0,0,8"/>
             </WrapPanel>
-            <TextBlock Text="{Binding Feedback}" TextWrapping="Wrap" Margin="0,8,0,12" Foreground="{StaticResource BrushWarning}" AutomationProperties.AutomationId="BotFeedback"/>
             <Grid>
                 <Grid.ColumnDefinitions><ColumnDefinition Width="110"/><ColumnDefinition/></Grid.ColumnDefinitions>
                 <Grid.RowDefinitions><RowDefinition/><RowDefinition/><RowDefinition/></Grid.RowDefinitions>

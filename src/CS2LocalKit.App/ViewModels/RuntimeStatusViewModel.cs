@@ -34,7 +34,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public string MetaModStatus => _manager.HumanWritesBlocked ? "实验占用（身份/恢复见人机页）" : Status?.MetaModNativeStatus ?? "missing";
     public string CssStatus => Status?.CounterStrikeSharpNativeStatus ?? "missing";
     public bool InventorySimulatorPluginPresent => Status?.InventorySimulatorPluginPresent ?? false;
-    public string InventorySimulatorStatusText => _manager.HumanWritesBlocked ? "Bot 实验隔离 / 先恢复实验" : InventorySimulatorPluginPresent ? "已安装" : "未安装";
+    public string InventorySimulatorStatusText => _manager.HumanWritesBlocked ? Status?.BotExperiment.PreservesHuman == true ? "Human 保留 / 先恢复普通模式再改配置" : "Bot 实验隔离 / 先恢复实验" : InventorySimulatorPluginPresent ? "已安装" : "未安装";
     public string PatchedDllMatch => Status?.PatchedDllMatch ?? "unknown";
     public string PatchedDllHash => Status?.InventorySimulatorDllSha256 ?? "-";
     public bool FixtureInstalled => Status?.FixtureInstalled ?? false;

@@ -48,7 +48,7 @@ public sealed class NavigationViewModel : ViewModelBase
     public string PageSubtitle => CurrentPage switch
     {
         PageType.Cosmetics => "选择武器、刀型、手套与音乐盒的外观",
-        PageType.Bot => "本地离线 Bot 实验 · 安装、设置与精确恢复",
+        PageType.Bot => "离线本地模式 · 按需增强人机，保留我的饰品",
         PageType.Presets => "管理编辑中的预设与激活预设",
         PageType.RuntimeStatus => "CS2 运行组件、饰品数据与本地清单状态",
         _ => "",

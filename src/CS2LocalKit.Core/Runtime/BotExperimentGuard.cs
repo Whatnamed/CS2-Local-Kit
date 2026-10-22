@@ -4,13 +4,31 @@ using System.Text.RegularExpressions;
 namespace CS2LocalKit.Core.Runtime;
 
 /// <summary>Observation only. Installation/restoration remain owned by the experimental transaction.</summary>
-public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, string? InstallId = null, string? BackupRoot = null)
+public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, string? InstallId = null, string? BackupRoot = null,
+    bool PreservesHuman = false, string? State = null, bool RecoveryRequired = false)
 {
     public static BotExperimentIdentity Inspect(string cs2Root, string? backupRoot = null)
     {
         backupRoot ??= Path.Combine(CorePaths.Cs2ModRoot, "backups", "bot-experiment");
         try
         {
+            BotExperimentIdentity FromRecord(string id, bool missingMarker, JsonElement? markerData = null)
+            {
+                var dir = Path.Combine(backupRoot, id);
+                using var doc = JsonDocument.Parse(File.ReadAllText(Path.Combine(dir, "install-record.json")));
+                var r = doc.RootElement;
+                if (r.GetProperty("installId").GetString() != id || !Path.GetFullPath(r.GetProperty("cs2Root").GetString()!).Equals(Path.GetFullPath(cs2Root), StringComparison.OrdinalIgnoreCase))
+                    throw new InvalidDataException("实验记录的 root/ID 不匹配");
+                var state = r.GetProperty("state").GetString();
+                var preserve = r.TryGetProperty("humanPolicy", out var policy) && policy.GetString() == "preserve";
+                if (markerData is { } m && (m.GetProperty("manifestSha256").GetString() != r.GetProperty("manifestSha256").GetString()
+                    || (m.TryGetProperty("humanPolicy", out var p) && p.GetString() == "preserve") != preserve))
+                    throw new InvalidDataException("marker 与事务身份不一致");
+                var recovery = missingMarker || state != "installed";
+                return new(true, recovery ? "事务未完整结束；请按精确 ID 检查恢复条件" : preserve
+                    ? "增强人机 + 我的饰品；事务活动期间请先恢复普通模式，再修改饰品配置"
+                    : "旧 Bot 实验隔离 Human；请先按精确 ID 恢复", id, backupRoot, preserve, state, recovery);
+            }
             var marker = Path.Combine(cs2Root, "game", "csgo", ".cs2-local-kit-bot-experiment.json");
             if (File.Exists(marker))
             {
@@ -19,8 +37,8 @@ public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, stri
                 if (!Regex.IsMatch(id, "^[0-9a-f]{32}$")) throw new InvalidDataException("Invalid install ID");
                 var declaredRoot = doc.RootElement.GetProperty("backupRoot").GetString()!;
                 if (!Path.GetFullPath(declaredRoot).Equals(Path.GetFullPath(backupRoot), StringComparison.OrdinalIgnoreCase))
-                    return new(true, "实验 marker 的备份位置不匹配；保留记录并检查人机页");
-                return new(true, "Bot 实验占用：Human 暂时隔离，请先在人机页按精确 ID 恢复", id, backupRoot);
+                    return new(true, "实验 marker 的备份位置不匹配；保留记录并检查人机页", RecoveryRequired: true);
+                return FromRecord(id, false, doc.RootElement);
             }
             var active = new List<string>();
             if (Directory.Exists(backupRoot))
@@ -39,10 +57,10 @@ public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, stri
             return active.Count switch
             {
                 0 => new(false, ""),
-                1 => new(true, "实验事务未恢复（marker 缺失/中断）；请按精确 ID 检查恢复条件", active[0], backupRoot),
-                _ => new(true, "存在多个未恢复实验事务，禁止猜测最近备份")
+                1 => FromRecord(active[0], true),
+                _ => new(true, "存在多个未恢复实验事务，禁止猜测最近备份", RecoveryRequired: true)
             };
         }
-        catch (Exception ex) { return new(true, "实验记录无法验证，阻止 Human 写入：" + ex.Message); }
+        catch (Exception ex) { return new(true, "实验记录无法验证，阻止 Human 写入：" + ex.Message, RecoveryRequired: true); }
     }
 }

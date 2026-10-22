@@ -71,7 +71,7 @@ public sealed class HeaderViewModel : ViewModelBase
 
     public InstalledConfigLevel InstalledConfigLevel => InstalledConfig.Level;
 
-    public string InstalledConfigName => _manager.HumanWritesBlocked ? "Human 已隔离 / 实验占用" : InstalledConfig.Level switch
+    public string InstalledConfigName => _manager.HumanWritesBlocked ? _manager.LastStatus?.BotExperiment.PreservesHuman == true ? "Human 保留 / 联合事务活动" : "Human 已隔离 / 实验占用" : InstalledConfig.Level switch
     {
         InstalledConfigLevel.Verified => Friendly(InstalledConfig.PresetPath),
         InstalledConfigLevel.Drifted => "已漂移",
@@ -100,7 +100,7 @@ public sealed class HeaderViewModel : ViewModelBase
 
     public bool Cs2Running => _manager.Cs2Running;
     public string Cs2StatusText => _manager.Cs2Running ? "CS2 正在运行" : "CS2 已关闭";
-    public string ApplyHint => _manager.HumanWritesBlocked ? "Bot 实验暂时隔离 Human，请先在人机页精确恢复。" : "CS2 正在运行时无法应用，请先关闭游戏。";
+    public string ApplyHint => _manager.HumanWritesBlocked ? _manager.LastStatus!.BotExperiment.Reason : "CS2 正在运行时无法应用，请先关闭游戏。";
     public RuntimeHealthLevel HealthLevel => _manager.RuntimeHealth;
     public string HealthSummary => _manager.RuntimeSummary;
 

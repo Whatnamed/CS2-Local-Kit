@@ -47,7 +47,6 @@ public class AppServices : IDisposable
         string botRoot;
         try { botRoot = cs2Root ?? (csgoDir is null ? Cs2Locator.FindCs2Root() : Path.GetFullPath(Path.Combine(csgoDir,"..",".."))); }
         catch { botRoot = Path.Combine(Cs2ModRoot,"unavailable-cs2"); }
-        BotExperiment = new BotExperimentService(Cs2ModRoot, botRoot, cs2RunningProbe);
 
         var actPresetPath = activePresetPath ?? CorePaths.ActivePresetPath;
         ActivePresetState = new ActivePresetState(actPresetPath);
@@ -89,6 +88,7 @@ public class AppServices : IDisposable
             var fallback = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "..", "..", "runtime", "inventory-simulator.lock.json"));
             if (File.Exists(fallback)) lPath = fallback;
         }
+        BotExperiment = new BotExperimentService(Cs2ModRoot, botRoot, cs2RunningProbe, humanLockPath: lPath);
 
         var bRoot = backupsRoot ?? CorePaths.FixtureBackupRoot;
 
