@@ -4,6 +4,7 @@ namespace CS2LocalKit.App.ViewModels;
 
 public enum PageType
 {
+    MatchSetup,
     Cosmetics,
     Presets,
     Bot,
@@ -12,7 +13,7 @@ public enum PageType
 
 public sealed class NavigationViewModel : ViewModelBase
 {
-    private PageType _currentPage = PageType.Cosmetics;
+    private PageType _currentPage = PageType.MatchSetup;
 
     public PageType CurrentPage
     {
@@ -20,6 +21,7 @@ public sealed class NavigationViewModel : ViewModelBase
         set
         {
             if (!SetProperty(ref _currentPage, value)) return;
+            OnPropertyChanged(nameof(IsMatchSetupSelected));
             OnPropertyChanged(nameof(IsCosmeticsSelected));
             OnPropertyChanged(nameof(IsPresetsSelected));
             OnPropertyChanged(nameof(IsRuntimeStatusSelected));
@@ -30,30 +32,34 @@ public sealed class NavigationViewModel : ViewModelBase
         }
     }
 
+    public bool IsMatchSetupSelected => CurrentPage == PageType.MatchSetup;
     public bool IsCosmeticsSelected => CurrentPage == PageType.Cosmetics;
     public bool IsBotSelected => CurrentPage == PageType.Bot;
-    public bool IsHumanPage => !IsBotSelected;
+    public bool IsHumanPage => IsCosmeticsSelected || IsPresetsSelected;
     public bool IsPresetsSelected => CurrentPage == PageType.Presets;
     public bool IsRuntimeStatusSelected => CurrentPage == PageType.RuntimeStatus;
 
     public string PageTitle => CurrentPage switch
     {
-        PageType.Cosmetics => "饰品",
-        PageType.Bot => "人机",
+        PageType.MatchSetup => "准备下一局",
+        PageType.Cosmetics => "真人饰品",
+        PageType.Bot => "Bot 安装",
         PageType.Presets => "预设",
-        PageType.RuntimeStatus => "运行状态",
+        PageType.RuntimeStatus => "环境与恢复",
         _ => "",
     };
 
     public string PageSubtitle => CurrentPage switch
     {
-        PageType.Cosmetics => "选择武器、刀型、手套与音乐盒的外观",
-        PageType.Bot => "离线本地模式 · 按需增强人机，保留我的饰品",
+        PageType.MatchSetup => "选择双方阵容与开局规则，保存后交给下一张本地地图",
+        PageType.Cosmetics => "按真实武器配置外观 · CT / T 独立保存",
+        PageType.Bot => "检查实际安装，再预览目标模式与精确恢复范围",
         PageType.Presets => "管理编辑中的预设与激活预设",
         PageType.RuntimeStatus => "CS2 运行组件、饰品数据与本地清单状态",
         _ => "",
     };
 
+    public RelayCommand NavigateMatchSetupCommand { get; }
     public RelayCommand NavigateCosmeticsCommand { get; }
     public RelayCommand NavigateBotCommand { get; }
     public RelayCommand NavigatePresetsCommand { get; }
@@ -61,6 +67,7 @@ public sealed class NavigationViewModel : ViewModelBase
 
     public NavigationViewModel()
     {
+        NavigateMatchSetupCommand = new RelayCommand(() => CurrentPage = PageType.MatchSetup);
         NavigateCosmeticsCommand = new RelayCommand(() => CurrentPage = PageType.Cosmetics);
         NavigateBotCommand = new RelayCommand(() => CurrentPage = PageType.Bot);
         NavigatePresetsCommand = new RelayCommand(() => CurrentPage = PageType.Presets);

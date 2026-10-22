@@ -26,15 +26,15 @@
     <common:DoubleFormatConverter x:Key="DoubleFormat"/>
 
     <!-- surfaces -->
-    <Color x:Key="ColorBgWindow">#FF101215</Color>
-    <Color x:Key="ColorBgRail">#FF0C0E11</Color>
-    <Color x:Key="ColorBgSurface">#FF16181D</Color>
-    <Color x:Key="ColorBgRaised">#FF1B1E24</Color>
-    <Color x:Key="ColorBgHover">#FF22262E</Color>
-    <Color x:Key="ColorBgPressed">#FF2A2F38</Color>
-    <Color x:Key="ColorBgSelected">#FF223045</Color>
-    <Color x:Key="ColorBorderSubtle">#FF262A32</Color>
-    <Color x:Key="ColorBorderStrong">#FF363D49</Color>
+    <Color x:Key="ColorBgWindow">#FF24272B</Color>
+    <Color x:Key="ColorBgRail">#FF1B1E21</Color>
+    <Color x:Key="ColorBgSurface">#FF2B2F33</Color>
+    <Color x:Key="ColorBgRaised">#FF33383D</Color>
+    <Color x:Key="ColorBgHover">#FF3A4045</Color>
+    <Color x:Key="ColorBgPressed">#FF454C53</Color>
+    <Color x:Key="ColorBgSelected">#FF454035</Color>
+    <Color x:Key="ColorBorderSubtle">#FF3D4348</Color>
+    <Color x:Key="ColorBorderStrong">#FF586169</Color>
 
     <SolidColorBrush x:Key="BrushBgWindow" Color="{StaticResource ColorBgWindow}"/>
     <SolidColorBrush x:Key="BrushBgRail" Color="{StaticResource ColorBgRail}"/>
@@ -50,27 +50,27 @@
     <SolidColorBrush x:Key="BrushScrollThumb" Color="#FF2E343D"/>
 
     <!-- text -->
-    <SolidColorBrush x:Key="BrushTextPrimary" Color="#FFEEF1F5"/>
-    <SolidColorBrush x:Key="BrushTextSecondary" Color="#FFA5AEBB"/>
-    <SolidColorBrush x:Key="BrushTextTertiary" Color="#FF727B8B"/>
-    <SolidColorBrush x:Key="BrushTextDisabled" Color="#FF59616E"/>
-    <SolidColorBrush x:Key="BrushTextOnAccent" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="BrushTextPrimary" Color="#FFF5F3EE"/>
+    <SolidColorBrush x:Key="BrushTextSecondary" Color="#FFC1C6CA"/>
+    <SolidColorBrush x:Key="BrushTextTertiary" Color="#FFA1A9B0"/>
+    <SolidColorBrush x:Key="BrushTextDisabled" Color="#FF7E878F"/>
+    <SolidColorBrush x:Key="BrushTextOnAccent" Color="#FF211D15"/>
 
     <!-- accent + semantics -->
-    <SolidColorBrush x:Key="BrushAccent" Color="#FF4F8CFF"/>
-    <SolidColorBrush x:Key="BrushAccentHover" Color="#FF6AA1FF"/>
-    <SolidColorBrush x:Key="BrushAccentPressed" Color="#FF3E71DC"/>
-    <SolidColorBrush x:Key="BrushAccentSoft" Color="#1F4F8CFF"/>
-    <SolidColorBrush x:Key="BrushAccentBorder" Color="#664F8CFF"/>
-    <SolidColorBrush x:Key="BrushSuccess" Color="#FF3FB27F"/>
-    <SolidColorBrush x:Key="BrushWarning" Color="#FFD9A24B"/>
-    <SolidColorBrush x:Key="BrushDanger" Color="#FFE15555"/>
+    <SolidColorBrush x:Key="BrushAccent" Color="#FFF0BE6C"/>
+    <SolidColorBrush x:Key="BrushAccentHover" Color="#FFF7CF8E"/>
+    <SolidColorBrush x:Key="BrushAccentPressed" Color="#FFDCA853"/>
+    <SolidColorBrush x:Key="BrushAccentSoft" Color="#24F0BE6C"/>
+    <SolidColorBrush x:Key="BrushAccentBorder" Color="#88F0BE6C"/>
+    <SolidColorBrush x:Key="BrushSuccess" Color="#FF82CBA5"/>
+    <SolidColorBrush x:Key="BrushWarning" Color="#FFF0BE6C"/>
+    <SolidColorBrush x:Key="BrushDanger" Color="#FFFF9690"/>
     <SolidColorBrush x:Key="BrushDangerSoft" Color="#1FE15555"/>
 
     <!-- placeholder used while art is missing, loading, or unavailable -->
     <LinearGradientBrush x:Key="BrushPlaceholder" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#FF1E2229" Offset="0"/>
-        <GradientStop Color="#FF171A20" Offset="1"/>
+        <GradientStop Color="#FF34393E" Offset="0"/>
+        <GradientStop Color="#FF2B3035" Offset="1"/>
     </LinearGradientBrush>
 
     <!-- type -->
@@ -78,11 +78,11 @@
     <FontFamily x:Key="FontDisplay">Segoe UI Variable Display, Segoe UI, Microsoft YaHei UI</FontFamily>
     <FontFamily x:Key="FontMono">Cascadia Mono, Consolas</FontFamily>
 
-    <sys:Double x:Key="SizeCaption" xmlns:sys="clr-namespace:System;assembly=mscorlib">11.5</sys:Double>
+    <sys:Double x:Key="SizeCaption" xmlns:sys="clr-namespace:System;assembly=mscorlib">12</sys:Double>
     <sys:Double x:Key="SizeBody" xmlns:sys="clr-namespace:System;assembly=mscorlib">13</sys:Double>
     <sys:Double x:Key="SizeSubtitle" xmlns:sys="clr-namespace:System;assembly=mscorlib">14</sys:Double>
     <sys:Double x:Key="SizeTitle" xmlns:sys="clr-namespace:System;assembly=mscorlib">16.5</sys:Double>
-    <sys:Double x:Key="SizeDisplay" xmlns:sys="clr-namespace:System;assembly=mscorlib">22</sys:Double>
+    <sys:Double x:Key="SizeDisplay" xmlns:sys="clr-namespace:System;assembly=mscorlib">24</sys:Double>
 
     <!-- spacing scale -->
     <Thickness x:Key="Gap2">2</Thickness>
