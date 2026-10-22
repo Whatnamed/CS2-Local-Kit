@@ -115,154 +115,78 @@
         </DataTemplate>
     </UserControl.Resources>
     <DockPanel Margin="24,0,24,0">
-        <Border DockPanel.Dock="Bottom" BorderBrush="{StaticResource BrushBorderSubtle}" BorderThickness="0,1,0,0" Padding="0,12,0,14" Margin="0,14,0,0">
+        <Border DockPanel.Dock="Bottom" BorderBrush="{StaticResource BrushBorderSubtle}" BorderThickness="0,1,0,0" Padding="0,12,0,14">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel VerticalAlignment="Center" Margin="0,0,16,0">
+                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center" Margin="0,0,14,0">
                     <TextBlock Text="{Binding DraftState}" FontSize="12" AutomationProperties.AutomationId="MatchDraftState"/>
-                    <TextBlock Text="{Binding Feedback}" Style="{StaticResource HintText}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" ToolTip="{Binding Feedback}" Foreground="{StaticResource BrushWarning}" AutomationProperties.AutomationId="MatchSetupFeedback"/>
+                    <TextBlock Text="{Binding Feedback}" Foreground="{StaticResource BrushWarning}" TextWrapping="Wrap" MaxHeight="42" AutomationProperties.AutomationId="MatchSetupFeedback"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Button Content="保存预设" Command="{Binding SaveCommand}" Margin="0,0,8,0" AutomationProperties.AutomationId="SaveMatchPreset"/>
-                    <Button Content="保存为下局" Command="{Binding QueueCommand}" Style="{StaticResource PrimaryButton}" ToolTip="保存独立快照并排队；不会改变当前地图，也不会安装运行时。" AutomationProperties.AutomationId="QueueMatchSetup"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="保存方案" Command="{Binding SaveCommand}" Margin="0,0,8,0" AutomationProperties.AutomationId="SaveMatchPreset"/>
+                    <Button Content="{Binding PrepareActionText}" Command="{Binding DataContext.Bot.PrepareMatchCommand,RelativeSource={RelativeSource AncestorType=Window}}" IsEnabled="{Binding CanPrepareAction}" Style="{StaticResource PrimaryButton}" AutomationProperties.AutomationId="PrepareMatch"/>
                 </StackPanel>
             </Grid>
         </Border>
-        <TabControl AutomationProperties.AutomationId="MatchWorkspaceTabs">
-            <TabItem Header="双方阵容">
-                <DockPanel Margin="0,14,0,0">
-                    <Grid DockPanel.Dock="Top" Margin="0,0,0,16">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Margin="0,0,12,0">
-                            <TextBlock Text="我的阵营" Style="{StaticResource Label}"/>
-                            <ComboBox ItemsSource="{Binding SideChoices}" SelectedItem="{Binding HumanSide}" AutomationProperties.AutomationId="MatchHumanSide"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Margin="0,0,12,0">
-                            <TextBlock Text="我方 Bot 人数" Style="{StaticResource Label}"/>
-                            <ComboBox ItemsSource="{Binding FriendlyCounts}" SelectedItem="{Binding FriendlyBots}" AutomationProperties.AutomationId="MatchFriendlyCount"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2" Margin="0,0,12,0">
-                            <TextBlock Text="敌方 Bot 人数" Style="{StaticResource Label}"/>
-                            <ComboBox ItemsSource="{Binding EnemyCounts}" SelectedItem="{Binding EnemyBots}" AutomationProperties.AutomationId="MatchEnemyCount"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="3">
-                            <TextBlock Text="我替代的席位" Style="{StaticResource Label}"/>
-                            <ComboBox ItemsSource="{Binding ReplacementChoices}" SelectedValuePath="Value" DisplayMemberPath="Label" SelectedValue="{Binding ReplacedSlot}" AutomationProperties.AutomationId="MatchReplacement"/>
-                        </StackPanel>
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="16"/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <DockPanel Margin="0,0,0,10">
-                            <TextBlock Text="{Binding FriendlySummary}" DockPanel.Dock="Right" Foreground="{StaticResource BrushAccent}"/>
-                            <TextBlock Text="我方" FontWeight="SemiBold"/>
-                        </DockPanel>
-                        <DockPanel Grid.Column="2" Margin="0,0,0,10">
-                            <TextBlock Text="{Binding EnemySummary}" DockPanel.Dock="Right" Style="{StaticResource MutedText}"/>
-                            <TextBlock Text="敌方" FontWeight="SemiBold"/>
-                        </DockPanel>
-                        <ContentControl Grid.Row="1" Content="{Binding Friendly}" ContentTemplate="{StaticResource RosterEditor}"/>
-                        <ContentControl Grid.Row="1" Grid.Column="2" Content="{Binding Enemy}" ContentTemplate="{StaticResource RosterEditor}"/>
-                    </Grid>
-                </DockPanel>
-            </TabItem>
-            <TabItem Header="规则与应用状态">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Margin="0,18,0,0">
-                        <TextBlock Text="Bot 行为" Style="{StaticResource SectionTitle}"/>
-                        <Grid Margin="0,14,0,12">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Margin="0,0,12,0">
-                                <TextBlock Text="预设需要的安装强度" Style="{StaticResource Label}"/>
-                                <ComboBox ItemsSource="{Binding ProfileChoices}" SelectedItem="{Binding Profile}" AutomationProperties.AutomationId="MatchProfile"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Margin="0,0,12,0">
-                                <TextBlock Text="瞄准优先" Style="{StaticResource Label}"/>
-                                <ComboBox ItemsSource="{Binding AimChoices}" SelectedItem="{Binding Aim}" AutomationProperties.AutomationId="MatchAim"/>
-                            </StackPanel>
-                            <StackPanel Grid.Column="2">
-                                <TextBlock Text="道具策略" Style="{StaticResource Label}"/>
-                                <ComboBox ItemsSource="{Binding NadeChoices}" SelectedItem="{Binding Nades}" AutomationProperties.AutomationId="MatchNades"/>
-                            </StackPanel>
-                        </Grid>
-                        <TextBlock Text="强度须匹配实际安装 profile，不会局内热切。Aim / Nades 在适配层就绪后应用并读回。" Style="{StaticResource HintText}"/>
-                        <Border Style="{StaticResource Divider}"/>
-                        <TextBlock Text="最终出场阵容" Style="{StaticResource SectionTitle}"/>
-                        <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" Margin="0,12,0,16" AutomationProperties.AutomationId="MatchLineupPreview"/>
-                        <Border Style="{StaticResource Panel}">
-                            <StackPanel>
-                                <DockPanel>
-                                    <Button DockPanel.Dock="Right" Content="刷新读回" Command="{Binding RefreshStatusCommand}"/>
-                                    <TextBlock Text="运行时接收与行为证据" Style="{StaticResource SectionTitle}" VerticalAlignment="Center"/>
-                                </DockPanel>
-                                <TextBlock Text="{Binding ApplyStatus}" TextWrapping="Wrap" Margin="0,14,0,0" AutomationProperties.AutomationId="MatchApplyStatus"/>
-                                <Border Style="{StaticResource Divider}"/>
-                                <TextBlock Text="保存 → 排队 → 运行时接收 / 读回 → 内部行为观察"/>
-                                <TextBlock Text="每一步分别记录。本局与上次会话分开；实际玩法仍需实机验收。配置只在新本地地图、插件就绪且计分开始前初始化一次。" Style="{StaticResource HintText}" Margin="0,8,0,0"/>
-                            </StackPanel>
-                        </Border>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <Border Style="{StaticResource Panel}" Margin="0,0,0,14">
+                    <StackPanel>
+                        <TextBlock Text="基础设置" Style="{StaticResource SectionTitle}"/>
+                        <UniformGrid Columns="3" Margin="0,14,0,0">
+                            <StackPanel Margin="0,0,12,12"><TextBlock Text="地图" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding MapChoices}" IsEditable="True" Text="{Binding Map,UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="MatchMap"/></StackPanel>
+                            <StackPanel Margin="0,0,12,12"><TextBlock Text="模式" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding ModeChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Mode}" AutomationProperties.AutomationId="MatchMode"/></StackPanel>
+                            <StackPanel Margin="0,0,0,12"><TextBlock Text="难度" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding DifficultyChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Profile}" AutomationProperties.AutomationId="MatchProfile"/></StackPanel>
+                            <StackPanel Margin="0,0,12,12"><TextBlock Text="瞄准" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding AimLabels}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Aim}" AutomationProperties.AutomationId="MatchAim"/></StackPanel>
+                            <StackPanel Margin="0,0,12,12"><TextBlock Text="道具" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding NadeLabels}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Nades}" AutomationProperties.AutomationId="MatchNades"/></StackPanel>
+                            <StackPanel Margin="0,0,0,12"><TextBlock Text="我的阵营" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding SideChoices}" SelectedItem="{Binding HumanSide}" AutomationProperties.AutomationId="MatchHumanSide"/></StackPanel>
+                            <StackPanel Margin="0,0,12,0"><TextBlock Text="我方 Bot" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding FriendlyCounts}" SelectedItem="{Binding FriendlyBots}" AutomationProperties.AutomationId="MatchFriendlyCount"/></StackPanel>
+                            <StackPanel Margin="0,0,12,0"><TextBlock Text="对方 Bot" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding EnemyCounts}" SelectedItem="{Binding EnemyBots}" AutomationProperties.AutomationId="MatchEnemyCount"/></StackPanel>
+                            <StackPanel><TextBlock Text="我替代的席位" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding ReplacementChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding ReplacedSlot}" AutomationProperties.AutomationId="MatchReplacement"/></StackPanel>
+                        </UniformGrid>
                     </StackPanel>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="整局预设">
-                <Grid Margin="0,18,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.9*"/>
-                        <ColumnDefinition Width="24"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <DockPanel>
-                        <Grid DockPanel.Dock="Top" Margin="0,0,0,10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <ComboBox ItemsSource="{Binding Filters}" SelectedIndex="{Binding PresetFilter}" AutomationProperties.Name="预设筛选"/>
-                            <Button Grid.Column="1" Content="载入" Command="{Binding LoadCommand}" Margin="8,0,0,0"/>
-                        </Grid>
-                        <ListBox ItemsSource="{Binding Presets}" SelectedItem="{Binding SelectedPreset}" DisplayMemberPath="Label" ItemContainerStyle="{StaticResource ListRow}" AutomationProperties.AutomationId="MatchPresetPicker"/>
-                    </DockPanel>
-                    <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
-                        <StackPanel>
-                            <TextBlock Text="编辑中的整局预设" Style="{StaticResource SectionTitle}" Margin="0,0,0,18"/>
-                            <TextBlock Text="预设名称" Style="{StaticResource Label}"/>
-                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="MatchPresetName"/>
-                            <CheckBox Content="收藏这个预设" IsChecked="{Binding Favorite}" Margin="0,14,0,14"/>
-                            <WrapPanel>
-                                <Button Content="新建" Command="{Binding NewCommand}" Margin="0,0,8,8"/>
-                                <Button Content="复制当前草稿" Command="{Binding DuplicateCommand}" Margin="0,0,8,8"/>
-                                <Button Content="复用上局" Command="{Binding ReuseLastCommand}" Margin="0,0,8,8"/>
-                            </WrapPanel>
-                            <Border Style="{StaticResource Divider}"/>
-                            <WrapPanel>
-                                <Button Content="导入" Command="{Binding ImportCommand}" Margin="0,0,8,8"/>
-                                <Button Content="导出全部" Command="{Binding ExportCommand}" Margin="0,0,8,8"/>
-                                <Button Content="删除所选" Command="{Binding DeleteCommand}" Style="{StaticResource DangerButton}" Margin="0,0,8,8"/>
-                            </WrapPanel>
-                            <TextBlock Text="预设保留双方阵容、人数、替代位置与行为规则。保存只写个人目录；保存为下局才会排队。" Style="{StaticResource HintText}" Margin="0,12,0,0"/>
-                        </StackPanel>
-                    </ScrollViewer>
-                </Grid>
-            </TabItem>
-        </TabControl>
+                </Border>
+                <Border Style="{StaticResource Panel}" Margin="0,0,0,14">
+                    <StackPanel>
+                        <DockPanel>
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <Button Content="交换阵容" Command="{Binding SwapLineupsCommand}" Margin="0,0,8,0" AutomationProperties.AutomationId="SwapLineups"/>
+                                <Button Content="撤销交换" Command="{Binding UndoSwapCommand}" AutomationProperties.AutomationId="UndoSwapLineups"/>
+                            </StackPanel>
+                            <TextBlock Text="双方阵容" Style="{StaticResource SectionTitle}" VerticalAlignment="Center"/>
+                        </DockPanel>
+                        <WrapPanel Margin="0,16,0,0">
+                            <StackPanel Width="370" Margin="0,0,14,14"><TextBlock Text="{Binding FriendlySummary}" FontWeight="SemiBold" Margin="0,0,0,8"/><ContentControl Content="{Binding Friendly}" ContentTemplate="{StaticResource RosterEditor}"/></StackPanel>
+                            <StackPanel Width="370" Margin="0,0,0,14"><TextBlock Text="{Binding EnemySummary}" FontWeight="SemiBold" Margin="0,0,0,8"/><ContentControl Content="{Binding Enemy}" ContentTemplate="{StaticResource RosterEditor}"/></StackPanel>
+                        </WrapPanel>
+                        <TextBlock Text="{Binding Preview}" TextWrapping="Wrap" AutomationProperties.AutomationId="MatchLineupPreview"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Panel}" Margin="0,0,0,14">
+                    <StackPanel>
+                        <TextBlock Text="对局方案" Style="{StaticResource SectionTitle}"/>
+                        <WrapPanel Margin="0,12,0,8">
+                            <ComboBox Width="230" ItemsSource="{Binding Presets}" DisplayMemberPath="Label" SelectedItem="{Binding SelectedPreset}" AutomationProperties.AutomationId="MatchPresetSelector" Margin="0,0,8,8"/>
+                            <Button Content="选择方案" Command="{Binding LoadCommand}" Margin="0,0,8,8"/>
+                            <Button Content="新建方案" Command="{Binding NewCommand}" Margin="0,0,8,8"/>
+                            <Button Content="复制方案" Command="{Binding DuplicateCommand}" Margin="0,0,8,8"/>
+                            <Button Content="删除方案" Command="{Binding DeleteCommand}" Margin="0,0,8,8"/>
+                            <Button Content="导入方案" Command="{Binding ImportCommand}" Margin="0,0,8,8"/>
+                            <Button Content="导出方案" Command="{Binding ExportCommand}" Margin="0,0,8,8"/>
+                        </WrapPanel>
+                        <TextBox Text="{Binding Name,UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="方案名称"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource Panel}" Margin="0,0,0,14">
+                    <StackPanel>
+                        <DockPanel><Button DockPanel.Dock="Right" Content="检查状态" Command="{Binding RefreshStatusCommand}"/><TextBlock Text="准备状态" Style="{StaticResource SectionTitle}"/></DockPanel>
+                        <TextBlock Text="{Binding PreparationText}" TextWrapping="Wrap" Margin="0,12,0,8" AutomationProperties.AutomationId="MatchPreparationStatus"/>
+                        <TextBlock Text="{Binding ApplyStatus}" TextWrapping="Wrap" Style="{StaticResource HintText}" AutomationProperties.AutomationId="MatchApplyStatus"/>
+                        <TextBlock Text="{Binding DataContext.Bot.Feedback,RelativeSource={RelativeSource AncestorType=Window}}" TextWrapping="Wrap" Foreground="{StaticResource BrushWarning}" Margin="0,8,0,0"/>
+                        <TextBlock Text="可靠的一键启动尚未实机证实。准备后由本人以 -insecure 启动离线 CS2 并加载所选地图；运行时读回后再确认本局状态。" Style="{StaticResource HintText}" TextWrapping="Wrap" Margin="0,12,0,0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
     </DockPanel>
 </UserControl>

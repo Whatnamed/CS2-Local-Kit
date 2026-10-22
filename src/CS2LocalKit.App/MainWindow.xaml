@@ -9,140 +9,57 @@
             </StackPanel>
         </Grid>
         <Grid x:Name="ShellHost" Visibility="Collapsed">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="196"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions><ColumnDefinition Width="184"/><ColumnDefinition/></Grid.ColumnDefinitions>
             <Border Background="{StaticResource BrushBgRail}" BorderBrush="{StaticResource BrushBorderSubtle}" BorderThickness="0,0,1,0">
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Margin="20,26,16,24">
-                        <StackPanel Orientation="Horizontal">
-                            <ui:SymbolIcon Symbol="Games24" Foreground="{StaticResource BrushAccent}" FontSize="27" Margin="0,0,10,0"/>
-                            <TextBlock Text="LOCAL KIT" FontWeight="Bold" FontSize="17" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <TextBlock Text="COUNTER-STRIKE 2" FontSize="10" Foreground="{StaticResource BrushTextTertiary}" Margin="38,4,0,0"/>
+                        <StackPanel Orientation="Horizontal"><ui:SymbolIcon Symbol="Games24" Foreground="{StaticResource BrushAccent}" FontSize="27" Margin="0,0,10,0"/><TextBlock Text="LOCAL KIT" FontWeight="Bold" FontSize="17" VerticalAlignment="Center"/></StackPanel>
                     </StackPanel>
                     <StackPanel DockPanel.Dock="Bottom" Margin="20,16,18,22">
                         <Border Style="{StaticResource Divider}"/>
                         <TextBlock Text="离线 · 本地游玩" FontSize="12"/>
-                        <TextBlock Text="运行时效果待游戏内验收" Style="{StaticResource HintText}" Margin="0,6,0,0"/>
+                        <TextBlock Text="游戏内效果待实际验收" Style="{StaticResource HintText}" Margin="0,6,0,0"/>
                     </StackPanel>
                     <StackPanel>
-                        <TextBlock Text="工作区" Style="{StaticResource GroupName}" Margin="20,0,0,10"/>
-                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav" IsChecked="{Binding Navigation.IsMatchSetupSelected, Mode=TwoWay}" Command="{Binding Navigation.NavigateMatchSetupCommand}" AutomationProperties.AutomationId="NavigateMatchSetup" AutomationProperties.Name="准备下一局">
-                            <Grid Width="140">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <ui:SymbolIcon Symbol="PeopleTeam24" FontSize="19"/>
-                                <TextBlock Grid.Column="1" Text="准备下一局" VerticalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
-                            </Grid>
+                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav" IsChecked="{Binding Navigation.IsMatchSetupSelected,Mode=TwoWay}" Command="{Binding Navigation.NavigateMatchSetupCommand}" AutomationProperties.AutomationId="NavigateMatchSetup" AutomationProperties.Name="对局配置">
+                            <Grid Width="130"><Grid.ColumnDefinitions><ColumnDefinition Width="28"/><ColumnDefinition/></Grid.ColumnDefinitions><ui:SymbolIcon Symbol="PeopleTeam24" FontSize="19"/><TextBlock Grid.Column="1" Text="对局配置" VerticalAlignment="Center" Foreground="{Binding Foreground,RelativeSource={RelativeSource AncestorType=RadioButton}}"/></Grid>
                         </RadioButton>
-                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav" IsChecked="{Binding Navigation.IsCosmeticsSelected, Mode=TwoWay}" Command="{Binding Navigation.NavigateCosmeticsCommand}" AutomationProperties.AutomationId="NavigateCosmetics" AutomationProperties.Name="真人饰品">
-                            <Grid Width="140">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <ui:SymbolIcon Symbol="PaintBrush24" FontSize="19"/>
-                                <TextBlock Grid.Column="1" Text="真人饰品" VerticalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
-                            </Grid>
-                        </RadioButton>
-                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav" IsChecked="{Binding Navigation.IsPresetsSelected, Mode=TwoWay}" Command="{Binding Navigation.NavigatePresetsCommand}" AutomationProperties.AutomationId="NavigatePresets" AutomationProperties.Name="饰品预设">
-                            <Grid Width="140">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <ui:SymbolIcon Symbol="Folder24" FontSize="19"/>
-                                <TextBlock Grid.Column="1" Text="饰品预设" VerticalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
-                            </Grid>
-                        </RadioButton>
-                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav" IsChecked="{Binding Navigation.IsBotSelected, Mode=TwoWay}" Command="{Binding Navigation.NavigateBotCommand}" AutomationProperties.AutomationId="NavigateBot" AutomationProperties.Name="Bot 安装">
-                            <Grid Width="140">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <ui:SymbolIcon Symbol="PuzzlePiece24" FontSize="19"/>
-                                <TextBlock Grid.Column="1" Text="Bot 安装" VerticalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
-                            </Grid>
-                        </RadioButton>
-                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav" IsChecked="{Binding Navigation.IsRuntimeStatusSelected, Mode=TwoWay}" Command="{Binding Navigation.NavigateRuntimeStatusCommand}" AutomationProperties.AutomationId="NavigateRuntimeStatus" AutomationProperties.Name="环境与恢复">
-                            <Grid Width="140">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="28"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <ui:SymbolIcon Symbol="ShieldCheckmark24" FontSize="19"/>
-                                <TextBlock Grid.Column="1" Text="环境与恢复" VerticalAlignment="Center" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=RadioButton}}"/>
-                            </Grid>
+                        <RadioButton Style="{StaticResource RailItem}" GroupName="nav" IsChecked="{Binding Navigation.IsCosmeticsSelected,Mode=TwoWay}" Command="{Binding Navigation.NavigateCosmeticsCommand}" AutomationProperties.AutomationId="NavigateCosmetics" AutomationProperties.Name="饰品配置">
+                            <Grid Width="130"><Grid.ColumnDefinitions><ColumnDefinition Width="28"/><ColumnDefinition/></Grid.ColumnDefinitions><ui:SymbolIcon Symbol="PaintBrush24" FontSize="19"/><TextBlock Grid.Column="1" Text="饰品配置" VerticalAlignment="Center" Foreground="{Binding Foreground,RelativeSource={RelativeSource AncestorType=RadioButton}}"/></Grid>
                         </RadioButton>
                     </StackPanel>
                 </DockPanel>
             </Border>
             <DockPanel Grid.Column="1">
-                <Grid DockPanel.Dock="Top" Margin="24,22,24,18">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Navigation.PageTitle}" Style="{StaticResource PageTitle}"/>
-                        <TextBlock Text="{Binding Navigation.PageSubtitle}" Style="{StaticResource HintText}" Margin="0,5,12,0"/>
+                <Grid DockPanel.Dock="Top" Margin="24,20,24,16">
+                    <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="返回" Command="{Binding Navigation.ReturnFromSettingsCommand}" Style="{StaticResource GhostButton}" Visibility="{Binding Navigation.IsSettingsSelected,Converter={StaticResource BoolToVis}}" Margin="0,0,12,0"/>
+                        <TextBlock Text="{Binding Navigation.PageTitle}" Style="{StaticResource PageTitle}" VerticalAlignment="Center"/>
                     </StackPanel>
-                    <Button Grid.Column="1" Command="{Binding Navigation.NavigateRuntimeStatusCommand}" Style="{StaticResource GhostButton}" VerticalAlignment="Top" ToolTip="查看环境与阻断原因">
-                        <StackPanel Orientation="Horizontal">
-                            <Ellipse Width="7" Height="7" Fill="{Binding Header.HealthLevel, Converter={StaticResource HealthBrush}}" Margin="0,0,8,0"/>
-                            <TextBlock Text="{Binding Header.Cs2StatusText}" FontSize="12"/>
-                        </StackPanel>
-                    </Button>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding Header.Cs2StatusText}" FontSize="12" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <Button Content="⚙" Command="{Binding Navigation.NavigateSettingsCommand}" Style="{StaticResource GhostButton}" ToolTip="系统设置" AutomationProperties.AutomationId="NavigateSettings" AutomationProperties.Name="系统设置" FontSize="19"/>
+                    </StackPanel>
                 </Grid>
-                <Border DockPanel.Dock="Bottom" Background="{StaticResource BrushBgRail}" BorderBrush="{StaticResource BrushBorderSubtle}" BorderThickness="0,1,0,0" Padding="24,12" Visibility="{Binding Navigation.IsHumanPage, Converter={StaticResource BoolToVis}}">
+                <Border DockPanel.Dock="Bottom" Background="{StaticResource BrushBgRail}" BorderBrush="{StaticResource BrushBorderSubtle}" BorderThickness="0,1,0,0" Padding="24,12" Visibility="{Binding Navigation.IsHumanPage,Converter={StaticResource BoolToVis}}">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                         <StackPanel VerticalAlignment="Center" Margin="0,0,12,0">
                             <TextBlock Text="{Binding Header.DraftStatusText}" FontSize="12"/>
-                            <TextBlock Text="{Binding Cosmetics.StatusMessage}" Style="{StaticResource HintText}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap" ToolTip="{Binding Cosmetics.StatusMessage}" Visibility="{Binding Cosmetics.IsStatusVisible, Converter={StaticResource BoolToVis}}"/>
+                            <TextBlock Text="{Binding Cosmetics.StatusMessage}" Style="{StaticResource HintText}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Cosmetics.StatusMessage}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Orientation="Horizontal">
-                            <Button Content="放弃更改" Command="{Binding Header.DiscardCommand}" Style="{StaticResource GhostButton}" Margin="0,0,8,0"/>
-                            <Button Content="保存预设" Command="{Binding Header.SaveCommand}" Margin="0,0,8,0" AutomationProperties.AutomationId="SaveHumanPreset"/>
-                            <Button Content="应用到 CS2" Style="{StaticResource PrimaryButton}" Command="{Binding Header.ApplyCommand}" ToolTip="{Binding Header.ApplyHint}" AutomationProperties.AutomationId="ApplyHumanPreset"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-                <Border DockPanel.Dock="Top" Margin="24,0,24,16" Background="{StaticResource BrushBgSurface}" CornerRadius="6" Padding="14,10" Visibility="{Binding Navigation.IsHumanPage, Converter={StaticResource BoolToVis}}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel>
-                            <TextBlock Text="编辑草稿" Style="{StaticResource HintText}"/>
-                            <TextBlock Text="{Binding Header.EditingName}" Margin="0,3,12,0" TextTrimming="CharacterEllipsis" ToolTip="{Binding Header.EditingName}"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="激活指针" Style="{StaticResource HintText}"/>
-                            <TextBlock Text="{Binding Header.ActiveName}" Margin="0,3,12,0" TextTrimming="CharacterEllipsis" ToolTip="启动时读取的预设指针；保存不会自动激活或写入游戏文件。"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2">
-                            <TextBlock Text="已写入的游戏文件" Style="{StaticResource HintText}"/>
-                            <TextBlock Text="{Binding Header.InstalledConfigName}" Margin="0,3,0,0" TextTrimming="CharacterEllipsis" ToolTip="{Binding Header.InstalledConfigDetail}"/>
+                            <Button Content="放弃修改" Command="{Binding Header.DiscardCommand}" Style="{StaticResource GhostButton}" Margin="0,0,8,0"/>
+                            <Button Content="保存方案" Command="{Binding Header.SaveCommand}" Margin="0,0,8,0" AutomationProperties.AutomationId="SaveHumanPreset"/>
+                            <Button Content="保存并应用" Style="{StaticResource PrimaryButton}" Command="{Binding Header.ApplyCommand}" ToolTip="{Binding Header.ApplyHint}" AutomationProperties.AutomationId="ApplyHumanPreset"/>
                         </StackPanel>
                     </Grid>
                 </Border>
                 <Grid>
-                    <views:MatchSetupView DataContext="{Binding Bot.Setup}" Visibility="{Binding DataContext.Navigation.IsMatchSetupSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}"/>
-                    <views:CosmeticsView DataContext="{Binding Cosmetics}" Visibility="{Binding DataContext.Navigation.IsCosmeticsSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}"/>
-                    <views:PresetsView DataContext="{Binding Presets}" Visibility="{Binding DataContext.Navigation.IsPresetsSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}"/>
-                    <views:BotView DataContext="{Binding Bot}" Visibility="{Binding DataContext.Navigation.IsBotSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}"/>
-                    <views:RuntimeStatusView DataContext="{Binding RuntimeStatus}" Visibility="{Binding DataContext.Navigation.IsRuntimeStatusSelected, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVis}}"/>
+                    <views:MatchSetupView DataContext="{Binding Bot.Setup}" Visibility="{Binding DataContext.Navigation.IsMatchSetupSelected,RelativeSource={RelativeSource AncestorType=Window},Converter={StaticResource BoolToVis}}"/>
+                    <views:CosmeticsConfigurationView Visibility="{Binding Navigation.IsCosmeticsSelected,Converter={StaticResource BoolToVis}}"/>
+                    <views:SystemSettingsView Visibility="{Binding Navigation.IsSettingsSelected,Converter={StaticResource BoolToVis}}"/>
                 </Grid>
             </DockPanel>
         </Grid>

@@ -64,11 +64,14 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Style="{StaticResource Segment}" Content="武器" GroupName="section" IsChecked="{Binding IsWeaponsSection,Mode=TwoWay}" Command="{Binding SelectSectionCommand}" CommandParameter="{x:Static vm:CosmeticsSection.Weapons}"/>
+            <StackPanel>
+                <TextBlock Text="装备类别" Style="{StaticResource Label}" Margin="0,0,0,6"/>
+                <StackPanel Orientation="Horizontal">
+                <RadioButton Style="{StaticResource Segment}" Content="枪械" GroupName="section" IsChecked="{Binding IsWeaponsSection,Mode=TwoWay}" Command="{Binding SelectSectionCommand}" CommandParameter="{x:Static vm:CosmeticsSection.Weapons}"/>
                 <RadioButton Style="{StaticResource Segment}" Content="刀具" GroupName="section" IsChecked="{Binding IsKnivesSection,Mode=TwoWay}" Command="{Binding SelectSectionCommand}" CommandParameter="{x:Static vm:CosmeticsSection.Knives}"/>
                 <RadioButton Style="{StaticResource Segment}" Content="手套" GroupName="section" IsChecked="{Binding IsGlovesSection,Mode=TwoWay}" Command="{Binding SelectSectionCommand}" CommandParameter="{x:Static vm:CosmeticsSection.Gloves}"/>
                 <RadioButton Style="{StaticResource Segment}" Content="音乐盒" GroupName="section" IsChecked="{Binding IsMusicKitSection,Mode=TwoWay}" Command="{Binding SelectSectionCommand}" CommandParameter="{x:Static vm:CosmeticsSection.MusicKit}"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal" Visibility="{Binding ShowsTeamContext,Converter={StaticResource BoolToVis}}">
                 <RadioButton Style="{StaticResource Segment}" Content="CT" GroupName="team" IsChecked="{Binding IsCt}"/>
@@ -97,6 +100,7 @@
             <!-- model list -->
             <DockPanel Grid.Column="0" LastChildFill="True">
                 <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="装备列表" Style="{StaticResource Label}" Margin="0,0,0,6"/>
                     <Grid Margin="0,0,10,8">
                         <TextBox MinHeight="34" Text="{Binding ItemSearchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="搜索武器（中文 / English / #ID）" AutomationProperties.Name="搜索武器"/>
                         <TextBlock Text="搜索武器（中文 / English / #ID）" FontSize="12" TextTrimming="CharacterEllipsis" Foreground="{StaticResource BrushTextDisabled}" Margin="10,0,0,0" VerticalAlignment="Center" IsHitTestVisible="False">
@@ -149,6 +153,7 @@
             <!-- finish grid -->
             <DockPanel Grid.Column="1" LastChildFill="True" x:Name="SkinHost">
                 <StackPanel DockPanel.Dock="Top" Margin="16,0,14,10">
+                    <TextBlock Text="外观列表" Style="{StaticResource Label}" Margin="0,0,0,6"/>
                     <TextBlock Text="{Binding DetailWeaponName}" Style="{StaticResource SectionTitle}" TextTrimming="CharacterEllipsis" Margin="0,0,0,8"/>
                     <ui:TextBox Text="{Binding SkinSearchText,UpdateSourceTrigger=PropertyChanged}" ToolTip="搜索皮肤（中文 / English / #ID）" AutomationProperties.Name="搜索皮肤" PlaceholderText="搜索皮肤 · 中文 / English / #ID"/>
                 </StackPanel>
@@ -190,7 +195,7 @@
             <!-- editing detail -->
             <ScrollViewer Grid.Column="3" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Padding="0,0,10,0">
                 <StackPanel Margin="0,0,4,16">
-                    <TextBlock Text="外观参数 · 草稿" Style="{StaticResource Label}"/>
+                    <TextBlock Text="参数设置" Style="{StaticResource Label}"/>
                     <Border Height="144" CornerRadius="10" Background="{StaticResource BrushPlaceholder}">
                         <Grid>
                             <Image x:Name="DetailArt" Margin="12" Stretch="Uniform" common:LazyImage.Url="{Binding DetailImageUrl}" common:LazyImage.PixelWidth="512"/>
