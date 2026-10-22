@@ -1,0 +1,7 @@
+  CS2LocalKit.Core -> E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\src\CS2LocalKit.Core\bin\Release\net10.0\CS2LocalKit.Core.dll
+  CS2LocalKit.App -> E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\src\CS2LocalKit.App\bin\Release\net10.0-windows\CS2LocalKit.App.dll
+  CS2LocalKit.Core.Tests -> E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\tests\CS2LocalKit.Core.Tests\bin\Release\net10.0-windows\CS2LocalKit.Core.Tests.dll
+E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\tests\CS2LocalKit.Core.Tests\bin\Release\net10.0-windows\CS2LocalKit.Core.Tests.dll (.NETCoreApp,Version=v10.0)的测试运行
+总共 1 个测试文件与指定模式相匹配。
+
+已通过! - 失败:     0，通过:   198，已跳过:     0，总计:   198，持续时间: 4 s - CS2LocalKit.Core.Tests.dll (net10.0)

@@ -1,0 +1,32 @@
+{
+  "observationOnly": true,
+  "cs2Running": false,
+  "steam": {
+    "Idle": true,
+    "Reason": "Steam \u5B89\u88C5\u72B6\u6001\u7A33\u5B9A",
+    "BuildId": "26087496",
+    "PatchVersion": "1.41.9.1",
+    "ClientVersion": "2000934",
+    "BuildText": "1.41.9.1 / 2000934 / 26087496"
+  },
+  "identity": {
+    "BlocksHuman": false,
+    "Reason": "",
+    "InstallId": null,
+    "BackupRoot": null,
+    "PreservesHuman": false,
+    "State": null,
+    "RecoveryRequired": false
+  },
+  "readiness": {
+    "CanEnable": false,
+    "Reason": "\u5019\u9009 build \u5DF2\u8FC7\u671F\uFF081.41.9.1 / 2000933 / 25966348\uFF09\uFF1B\u7981\u6B62\u5957\u7528\u5230\u5F53\u524D build",
+    "CurrentBuild": "1.41.9.1 / 2000934 / 26087496",
+    "CandidateBuild": "1.41.9.1 / 2000933 / 25966348",
+    "BotRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+    "HumanFilesValid": true
+  },
+  "realInstallationPerformed": false,
+  "gameStarted": false
+}
+

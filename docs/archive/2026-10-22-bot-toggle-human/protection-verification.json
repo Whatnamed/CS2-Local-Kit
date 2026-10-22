@@ -1,0 +1,23 @@
+{
+  "changedSurfaces": [],
+  "unchanged": true,
+  "surfaces": [
+    "game/csgo/addons",
+    "game/csgo/cfg",
+    "data/presets",
+    "data/app-data",
+    "data/backups",
+    "game/bin/win64/cs2.exe",
+    "game/bin/win64/engine2.dll",
+    "game/bin/win64/schemasystem.dll",
+    "game/csgo/bin/win64/client.dll",
+    "game/csgo/bin/win64/server.dll",
+    "game/csgo/steam.inf",
+    "game/csgo/gameinfo.gi",
+    "game/csgo/.cs2-local-kit-bot-experiment.json",
+    "steamManifest",
+    "locks"
+  ],
+  "snapshotSha256": "d64d9680520ce21ed1515e52335a392abe230cc985b4cb493da208dff7898d1c",
+  "scope": "addons/cfg, key binaries, gameinfo, steam.inf/manifest, runtime locks, all presets/app-data/backups. Root-level private preset files are outside all write paths and were not opened."
+}

@@ -1,0 +1,37 @@
+test_all_five_game_binary_identities_required (__main__.TransactionTests.test_all_five_game_binary_identities_required) ... ok
+test_corrupt_backup_refuses_before_writes (__main__.TransactionTests.test_corrupt_backup_refuses_before_writes) ... ok
+test_created_and_overwritten_file_drift (__main__.TransactionTests.test_created_and_overwritten_file_drift) ... ok
+test_dry_run_is_default_at_public_entry (__main__.TransactionTests.test_dry_run_is_default_at_public_entry) ... ok
+test_duplicate_and_case_collision_paths (__main__.TransactionTests.test_duplicate_and_case_collision_paths) ... ok
+test_duplicate_install_and_incomplete_history (__main__.TransactionTests.test_duplicate_install_and_incomplete_history) ... ok
+test_duplicate_json_keys (__main__.TransactionTests.test_duplicate_json_keys) ... ok
+test_duplicate_startup_entry (__main__.TransactionTests.test_duplicate_startup_entry) ... ok
+test_each_profile_failure_interruption_and_retry (__main__.TransactionTests.test_each_profile_failure_interruption_and_retry) ... ok
+test_extra_installed_plugin_file_refuses_restore (__main__.TransactionTests.test_extra_installed_plugin_file_refuses_restore) ... ok
+test_extra_startup_entry (__main__.TransactionTests.test_extra_startup_entry) ... ok
+test_fake_mode_refuses_real_executable (__main__.TransactionTests.test_fake_mode_refuses_real_executable) ... ok
+test_fault_rollback_all_four_surfaces (__main__.TransactionTests.test_fault_rollback_all_four_surfaces) ... ok
+test_full_roundtrip_and_zero_write_previews (__main__.TransactionTests.test_full_roundtrip_and_zero_write_previews) ... ok
+test_game_build_and_binary_drift (__main__.TransactionTests.test_game_build_and_binary_drift) ... ok
+test_hard_interruption_resumes_from_exact_record (__main__.TransactionTests.test_hard_interruption_resumes_from_exact_record) ... ok
+test_human_requires_explicit_isolation (__main__.TransactionTests.test_human_requires_explicit_isolation) ... ok
+test_isolation_conflict_refuses_before_writes (__main__.TransactionTests.test_isolation_conflict_refuses_before_writes) ... ok
+test_malicious_relative_paths (__main__.TransactionTests.test_malicious_relative_paths) ... ok
+test_manifest_digest (__main__.TransactionTests.test_manifest_digest) ... ok
+test_missing_and_unknown_framework_identity (__main__.TransactionTests.test_missing_and_unknown_framework_identity) ... ok
+test_missing_backup_refuses_before_writes (__main__.TransactionTests.test_missing_backup_refuses_before_writes) ... ok
+test_missing_payload (__main__.TransactionTests.test_missing_payload) ... ok
+test_payload_hash_mismatch (__main__.TransactionTests.test_payload_hash_mismatch) ... ok
+test_profile_drift_and_selected_source_refused (__main__.TransactionTests.test_profile_drift_and_selected_source_refused) ... ok
+test_profile_record_and_installed_vpk_drift_refused (__main__.TransactionTests.test_profile_record_and_installed_vpk_drift_refused) ... ok
+test_reparse_target_and_payload (__main__.TransactionTests.test_reparse_target_and_payload) ... ok
+test_restore_interruption_resumes (__main__.TransactionTests.test_restore_interruption_resumes) ... ok
+test_retained_css_drift (__main__.TransactionTests.test_retained_css_drift) ... ok
+test_running_cs2_refused_in_fake_mode_too (__main__.TransactionTests.test_running_cs2_refused_in_fake_mode_too) ... ok
+test_three_profiles_roundtrip_and_explicit_record (__main__.TransactionTests.test_three_profiles_roundtrip_and_explicit_record) ... ok
+test_unlisted_plugin_refused (__main__.TransactionTests.test_unlisted_plugin_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 211.761s
+
+OK

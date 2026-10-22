@@ -1,0 +1,13 @@
+test_joint_evidence_and_explicit_policy_required (__main__.CoexistenceTests.test_joint_evidence_and_explicit_policy_required) ... ok
+test_joint_failure_and_hard_interruption_all_four_stages (__main__.CoexistenceTests.test_joint_failure_and_hard_interruption_all_four_stages) ... ok
+test_joint_human_file_drift_and_bad_backup_refuse_without_writes (__main__.CoexistenceTests.test_joint_human_file_drift_and_bad_backup_refuse_without_writes) ... ok
+test_joint_restore_interruption_resumes_exactly (__main__.CoexistenceTests.test_joint_restore_interruption_resumes_exactly) ... ok
+test_joint_steam_update_before_and_during_write_keeps_recovery (__main__.CoexistenceTests.test_joint_steam_update_before_and_during_write_keeps_recovery) ... ok
+test_joint_unknown_module_and_game_update_refuse (__main__.CoexistenceTests.test_joint_unknown_module_and_game_update_refuse) ... ok
+test_normal_joint_normal_repeat_and_human_unchanged (__main__.CoexistenceTests.test_normal_joint_normal_repeat_and_human_unchanged) ... ok
+test_public_joint_wrapper_roundtrip_without_real_target (__main__.CoexistenceTests.test_public_joint_wrapper_roundtrip_without_real_target) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 20.529s
+
+OK

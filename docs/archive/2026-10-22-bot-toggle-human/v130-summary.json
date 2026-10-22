@@ -1,0 +1,85 @@
+{
+  "patterns": 40,
+  "unique": 24,
+  "missing": 15,
+  "ambiguous": 1,
+  "uniqueOriginalMismatches": [
+    "BotAI/OnAudibleEvent_GlobalHearRange"
+  ],
+  "oldAimConstants": {
+    "OFF_M_TARGETSPOT": "0x59A4",
+    "OFF_M_ENEMY_HANDLE": "0x5A10",
+    "OFF_M_IS_ENEMY_VISIBLE": "0x5A14",
+    "OFF_PAWN_M_PBOT": "0x1298"
+  },
+  "failedBindings": [
+    {
+      "name": "BotAI/AttackState_SkipSniperSpreadCheck",
+      "count": 0
+    },
+    {
+      "name": "BotAI/AllSkill_DodgeChance100_OnOutnumberedOrSniper",
+      "count": 0
+    },
+    {
+      "name": "BotAI/DodgeChance_Flat80",
+      "count": 0
+    },
+    {
+      "name": "BotAI/AttackState_CanStrafe_jne",
+      "count": 19
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipSkillCheck",
+      "count": 0
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipHidingSpotCheck",
+      "count": 0
+    },
+    {
+      "name": "BotAI/Vision_SkipIsMovingGate",
+      "count": 0
+    },
+    {
+      "name": "BotAI/Vision_AlwaysEnterApproachBody",
+      "count": 0
+    },
+    {
+      "name": "BotAI/IsNoticable_AlwaysTrue",
+      "count": 0
+    },
+    {
+      "name": "BotAI/InViewCone_RemoveOuterFOV",
+      "count": 0
+    },
+    {
+      "name": "BotAI/TBot_BombsiteSearch_UseKnownPlantedSite",
+      "count": 0
+    },
+    {
+      "name": "BotAI/BombBeep_CT_GlobalHearRange",
+      "count": 0
+    },
+    {
+      "name": "BotAI/BombPickup_CT_GlobalHearRange",
+      "count": 0
+    },
+    {
+      "name": "BotAI/OnAudibleEvent_GlobalHearRange",
+      "count": 1
+    },
+    {
+      "name": "BotAI/OnBombPlanted_AllBotsLearnSite",
+      "count": 0
+    },
+    {
+      "name": "BotAI/FlashbangAvoidance_Disable",
+      "count": 0
+    },
+    {
+      "name": "BotAimImprover/PickNewAimSpot",
+      "count": 0
+    }
+  ]
+}

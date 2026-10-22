@@ -1,0 +1,24 @@
+{
+  "status": "PASS for offline Controller and synthetic transaction scope only",
+  "sourceHead": "65798bf262c7e6dd490b0bc2cf5dcf1816ee78af",
+  "releaseDir": "E:\\CS2MOD\\releases\\controller\\controller-bot-toggle-human-20261022-65798bf",
+  "releaseManifestSha256": "dc97d3c0e4de70a699ca0f49df89d1731d3ce39919aaba657e83b7710d76c6ef",
+  "verifiedPayloadFiles": 404,
+  "dotnetTests": {
+    "passed": 198,
+    "failed": 0,
+    "skipped": 0
+  },
+  "pythonJointTests": {
+    "passed": 8
+  },
+  "pythonLegacyTransactionTests": {
+    "passed": 32
+  },
+  "nativeWpfReleaseSmoke": "PASS; isolated app-data plus synthetic public candidate build/ref header, actual game read-only",
+  "protectionSnapshot": "unchanged, see protection-verification.json",
+  "botInstalled": false,
+  "gameStarted": false,
+  "jointRuntimeCertified": false,
+  "lowOverheadHistoricalVersionConfirmed": false
+}

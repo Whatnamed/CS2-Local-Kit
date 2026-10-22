@@ -1,0 +1,18 @@
+== Using .NET host: E:\Projects\CS2-Local-Kit\CS2-Local-Kit\temp\tooling\dotnet\dotnet.exe
+   OK  .NET SDK version: 10.0.401
+== Publishing CS2LocalKit.App (win-x64, self-contained, Release)...
+  正在确定要还原的项目…
+  已还原 E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\src\CS2LocalKit.Core\CS2LocalKit.Core.csproj (用时 2.73 秒)。
+  已还原 E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\src\CS2LocalKit.App\CS2LocalKit.App.csproj (用时 2.73 秒)。
+  CS2LocalKit.Core -> E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\src\CS2LocalKit.Core\bin\Release\net10.0\CS2LocalKit.Core.dll
+  CS2LocalKit.App -> E:\Projects\CS2-Local-Kit\wt-bot-toggle-human-20261022\src\CS2LocalKit.App\bin\Release\net10.0-windows\win-x64\CS2LocalKit.App.dll
+  CS2LocalKit.App -> E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf\payload\
+   OK  Published executable: E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf\payload\CS2LocalKit.App.exe
+   OK  Runtime lock present in payload: E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf\payload\runtime\inventory-simulator.lock.json
+== Computing file hashes and checking private data boundaries...
+   OK  Hashed 404 files. No private data detected.
+   OK  Manifest written: E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf\release-manifest.json
+== Controller UI Release successfully published to: E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf
+   Payload: E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf\payload
+   Executable: E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf\payload\CS2LocalKit.App.exe
+   Manifest: E:\CS2MOD\releases\controller\controller-bot-toggle-human-20261022-65798bf\release-manifest.json

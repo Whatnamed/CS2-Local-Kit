@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/ed0ard/CS2-Bot-Improver",
+  "tag": "v1.3.0",
+  "ref": "1ceb47b9c6fa837f1656e2772763e2ab7c408158",
+  "officialRelease": "https://github.com/ed0ard/CS2-Bot-Improver/releases/tag/v1.3.0",
+  "releasePublishedAt": "2026-05-24T03:47:20Z",
+  "windowsAssetMetadataOnly": {
+    "id": 428608675,
+    "size": 74537979,
+    "sha256": "ed2b6485ce7095d3ec1ee2712cfeb79442a5874c381465f2ff73939604ff919f",
+    "downloaded": false
+  },
+  "localSource": "existing legacy Git object, exact tag ref verified against GitHub; git archive addons README.md LICENSE",
+  "localSourceArchiveSha256": "4665791b2117bbfc20a19edcea73ba82db315777cea888c484a6ea22875ed1df",
+  "historicalInstalledIdentityConfirmed": false,
+  "localSearch": "bounded E:/CS2MOD release, backup, diagnostics and Downloads metadata search for June-era original package/DLL/diagnostic identity; no original identity found",
+  "licenseAtInspectedTag": "GPL-3.0 (LICENSE); source and binary package are not vendored or redistributed here",
+  "decision": "STOP: multiple critical missing or ambiguous bindings and original patch byte mismatch. No repairs, builds, further module audit, release DLL loading, installation or FPS tests."
+}

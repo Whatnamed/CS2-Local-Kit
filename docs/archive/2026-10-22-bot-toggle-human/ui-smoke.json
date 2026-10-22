@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "host": "native WPF Release window",
+  "currentMode": "普通人机 + 我的饰品",
+  "targetMode": "增强人机 + 我的饰品",
+  "applyEnabled": false,
+  "previewEnabled": false,
+  "reason": "候选 build 已过期（1.41.9.1 / 2000933 / 25966348）；禁止套用到当前 build",
+  "dataRoot": "E:\\Projects\\CS2-Local-Kit\\wt-bot-toggle-human-20261022\\temp\\ui-data",
+  "candidateMetadata": "synthetic public build/ref header only; no payload or private manifest copied",
+  "realGameWrites": false,
+  "gameStarted": false,
+  "processId": 10868,
+  "executable": "E:\\CS2MOD\\releases\\controller\\controller-bot-toggle-human-20261022-65798bf\\payload\\CS2LocalKit.App.exe",
+  "sourceHead": "65798bf262c7e6dd490b0bc2cf5dcf1816ee78af"
+}

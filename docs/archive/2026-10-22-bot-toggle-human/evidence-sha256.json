@@ -1,0 +1,17 @@
+{
+  "actual-readiness.json": "bb5e322274872f6663b29bc0d4cd0b80da918045ac2e3ec2f5addeee5e64ce00",
+  "coexistence-preflight.json": "29fd3490ebe9d38e7fdff230f09e5aa437af86a5d0eee722fdd3d9314561b8b9",
+  "controller-joint-blocked.png": "efee9de1f2e5ef37357381953902a38041eefc2377dfffac63371ac7cbfa777c",
+  "controller-normal.png": "8e76b8d2841d620fb6ffa3f244da506c6eed7cb1494961d20a31548c469ea55e",
+  "controller-publish.log": "0e5d88f39f3401f73ac2d88b771ecda941cd0037540bb2258d8d205608799eb0",
+  "controller-release-manifest.json": "dc97d3c0e4de70a699ca0f49df89d1731d3ce39919aaba657e83b7710d76c6ef",
+  "dotnet-tests.log": "0d3bdc622aefe76944ff2ddada0e13e664abaee8ac22e4ad986b10ad6daa9bd5",
+  "joint-transaction-tests.log": "31e01a5d5e96203213327e51d0005e8a06a065a80083237badc469d1cb5f79c1",
+  "legacy-transaction-tests.log": "a0bad12e214e2a6686f0b93b214327ff4cb8ea57f589d549b29d4eeea70b31ed",
+  "protection-verification.json": "b15d93c7a0fcbba26710dbed888885a2b2555ab5f2570a48a8fb03cf4e3f5377",
+  "ui-smoke.json": "098b2f7a6da65754646ee690a169e626b6a25d97a17e8d693dd42cb515f609d2",
+  "v130-critical-scan.json": "0a40c4891c4091a5fc403f78707edaea3b5b37d6ff90ebef9b94b6257b25b1a0",
+  "v130-provenance.json": "6d185b2b722a75c68e4e1b23d59a8faec5d9ccb58e87f9b8f1611ecac5e862bc",
+  "v130-summary.json": "e8b7cc88a77717e2c39cf4d6257f48609fad8355da35e7aebcf102dce4473fcf",
+  "validation-summary.json": "12fd46944dc0a589817d504a925ba050d299012d7bd4894a9a8c065e65400e36"
+}

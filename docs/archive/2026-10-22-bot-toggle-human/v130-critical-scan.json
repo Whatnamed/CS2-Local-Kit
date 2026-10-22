@@ -1,0 +1,817 @@
+{
+  "scope": "One bounded source-level critical check of BotAI Windows patch definitions and Aim binding only. No release DLL was loaded, built, installed or tested; no certification of the other old modules or of runtime performance.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "05e6f04972bb2983f463c08824c3133626e0703e881443589288b68e200acc4d"
+    }
+  },
+  "results": [
+    {
+      "name": "BotAI/HasVisitedEnemySpawn",
+      "library": "server",
+      "pattern": "40 88 B7 20 05 00 00",
+      "patch": "C6 87 20 05 00 00 01",
+      "expectedOriginal": "40 88 B7 20 05 00 00",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xff69d4",
+          "fileOffset": "0xff5dd4",
+          "originalBytes": "40 88 B7 20 05 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/GameState_Reset",
+      "library": "server",
+      "pattern": "83 7F 0C 00 74 07 C7 47 0C 00 00 00 00",
+      "patch": "0F 1F 80 00 00 00 00",
+      "expectedOriginal": "C7 47 0C 00 00 00 00",
+      "patchOffset": 6,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e3c5b",
+          "fileOffset": "0x2e305b",
+          "originalBytes": "C7 47 0C 00 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Idle_IsSafeAlwaysFalse",
+      "library": "server",
+      "pattern": "74 28 33 D2 48 8B CE E8 ? ? ? ? 84 C0 75 1A",
+      "patch": "EB 28",
+      "expectedOriginal": "74 28",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32ee6d",
+          "fileOffset": "0x32e26d",
+          "originalBytes": "74 28",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "C6 83 ? ? 00 00 00 C6 83 ? ? 00 00 00 48 83 C4 20 5B E9",
+      "patch": "C3 90 90 90 90",
+      "expectedOriginal": "E9 ? ? ? ?",
+      "patchOffset": 19,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329a0d",
+          "fileOffset": "0x328e0d",
+          "originalBytes": "E9 EB 42 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnUpdate_NoEquipKnife",
+      "library": "server",
+      "pattern": "75 0F 48 8B 5C 24 50 48 83 C4 40 5F E9 ? ? ? ? E8 ? ? ? ?",
+      "patch": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c732",
+          "fileOffset": "0x32bb32",
+          "originalBytes": "E8 C8 15 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromFlames_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "48 8B CB 40 88 BB ? ? 00 00 40 88 BB ? ? 00 00 E8 ? ? ? ? F3 0F 10 0D",
+      "patch": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329af5",
+          "fileOffset": "0x328ef5",
+          "originalBytes": "E8 05 42 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/PlantBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 F3 0F 10 0D",
+      "patch": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32a57c",
+          "fileOffset": "0x32997c",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 4C 8B C7",
+      "patch": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c5a6",
+          "fileOffset": "0x32b9a6",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipFireRateCheck",
+      "library": "server",
+      "pattern": "0F 2F 8B ? ? 00 00 0F 82",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 82 87 00 00 00",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x300030",
+          "fileOffset": "0x2ff430",
+          "originalBytes": "0F 82 87 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SprayAllDistances_ForceHoldTrigger",
+      "library": "server",
+      "pattern": "76 12 48 8B 05 ? ? ? ? 0F 2F 40 30 76 05 40 B5 01 EB 03 40 32 ED",
+      "patch": "40 32 ED",
+      "expectedOriginal": "40 B5 01",
+      "patchOffset": 15,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2fe8a3",
+          "fileOffset": "0x2fdca3",
+          "originalBytes": "40 B5 01",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipSteadyFireShortcut",
+      "library": "server",
+      "pattern": "0F B6 F0 84 C0 74 3C 48 8B 4B 18 48 8B 11 FF 92 90 00 00 00",
+      "patch": "90 90",
+      "expectedOriginal": "74 3C",
+      "patchOffset": 5,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ff860",
+          "fileOffset": "0x2fec60",
+          "originalBytes": "74 3C",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipZoomFireShortcut",
+      "library": "server",
+      "pattern": "FF 90 ? ? 00 00 84 C0 74 15 48 8D 8B ? ? 00 00 48 89 AB",
+      "patch": "90 90",
+      "expectedOriginal": "74 15",
+      "patchOffset": 8,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ff884",
+          "fileOffset": "0x2fec84",
+          "originalBytes": "74 15",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipSniperSpreadCheck",
+      "library": "server",
+      "pattern": "41 0F 28 C8 0F 57 C0 FF 15 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 86",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 86 8A 04 00 00",
+      "patchOffset": 24,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/AttackState_DodgeDuringReload",
+      "library": "server",
+      "pattern": "E9 ? ? ? ? 0F 2F BB ? 00 00 00 76 74",
+      "patch": "EB 74",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3000bf",
+          "fileOffset": "0x2ff4bf",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SniperCrouchDodge_jb",
+      "library": "server",
+      "pattern": "0F 2F BB ? 00 00 00 0F 28 7C 24 30 76 74",
+      "patch": "90 90",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3001ab",
+          "fileOffset": "0x2ff5ab",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/LowSKill_JumpChance0",
+      "library": "server",
+      "pattern": "FF 90 90 00 00 00 0F 2F 05 ? ? ? ? 76 11",
+      "patch": "EB 40",
+      "expectedOriginal": "76 11",
+      "patchOffset": 13,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30276a",
+          "fileOffset": "0x301b6a",
+          "originalBytes": "76 11",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AllSkill_DodgeChance100_OnOutnumberedOrSniper",
+      "library": "server",
+      "pattern": "0F 28 F0 F3 0F 59 35 ? ? ? ? 76 15",
+      "patch": "90 90",
+      "expectedOriginal": "76 15",
+      "patchOffset": 11,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/DodgeChance_Flat80",
+      "library": "server",
+      "pattern": "0F 28 F0 F3 0F 59 35 ? ? ? ? 76 15",
+      "patch": "10",
+      "expectedOriginal": "59",
+      "patchOffset": 5,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/AllSkill_KeepMoving_WhenSeeSniper",
+      "library": "server",
+      "pattern": "0F 2F 05 ? ? ? ? 76 0D 80 BF ? ? 00 00 00 0F 85",
+      "patch": "90 90",
+      "expectedOriginal": "76 0D",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d91ff",
+          "fileOffset": "0x2d85ff",
+          "originalBytes": "76 0D",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_CanStrafe_jne",
+      "library": "server",
+      "pattern": "48 8B CB E8 ? ? ? ? 84 C0 74 7B",
+      "patch": "90 90",
+      "expectedOriginal": "74 7B",
+      "patchOffset": 10,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 19,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x196acb",
+          "fileOffset": "0x195ecb",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x196b5e",
+          "fileOffset": "0x195f5e",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x30003d",
+          "fileOffset": "0x2ff43d",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x6debac",
+          "fileOffset": "0x6ddfac",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x6dec5f",
+          "fileOffset": "0x6de05f",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x6ded17",
+          "fileOffset": "0x6de117",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x6def35",
+          "fileOffset": "0x6de335",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x6df105",
+          "fileOffset": "0x6de505",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x6df1e7",
+          "fileOffset": "0x6de5e7",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xa40734",
+          "fileOffset": "0xa3fb34",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xa407c7",
+          "fileOffset": "0xa3fbc7",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xa4085a",
+          "fileOffset": "0xa3fc5a",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xa408ed",
+          "fileOffset": "0xa3fced",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xa40b15",
+          "fileOffset": "0xa3ff15",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xa40ba8",
+          "fileOffset": "0xa3ffa8",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xcf80cc",
+          "fileOffset": "0xcf74cc",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xd48466",
+          "fileOffset": "0xd47866",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xd484f8",
+          "fileOffset": "0xd478f8",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0xe7d110",
+          "fileOffset": "0xe7c510",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SniperDodge_SkipIsSniper_DodgeA",
+      "library": "server",
+      "pattern": "84 F6 75 6A 48 8B 05",
+      "patch": "90 90",
+      "expectedOriginal": "75 6A",
+      "patchOffset": 2,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30013d",
+          "fileOffset": "0x2ff53d",
+          "originalBytes": "75 6A",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_AlwaysWatchApproachPoints",
+      "library": "server",
+      "pattern": "80 BF ? ? 00 00 00 75 25 0F 2F",
+      "patch": "EB 25",
+      "expectedOriginal": "75 25",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32851d",
+          "fileOffset": "0x32791d",
+          "originalBytes": "75 25",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipSkillCheck",
+      "library": "server",
+      "pattern": "0F 2F C7 76 3B 80 BF ? ? 00 00 00 74 32",
+      "patch": "90 90",
+      "expectedOriginal": "76 3B",
+      "patchOffset": 3,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipHidingSpotCheck",
+      "library": "server",
+      "pattern": "0F 2F C7 76 3B 80 BF ? ? 00 00 00 74 32",
+      "patch": "90 90",
+      "expectedOriginal": "74 32",
+      "patchOffset": 12,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/Vision_SkipIsMovingGate",
+      "library": "server",
+      "pattern": "0F 2F 35 ? ? ? ? 77 0F 49 8B D7 48 8B CF E8",
+      "patch": "90 90",
+      "expectedOriginal": "77 0F",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/Vision_AlwaysEnterApproachBody",
+      "library": "server",
+      "pattern": "84 C0 75 0D 49 C7 46 08 00 00 00 00 E9",
+      "patch": "EB 0D",
+      "expectedOriginal": "75 0D",
+      "patchOffset": 2,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/IsNoticable_AlwaysTrue",
+      "library": "server",
+      "pattern": "40 53 48 83 EC 30 48 8B D9 BA FF FF FF FF 48 8D 0D ? ? ? ? E8 ? ? ? ? 48 85 C0 75",
+      "patch": "B0 01 C3",
+      "expectedOriginal": "40 53 48",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/InViewCone_RemoveOuterFOV",
+      "library": "server",
+      "pattern": "FF 90 C8 00 00 00 0F 2F 05 ? ? ? ? 76 08 33 C0",
+      "patch": "90 90",
+      "expectedOriginal": "76 08",
+      "patchOffset": 13,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/InViewCone_RemoveInnerFOV",
+      "library": "server",
+      "pattern": "0F 96 C0 FF C0 48 83 C4 20 5B C3",
+      "patch": "B0 01 90",
+      "expectedOriginal": "0F 96 C0",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2c66c3",
+          "fileOffset": "0x2c5ac3",
+          "originalBytes": "0F 96 C0",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/InvestigateNoise_SkipSelfDefenseCheck",
+      "library": "server",
+      "pattern": "83 BB ? ? 00 00 02 74 1E",
+      "patch": "90 90",
+      "expectedOriginal": "74 1E",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32820f",
+          "fileOffset": "0x32760f",
+          "originalBytes": "74 1E",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/TBot_BombsiteSearch_UseKnownPlantedSite",
+      "library": "server",
+      "pattern": "48 8B 8E ? ? 00 00 E8 ? ? ? ? 49 8B CC E8 ? ? ? ? 4C 8B 05 ? ? ? ? 85 C0",
+      "patch": "E8 55 46 F9 FF",
+      "expectedOriginal": "E8 D5 3F F9 FF",
+      "patchOffset": 15,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/BombBeep_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "F3 0F 59 F6 F3 0F 59 DB F3 0F 59 D2 F3 0F 58 DA F3 0F 58 DE 0F 2F C3 76 67",
+      "patch": "90 90",
+      "expectedOriginal": "76 67",
+      "patchOffset": 23,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/BombPickup_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "F3 0F 5C 78 08 F3 0F 59 D2 F3 0F 59 FF F3 0F 58 CA F3 0F 58 CF 0F 28 BC 24 E0 00 00 00 0F 2F C1 76 23",
+      "patch": "90 90",
+      "expectedOriginal": "76 23",
+      "patchOffset": 32,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/OnAudibleEvent_GlobalHearRange",
+      "library": "server",
+      "pattern": "F3 44 0F 51 CA EB 0C 0F 28 C2 E8 ? ? ? ? 44 0F 28 C8 45 0F 2F D1 0F 86 ? ? ? ?",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 86 F4 03 00 00",
+      "patchOffset": 23,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d0b93",
+          "fileOffset": "0x2cff93",
+          "originalBytes": "0F 86 65 03 00 00",
+          "expectedOriginalMatches": false
+        }
+      ]
+    },
+    {
+      "name": "BotAI/OnBombPlanted_AllBotsLearnSite",
+      "library": "server",
+      "pattern": "80 BA ? ? 00 00 02 75 6D 48 85 DB 74 68",
+      "patch": "90 90",
+      "expectedOriginal": "75 6D",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAI/CT_Defuse_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "C7 86 ? ? 00 00 03 00 00 00 BA 02 00 00 00 48 8B CE",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 10,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3301c8",
+          "fileOffset": "0x32f5c8",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnUpdate_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 8D 8A ? ? 00 00 48 8B DA E8 ? ? ? ? BA 02 00 00 00 48 8B CB",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 15,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c54a",
+          "fileOffset": "0x32b94a",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnEnter_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 89 5C 24 08 57 48 83 EC 20 48 8B DA BA 02 00 00 00 48 8B CB",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 13,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329940",
+          "fileOffset": "0x328d40",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/FlashbangAvoidance_Disable",
+      "library": "server",
+      "pattern": "49 8B 0E 0F 14 E3 F2 0F 11 65 17 F3 0F 11 55 1F F3 0F 11 4C 24 20 E8 ? ? ? ? 49 8B 06 C6 80 ? ? 00 00 00",
+      "patch": "90 90 90 90 90 90 90 90 90 90 90 90 90 90 90",
+      "expectedOriginal": "E8 CE BC 02 00 49 8B 06 C6 80 84 5C 00 00 00",
+      "patchOffset": 22,
+      "source": "addons/counterstrikesharp/plugins/BotAI/BotAI.cs",
+      "sourceSha256": "8b61d9e2ef8236c6678adba949bb3bf2adb59ca6c3afdc490e7527d27daa1003",
+      "matchCount": 0,
+      "matches": []
+    },
+    {
+      "name": "BotAimImprover/PickNewAimSpot",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 A1 48 81 EC A8 00 00 00 48 8B F9 0F 29 70 D8 8B 89 10 5A 00 00 83 F9 FF",
+      "source": "addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.cs",
+      "sourceSha256": "17e9878de8c5cbe6566c7f570ad49e00eec84e773ba5922bf949f71953cd8a28",
+      "matchCount": 0,
+      "matches": []
+    }
+  ],
+  "upstreamTag": "v1.3.0",
+  "upstreamRef": "1ceb47b9c6fa837f1656e2772763e2ab7c408158",
+  "sourceArchiveSha256": "4665791b2117bbfc20a19edcea73ba82db315777cea888c484a6ea22875ed1df"
+}

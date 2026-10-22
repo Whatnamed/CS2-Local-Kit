@@ -1,0 +1,46 @@
+{
+  "status": "blocked",
+  "jointCandidateReady": false,
+  "botRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+  "legacyManifestSha256": "e6f028042b7fc778d62df9a17211ea9701b6e8bab034da4b3170e8331b3483b4",
+  "legacyTargetBuild": {
+    "PatchVersion": "1.41.9.1",
+    "ClientVersion": "2000933",
+    "buildId": "25966348"
+  },
+  "metamod": {
+    "build": 1481,
+    "ref": "021f06b67e796b0a578d0c7bc0baa84a97fb3d43",
+    "url": "https://mms.alliedmods.net/mmsdrop/2.0/mmsource-2.0.0-git1481-windows.zip",
+    "archiveSha256": "c4f825ed226635ce13d4c822fcf837e036baf83d30233ba54dde3b303d30379c",
+    "selectedFiles": [
+      "addons/metamod/bin/win64/metamod.2.cs2.dll",
+      "addons/metamod/bin/win64/server.dll"
+    ]
+  },
+  "cssVersion": "1.0.376",
+  "relatedBundleIdentities": {
+    "bot/addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.dll": "65d22727bd97e19da8fb7ff91625b1c15db77ca34ac58d1e103e56227a35ee50",
+    "bot/addons/counterstrikesharp/shared/BotHiderApi/BotHiderApi.dll": "8e10ac7823750dc8f7a6b0715c04fd9950fc6d867ec816714550dcc58f6abcb0"
+  },
+  "humanRef": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+  "acceptedPatchedHumanDllSha256": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+  "botRandomizerSourceSha256": "8196ab805c0cfbdc9e072cf29a4fff3b3521da5d5fbe8e2b9a05df46d925a291",
+  "humanMainPartialSourceSha256": "1e63849c2c5dbc38133cb704c75b72196f5c307c544cf5e76a68c784d6a1a9cc",
+  "staticFindings": [
+    "BotRandomizer selection and mutation paths restrict players to IsBot:true.",
+    "Human main partial reload loop excludes bots. Its other partial handlers were not certified by this check.",
+    "Both components register a GiveNamedItem pre-hook; player filtering alone does not prove native hook or shared framework compatibility.",
+    "Legacy candidate uses MetaMod1481/CSS376; installed accepted Human files use MetaMod1473/CSS376 and patched InventorySimulator.",
+    "Fixed BotControllerApi/BotHiderApi identities are recorded above. RayTraceImpl is an empty legacy directory scaffold with no DLL; the candidate does not deploy RayTrace. No dependency upgrade or joint startup validation occurred.",
+    "Legacy Bot build is 2000933/25966348, current host is 2000934/26087496. No current-build Bot/native compatibility evidence exists.",
+    "No preserve-policy real manifest was produced. Historical isolation bundles remain recovery-only in Controller."
+  ],
+  "manualRuntimeAcceptance": false,
+  "runtimeLocksChanged": false,
+  "rayTraceObserved": {
+    "files": 0,
+    "directories": 4,
+    "deployedByCandidate": false
+  }
+}
