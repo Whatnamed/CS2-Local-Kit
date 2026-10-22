@@ -1,0 +1,396 @@
+{
+  "kind": "cs2-local-kit/controller-ui-verification",
+  "date": "2026-10-22",
+  "baseline": "e6b7f4afa3614ab2178f17f6efd99e12d395e856",
+  "sourceHead": "822155c8b2ee795f0b061c6946b9d3df70cf3165",
+  "branch": "codex/controller-redesign-20261022",
+  "unitTests": {
+    "passed": 254,
+    "failed": 0,
+    "skipped": 0
+  },
+  "uiProbe": {
+    "checks": 69,
+    "rasterChecks": 34,
+    "nativeDpi": 144,
+    "loadedPublishedAssemblySha256": "6c83a0eb03d201d27072d5de31c859039fddc4dd836b921cb98b74c96ed808c8",
+    "loadedPublishedAssemblyVerified": true,
+    "hiddenHwndVisible": false,
+    "windowShowCalled": false,
+    "inputInjectionUsed": false,
+    "foregroundBeforeOwnedByProbe": false,
+    "foregroundAfterOwnedByProbe": false,
+    "checksList": [
+      "owned HWND remains hidden and non-activating",
+      "40 built-in teams and thousands of persona identities",
+      "nonblank capture match-1280",
+      "both roster sides retained; human replacement is visible",
+      "nonblank capture match-1024",
+      "nonblank capture match-min-client",
+      "nonblank capture match-1440-125dpi",
+      "nonblank capture match-1280-150dpi",
+      "nonblank capture match-1600",
+      "UIA ValuePattern filters real persona library",
+      "enabled action 替换席位",
+      "UIA InvokePattern replaces the selected seat with explicit persona",
+      "nonblank capture players-search",
+      "empty search clears old persona and blocks replace",
+      "nonblank capture players-empty-1024",
+      "disabled persona is shown but never bindable",
+      "nonblank capture players-disabled",
+      "nonblank capture custom-roster",
+      "custom roster writes sandbox library",
+      "enabled action SaveMatchPreset",
+      "save persists without creating a queue",
+      "enabled action QueueMatchSetup",
+      "queue action creates an independent pending request",
+      "nonblank capture match-status-pending",
+      "dirty draft is distinguished from queued snapshot",
+      "nonblank capture match-dirty-1024",
+      "nonblank capture match-presets",
+      "navigation Cosmetics has one active page",
+      "nonblank capture cosmetics-1280",
+      "nonblank capture cosmetics-1024",
+      "nonblank capture cosmetics-min-client",
+      "nonblank capture cosmetics-150dpi",
+      "UIA SelectionItemPattern switches CT/T",
+      "UIA section selection changes browser",
+      "nonblank capture knives",
+      "nonblank capture gloves",
+      "nonblank capture music",
+      "UIA range editing changes draft wear",
+      "enabled action SaveHumanPreset",
+      "save Human draft persists only sandbox preset",
+      "enabled action ApplyHumanPreset",
+      "Human apply requires explicit confirmation and cancellation writes no game file",
+      "navigation Presets has one active page",
+      "nonblank capture presets",
+      "nonblank capture presets-1024",
+      "preset empty filter",
+      "nonblank capture presets-empty",
+      "enabled action ActivateHumanPreset",
+      "activation writes a sandbox pointer",
+      "navigation Bot has one active page",
+      "install gate preserved",
+      "nonblank capture bot-install",
+      "nonblank capture bot-install-1024",
+      "exact restore gate preserved",
+      "nonblank capture bot-restore-details",
+      "navigation RuntimeStatus has one active page",
+      "health page does not expose Human save/apply bar",
+      "nonblank capture health",
+      "nonblank capture health-1024",
+      "nonblank capture health-evidence",
+      "nonblank capture recovery",
+      "recovery commands remain blocked for a fake game",
+      "nonblank capture confirmation",
+      "nonblank capture unsaved-confirmation",
+      "all game-like writes remain inside synthetic game; no real install",
+      "nonblank capture loading",
+      "catalog-unavailable state preserves validation gate",
+      "nonblank capture catalog-unavailable",
+      "probe never made its HWND visible"
+    ],
+    "captures": [
+      {
+        "name": "match-1280",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "match-1024",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      },
+      {
+        "name": "match-min-client",
+        "width": 1000,
+        "height": 610,
+        "dpi": 96,
+        "pixelsWidth": 1000,
+        "pixelsHeight": 610
+      },
+      {
+        "name": "match-1440-125dpi",
+        "width": 1440,
+        "height": 900,
+        "dpi": 120,
+        "pixelsWidth": 1800,
+        "pixelsHeight": 1125
+      },
+      {
+        "name": "match-1280-150dpi",
+        "width": 1280,
+        "height": 840,
+        "dpi": 144,
+        "pixelsWidth": 1920,
+        "pixelsHeight": 1260
+      },
+      {
+        "name": "match-1600",
+        "width": 1600,
+        "height": 940,
+        "dpi": 96,
+        "pixelsWidth": 1600,
+        "pixelsHeight": 940
+      },
+      {
+        "name": "players-search",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "players-empty-1024",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      },
+      {
+        "name": "players-disabled",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "custom-roster",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "match-status-pending",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "match-dirty-1024",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      },
+      {
+        "name": "match-presets",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "cosmetics-1280",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "cosmetics-1024",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      },
+      {
+        "name": "cosmetics-min-client",
+        "width": 1000,
+        "height": 610,
+        "dpi": 96,
+        "pixelsWidth": 1000,
+        "pixelsHeight": 610
+      },
+      {
+        "name": "cosmetics-150dpi",
+        "width": 1280,
+        "height": 840,
+        "dpi": 144,
+        "pixelsWidth": 1920,
+        "pixelsHeight": 1260
+      },
+      {
+        "name": "knives",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "gloves",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "music",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "presets",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "presets-1024",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      },
+      {
+        "name": "presets-empty",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "bot-install",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "bot-install-1024",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      },
+      {
+        "name": "bot-restore-details",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "health",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "health-1024",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      },
+      {
+        "name": "health-evidence",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "recovery",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "confirmation",
+        "width": 580,
+        "height": 440,
+        "dpi": 96,
+        "pixelsWidth": 580,
+        "pixelsHeight": 440
+      },
+      {
+        "name": "unsaved-confirmation",
+        "width": 580,
+        "height": 440,
+        "dpi": 96,
+        "pixelsWidth": 580,
+        "pixelsHeight": 440
+      },
+      {
+        "name": "loading",
+        "width": 1280,
+        "height": 840,
+        "dpi": 96,
+        "pixelsWidth": 1280,
+        "pixelsHeight": 840
+      },
+      {
+        "name": "catalog-unavailable",
+        "width": 1024,
+        "height": 660,
+        "dpi": 96,
+        "pixelsWidth": 1024,
+        "pixelsHeight": 660
+      }
+    ]
+  },
+  "preservation": {
+    "fileCount": 674,
+    "pathLengthSha256Unchanged": true,
+    "coreRuntimeInstallerDiffEmpty": true
+  },
+  "release": {
+    "localDirectory": "E:\\CS2MOD\\releases\\controller\\controller-redesign-20261022-822155c",
+    "selfContained": true,
+    "rid": "win-x64",
+    "targetFramework": "net10.0-windows",
+    "fileCount": 408,
+    "manifestSha256": "0c106e53fc00a1a21aa16875119854065e4742a544f329fff850d6821ebb0f56",
+    "privateDataGate": "passed",
+    "runtimeLocksChanged": false
+  },
+  "manualPending": [
+    "Native ComboBox popups and file dialogs",
+    "Real titlebar/modal focus, keyboard and mouse routing",
+    "Physical per-monitor DPI transitions",
+    "Real CS2 D-stage Bot/Human effects and gameplay"
+  ],
+  "notes": [
+    "All screenshots use synthetic presets and sandbox state. Existing catalog/art are read-only sources.",
+    "WPF root DPI captures and a hidden native 144-DPI source are executable probes, not physical monitor acceptance.",
+    "Direct normal App.OnStartup is not executed because it calls Window.Show. Published assemblies and local self-contained runtime were loaded by the hidden probe.",
+    "Screenshots are RenderTargetBitmap of actual WPF visuals, not native desktop compositor captures."
+  ]
+}
