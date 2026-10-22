@@ -40,10 +40,12 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
 
     // Components
     public bool GameinfoHasMetamod => Status?.GameinfoHasMetamod ?? false;
-    public string MetaModStatus => _manager.HumanWritesBlocked ? "实验占用（身份/恢复见人机页）" : Status?.MetaModNativeStatus ?? "missing";
+    public string MetaModStatus => Status?.BotExperiment.BlocksHuman == true
+        ? Status.HumanWriteSafe ? "联合事务身份已核验" : "联合事务身份无法确认"
+        : Status?.MetaModNativeStatus ?? "missing";
     public string CssStatus => Status?.CounterStrikeSharpNativeStatus ?? "missing";
     public bool InventorySimulatorPluginPresent => Status?.InventorySimulatorPluginPresent ?? false;
-    public string InventorySimulatorStatusText => _manager.HumanWritesBlocked ? Status?.BotExperiment.PreservesHuman == true ? "Human 保留 / 先恢复普通模式再改配置" : "Bot 实验隔离 / 先恢复实验" : InventorySimulatorPluginPresent ? "已安装" : "未安装";
+    public string InventorySimulatorStatusText => _manager.HumanWritesBlocked ? Status?.BotExperiment.PreservesHuman == true ? "Human 文件需检查后才能修改" : "Bot 实验隔离 / 先恢复实验" : InventorySimulatorPluginPresent ? "已安装" : "未安装";
     public string PatchedDllMatch => Status?.PatchedDllMatch ?? "unknown";
     public string PatchedDllHash => Status?.InventorySimulatorDllSha256 ?? "-";
     public bool FixtureInstalled => Status?.FixtureInstalled ?? false;
@@ -118,7 +120,7 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
 
     public bool CanRepairMetaModStartup =>
         Cs2Detected
-        && !_manager.HumanWritesBlocked
+        && Status?.BotExperiment.BlocksHuman != true
         && !Cs2Running
         && !GameinfoHasMetamod
         && IsAcceptedFrameworkValid;

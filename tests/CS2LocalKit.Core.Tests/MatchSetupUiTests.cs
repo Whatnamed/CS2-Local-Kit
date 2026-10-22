@@ -14,14 +14,14 @@ public sealed class MatchSetupUiTests : IDisposable
     private MatchSetupStore Store=>new(Path.Combine(_root,"app-data/match-setup"),_catalog);
     private MatchSetupViewModel Vm(IDialogService? dialog=null)=>new(Store,_catalog,dialog??new MockDialogService(),new BotExperimentService(_root,Path.Combine(_root,"no-game"),()=>false));
     public void Dispose() { if(Directory.Exists(_root))Directory.Delete(_root,true); }
-    [Fact] public void TeamsVersionsHumanReplacementAndQueuePersistRealRequest()
+    [Fact] public void TeamsVersionsHumanReplacementSaveButCannotPrepareWithoutGameAndAdapter()
     {
         var vm=Vm();vm.Friendly.TeamId="team-13";vm.Friendly.Version=vm.Friendly.Versions.Single(v=>v.Id=="team-13-2024-03-31");
         vm.Enemy.TeamId="team-2";vm.HumanSide=MatchSide.T;vm.ReplacedSlot=3;vm.Aim=AimSetting.Head;vm.Nades=NadeSetting.Max;
         Assert.Contains("最终 CT 5 人 / T 5 人",vm.Preview);Assert.Contains("席位 4",vm.Preview);
-        vm.QueueCommand.Execute(null);var r=Store.ReadRequest()!;
-        Assert.Equal(MatchSide.T,r.Preset.HumanSide);Assert.Equal(3,r.Preset.ReplacedSlot);Assert.Equal(AimSetting.Head,r.Preset.Aim);Assert.Equal(NadeSetting.Max,r.Preset.Nades);
-        Assert.Contains("开局待应用",vm.Feedback);Assert.DoesNotContain("已接收",vm.ApplyStatus);
+        vm.SaveCommand.Execute(null);var saved=Store.Load().Presets.Single();
+        Assert.Equal(MatchSide.T,saved.HumanSide);Assert.Equal(3,saved.ReplacedSlot);Assert.Equal(AimSetting.Head,saved.Aim);Assert.Equal(NadeSetting.Max,saved.Nades);
+        vm.QueueCommand.Execute(null);Assert.Null(Store.ReadRequest());Assert.Contains("本机没有所选地图",vm.Feedback);
     }
     [Fact] public void ExplicitPersonaSearchReplacesSelectedSeatAndTypingClearsBinding()
     {
@@ -57,7 +57,7 @@ public sealed class MatchSetupUiTests : IDisposable
     }
     [Fact] public void OldOrWrongRequestStatusIsNeverCurrentAcceptance()
     {
-        var vm=Vm();vm.QueueCommand.Execute(null);var request=Store.ReadRequest()!;
+        var vm=Vm();var request=Store.Queue(vm.Snapshot());
         Store.WriteStatus(new(1,"old","different",request.PresetSha256,"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.BehaviorObserved,"old success",5,5));
         vm.RefreshRuntime();Assert.DoesNotContain("old success",vm.ApplyStatus);
         Store.WriteStatus(new(1,"old",request.RequestId,request.PresetSha256,"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.InsufficientEvidence,"received only",5,5));
@@ -76,10 +76,10 @@ public sealed class MatchSetupUiTests : IDisposable
     }
     [Fact] public void DraftChangesDoNotMutateQueuedSnapshot()
     {
-        var vm=Vm();vm.QueueCommand.Execute(null);var request=Store.ReadRequest()!;
+        var vm=Vm();var request=Store.Queue(vm.Snapshot());vm.RefreshRuntime();
         Assert.Contains("一致",vm.DraftState);vm.Aim=AimSetting.Body;
         Assert.Contains("不同",vm.DraftState);Assert.Equal(request.RequestId,Store.ReadRequest()!.RequestId);Assert.Equal(request.PresetSha256,Store.ReadRequest()!.PresetSha256);
-        vm.QueueCommand.Execute(null);Assert.Equal(AimSetting.Body,Store.ReadRequest()!.Preset.Aim);Assert.Contains("一致",vm.DraftState);
+        Store.Queue(vm.Snapshot());vm.RefreshRuntime();Assert.Equal(AimSetting.Body,Store.ReadRequest()!.Preset.Aim);Assert.Contains("一致",vm.DraftState);
     }
     [Fact] public void PersonalLibraryExportImportDeduplicatesThroughUi()
     {
@@ -87,5 +87,21 @@ public sealed class MatchSetupUiTests : IDisposable
         vm.Friendly.CustomName="exported";vm.Friendly.NewCustomCommand.Execute(null);vm.SaveCommand.Execute(null);vm.ExportCommand.Execute(null);
         Assert.True(File.Exists(path));vm.ImportCommand.Execute(null);vm.ImportCommand.Execute(null);
         Assert.Single(Store.Load().Presets);Assert.Single(Store.Load().CustomRosters);Assert.Contains("导入完成",vm.Feedback);
+    }
+    [Fact] public void QueuedRequestIsOneShotForItsExactMapAndExpires()
+    {
+        var store=Store;var request=store.Queue(MatchSetupPreset.Default());
+        Assert.Null(store.ClaimForMap("de_mirage","session-one"));
+        Assert.Equal(request.RequestId,store.ClaimForMap("de_dust2","session-one")!.RequestId);
+        Assert.Null(store.ClaimForMap("de_dust2","session-two"));
+        Assert.Null(store.ReadPendingRequest());
+        var next=store.Queue(MatchSetupPreset.Default());
+        Assert.NotEqual(request.RequestId,store.ReadPendingRequest()!.RequestId);
+        File.WriteAllText(store.RequestPath,MatchJson.Write(next with {SavedAt=DateTimeOffset.UtcNow.AddHours(-3)}));
+        Assert.Null(store.ReadPendingRequest());
+    }
+    [Fact] public void MapNameCannotCarryConsoleCommands()
+    {
+        Assert.Throws<InvalidDataException>(()=>_catalog.Resolve(MatchSetupPreset.Default() with {Map="de_dust2;bot_kick"}));
     }
 }

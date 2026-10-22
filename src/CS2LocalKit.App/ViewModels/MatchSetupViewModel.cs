@@ -147,7 +147,8 @@ public sealed class MatchSetupViewModel : ViewModelBase
 {
     private readonly MatchSetupStore _store;private readonly RosterCatalog _catalog;private readonly IDialogService _dialogs;private readonly BotExperimentService _runtime;
     private MatchLibrary _library=MatchLibrary.Empty;private MatchSetupPreset _basis=MatchSetupPreset.Default();private string _name="我 + 4 vs 5",_feedback="",_status="尚未保存 / 排队",_preview="";private string? _queuedDigest;private bool _loaded;
-    private MatchSide _side=MatchSide.CT;private int _friendly=4,_enemy=5,_replacement,_filter;private bool _favorite;private InstalledProfile _profile=InstalledProfile.Medium;private AimSetting _aim;private NadeSetting _nades=NadeSetting.Normal;private SetupPresetChoice? _selected;
+    private (MatchTeamSelection Friendly, MatchTeamSelection Enemy)? _lastSwap;
+    private MatchSide _side=MatchSide.CT;private int _friendly=4,_enemy=5,_replacement,_filter;private bool _favorite;private InstalledProfile _profile=InstalledProfile.Medium;private AimSetting _aim;private NadeSetting _nades=NadeSetting.Normal;private MatchPlayMode _mode=MatchPlayMode.EnhancedHuman;private string _map="de_dust2";private SetupPresetChoice? _selected;
     public RosterEditorViewModel Friendly { get; }
     public RosterEditorViewModel Enemy { get; }
     public MatchSetupViewModel(MatchSetupStore store,RosterCatalog catalog,IDialogService dialogs,BotExperimentService runtime)
@@ -155,14 +156,21 @@ public sealed class MatchSetupViewModel : ViewModelBase
         _store=store;_catalog=catalog;_dialogs=dialogs;_runtime=runtime;
         try { _library=store.Load();_loaded=true; } catch(Exception ex) { _feedback="配置读取失败，保留原文件："+ex.Message; }
         Friendly=new(catalog,()=>_library,SaveLibrary,dialogs,RefreshPreview,"我方");Enemy=new(catalog,()=>_library,SaveLibrary,dialogs,RefreshPreview,"对手");
-        SaveCommand=new(()=>Run(Save));QueueCommand=new(()=>Run(Queue));NewCommand=new(()=>Load(MatchSetupPreset.Default()));
+        SaveCommand=new(()=>Run(Save));QueueCommand=new(()=>Run(Queue));NewCommand=new(()=>SwitchTo(MatchSetupPreset.Default()));
         DuplicateCommand=new(()=> { _basis=_basis with {Id=Guid.NewGuid().ToString("N")};Name+=" 副本"; });
-        LoadCommand=new(()=> { if(SelectedPreset is not null)Load(SelectedPreset.Preset); });
+        LoadCommand=new(()=> { if(SelectedPreset is not null)SwitchTo(SelectedPreset.Preset); });
+        SwapLineupsCommand=new(()=> { var old=(Friendly:Friendly.Snapshot(),Enemy:Enemy.Snapshot());_lastSwap=old;Friendly.LoadSelection(old.Enemy);Enemy.LoadSelection(old.Friendly);RefreshPreview();UndoSwapCommand?.RaiseCanExecuteChanged(); });
+        UndoSwapCommand=new(()=> { if(_lastSwap is not { } old)return;Friendly.LoadSelection(old.Friendly);Enemy.LoadSelection(old.Enemy);_lastSwap=null;RefreshPreview();UndoSwapCommand?.RaiseCanExecuteChanged(); },()=>_lastSwap is not null);
         DeleteCommand=new(()=>Run(Delete));ReuseLastCommand=new(()=> { if(_library.LastUsed is not null)Load(_library.LastUsed);else _feedback="没有收到过运行时成功读回的上局配置";Notify(); });
         ImportCommand=new(()=>Run(Import));ExportCommand=new(()=>Run(Export));RefreshStatusCommand=new(RefreshRuntime);
         Load(_library.Presets.FirstOrDefault()??_basis);RefreshRuntime();
     }
     public MatchSide[] SideChoices { get; }=[MatchSide.CT,MatchSide.T];
+    public BotChoice<MatchPlayMode>[] ModeChoices { get; }=[new(MatchPlayMode.NormalHuman,"普通人机"),new(MatchPlayMode.EnhancedHuman,"增强人机")];
+    public BotChoice<InstalledProfile>[] DifficultyChoices { get; }=[new(InstalledProfile.Low,"简单"),new(InstalledProfile.Medium,"中等"),new(InstalledProfile.High,"困难")];
+    public BotChoice<AimSetting>[] AimLabels { get; }=[new(AimSetting.Mixed,"混合"),new(AimSetting.Head,"头部"),new(AimSetting.Body,"身体")];
+    public BotChoice<NadeSetting>[] NadeLabels { get; }=[new(NadeSetting.Off,"关闭"),new(NadeSetting.Less,"较少"),new(NadeSetting.Normal,"正常"),new(NadeSetting.More,"较多"),new(NadeSetting.Max,"最多")];
+    public IReadOnlyList<string> MapChoices => _runtime.AvailableMaps;
     public int[] FriendlyCounts { get; }=[0,1,2,3,4];public int[] EnemyCounts { get; }=[0,1,2,3,4,5];public BotChoice<int>[] ReplacementChoices { get; }=Enumerable.Range(0,5).Select(i=>new BotChoice<int>(i,$"席位 {i+1}")).ToArray();
     public InstalledProfile[] ProfileChoices { get; }=Enum.GetValues<InstalledProfile>();public AimSetting[] AimChoices { get; }=Enum.GetValues<AimSetting>();public NadeSetting[] NadeChoices { get; }=Enum.GetValues<NadeSetting>();
     public string[] Filters { get; }=["全部预设","收藏","最近使用"];
@@ -176,16 +184,57 @@ public sealed class MatchSetupViewModel : ViewModelBase
     public int ReplacedSlot { get=>_replacement;set { if(SetProperty(ref _replacement,value))RefreshPreview(); } }
     public bool Favorite { get=>_favorite;set { if(SetProperty(ref _favorite,value))RefreshPreview(); } }
     public InstalledProfile Profile { get=>_profile;set { if(SetProperty(ref _profile,value))RefreshPreview(); } }
+    public MatchPlayMode Mode { get=>_mode;set { if(SetProperty(ref _mode,value))RefreshPreview(); } }
+    public string Map { get=>_map;set { if(SetProperty(ref _map,value))RefreshPreview(); } }
     public AimSetting Aim { get=>_aim;set { if(SetProperty(ref _aim,value))RefreshPreview(); } }
     public NadeSetting Nades { get=>_nades;set { if(SetProperty(ref _nades,value))RefreshPreview(); } }
     public string Preview=>_preview;public string Feedback=>_feedback;public string ApplyStatus=>_status;
+    public string PreparationText
+    {
+        get
+        {
+            if (!_runtime.HasMap(Map)) return "需要处理：本机没有所选地图，请更换地图";
+            if (Mode==MatchPlayMode.NormalHuman) return _runtime.Identity.BlocksHuman
+                ? "需要准备：关闭 CS2 后精确恢复增强组件；普通阵容自动应用仍不可用"
+                : "普通人机可通过 CS2 原生方式游玩；当前阵容自动应用通道仅供增强人机使用";
+            var state=_runtime.Assess(LocalPlayMode.EnhancedHuman,(BotDifficulty)(int)Profile);
+            return state.Kind switch
+            {
+                LocalPlayReadinessKind.Ready => "组件已匹配；可将本次配置应用到下一张本地地图",
+                LocalPlayReadinessKind.NeedsLocalPreparation => "需要准备："+state.Reason,
+                LocalPlayReadinessKind.NeedsRepair => "需要处理："+state.Reason,
+                _ => "无法确认："+state.Reason
+            };
+        }
+    }
+    public string PrepareActionText => Mode==MatchPlayMode.NormalHuman ? _runtime.Identity.BlocksHuman ? "准备普通模式" : "普通模式暂无阵容自动应用" :
+        _runtime.Assess(LocalPlayMode.EnhancedHuman,(BotDifficulty)(int)Profile).Kind==LocalPlayReadinessKind.Ready ? "应用到下局" : "准备对局";
+    public bool CanPrepareAction => Mode==MatchPlayMode.EnhancedHuman || _runtime.Identity.BlocksHuman;
     public string DraftState => _queuedDigest is null ? "当前编辑尚未排队" : Friendly is null || Enemy is null ? "正在准备" : MatchSetupStore.Digest(Snapshot())==_queuedDigest ? "当前编辑与已排队快照一致" : "当前编辑与排队快照不同；保存为下局后才会应用";
-    public RelayCommand SaveCommand { get; }public RelayCommand QueueCommand { get; }public RelayCommand NewCommand { get; }public RelayCommand DuplicateCommand { get; }public RelayCommand LoadCommand { get; }public RelayCommand DeleteCommand { get; }public RelayCommand ReuseLastCommand { get; }public RelayCommand ImportCommand { get; }public RelayCommand ExportCommand { get; }public RelayCommand RefreshStatusCommand { get; }
-    public MatchSetupPreset Snapshot()=>_basis with {Name=Name,HumanSide=HumanSide,FriendlyBots=FriendlyBots,EnemyBots=EnemyBots,ReplacedSlot=ReplacedSlot,Friendly=Friendly.Snapshot(),Enemy=Enemy.Snapshot(),Favorite=Favorite,Profile=Profile,Aim=Aim,Nades=Nades};
+    public RelayCommand SaveCommand { get; }public RelayCommand QueueCommand { get; }public RelayCommand NewCommand { get; }public RelayCommand DuplicateCommand { get; }public RelayCommand LoadCommand { get; }public RelayCommand DeleteCommand { get; }public RelayCommand ReuseLastCommand { get; }public RelayCommand ImportCommand { get; }public RelayCommand ExportCommand { get; }public RelayCommand RefreshStatusCommand { get; }public RelayCommand SwapLineupsCommand { get; }public RelayCommand UndoSwapCommand { get; }
+    public MatchSetupPreset Snapshot()=>_basis with {Name=Name,HumanSide=HumanSide,FriendlyBots=FriendlyBots,EnemyBots=EnemyBots,ReplacedSlot=ReplacedSlot,Friendly=Friendly.Snapshot(),Enemy=Enemy.Snapshot(),Favorite=Favorite,Profile=Profile,Aim=Aim,Nades=Nades,Mode=Mode,Map=Map};
+    public void ValidateDesired()
+    {
+        var desired=Snapshot();_catalog.Resolve(desired);
+        if (!_runtime.HasMap(desired.Map)) throw new InvalidOperationException("本机没有所选地图文件；请更换地图");
+    }
     public void Load(MatchSetupPreset p)
     {
-        _basis=p;_name=p.Name;_side=p.HumanSide;_friendly=p.FriendlyBots;_enemy=p.EnemyBots;_replacement=p.ReplacedSlot;_favorite=p.Favorite;_profile=p.Profile;_aim=p.Aim;_nades=p.Nades;
+        _basis=p;_name=p.Name;_side=p.HumanSide;_friendly=p.FriendlyBots;_enemy=p.EnemyBots;_replacement=p.ReplacedSlot;_favorite=p.Favorite;_profile=p.Profile;_aim=p.Aim;_nades=p.Nades;_mode=p.Mode;_map=p.Map;
         Friendly.LoadSelection(p.Friendly);Enemy.LoadSelection(p.Enemy);Notify();RefreshPreview();
+    }
+    private void SwitchTo(MatchSetupPreset next)
+    {
+        if (MatchSetupStore.Digest(Snapshot())!=MatchSetupStore.Digest(_basis))
+        {
+            var decision=_dialogs.ConfirmUnsavedChanges(Name);
+            if (decision==UnsavedChangesResolution.Cancel)return;
+            if (decision==UnsavedChangesResolution.SaveAndSwitch)
+            {
+                try { Save(); } catch(Exception ex) { _feedback="保存方案失败，当前草稿保留："+ex.Message;Notify();return; }
+            }
+        }
+        _lastSwap=null;Load(next);
     }
     public string FriendlySummary => $"{HumanSide} · 我 + {FriendlyBots} Bot";
     public string EnemySummary => $"{(HumanSide==MatchSide.CT ? MatchSide.T : MatchSide.CT)} · {EnemyBots} Bot";
@@ -206,6 +255,7 @@ public sealed class MatchSetupViewModel : ViewModelBase
         OnPropertyChanged(nameof(EnemySummary));
         OnPropertyChanged(nameof(Preview));
         OnPropertyChanged(nameof(DraftState));
+        OnPropertyChanged(nameof(PreparationText));OnPropertyChanged(nameof(PrepareActionText));OnPropertyChanged(nameof(CanPrepareAction));
     }
     private void SaveLibrary(MatchLibrary value)
     {
@@ -214,12 +264,18 @@ public sealed class MatchSetupViewModel : ViewModelBase
     }
     private void Save()
     {
-        var p=Snapshot();_catalog.Resolve(p);SaveLibrary(_library with {Presets=_library.Presets.Where(x=>x.Id!=p.Id).Append(p).ToImmutableArray()});_feedback="配置已保存；尚未排队或改变运行中的对局。";
+        var p=Snapshot();_catalog.Resolve(p);SaveLibrary(_library with {Presets=_library.Presets.Where(x=>x.Id!=p.Id).Append(p).ToImmutableArray()});_basis=p;_feedback="方案已保存；尚未应用到游戏。";
     }
     private void Queue()
     {
-        Save();var r=_store.Queue(Snapshot());_feedback="配置已保存，开局待应用 · request "+r.RequestId+"。由玩家以 -insecure 启动离线地图；当前图不会重建阵容。";RefreshRuntime();
+        ValidateDesired();var desired=Snapshot();
+        if (desired.Mode!=MatchPlayMode.EnhancedHuman) throw new InvalidOperationException("普通人机尚无阵容自动应用通道；方案可保存，不能标为已准备");
+        var readiness=_runtime.Assess(LocalPlayMode.EnhancedHuman,(BotDifficulty)(int)desired.Profile);
+        if (readiness.Kind!=LocalPlayReadinessKind.Ready) throw new InvalidOperationException(readiness.Reason);
+        MatchRuntimeContract.Validate(_runtime.Cs2Root,_runtime.DataRoot);
+        Save();var r=_store.Queue(desired);_feedback="配置已准备供下一张 "+desired.Map+" 本地地图接收；尚未在游戏内应用。需要以 -insecure 启动离线游戏并加载该地图。";RefreshRuntime();
     }
+    public void PrepareRequest() { Queue();Notify(); }
     private void Delete()
     {
         if(SelectedPreset is null)return;var id=SelectedPreset.Preset.Id;
@@ -232,9 +288,9 @@ public sealed class MatchSetupViewModel : ViewModelBase
     {
         try
         {
-            _library=_store.Load();var request=_store.ReadRequest();
-            _queuedDigest=request?.PresetSha256;
-            _status=request is null?"配置未排队；保存为下局后才会自动接收":"开局待应用 · "+request.RequestId;
+            _library=_store.Load();var request=_store.ReadRequest();var pending=_store.ReadPendingRequest();
+            _queuedDigest=pending?.PresetSha256;
+            _status=request is null?"配置未准备":"配置"+(pending is null?"已消费或过期；重新准备后才能用于下一局":"已准备供下局接收 · "+pending.Preset.Map);
             if(request is not null&&File.Exists(_store.StatusPath))
             {
                 MatchSetupStore.CheckPath(_store.StatusPath);var s=MatchJson.Read<MatchRuntimeStatus>(File.ReadAllText(_store.StatusPath));
@@ -262,6 +318,6 @@ public sealed class MatchSetupViewModel : ViewModelBase
     private void Run(Action action) { try { action(); } catch(Exception ex) { _feedback="未完成："+ex.Message; }Notify(); }
     private void Notify()
     {
-        foreach(var p in new[]{nameof(Name),nameof(HumanSide),nameof(FriendlyBots),nameof(EnemyBots),nameof(ReplacedSlot),nameof(Favorite),nameof(Profile),nameof(Aim),nameof(Nades),nameof(Presets),nameof(Feedback),nameof(ApplyStatus),nameof(DraftState)})OnPropertyChanged(p);
+        foreach(var p in new[]{nameof(Name),nameof(HumanSide),nameof(FriendlyBots),nameof(EnemyBots),nameof(ReplacedSlot),nameof(Favorite),nameof(Profile),nameof(Mode),nameof(Map),nameof(Aim),nameof(Nades),nameof(Presets),nameof(Feedback),nameof(ApplyStatus),nameof(DraftState),nameof(PreparationText),nameof(PrepareActionText),nameof(CanPrepareAction)})OnPropertyChanged(p);
     }
 }

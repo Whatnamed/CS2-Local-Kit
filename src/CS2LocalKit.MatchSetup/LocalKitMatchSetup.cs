@@ -71,7 +71,7 @@ public sealed class LocalKitMatchSetup : BasePlugin
         _attempts=0;_session=null;_bindings.Clear();_installation=null;_verifiedEnvironment=false;
         try
         {
-            var request=_store.ReadRequest(); if (request is null) return; // Existing offline defaults remain usable.
+            var request=_store.ClaimForMap(name,_sessionId); if (request is null) return; // No matching fresh one-shot request.
             _session=new(request,_catalog.Resolve(request.Preset));
             Status(MatchApplyState.Pending,"地图已收到保存请求，正在校验当前 build/安装身份");
             if (_checking) { Stop("上次环境校验尚未结束，请重新载入地图"); return; }
@@ -142,7 +142,8 @@ public sealed class LocalKitMatchSetup : BasePlugin
         var a=ReadMode(true);var n=ReadMode(false);
         return a.GetProperty("Epoch").GetInt64()==_aimEpoch && n.GetProperty("Epoch").GetInt64()==_nadeEpoch
             && a.GetProperty("Mode").GetString()==_session.Request.Preset.Aim.ToString().ToLowerInvariant()
-            && n.GetProperty("Mode").GetString()==_session.Request.Preset.Nades.ToString().ToLowerInvariant() && n.GetProperty("DatabaseCount").GetInt32()>0;
+            && n.GetProperty("Mode").GetString()==_session.Request.Preset.Nades.ToString().ToLowerInvariant()
+            && (_session.Request.Preset.Nades==NadeSetting.Off || n.GetProperty("DatabaseCount").GetInt32()>0);
     }
     private bool PresentationMatches()
     {
@@ -210,9 +211,11 @@ public sealed class LocalKitMatchSetup : BasePlugin
             if (_session is null) return;
             if (!Ready()||!ModesMatch()||!BoundIdentitiesMatch(allowSideSwitch:true)) { Stop("插件/身份/本局模式或 epoch 已改变；未自动重新应用");return; }
             var a=ReadMode(true);var n=ReadMode(false);
-            var observed=a.GetProperty("Count").GetInt64()>0 && n.GetProperty("Count").GetInt64()>0;
+            var nadesEnabled=_session.Request.Preset.Nades!=NadeSetting.Off;
+            var observed=a.GetProperty("Count").GetInt64()>0 && nadesEnabled && n.GetProperty("MapCount").GetInt32()>0 && n.GetProperty("Count").GetInt64()>0;
             var reason=observed?"内部 aim 写入与投掷已观察；玩法和 off/max 差异仍需实机验收":"运行时已接收且人数/身份/模式读回通过；行为证据不足，需实机对照";
-            if (n.GetProperty("MapCount").GetInt32()==0 && _session.Request.Preset.Nades!=NadeSetting.Off) reason="运行时已接收，但当前地图无 Nade lineup；投掷效果验证不足";
+            if (n.GetProperty("MapCount").GetInt32()==0 && nadesEnabled) reason="运行时已接收，但当前地图无 Nade lineup；投掷效果验证不足";
+            if (!nadesEnabled) reason="Nades 关闭已读回；无投掷为预期，实际行为仍待实机对照";
             Status(observed?MatchApplyState.BehaviorObserved:MatchApplyState.InsufficientEvidence,reason,a.GetRawText(),n.GetRawText());
         }
         catch(Exception ex) { Stop(ex.Message); }

@@ -129,7 +129,7 @@ public class PresetManagerService : ViewModelBase
         private set => SetProperty(ref _lastStatus, value);
     }
 
-    public bool HumanWritesBlocked => LastStatus?.BotExperiment.BlocksHuman == true;
+    public bool HumanWritesBlocked => LastStatus?.BotExperiment.BlocksHuman == true && LastStatus.HumanWriteSafe != true;
 
     public event EventHandler? WorkingPresetChanged;
     public event EventHandler? StatusRefreshed;
@@ -324,7 +324,7 @@ public class PresetManagerService : ViewModelBase
         RefreshRuntimeStatus();
         if (Cs2Running)
             return OperationResult.Failed("CS2 正在运行，无法应用修改。请先关闭 CS2 游戏。");
-        if (HumanWritesBlocked) return OperationResult.Failed(LastStatus!.BotExperiment.Reason);
+        if (HumanWritesBlocked) return OperationResult.Failed(LastStatus!.HumanWriteReason ?? LastStatus.BotExperiment.Reason);
 
         if (_services.Catalog is null)
             return OperationResult.Failed("皮肤数据清单不可用，无法应用饰品配置");
@@ -342,13 +342,18 @@ public class PresetManagerService : ViewModelBase
             var steamId = _services.GetSteamId64();
             var record = _services.FixtureApplier.Apply(preset, steamId, WorkingPresetName);
             RefreshRuntimeStatus();
-
-            var shortHash = record.ProjectedSha256.Length > 12 ? record.ProjectedSha256[..12] : record.ProjectedSha256;
-            return OperationResult.Succeeded(
-                $"成功应用预设 [{WorkingPresetName}] 到 CS2！\n" +
-                $"投影哈希: {shortHash}...\n" +
-                $"应用时间: {record.CreatedAt}\n" +
-                $"可执行回滚: 是");
+            try
+            {
+                _services.ActivePresetState.SetActive(WorkingPresetName);
+                ActivePresetName = WorkingPresetName;
+            }
+            catch (Exception ex)
+            {
+                return OperationResult.Failed("饰品运行配置已写入并读回，但方案关联未完成：" + ex.Message);
+            }
+            RefreshRuntimeStatus();
+            return OperationResult.Succeeded($"饰品方案 [{WorkingPresetName}] 已应用到游戏配置；游戏内呈现仍待验证。" +
+                $"\n应用记录：{record.CreatedAt}");
         }
         catch (ApplyException ex)
         {
@@ -393,7 +398,7 @@ public class PresetManagerService : ViewModelBase
         RefreshRuntimeStatus();
         if (Cs2Running)
             return OperationResult.Failed("CS2 正在运行，无法修复启动项。请先关闭 CS2 游戏。");
-        if (HumanWritesBlocked) return OperationResult.Failed(LastStatus!.BotExperiment.Reason);
+        if (LastStatus?.BotExperiment.BlocksHuman == true) return OperationResult.Failed("活动 Bot 事务期间不能修复 MetaMod 启动项；先完成精确恢复");
 
         try
         {

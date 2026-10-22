@@ -59,6 +59,17 @@ public sealed partial class RuntimeStatusService
         {
             var csgoDir = Path.Combine(cs2Root, "game", "csgo");
             status.BotExperiment = BotExperimentIdentity.Inspect(cs2Root, _options.BotExperimentBackupRoot);
+            if (status.BotExperiment is { BlocksHuman: true, PreservesHuman: true, RecoveryRequired: false, InstallId: not null })
+            {
+                try
+                {
+                    new BotHumanFixtureSidecar(cs2Root,
+                        _options.BotExperimentBackupRoot ?? Path.Combine(CorePaths.Cs2ModRoot, "backups", "bot-experiment"),
+                        status.BotExperiment.InstallId).Inspect();
+                    status.HumanWriteSafe = true;
+                }
+                catch (Exception ex) { status.HumanWriteReason = "联合事务中的 Human 配置不可安全修改：" + ex.Message; }
+            }
 
             var steamInf = Path.Combine(csgoDir, "steam.inf");
             if (File.Exists(steamInf))
@@ -264,6 +275,8 @@ public sealed class RuntimeStatus
     /// <summary>"match" | "mismatch" | "unknown" against the lock's patched DLL hash.</summary>
     public string PatchedDllMatch { get; set; } = "unknown";
     public bool FixtureInstalled { get; set; }
+    public bool HumanWriteSafe { get; set; }
+    public string? HumanWriteReason { get; set; }
     public string? FixtureSha256 { get; set; }
     public string? ActivePreset { get; set; }
     public bool ActivePresetExists { get; set; }
@@ -285,7 +298,7 @@ public sealed class RuntimeStatus
         get
         {
             var list = new List<string>();
-            if (BotExperiment.BlocksHuman) return new[] { BotExperiment.Reason };
+            if (BotExperiment.BlocksHuman) return HumanWriteSafe ? [] : new[] { HumanWriteReason ?? BotExperiment.Reason };
             if (!Cs2Detected) list.Add("未检测到 CS2 安装路径");
             if (!GameinfoHasMetamod && Cs2Detected) list.Add("gameinfo.gi 未配置 MetaMod 启动项");
             if (MetaModNativeStatus == "missing" && Cs2Detected) list.Add("MetaMod 原生组件缺失");

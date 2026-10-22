@@ -20,6 +20,7 @@ public sealed class BotViewModel : ViewModelBase
     private string _state = "未安装 / 请检查安装条件", _feedback = "", _plan = "尚未预览", _installedDifficulty = "—";
     private BotExperimentIdentity _identity = new(false, "");
     private BotModeReadiness _readiness = new(false, "尚未检查", "未读取", "未提供", "未提供", false);
+    private BotSwitchPlan? _switchPlan;
     public MatchSetupViewModel Setup { get; }
     public BotViewModel(BotExperimentService service, IDialogService dialogs, Action refreshHuman, Action<string>? clipboard = null)
     {
@@ -31,26 +32,50 @@ public sealed class BotViewModel : ViewModelBase
         CopyCommandsCommand = new(CopyCommands, () => !IsBusy);
         OpenLogsCommand = new(() => OpenFolder(_service.LogsRoot));
         OpenBackupCommand = new(() => OpenFolder(BackupPath));
-        PreviewModeCommand = new(() => _ = PreviewModeAsync(), () => TargetMode == LocalPlayMode.EnhancedHuman ? PreviewCommand.CanExecute(null) : DiagnosticsCommand.CanExecute(null));
-        SwitchModeCommand = new(() => _ = SwitchModeAsync(), () => TargetMode == LocalPlayMode.EnhancedHuman ? InstallCommand.CanExecute(null) : RestoreCommand.CanExecute(null));
+        PreviewModeCommand = new(() => _ = PreviewModeAsync(), () => !IsBusy && !_running && _service.SteamState.Idle &&
+            (TargetMode == LocalPlayMode.EnhancedHuman
+                ? _service.Candidates.Any(c => c.Difficulty == Difficulty && c.PreservesHuman && c.MatchSetup)
+                : DiagnosticsCommand.CanExecute(null)));
+        SwitchModeCommand = new(() => _ = SwitchModeAsync(), () => TargetMode == LocalPlayMode.EnhancedHuman ? !IsBusy && !_running && _switchPlan is { AlreadyPrepared: false } : RestoreCommand.CanExecute(null));
+        PrepareMatchCommand = new(() => _ = PrepareMatchAsync(), () => !IsBusy);
         RefreshCommand = new(Observe, () => !IsBusy);
         try { _preferences = service.LoadPreferences(); } catch (Exception ex) { _feedback = "偏好读取失败（保留原文件）：" + ex.Message; }
         var catalog = RosterCatalog.LoadBuiltIn();
         Setup = new(new MatchSetupStore(Path.Combine(service.DataRoot,"app-data/match-setup"),catalog),catalog,dialogs,service);
-        if (!File.Exists(Path.Combine(service.DataRoot,"app-data/match-setup/library.json"))) { Setup.Aim=(AimSetting)(int)_preferences.Aim; Setup.Nades=(NadeSetting)(int)_preferences.Nades; Setup.Profile=(InstalledProfile)(int)_preferences.Difficulty; }
-        Setup.PropertyChanged += (_,e) => { if(e.PropertyName is nameof(Setup.Aim) or nameof(Setup.Nades)) { OnPropertyChanged(nameof(Aim));OnPropertyChanged(nameof(Nades));OnPropertyChanged(nameof(ConsoleCommands)); } };
+        if (!File.Exists(Path.Combine(service.DataRoot,"app-data/match-setup/library.json"))) { Setup.Aim=(AimSetting)(int)_preferences.Aim; Setup.Nades=(NadeSetting)(int)_preferences.Nades; Setup.Profile=(InstalledProfile)(int)_preferences.Difficulty; Setup.Mode=_preferences.TargetMode==LocalPlayMode.EnhancedHuman?MatchPlayMode.EnhancedHuman:MatchPlayMode.NormalHuman; }
+        Setup.PropertyChanged += (_,e) =>
+        {
+            if (e.PropertyName is nameof(Setup.Aim) or nameof(Setup.Nades))
+            {
+                OnPropertyChanged(nameof(Aim));OnPropertyChanged(nameof(Nades));OnPropertyChanged(nameof(ConsoleCommands));
+            }
+            if (e.PropertyName == nameof(Setup.Profile))
+            {
+                _previewReady = false; _switchPlan = null;
+                _preferences = _preferences with { Difficulty = (BotDifficulty)(int)Setup.Profile };
+                Persist();
+                Observe();
+            }
+            if (e.PropertyName == nameof(Setup.Mode))
+            {
+                _previewReady = false; _switchPlan = null;
+                _preferences = _preferences with { TargetMode = Setup.Mode == MatchPlayMode.EnhancedHuman ? LocalPlayMode.EnhancedHuman : LocalPlayMode.NormalHuman };
+                Persist();
+                Observe();
+            }
+        };
         Observe();
     }
     public IReadOnlyList<BotChoice<BotDifficulty>> DifficultyChoices { get; } = [new(BotDifficulty.Low,"低 · Low"),new(BotDifficulty.Medium,"中 · Medium"),new(BotDifficulty.High,"高 · High")];
     public IReadOnlyList<BotChoice<LocalPlayMode>> ModeChoices { get; } = [new(LocalPlayMode.NormalHuman,"普通人机 + 我的饰品"),new(LocalPlayMode.EnhancedHuman,"增强人机 + 我的饰品")];
-    public LocalPlayMode TargetMode { get => _preferences.TargetMode; set { if (!Enum.IsDefined(value) || value == TargetMode) return; _preferences = _preferences with { TargetMode = value }; _previewReady = _restoreReady = false; _plan = "目标模式已更改，请重新预览。"; Persist(); Notify(); } }
+    public LocalPlayMode TargetMode { get => Setup.Mode == MatchPlayMode.EnhancedHuman ? LocalPlayMode.EnhancedHuman : LocalPlayMode.NormalHuman; set { if (!Enum.IsDefined(value) || value == TargetMode) return; Setup.Mode = value == LocalPlayMode.EnhancedHuman ? MatchPlayMode.EnhancedHuman : MatchPlayMode.NormalHuman; _previewReady = _restoreReady = false; _plan = "目标模式已更改，请重新预览。"; Notify(); } }
     public IReadOnlyList<BotChoice<BotAim>> AimChoices { get; } = [new(BotAim.Mixed,"混合 · Mixed"),new(BotAim.Head,"头部 · Head"),new(BotAim.Body,"身体 · Body")];
     public IReadOnlyList<BotChoice<BotNades>> NadesChoices { get; } = [new(BotNades.Off,"关闭"),new(BotNades.Less,"较少"),new(BotNades.Normal,"正常"),new(BotNades.More,"较多"),new(BotNades.Max,"最多")];
-    public BotDifficulty Difficulty { get => _preferences.Difficulty; set { if (!Enum.IsDefined(value) || value == Difficulty) return; _preferences = _preferences with { Difficulty = value }; _previewReady = false; Persist(); Observe(); } }
+    public BotDifficulty Difficulty { get => (BotDifficulty)(int)Setup.Profile; set { if (!Enum.IsDefined(value) || value == Difficulty) return; Setup.Profile = (InstalledProfile)(int)value; } }
     public BotAim Aim { get => Setup is null ? _preferences.Aim : (BotAim)(int)Setup.Aim; set { if (!Enum.IsDefined(value) || value == Aim) return; _preferences = _preferences with { Aim = value }; Setup.Aim=(AimSetting)(int)value; Persist(); Notify(); } }
     public BotNades Nades { get => Setup is null ? _preferences.Nades : (BotNades)(int)Setup.Nades; set { if (!Enum.IsDefined(value) || value == Nades) return; _preferences = _preferences with { Nades = value }; Setup.Nades=(NadeSetting)(int)value; Persist(); Notify(); } }
     public bool IsBusy => _busy;
-    public bool CanSelectDifficulty => !_busy && !_active;
+    public bool CanSelectDifficulty => !_busy;
     public bool CanSelectMode => !_busy;
     public bool CanEditCommands => !_busy;
     public string StateText => _running ? "游戏运行不可切换" : _busy ? "检查 / 切换中…" : _state;
@@ -62,7 +87,7 @@ public sealed class BotViewModel : ViewModelBase
         : "候选或安装条件未通过检查。展开阻断详情核对版本与文件身份。";
     public string ActionSummary => !_readiness.CanEnable && !_active && !_running && TargetMode == LocalPlayMode.EnhancedHuman
         ? "预览通过后才允许切换；当前不会写入游戏文件。" : ActionHint;
-    public string HumanStatusText => _active ? _identity.PreservesHuman ? "Human 文件与预设保留；先恢复普通模式再写入饰品配置。" : "旧实验隔离了 Human，请通过原事务恢复。" : _readiness.HumanFilesValid ? "Human 文件身份匹配；当前 build 的实机呈现尚未重新验收。" : "Human 文件身份未通过检查，请查看运行状态。";
+    public string HumanStatusText => _active ? _identity.PreservesHuman ? _service.InspectInstalled().Valid ? "Human 文件身份匹配；关闭 CS2 后可安全更新饰品配置。" : "Human 文件身份无法确认；请先检查组件。" : "旧实验隔离了 Human，请通过原事务恢复。" : _readiness.HumanFilesValid ? "Human 文件身份匹配；当前 build 的实机呈现尚未重新验收。" : "Human 文件身份未通过检查，请查看运行状态。";
     public string ProcessText => _running ? "CS2 正在运行" : "CS2 已关闭";
     public string CandidateIdentity
     {
@@ -82,7 +107,7 @@ public sealed class BotViewModel : ViewModelBase
     public string PlanText => _plan;
     public string ConsoleCommands => $"bot_aim {Aim.ToString().ToLowerInvariant()}; bot_nades {Nades.ToString().ToLowerInvariant()}";
     public string DifficultyHint => _active ? "已安装的 profile 不可热改；先恢复原环境，再选择难度重新安装。" : "安装前选择；Low / Medium / High 分别使用固定上游 profile，默认 Medium。";
-    public string ActionHint => _running ? "请先退出 CS2，再检查切换条件。" : TargetMode == LocalPlayMode.NormalHuman ? _active ? "检查恢复预览后，按精确事务恢复普通模式。" : "当前无需切换；普通模式保留现有 Human 文件。" : _active ? "先恢复普通模式，再更换联合候选或难度。" : !_readiness.CanEnable ? _readiness.Reason : _previewReady ? "切换预览通过；确认后会再次完整校验。" : "先检查切换预览，确认文件清单后再执行。";
+    public string ActionHint => _running ? "请先退出 CS2，再检查切换条件。" : TargetMode == LocalPlayMode.NormalHuman ? _active ? "检查恢复预览后，按精确事务恢复普通模式。" : "当前无需切换；普通模式保留现有 Human 文件。" : _active ? "检查旧事务精确恢复和目标候选；确认后按顺序完成安全切换。" : !_readiness.CanEnable ? _readiness.Reason : _switchPlan is not null ? "准备预览通过；确认后仍会重新校验。" : "先检查准备预览，确认后再执行。";
     public string SwitchButtonText => TargetMode == LocalPlayMode.NormalHuman ? "恢复普通模式" : "启用增强模式";
     public RelayCommand PreviewCommand { get; }
     public RelayCommand InstallCommand { get; }
@@ -93,6 +118,7 @@ public sealed class BotViewModel : ViewModelBase
     public RelayCommand OpenBackupCommand { get; }
     public RelayCommand PreviewModeCommand { get; }
     public RelayCommand SwitchModeCommand { get; }
+    public RelayCommand PrepareMatchCommand { get; }
     public RelayCommand RefreshCommand { get; }
 
     private void Persist() { try { _service.SavePreferences(_preferences); } catch (Exception ex) { _feedback = "偏好未保存：" + ex.Message; } }
@@ -103,6 +129,7 @@ public sealed class BotViewModel : ViewModelBase
         _identity = identity;
         _readiness = _service.Readiness(Difficulty);
         if (!_readiness.CanEnable) _previewReady = false;
+        if (_switchPlan is not null && (_switchPlan.TargetDifficulty != Difficulty || _switchPlan.OldInstallId != identity.InstallId)) _switchPlan = null;
         var wasActive = _active;
         _active = identity.BlocksHuman;
         if (_installId != identity.InstallId) _restoreReady = false;
@@ -114,10 +141,11 @@ public sealed class BotViewModel : ViewModelBase
             {
                 try
                 {
-                    using var doc = JsonDocument.Parse(File.ReadAllText(Path.Combine(BackupPath,"install-record.json")));
-                    var r = doc.RootElement;
-                    _installedDifficulty = r.TryGetProperty("profile",out var p) ? p.GetProperty("difficulty").GetString()! : "Medium (legacy)";
-                    _state = identity.RecoveryRequired ? "安装/恢复中断 · 保留备份并检查恢复条件" : identity.PreservesHuman ? "已安装待实机验证 · Human 保留" : "已安装待实机验证 · 旧实验隔离 Human";
+                    var installed = _service.InspectInstalled();
+                    _installedDifficulty = installed.Valid ? installed.Difficulty!.Value.ToString() : "无法确认";
+                    _state = identity.RecoveryRequired ? "安装/恢复中断 · 保留备份并检查恢复条件"
+                        : installed.Valid ? installed.HasMatchSetup ? "增强组件已安装；开局适配层就绪，游戏内效果待验证" : "旧增强组件已安装；开局配置尚不能应用"
+                        : installed.Reason;
                 }
                 catch (Exception ex) { _state = "文件/记录漂移阻断：" + ex.Message; }
             }
@@ -157,13 +185,67 @@ public sealed class BotViewModel : ViewModelBase
         await _service.ExecuteAsync("Restore", Difficulty, true, _installId);
         _state = "已恢复 · Human 实机呈现仍需检查"; _installedDifficulty = "—"; _feedback = "原文件已按精确事务恢复。Bot 本局偏好保留。";
     });
-    public Task PreviewModeAsync() => TargetMode == LocalPlayMode.NormalHuman ? DiagnosticsAsync() : PreviewAsync();
-    public Task SwitchModeAsync() => TargetMode == LocalPlayMode.NormalHuman ? RestoreAsync() : InstallAsync();
-    private async Task Run(Func<Task> action)
+    public Task PreviewModeAsync() => TargetMode == LocalPlayMode.NormalHuman ? DiagnosticsAsync() : Run(async () =>
+    {
+        _switchPlan = await _service.PreviewSwitchAsync(Difficulty);
+        _plan = _switchPlan.Summary + "\n原事务：" + (_switchPlan.OldInstallId ?? "无") + "\n目标候选 manifest：" + _switchPlan.TargetManifestSha256;
+        _feedback = _switchPlan.AlreadyPrepared ? "当前组件和难度已匹配，无需重复安装。" : "准备预览完成；未修改游戏文件。";
+    });
+    public Task SwitchModeAsync() => TargetMode == LocalPlayMode.NormalHuman ? RestoreAsync() : Run(async () =>
+    {
+        var approved = _switchPlan ?? throw new InvalidOperationException("先检查本次安全准备预览");
+        if (approved.AlreadyPrepared) return;
+        if (!_dialogs.Confirm("准备增强人机", $"目标难度：{approved.TargetDifficulty}\n{approved.Summary}\n\n原事务：{approved.OldInstallId ?? "无"}\n目标 manifest：{approved.TargetManifestSha256}\n\n将按精确 ID 恢复旧安装，再重新预检并安装目标；失败会保留操作记录和备份。是否执行？")) return;
+        _switchPlan = null;
+        var completed = await _service.ApplySwitchAsync(approved);
+        _installId = completed.NewInstallId;
+        _preferences = _preferences with { LastInstallId = _installId }; Persist();
+        _feedback = "目标增强组件已安装并核验；未启动 CS2，游戏内效果仍待验收。";
+    });
+    public Task PrepareMatchAsync() => Run(async () =>
+    {
+        Setup.ValidateDesired();
+        if (TargetMode == LocalPlayMode.NormalHuman)
+        {
+            var active=_service.Identity;
+            if (active.BlocksHuman)
+            {
+                if (active.InstallId is null || active.RecoveryRequired) throw new InvalidOperationException(active.Reason);
+                await _service.ExecuteAsync("Diagnostics",Difficulty,installId:active.InstallId);
+                if (!_dialogs.Confirm("准备普通人机", "将按原事务精确恢复增强组件；Human 配置保留。普通人机阵容自动应用尚不可用。是否执行？"))
+                { _feedback="恢复已取消；当前方案保留。"; return; }
+                await _service.ExecuteAsync("Restore",Difficulty,true,active.InstallId);
+            }
+            var normal=_service.Assess(LocalPlayMode.NormalHuman,Difficulty);
+            if (normal.Kind!=LocalPlayReadinessKind.Ready) throw new InvalidOperationException(normal.Reason);
+            _feedback = "普通人机文件状态已核对；可通过 CS2 原生方式游玩。阵容自动应用尚不可用，方案可保存。";
+            return;
+        }
+        var desired=Difficulty;
+        var readiness=_service.Assess(LocalPlayMode.EnhancedHuman,desired);
+        if (readiness.Kind is LocalPlayReadinessKind.NeedsRepair or LocalPlayReadinessKind.Unknown)
+            throw new InvalidOperationException(readiness.Reason);
+        if (readiness.Kind == LocalPlayReadinessKind.NeedsLocalPreparation)
+        {
+            var plan=await _service.PreviewSwitchAsync(desired);
+            if (!plan.AlreadyPrepared)
+            {
+                if (!_dialogs.Confirm("准备对局", $"{plan.Summary}\n目标难度：{desired}\n原事务：{plan.OldInstallId ?? "无"}\n目标 manifest：{plan.TargetManifestSha256}\n\n将精确恢复旧安装、实时预检并安装目标。游戏内表现待验证。是否执行？"))
+                { _feedback="准备已取消；当前方案保留。"; return; }
+                var journal=await _service.ApplySwitchAsync(plan);
+                _installId=journal.NewInstallId;
+                _preferences=_preferences with { LastInstallId=_installId };Persist();
+            }
+        }
+        Setup.PrepareRequest();
+        Setup.RefreshRuntime();
+        _feedback="已提交下一张本地地图的配置请求；请按页面步骤启动离线游戏，本局应用等待运行时读回。";
+    }, allowRunning: true);
+    private async Task Run(Func<Task> action, bool allowRunning = false)
     {
         if (_busy) return;
         _busy = true; Notify();
-        try { _blocked = false; Observe(); if (_running) throw new InvalidOperationException("CS2 正在运行，禁止文件操作"); await action(); }
+        try { _blocked = false; Observe(); if (_running && !allowRunning) throw new InvalidOperationException("CS2 正在运行，禁止文件操作"); await action(); }
         catch (Exception ex) { _blocked = true; _previewReady = _restoreReady = false; _state = "文件漂移 / 条件阻断"; _feedback = ex.Message; }
         finally { _busy = false; Observe(); _refreshHuman(); Notify(); }
     }
@@ -187,6 +269,6 @@ public sealed class BotViewModel : ViewModelBase
     private void Notify()
     {
         foreach (var name in new[] { nameof(TargetMode),nameof(CurrentMode),nameof(CanSelectMode),nameof(AvailabilityText),nameof(AvailabilitySummary),nameof(ActionSummary),nameof(HumanStatusText),nameof(SwitchButtonText),nameof(Difficulty),nameof(Aim),nameof(Nades),nameof(IsBusy),nameof(CanSelectDifficulty),nameof(CanEditCommands),nameof(StateText),nameof(ProcessText),nameof(TargetBuild),nameof(CandidateIdentity),nameof(InstalledDifficulty),nameof(InstallId),nameof(BackupPath),nameof(Feedback),nameof(PlanText),nameof(ConsoleCommands),nameof(DifficultyHint),nameof(ActionHint) }) OnPropertyChanged(name);
-        foreach (var cmd in new[] { PreviewCommand,InstallCommand,DiagnosticsCommand,RestoreCommand,CopyCommandsCommand,PreviewModeCommand,SwitchModeCommand,RefreshCommand }) cmd.RaiseCanExecuteChanged();
+        foreach (var cmd in new[] { PreviewCommand,InstallCommand,DiagnosticsCommand,RestoreCommand,CopyCommandsCommand,PreviewModeCommand,SwitchModeCommand,PrepareMatchCommand,RefreshCommand }) cmd.RaiseCanExecuteChanged();
     }
 }

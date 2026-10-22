@@ -48,12 +48,21 @@ public class FixtureApplier
 
     private bool Cs2Running =>
         !_options.SkipCs2ProcessCheck && (_options.Cs2RunningProbe ?? Cs2Locator.IsCs2Running)();
+    private string Cs2Root => Path.GetFullPath(Path.Combine(_options.CsgoDir ?? Cs2Locator.FindCsgoDir(), "..", ".."));
 
-    private void EnsureNoBotExperiment()
+    private BotHumanFixtureSidecar? HumanWriteSidecar()
     {
         var csgo = _options.CsgoDir ?? Cs2Locator.FindCsgoDir();
-        var experiment = BotExperimentIdentity.Inspect(Path.GetFullPath(Path.Combine(csgo, "..", "..")), _options.BotExperimentBackupRoot);
-        if (experiment.BlocksHuman) throw new ApplyException(experiment.Reason);
+        var root = Path.GetFullPath(Path.Combine(csgo, "..", ".."));
+        var experiment = BotExperimentIdentity.Inspect(root, _options.BotExperimentBackupRoot);
+        if (!experiment.BlocksHuman) return null;
+        if (!experiment.PreservesHuman || experiment.RecoveryRequired || experiment.InstallId is null)
+            throw new ApplyException(experiment.Reason);
+        var sidecar = new BotHumanFixtureSidecar(root,
+            _options.BotExperimentBackupRoot ?? Path.Combine(CorePaths.Cs2ModRoot, "backups", "bot-experiment"), experiment.InstallId);
+        try { sidecar.Inspect(); }
+        catch (Exception ex) { throw new ApplyException("活动增强组件无法证明可安全更新 Human 配置：" + ex.Message, ex); }
+        return sidecar;
     }
 
     public string InstalledFixturePath
@@ -67,7 +76,8 @@ public class FixtureApplier
 
     public ApplyRecord Apply(HumanPreset preset, string steamId64, string? presetPath = null)
     {
-        EnsureNoBotExperiment();
+        using var operation = BotHumanOperationGate.Acquire(Cs2Root);
+        var sidecar = HumanWriteSidecar();
         if (Cs2Running)
             throw new ApplyException("cs2.exe is running. Close CS2, then re-run.");
         // Mutation boundary: the caller may hold an in-memory preset that never went
@@ -84,10 +94,12 @@ public class FixtureApplier
         var projected = _projector.Project(preset, steamId64);
         var staging = Path.Combine(Path.GetTempPath(), $"cs2localkit-apply-{Guid.NewGuid():N}.json");
         var tempTarget = installedPath + ".new";
+        var recordWritten = false;
         try
         {
             File.WriteAllText(staging, projected);
             var stagedSha = Sha256File(staging);
+            sidecar?.Begin(System.Text.Encoding.UTF8.GetBytes(projected));
 
             var stamp = DateTime.Now.ToString("yyyyMMdd-HHmmssfff");
             var backupsRoot = _options.BackupsRoot ?? CorePaths.FixtureBackupRoot;
@@ -125,6 +137,7 @@ public class FixtureApplier
             try
             {
                 WriteApplyRecord(backupDir, record);
+                recordWritten = true;
             }
             catch (Exception ex)
             {
@@ -137,7 +150,14 @@ public class FixtureApplier
                     $"apply-record.json could not be written ({ex.Message}); installed fixture was rolled back to the previous state.", ex);
             }
 
+            sidecar?.Complete();
             return record;
+        }
+        catch
+        {
+            if (!recordWritten) sidecar?.Abort();
+            // A written apply record and an unfinished sidecar retain the exact recovery evidence.
+            throw;
         }
         finally
         {
@@ -178,7 +198,8 @@ public class FixtureApplier
     /// </summary>
     public ApplyRecord RestoreLatest()
     {
-        EnsureNoBotExperiment();
+        using var operation = BotHumanOperationGate.Acquire(Cs2Root);
+        var sidecar = HumanWriteSidecar();
         if (Cs2Running)
             throw new ApplyException("cs2.exe is running. Close CS2, then re-run.");
 
@@ -213,22 +234,24 @@ public class FixtureApplier
                 $"Record: {recordPath}");
 
         var tempTarget = installedPath + ".new";
+        sidecar?.Begin(File.ReadAllBytes(record.BackupPath));
         try
         {
             File.Copy(record.BackupPath, tempTarget, overwrite: true);
             if (Sha256File(tempTarget) != record.PreviousSha256)
                 throw new ApplyException("Backup content does not match the recorded previous hash - refusing to restore.");
             File.Move(tempTarget, installedPath, overwrite: true);
+            var restored = Sha256File(installedPath);
+            if (restored != record.PreviousSha256)
+                throw new ApplyException("Post-restore verification failed.");
+            sidecar?.Complete();
+            return record;
         }
+        catch { sidecar?.Abort(); throw; }
         finally
         {
             if (File.Exists(tempTarget)) File.Delete(tempTarget);
         }
-
-        var restored = Sha256File(installedPath);
-        if (restored != record.PreviousSha256)
-            throw new ApplyException("Post-restore verification failed.");
-        return record;
     }
 
     internal static string Sha256File(string path)

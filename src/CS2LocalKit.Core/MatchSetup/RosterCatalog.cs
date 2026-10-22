@@ -38,8 +38,10 @@ public sealed class RosterCatalog
     {
         if (preset.SchemaVersion != 1) throw new InvalidDataException("不支持的对局 schemaVersion；保留原配置");
         MatchJson.Id(preset.Id); MatchJson.Name(preset.Name, 120);
-        if (!Enum.IsDefined(preset.HumanSide) || !Enum.IsDefined(preset.Profile) || !Enum.IsDefined(preset.Aim) || !Enum.IsDefined(preset.Nades)
+        if (!Enum.IsDefined(preset.HumanSide) || !Enum.IsDefined(preset.Profile) || !Enum.IsDefined(preset.Mode) || !Enum.IsDefined(preset.Aim) || !Enum.IsDefined(preset.Nades)
             || preset.FriendlyBots is < 0 or > 4 || preset.EnemyBots is < 0 or > 5 || preset.ReplacedSlot is < 0 or > 4) throw new InvalidDataException("阵营、人数、替代席位或行为档位无效");
+        if (string.IsNullOrEmpty(preset.Map) || !System.Text.RegularExpressions.Regex.IsMatch(preset.Map, "^(de_|cs_|ar_)[a-z0-9_]{1,40}$"))
+            throw new InvalidDataException("地图名称无效；只能选择本机游戏地图");
         var bots = ImmutableArray.CreateBuilder<ResolvedBot>(); var warnings = ImmutableArray.CreateBuilder<string>();
         var usedIds = new HashSet<string>(StringComparer.Ordinal); var usedNames = new Dictionary<string,int>(StringComparer.OrdinalIgnoreCase);
         void Add(MatchTeamSelection selection, MatchSide side, int count, bool friendly)

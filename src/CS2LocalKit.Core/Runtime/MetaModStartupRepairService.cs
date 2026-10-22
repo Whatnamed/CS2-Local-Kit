@@ -56,6 +56,7 @@ public sealed class MetaModStartupRepairService
         }
         if (cs2Root is null || !Directory.Exists(cs2Root))
             throw new MetaModStartupRepairException("未检测到 CS2 安装路径。");
+        using var operation = BotHumanOperationGate.Acquire(cs2Root);
 
         // 2. CS2 running probe (must be closed)
         var experiment = BotExperimentIdentity.Inspect(cs2Root, _options.BotExperimentBackupRoot);

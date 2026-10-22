@@ -26,7 +26,7 @@ public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, stri
                     throw new InvalidDataException("marker 与事务身份不一致");
                 var recovery = missingMarker || state != "installed";
                 return new(true, recovery ? "事务未完整结束；请按精确 ID 检查恢复条件" : preserve
-                    ? "增强人机 + 我的饰品；事务活动期间请先恢复普通模式，再修改饰品配置"
+                    ? "增强人机 + 我的饰品；Human 修改须经活动事务与侧车校验"
                     : "旧 Bot 实验隔离 Human；请先按精确 ID 恢复", id, backupRoot, preserve, state, recovery);
             }
             var marker = Path.Combine(cs2Root, "game", "csgo", ".cs2-local-kit-bot-experiment.json");

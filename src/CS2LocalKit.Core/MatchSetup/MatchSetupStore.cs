@@ -50,6 +50,30 @@ public sealed class MatchSetupStore(string root, RosterCatalog catalog)
         if (r.SchemaVersion != 1 || Digest(r.Preset) != r.PresetSha256) throw new InvalidDataException("开局请求版本或校验和不匹配");
         catalog.Resolve(r.Preset); return r;
     }
+    public MatchSetupRequest? ReadPendingRequest()
+    {
+        var request = ReadRequest();
+        return request is not null && DateTimeOffset.UtcNow - request.SavedAt <= TimeSpan.FromHours(2)
+            && !File.Exists(ClaimPath(request.RequestId)) ? request : null;
+    }
+    private string ClaimPath(string id) { MatchJson.Id(id); return Path.Combine(Root, "claims", id + ".json"); }
+    /// <summary>A request belongs to one matching map session. A crash or failure leaves it consumed, never replayed later.</summary>
+    public MatchSetupRequest? ClaimForMap(string map, string sessionId)
+    {
+        MatchJson.Id(sessionId);
+        var request = ReadPendingRequest();
+        if (request is null || !string.Equals(request.Preset.Map, map, StringComparison.Ordinal)) return null;
+        var path = ClaimPath(request.RequestId);
+        CheckPath(path); Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        try
+        {
+            using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
+            var bytes = System.Text.Encoding.UTF8.GetBytes(MatchJson.Write(new { request.RequestId, sessionId, map, claimedAt = DateTimeOffset.UtcNow }));
+            stream.Write(bytes); stream.Flush(true);
+            return request;
+        }
+        catch (IOException) when (File.Exists(path)) { return null; }
+    }
     public void Import(string json)
     {
         var incoming = MatchJson.Read<MatchLibrary>(json); Validate(incoming);

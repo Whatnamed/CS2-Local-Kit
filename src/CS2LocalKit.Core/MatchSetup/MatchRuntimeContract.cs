@@ -34,7 +34,10 @@ public static class MatchRuntimeContract
         void Verify(string rel,string expected) { if (Hash(Safe(cs2Root,rel))!=expected) throw new InvalidDataException("运行时文件漂移："+rel); }
         foreach (var binary in m.GetProperty("gameBinaries").EnumerateObject()) Verify(binary.Name,binary.Value.GetString()!);
         foreach (var e in m.GetProperty("files").EnumerateArray()) Verify(e.GetProperty("target").GetString()!,e.GetProperty("sha256").GetString()!);
-        foreach (var h in m.GetProperty("coexistence").GetProperty("humanFiles").EnumerateObject()) Verify(h.Name,h.Value.GetString()!);
+        var humanUpdate = BotHumanFixtureSidecar.Exists(backupRoot,id)
+            ? new BotHumanFixtureSidecar(cs2Root,backupRoot,id).Inspect() : null;
+        foreach (var h in m.GetProperty("coexistence").GetProperty("humanFiles").EnumerateObject())
+            Verify(h.Name,h.Name==BotHumanFixtureSidecar.Target && humanUpdate is not null?humanUpdate.CurrentSha256:h.Value.GetString()!);
         foreach (var p in m.GetProperty("baselineFiles").EnumerateObject().Where(p=>p.Name.Contains("/counterstrikesharp/api/") || p.Name.Contains("/counterstrikesharp/bin/") || p.Name.EndsWith("/counterstrikesharp.vdf"))) Verify(p.Name,p.Value.GetString()!);
         using var fresh=JsonDocument.Parse(File.ReadAllText(recordPath));
         if (fresh.RootElement.GetProperty("state").GetString()!="installed" || Hash(manifestPath)!=sha || Hash(markerPath)!=markerHash || !SteamInstallState.Inspect(cs2Root).Equals(steam)) throw new InvalidDataException("校验期间安装或 Steam 状态变化");

@@ -16,6 +16,12 @@ public sealed record BotPreferences(BotDifficulty Difficulty = BotDifficulty.Med
 }
 public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false, bool MatchSetup = false);
 public sealed record BotModeReadiness(bool CanEnable, string Reason, string CurrentBuild, string CandidateBuild, string BotRef, bool HumanFilesValid);
+public sealed record BotInstalledSnapshot(bool Valid, string Reason, BotDifficulty? Difficulty = null, bool HasMatchSetup = false);
+public enum LocalPlayReadinessKind { Ready, NeedsLocalPreparation, NeedsRepair, Unknown }
+public sealed record LocalPlayReadiness(LocalPlayReadinessKind Kind, string Reason, BotDifficulty? InstalledDifficulty = null, bool HasMatchSetup = false);
+public sealed record BotSwitchPlan(string? OldInstallId, BotDifficulty TargetDifficulty, string TargetManifestSha256, bool AlreadyPrepared, string Summary);
+public sealed record BotPrepareJournal(string OperationId, string? OldInstallId, BotDifficulty TargetDifficulty,
+    string TargetManifestSha256, string Stage, string? NewInstallId = null, string? Error = null);
 public sealed record BotProcessResult(int ExitCode, string Stdout, string Stderr);
 public interface IBotProcessRunner { Task<BotProcessResult> RunAsync(string executable, IReadOnlyList<string> arguments); }
 public sealed class BotProcessRunner : IBotProcessRunner
@@ -50,10 +56,18 @@ public sealed class BotExperimentService
     public string BackupRoot { get; }
     public string LogsRoot { get; }
     public string PreferencesPath { get; }
+    public string PrepareJournalPath => Path.Combine(DataRoot, "app-data", "bot-experiment", "prepare-operation.json");
     public bool Cs2Running => _running();
     public SteamInstallState SteamState => SteamInstallState.Inspect(Cs2Root);
     public BotExperimentIdentity Identity => BotExperimentIdentity.Inspect(Cs2Root, BackupRoot);
     public IReadOnlyList<BotCandidate> Candidates => _candidates;
+    public IReadOnlyList<string> AvailableMaps => System.IO.Directory.Exists(Path.Combine(Cs2Root, "game", "csgo", "maps"))
+        ? System.IO.Directory.EnumerateFiles(Path.Combine(Cs2Root, "game", "csgo", "maps"), "*.vpk", SearchOption.TopDirectoryOnly)
+            .Select(Path.GetFileNameWithoutExtension).Where(name => name is not null && !name.EndsWith("_vanity", StringComparison.Ordinal)
+                && Regex.IsMatch(name, "^(de_|cs_|ar_)[a-z0-9_]{1,40}$"))
+            .Select(name => name!).Distinct(StringComparer.Ordinal).OrderBy(name => name, StringComparer.Ordinal).ToArray()
+        : [];
+    public bool HasMap(string map) => AvailableMaps.Contains(map, StringComparer.Ordinal);
 
     public BotExperimentService(string dataRoot, string cs2Root, Func<bool>? running = null, IBotProcessRunner? runner = null, IReadOnlyList<BotCandidate>? candidates = null, string? humanLockPath = null)
     {
@@ -92,8 +106,8 @@ public sealed class BotExperimentService
         File.Move(tmp, PreferencesPath, true);
     }
 
-    public BotCandidate Candidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty).OrderByDescending(c => c.PreservesHuman).ThenByDescending(c => c.MatchSetup).FirstOrDefault() ?? throw new InvalidOperationException("该难度没有已固定候选，禁止安装");
-    private BotCandidate JointCandidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty && c.PreservesHuman).OrderByDescending(c => c.MatchSetup).FirstOrDefault()
+    public BotCandidate Candidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty).OrderBy(c => c.PreservesHuman).ThenBy(c => c.MatchSetup).LastOrDefault() ?? throw new InvalidOperationException("该难度没有已固定候选，禁止安装");
+    private BotCandidate JointCandidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty && c.PreservesHuman).OrderBy(c => c.MatchSetup).LastOrDefault()
         ?? throw new InvalidOperationException("暂无通过门禁的 Bot + Human 联合候选；旧隔离实验仅保留精确恢复入口");
 
     private (bool Valid, string Reason) HumanBaseline()
@@ -116,9 +130,93 @@ public sealed class BotExperimentService
         catch (Exception ex) { return (false, "无法核实 Human 基线：" + ex.Message); }
     }
 
+    /// <summary>Read the active transaction against its own postimages. The pure Human lock describes only the restored baseline.</summary>
+    public BotInstalledSnapshot InspectInstalled()
+    {
+        var identity = Identity;
+        if (!identity.BlocksHuman) return new(false, "没有活动增强人机事务");
+        if (identity.InstallId is null || identity.RecoveryRequired || !identity.PreservesHuman)
+            return new(false, identity.Reason);
+        try
+        {
+            var backup = SafePath(BackupRoot, identity.InstallId);
+            var recordPath = SafePath(backup, "install-record.json");
+            var manifestPath = SafePath(backup, "candidate-manifest.json");
+            using var record = JsonDocument.Parse(File.ReadAllText(recordPath));
+            using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
+            var r = record.RootElement;
+            var m = manifest.RootElement;
+            if (r.GetProperty("state").GetString() != "installed" ||
+                r.GetProperty("installId").GetString() != identity.InstallId ||
+                r.GetProperty("manifestSha256").GetString() != HashFile(manifestPath) ||
+                m.GetProperty("humanPolicy").GetString() != "preserve")
+                throw new InvalidDataException("活动事务记录与 manifest 不匹配");
+            var steam = SteamState;
+            var build = m.GetProperty("targetBuild");
+            if (!steam.Idle || steam.BuildId != build.GetProperty("buildId").GetString() ||
+                steam.PatchVersion != build.GetProperty("PatchVersion").GetString() ||
+                steam.ClientVersion != build.GetProperty("ClientVersion").GetString())
+                throw new InvalidDataException("活动事务与当前 Steam/CS2 build 不匹配");
+            var humanUpdate = BotHumanFixtureSidecar.Exists(BackupRoot, identity.InstallId)
+                ? new BotHumanFixtureSidecar(Cs2Root, BackupRoot, identity.InstallId).Inspect() : null;
+            var entries = r.GetProperty("entries").EnumerateArray().ToArray();
+            var targets = entries.Select(e => e.GetProperty("target").GetString()!).ToHashSet(StringComparer.OrdinalIgnoreCase);
+            if (entries.Length == 0 || !m.GetProperty("files").EnumerateArray().All(e => targets.Contains(e.GetProperty("target").GetString()!)))
+                throw new InvalidDataException("活动事务缺少候选文件清单");
+            foreach (var entry in entries)
+            {
+                var path = SafePath(Cs2Root, entry.GetProperty("target").GetString()!);
+                var after = entry.GetProperty("after");
+                if (after.ValueKind == JsonValueKind.Null)
+                {
+                    if (File.Exists(path) || System.IO.Directory.Exists(path)) throw new InvalidDataException("隔离文件重新出现：" + entry.GetProperty("target").GetString());
+                    continue;
+                }
+                var expected = entry.GetProperty("target").GetString() == BotHumanFixtureSidecar.Target && humanUpdate is not null
+                    ? humanUpdate.CurrentSha256 : after.GetProperty("sha256").GetString();
+                if (after.GetProperty("kind").GetString() != "file" || HashFile(path) != expected)
+                    throw new InvalidDataException("活动事务文件漂移：" + entry.GetProperty("target").GetString());
+            }
+            foreach (var file in m.GetProperty("coexistence").GetProperty("humanFiles").EnumerateObject())
+                if (HashFile(SafePath(Cs2Root, file.Name)) != (file.Name == BotHumanFixtureSidecar.Target && humanUpdate is not null ? humanUpdate.CurrentSha256 : file.Value.GetString()))
+                    throw new InvalidDataException("Human 文件漂移：" + file.Name);
+            var level = Enum.Parse<BotDifficulty>(r.GetProperty("profile").GetProperty("difficulty").GetString()!);
+            return new(true, "活动联合安装文件身份匹配；游戏内行为待验证", level, m.TryGetProperty("matchSetup", out _));
+        }
+        catch (Exception ex) { return new(false, "无法确认活动安装：" + ex.Message); }
+    }
+
+    public LocalPlayReadiness Assess(LocalPlayMode mode, BotDifficulty desired)
+    {
+        var identity = Identity;
+        if (identity.BlocksHuman)
+        {
+            if (identity.RecoveryRequired || identity.InstallId is null)
+                return new(LocalPlayReadinessKind.Unknown, identity.Reason);
+            var installed = InspectInstalled();
+            if (!installed.Valid) return new(LocalPlayReadinessKind.NeedsRepair, installed.Reason);
+            if (mode == LocalPlayMode.NormalHuman)
+                return new(LocalPlayReadinessKind.NeedsLocalPreparation, "关闭 CS2 后预览并精确恢复活动增强组件", installed.Difficulty, installed.HasMatchSetup);
+            if (installed.Difficulty != desired || !installed.HasMatchSetup)
+                return new(LocalPlayReadinessKind.NeedsLocalPreparation, "当前增强组件与对局配置不匹配；关闭 CS2 后预览安全切换", installed.Difficulty, installed.HasMatchSetup);
+            return new(LocalPlayReadinessKind.Ready, "增强组件文件身份匹配；本局应用仍需会话读回", installed.Difficulty, true);
+        }
+        var baseline = HumanBaseline();
+        if (!baseline.Valid) return new(LocalPlayReadinessKind.NeedsRepair, baseline.Reason);
+        if (mode == LocalPlayMode.NormalHuman) return new(LocalPlayReadinessKind.Ready, "普通人机与 Human 基线文件身份匹配");
+        var candidate = Readiness(desired);
+        return candidate.CanEnable
+            ? new(LocalPlayReadinessKind.NeedsLocalPreparation, "增强组件尚未安装；先检查候选并准备对局")
+            : new(LocalPlayReadinessKind.NeedsRepair, candidate.Reason);
+    }
+
     public BotModeReadiness Readiness(BotDifficulty difficulty)
     {
-        var steam = SteamState; var human = HumanBaseline();
+        var steam = SteamState;
+        var active = Identity;
+        var human = active.BlocksHuman
+            ? (Valid: InspectInstalled().Valid, Reason: "活动联合安装需先精确恢复，才可安装目标候选")
+            : HumanBaseline();
         var build = "未提供"; var botRef = "未提供";
         try
         {
@@ -129,6 +227,7 @@ public sealed class BotExperimentService
             build = $"{target.GetProperty("PatchVersion").GetString()} / {target.GetProperty("ClientVersion").GetString()} / {target.GetProperty("buildId").GetString()}";
             if (Cs2Running) throw new InvalidOperationException("CS2 正在运行，请退出游戏后切换");
             if (!steam.Idle) throw new InvalidOperationException(steam.Reason);
+            if (active.BlocksHuman) throw new InvalidOperationException(human.Reason);
             if (!human.Valid) throw new InvalidOperationException(human.Reason);
             if (build != steam.BuildText) throw new InvalidOperationException($"候选 build 已过期（{build}）；禁止套用到当前 build");
             if (!candidate.PreservesHuman) throw new InvalidOperationException("现有候选会隔离 Human，不能用于“增强人机 + 我的饰品”");
@@ -193,6 +292,45 @@ public sealed class BotExperimentService
         if (!await _operation.WaitAsync(0)) throw new InvalidOperationException("另一个 Bot 操作正在执行");
         try
         {
+            using var gameWrite = apply ? BotHumanOperationGate.Acquire(Cs2Root) : null;
+            return await ExecuteWithHumanUpdateAsync(action, difficulty, apply, installId);
+        }
+        finally { _operation.Release(); }
+    }
+
+    private async Task<JsonElement> ExecuteWithHumanUpdateAsync(string action, BotDifficulty difficulty, bool apply, string? installId)
+    {
+        if (installId is null || action is not ("Diagnostics" or "Restore") ||
+            !BotHumanFixtureSidecar.Exists(BackupRoot, installId))
+            return await ExecuteCoreAsync(action, difficulty, apply, installId);
+        if (Cs2Running || !SteamState.Idle) throw new InvalidOperationException("CS2 运行或 Steam 更新状态未稳定，禁止恢复");
+        var sidecar = new BotHumanFixtureSidecar(Cs2Root, BackupRoot, installId);
+        var count = sidecar.PreviewExactRestore();
+        if (action == "Diagnostics" || !apply)
+        {
+            using var record = JsonDocument.Parse(File.ReadAllText(SafePath(BackupRoot, installId + "/install-record.json")));
+            return JsonSerializer.SerializeToElement(new { state = "sidecar-preview", count,
+                entries = record.RootElement.GetProperty("entries").Clone() });
+        }
+        sidecar.SuspendForExactRestore();
+        try
+        {
+            var result = await ExecuteCoreAsync("Restore", difficulty, true, installId);
+            sidecar.FinishExactRestore();
+            return result;
+        }
+        catch
+        {
+            // Only reconcile a stage whose exact Bot record proves the corresponding disk state.
+            var state = ReadRecordState(installId);
+            if (state == "installed" && Identity.InstallId == installId) sidecar.AbortSuspendedRestore();
+            else if (state == "restored" && !Identity.BlocksHuman) sidecar.FinishExactRestore();
+            throw;
+        }
+    }
+
+    private async Task<JsonElement> ExecuteCoreAsync(string action, BotDifficulty difficulty, bool apply = false, string? installId = null)
+    {
             if (action is not ("Preview" or "Install" or "Diagnostics" or "Restore") || apply && action is not ("Install" or "Restore")) throw new InvalidOperationException("未知实验操作");
             if (Cs2Running) throw new InvalidOperationException("CS2 正在运行，关闭游戏后再操作");
             if (!SteamState.Idle) throw new InvalidOperationException(SteamState.Reason);
@@ -245,8 +383,158 @@ public sealed class BotExperimentService
             if (apply && action == "Restore" && (Identity.BlocksHuman || ReadRecordState(installId!) != "restored"))
                 throw new InvalidDataException("恢复入口结束，但原环境状态未确认；保留精确备份");
             return result;
+    }
+
+    public BotPrepareJournal? ReadPrepareJournal()
+    {
+        CheckNoLinks(PrepareJournalPath);
+        return File.Exists(PrepareJournalPath)
+            ? JsonSerializer.Deserialize<BotPrepareJournal>(File.ReadAllText(PrepareJournalPath)) ?? throw new InvalidDataException("准备记录为空")
+            : null;
+    }
+
+    private void WritePrepareJournal(BotPrepareJournal journal)
+    {
+        CheckNoLinks(PrepareJournalPath);
+        System.IO.Directory.CreateDirectory(Path.GetDirectoryName(PrepareJournalPath)!);
+        var temp = PrepareJournalPath + ".new";
+        CheckNoLinks(temp);
+        File.WriteAllText(temp, JsonSerializer.Serialize(journal));
+        File.Move(temp, PrepareJournalPath, true);
+    }
+
+    public async Task<BotSwitchPlan> PreviewSwitchAsync(BotDifficulty difficulty)
+    {
+        if (!await _operation.WaitAsync(0)) throw new InvalidOperationException("另一个 Bot 操作正在执行");
+        try { return await PreviewSwitchCoreAsync(difficulty); }
+        finally { _operation.Release(); }
+    }
+
+    private async Task<BotSwitchPlan> PreviewSwitchCoreAsync(BotDifficulty difficulty)
+    {
+        if (Cs2Running || !SteamState.Idle) throw new InvalidOperationException("CS2 运行或 Steam 更新状态未稳定，禁止准备");
+        var target = JointCandidate(difficulty);
+        if (!target.MatchSetup) throw new InvalidOperationException("目标候选没有开局配置适配层");
+        Validate(target);
+        var current = Identity;
+        if (!current.BlocksHuman)
+        {
+            await ExecuteCoreAsync("Preview", difficulty);
+            return new(null, difficulty, target.ManifestSha256, false, "当前无活动增强安装；目标候选完整预览通过，待确认安装");
+        }
+        if (current.InstallId is null || current.RecoveryRequired || !current.PreservesHuman)
+            throw new InvalidOperationException(current.Reason);
+        var installed = InspectInstalled();
+        if (!installed.Valid) throw new InvalidOperationException(installed.Reason);
+        await ExecuteWithHumanUpdateAsync("Diagnostics", difficulty, false, current.InstallId);
+        using var activeRecord = JsonDocument.Parse(File.ReadAllText(SafePath(BackupRoot, current.InstallId + "/install-record.json")));
+        if (installed.Difficulty == difficulty && installed.HasMatchSetup &&
+            activeRecord.RootElement.GetProperty("manifestSha256").GetString() == target.ManifestSha256)
+            return new(current.InstallId, difficulty, target.ManifestSha256, true, "当前增强安装与所选难度匹配；无需重复安装");
+
+        // The target's full live preflight is impossible while the old package owns overlapping paths.
+        // Compare immutable restored preimages now; Install still performs a fresh full preflight after Restore.
+        using var old = JsonDocument.Parse(File.ReadAllText(SafePath(BackupRoot, current.InstallId + "/candidate-manifest.json")));
+        using var next = JsonDocument.Parse(File.ReadAllText(SafePath(CandidatePath(target), "experiment-manifest.json")));
+        foreach (var key in new[] { "targetBuild", "baselineFiles", "gameBinaries", "moduleInventory" })
+            if (old.RootElement.GetProperty(key).GetRawText() != next.RootElement.GetProperty(key).GetRawText())
+                throw new InvalidDataException("旧事务恢复基线与目标候选不一致：" + key);
+        if (old.RootElement.GetProperty("coexistence").GetProperty("humanFiles").GetRawText() !=
+            next.RootElement.GetProperty("coexistence").GetProperty("humanFiles").GetRawText())
+            throw new InvalidDataException("旧事务与目标候选的 Human 文件身份不一致");
+        return new(current.InstallId, difficulty, target.ManifestSha256, false,
+            "原事务精确恢复预检通过；目标与恢复后的固定基线一致。确认后先恢复，重新完整预检，再安装目标候选");
+    }
+
+    public async Task<BotPrepareJournal> ApplySwitchAsync(BotSwitchPlan approved)
+    {
+        if (!await _operation.WaitAsync(0)) throw new InvalidOperationException("另一个 Bot 操作正在执行");
+        try
+        {
+            using var gameWrite = BotHumanOperationGate.Acquire(Cs2Root);
+            var previous = ReadPrepareJournal();
+            if (previous is not null && previous.Stage != "completed" && !PreviousPrepareSettled(previous))
+                throw new InvalidOperationException("上次准备操作未完成；保留现场并检查记录，不自动重试");
+            var fresh = await PreviewSwitchCoreAsync(approved.TargetDifficulty);
+            if (fresh.OldInstallId != approved.OldInstallId || fresh.TargetManifestSha256 != approved.TargetManifestSha256 || fresh.AlreadyPrepared != approved.AlreadyPrepared)
+                throw new InvalidOperationException("准备预览后安装身份变化，请重新检查并确认");
+            if (fresh.AlreadyPrepared) return new(Guid.NewGuid().ToString("N"), fresh.OldInstallId,
+                fresh.TargetDifficulty, fresh.TargetManifestSha256, "completed", fresh.OldInstallId);
+            var journal = new BotPrepareJournal(Guid.NewGuid().ToString("N"), fresh.OldInstallId,
+                fresh.TargetDifficulty, fresh.TargetManifestSha256, "previewed");
+            WritePrepareJournal(journal);
+            BotHumanFixtureSidecar? handoff = null;
+            try
+            {
+                if (fresh.OldInstallId is not null)
+                {
+                    journal = journal with { Stage = "restoring" }; WritePrepareJournal(journal);
+                    if (BotHumanFixtureSidecar.Exists(BackupRoot, fresh.OldInstallId))
+                    {
+                        handoff = new BotHumanFixtureSidecar(Cs2Root, BackupRoot, fresh.OldInstallId);
+                        handoff.PreviewExactRestore();
+                        handoff.SuspendForExactRestore();
+                        try
+                        {
+                            await ExecuteCoreAsync("Restore", fresh.TargetDifficulty, true, fresh.OldInstallId);
+                            handoff.FinishExactRestore(replayHuman: false);
+                        }
+                        catch
+                        {
+                            if (ReadRecordState(fresh.OldInstallId) == "installed" && Identity.InstallId == fresh.OldInstallId)
+                                handoff.AbortSuspendedRestore();
+                            else if (ReadRecordState(fresh.OldInstallId) == "restored" && !Identity.BlocksHuman)
+                                handoff.FinishExactRestore(replayHuman: false);
+                            throw;
+                        }
+                    }
+                    else await ExecuteCoreAsync("Restore", fresh.TargetDifficulty, true, fresh.OldInstallId);
+                    journal = journal with { Stage = "restored" }; WritePrepareJournal(journal);
+                }
+                journal = journal with { Stage = "installing" }; WritePrepareJournal(journal);
+                var installed = await ExecuteCoreAsync("Install", fresh.TargetDifficulty, true);
+                var newId = installed.GetProperty("installId").GetString();
+                if (handoff is not null)
+                {
+                    if (newId is null) throw new InvalidDataException("新事务缺少 install ID，不能移交 Human 配置");
+                    handoff.TransferTo(new BotHumanFixtureSidecar(Cs2Root, BackupRoot, newId));
+                }
+                var snapshot = InspectInstalled();
+                if (!snapshot.Valid || !snapshot.HasMatchSetup || snapshot.Difficulty != fresh.TargetDifficulty || Identity.InstallId != newId)
+                    throw new InvalidDataException("新安装事务结束后身份仍无法确认；保留现场");
+                journal = journal with { Stage = "completed", NewInstallId = newId }; WritePrepareJournal(journal);
+                return journal;
+            }
+            catch (Exception ex)
+            {
+                var reason = ex.Message;
+                if (handoff is not null && !Identity.BlocksHuman)
+                {
+                    try { handoff.ReplayAfterFailedSwitch(); }
+                    catch (Exception recovery) { reason += "；Human 配置仍保存在旧事务侧车：" + recovery.Message; }
+                }
+                WritePrepareJournal(journal with { Stage = "blocked", Error = reason });
+                throw;
+            }
         }
         finally { _operation.Release(); }
+    }
+    private bool PreviousPrepareSettled(BotPrepareJournal previous)
+    {
+        // This only permits a new user-confirmed plan. It never resumes or retries an unknown write.
+        if (previous.OldInstallId is not null && Identity.InstallId == previous.OldInstallId && InspectInstalled().Valid)
+            return true;
+        if (previous.OldInstallId is null && !Identity.BlocksHuman && HumanBaseline().Valid)
+            return true;
+        if (!Identity.BlocksHuman && previous.OldInstallId is not null &&
+            ReadRecordState(previous.OldInstallId) == "restored" && HumanBaseline().Valid)
+        {
+            var update = SafePath(BackupRoot, previous.OldInstallId + "/human-fixture-update/update.json");
+            if (!File.Exists(update)) return true;
+            using var doc = JsonDocument.Parse(File.ReadAllText(update));
+            return doc.RootElement.GetProperty("Stage").GetString() == "completed";
+        }
+        return false;
     }
     private string? ReadRecordState(string id)
     {

@@ -10,6 +10,7 @@ public enum MatchSide { T = 2, CT = 3 }
 public enum AimSetting { Mixed, Head, Body }
 public enum NadeSetting { Off, Less, Normal, More, Max }
 public enum InstalledProfile { Low, Medium, High }
+public enum MatchPlayMode { NormalHuman, EnhancedHuman }
 public enum MatchApplyState { Saved, Pending, Received, InsufficientEvidence, BehaviorObserved, Failed }
 public sealed record MatchRuntimeStatus(int SchemaVersion, string SessionId, string? RequestId, string? PresetSha256, string Map, DateTimeOffset UpdatedAt,
     MatchApplyState State, string Reason, int CtCount = 0, int TCount = 0, string? AimReadback = null, string? NadesReadback = null, int ProcessId = 0, DateTimeOffset ProcessStartUtc = default);
@@ -25,7 +26,8 @@ public sealed record MatchTeamSelection(string Name, string Logo, ImmutableArray
 }
 public sealed record MatchSetupPreset(int SchemaVersion, string Id, string Name, MatchSide HumanSide, int FriendlyBots, int EnemyBots,
     int ReplacedSlot, MatchTeamSelection Friendly, MatchTeamSelection Enemy, InstalledProfile Profile = InstalledProfile.Medium,
-    AimSetting Aim = AimSetting.Mixed, NadeSetting Nades = NadeSetting.Normal, bool Favorite = false)
+    AimSetting Aim = AimSetting.Mixed, NadeSetting Nades = NadeSetting.Normal, bool Favorite = false,
+    MatchPlayMode Mode = MatchPlayMode.EnhancedHuman, string Map = "de_dust2")
 {
     public static MatchSetupPreset Default() => new(1, Guid.NewGuid().ToString("N"), "我 + 4 vs 5", MatchSide.CT, 4, 5, 0,
         MatchTeamSelection.Random("我方"), MatchTeamSelection.Random("对手"));

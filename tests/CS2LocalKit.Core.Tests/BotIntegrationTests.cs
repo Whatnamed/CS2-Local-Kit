@@ -61,8 +61,9 @@ public sealed class BotIntegrationTests : IDisposable
 
     [Fact] public void NavigationAndCommandsAreExplicitPendingFacts()
     {
-        var nav = new NavigationViewModel(); nav.NavigateBotCommand.Execute(null);
-        Assert.True(nav.IsBotSelected); Assert.False(nav.IsHumanPage); Assert.Equal("Bot 安装",nav.PageTitle);
+        var nav = new NavigationViewModel(); nav.NavigateSettingsCommand.Execute(null);
+        Assert.True(nav.IsSettingsSelected); Assert.False(nav.IsHumanPage); Assert.Equal("系统设置",nav.PageTitle);
+        nav.ReturnFromSettingsCommand.Execute(null);Assert.Equal("对局配置",nav.PageTitle);
         var vm = new BotViewModel(Service(),new MockDialogService(),()=>{},text=>Assert.Equal("bot_aim head; bot_nades max",text));
         Assert.Equal(BotDifficulty.Medium,vm.Difficulty);
         Assert.Equal(3,vm.DifficultyChoices.Count); Assert.Equal(3,vm.AimChoices.Count); Assert.Equal(5,vm.NadesChoices.Count);
@@ -144,10 +145,11 @@ public sealed class BotIntegrationTests : IDisposable
         var service=Service();Active(service);
         Assert.True(service.Identity.PreservesHuman);Assert.True(service.Identity.BlocksHuman);
         var vm=new BotViewModel(service,new MockDialogService(),()=>{},_=>{});
-        Assert.Contains("增强人机 + 我的饰品",vm.CurrentMode);Assert.Contains("Human 保留",vm.StateText);
+        Assert.Contains("增强人机 + 我的饰品",vm.CurrentMode);Assert.Contains("无法确认活动安装",vm.StateText);
+        Assert.Equal(LocalPlayReadinessKind.NeedsRepair,service.Assess(LocalPlayMode.EnhancedHuman,BotDifficulty.Medium).Kind);
         var applier=new FixtureApplier(new(){CsgoDir=Path.Combine(Root,"game/csgo"),BotExperimentBackupRoot=service.BackupRoot,Cs2RunningProbe=()=>false});
         Assert.Throws<ApplyException>(()=>applier.Apply(HumanPresetTemplate.CreateMinimalValid(),TestFixtures.FakeSteamId64));
-        Assert.Contains("先恢复普通模式",service.Identity.Reason);
+        Assert.Contains("侧车校验",service.Identity.Reason);
     }
     [Theory] [InlineData("0")] [InlineData("1026")] [InlineData("6")]
     public void SteamStateFailsClosedForNonIdleStates(string flags)
@@ -223,7 +225,7 @@ public sealed class BotIntegrationTests : IDisposable
     {
         var service=Service();Active(service,"restoring",false);
         var vm=new BotViewModel(service,new MockDialogService(),()=>{},_=>{});
-        Assert.Contains("中断",vm.StateText);Assert.Equal(Id,vm.InstallId);Assert.False(vm.CanSelectDifficulty);Assert.False(vm.InstallCommand.CanExecute(null));
+        Assert.Contains("中断",vm.StateText);Assert.Equal(Id,vm.InstallId);Assert.True(vm.CanSelectDifficulty);Assert.False(vm.InstallCommand.CanExecute(null));
         _runner.Handler=_=>Task.FromResult(new BotProcessResult(2,"","backup corrupt"));await vm.DiagnosticsAsync();
         Assert.Contains("阻断",vm.StateText);Assert.False(vm.RestoreCommand.CanExecute(null));Assert.Contains("backup corrupt",vm.Feedback);
     }
@@ -247,8 +249,8 @@ public sealed class BotIntegrationTests : IDisposable
             return Task.FromResult(new BotProcessResult(0,"{\"state\":\"preview\",\"entries\":[]}",""));
         };
         await vm.PreviewAsync();var calls=_runner.Calls.Count;await vm.InstallAsync();Assert.Equal(calls,_runner.Calls.Count);
-        dialogs.ConfirmToReturn=true;await vm.InstallAsync();Assert.Equal(Id,vm.InstallId);Assert.Contains("已安装待实机验证",vm.StateText);
-        Assert.False(vm.CanSelectDifficulty);Assert.Equal("Medium",vm.InstalledDifficulty);Assert.False(vm.RestoreCommand.CanExecute(null));
+        dialogs.ConfirmToReturn=true;await vm.InstallAsync();Assert.Equal(Id,vm.InstallId);Assert.Contains("无法确认活动安装",vm.StateText);
+        Assert.True(vm.CanSelectDifficulty);Assert.Equal("无法确认",vm.InstalledDifficulty);Assert.False(vm.RestoreCommand.CanExecute(null));
         await vm.DiagnosticsAsync();Assert.True(vm.RestoreCommand.CanExecute(null));await vm.RestoreAsync();Assert.Contains("已恢复",vm.StateText);Assert.True(vm.CanSelectDifficulty);
         Assert.Equal(Id,service.LoadPreferences().LastInstallId);
     }
