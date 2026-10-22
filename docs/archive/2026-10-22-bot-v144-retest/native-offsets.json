@@ -1,0 +1,237 @@
+[
+  {
+    "component": "BotController",
+    "name": "BuyState::InitialDelay",
+    "windows": 8
+  },
+  {
+    "component": "BotController",
+    "name": "BuyState::DoneBuying",
+    "windows": 24
+  },
+  {
+    "component": "BotController",
+    "name": "CCSBot::Profile",
+    "windows": 8
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Aggression",
+    "windows": 8
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Skill",
+    "windows": 12
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Teamwork",
+    "windows": 16
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::WeaponPref",
+    "windows": 36
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::WeaponPrefCount",
+    "windows": 68
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Cost",
+    "windows": 72
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Difficulty",
+    "windows": 80
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::ReactionTime",
+    "windows": 88
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::AttackDelay",
+    "windows": 92
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::LookAngleMaxAccelAttacking",
+    "windows": 120
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::LookAngleStiffnessAttacking",
+    "windows": 124
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::LookAngleDampingAttacking",
+    "windows": 128
+  },
+  {
+    "component": "BotController",
+    "name": "CEntityIdentity::EHandle",
+    "windows": 16
+  },
+  {
+    "component": "BotController",
+    "name": "CCSPlayer_MovementServices::Pawn",
+    "windows": 56
+  },
+  {
+    "component": "BotController",
+    "name": "CMoveData::Velocity",
+    "windows": 56
+  },
+  {
+    "component": "BotController",
+    "name": "CMoveData::AbsOrigin",
+    "windows": 200
+  },
+  {
+    "component": "BotController",
+    "name": "vtidx::PlayerRunCommand",
+    "windows": 25
+  },
+  {
+    "component": "BotController",
+    "name": "vtidx::FinishMove",
+    "windows": 38
+  },
+  {
+    "component": "BotController",
+    "name": "vtidx::DropWeapon",
+    "windows": 24
+  },
+  {
+    "component": "BotHider",
+    "name": "CCSGameRules::SameMapTeardown",
+    "windows": -43
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::SetName",
+    "windows": 61
+  },
+  {
+    "component": "BotHider",
+    "name": "GameResourceServiceServer::m_pEntitySystem",
+    "windows": 88
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntitySystem::m_EntityList",
+    "windows": 16
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntityIdentity::Size",
+    "windows": 112
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntityIdentity::m_pInstance",
+    "windows": 0
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntityIdentity::m_designerName",
+    "windows": 32
+  },
+  {
+    "component": "BotHider",
+    "name": "CBaseEntity::m_iTeamNum",
+    "windows": 836
+  },
+  {
+    "component": "BotHider",
+    "name": "CNetworkGameServerBase::m_Clients",
+    "windows": 584
+  },
+  {
+    "component": "BotHider",
+    "name": "CBasePlayerController::FakeClientFlags",
+    "windows": 904
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_UserIDString",
+    "windows": 56
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_Name",
+    "windows": 64
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nClientSlot",
+    "windows": 72
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nEntityIndex",
+    "windows": 76
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_Server",
+    "windows": 80
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_NetChannel",
+    "windows": 88
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nConnectionTypeFlags",
+    "windows": 96
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nSignonState",
+    "windows": 100
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_pAttachedTo",
+    "windows": 144
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_bFakePlayer",
+    "windows": 160
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_UserID",
+    "windows": 168
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_SteamID",
+    "windows": 171
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_SteamIDMirror",
+    "windows": 179
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_bIsHLTV",
+    "windows": 322
+  },
+  {
+    "component": "BotVision",
+    "name": "Bot::m_pPlayer",
+    "windows": 24
+  }
+]

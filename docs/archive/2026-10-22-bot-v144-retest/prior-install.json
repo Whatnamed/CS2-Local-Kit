@@ -1,0 +1,61 @@
+{
+  "installId": "45ca2c5899234180aad9b8927a338862",
+  "state": "restored",
+  "recordSha256": "fa25b8d1a4e7dc4384144d709329aaae8c780732a49ba429ea5f17aa0fd868db",
+  "manifestSha256": "e6f028042b7fc778d62df9a17211ea9701b6e8bab034da4b3170e8331b3483b4",
+  "manifestMatchesRecord": true,
+  "entriesChecked": 625,
+  "differencesFromRestoredPreimages": [
+    {
+      "target": "game/csgo/bin/win64/server.dll",
+      "action": "retained",
+      "expectedRestored": {
+        "kind": "file",
+        "sha256": "09e8c04c5f44040155d04fa79a3f43491d542a386f45807ed77785729e5925a9"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "05e6f04972bb2983f463c08824c3133626e0703e881443589288b68e200acc4d"
+      }
+    },
+    {
+      "target": "game/csgo/bin/win64/client.dll",
+      "action": "retained",
+      "expectedRestored": {
+        "kind": "file",
+        "sha256": "659940c1db362ed981d1df10637cec8c2a3d99409b77fc3b73e435e4649e36b0"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "5a46a09b521bbd607012146364dafae2abfa50364246638391990d4c7dfb9d49"
+      }
+    },
+    {
+      "target": "game/csgo/steam.inf",
+      "action": "retained",
+      "expectedRestored": {
+        "kind": "file",
+        "sha256": "3298e0fcdea48feb2c994d0a6c75f6ac31dab624dd188799bb1078388e3f5816"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "cd486dc60f1b0224f52b1f668231a0bf87166c140be82f4a1e19d188a14d4070"
+      }
+    }
+  ],
+  "preimageErrors": [],
+  "marker": null,
+  "currentModuleInventoryMatchesOriginalBaseline": true,
+  "createdDirectoriesStillPresent": [],
+  "actions": {
+    "created": 92,
+    "isolated": 3,
+    "overwritten": 14,
+    "modified": 1,
+    "retained": 515
+  },
+  "oldRestoreStateGuard": "Refuses this already-restored ID: Transaction is not active. No Apply was attempted.",
+  "restoreCompletedLog": "E:\\CS2MOD\\diagnostics\\bot-experiment\\20261020-050047-7338585.json",
+  "restoreCompletedLogExitCode": 0,
+  "restoreCompletedLogState": "restored"
+}

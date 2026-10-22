@@ -1,0 +1,33 @@
+{
+  "scope": [
+    "game/csgo/addons",
+    "game/csgo/cfg",
+    "CS2MOD/presets",
+    "CS2MOD/app-data",
+    "game/csgo/bin/win64/client.dll",
+    "game/bin/win64/cs2.exe",
+    "game/bin/win64/engine2.dll",
+    "game/csgo/bin/win64/server.dll",
+    "game/bin/win64/schemasystem.dll",
+    "game/csgo/steam.inf",
+    "game/csgo/gameinfo.gi",
+    "SteamManifest",
+    "locks",
+    "previousBackup"
+  ],
+  "changedSurfaces": [],
+  "unchanged": true,
+  "scopeLimit": "Does not hash the whole Steam game asset tree. Compares addons, cfg, gameinfo, build descriptors, five binaries, formal locks, preset/app-data directories and the exact prior transaction backup. Root-level private preset contents were never read or written.",
+  "beforeSnapshotSha256": "942cbcfb396f12f3c4f8429d4debcb8cd37b363d44cb5aa2247944d80ff477a0",
+  "scriptHashes": {
+    "scan-windows-signatures.py": "eccfaaad00edf5a788cac1c9c8b5da6bc4b229e73f072b9916b31a684468da02",
+    "bot_experiment.py": "8245de31c87265216b6211c62a5405097efaea0f4b923d1a59cea29f86f5fc75"
+  },
+  "nativePatterns": 25,
+  "nativeUnique": 14,
+  "botAiDefinitions": 42,
+  "botAiUnique": 39,
+  "newInstallOrRollbackTest": "not-run; stopped before implementation/candidate stage",
+  "gameStarted": false,
+  "realInstallAttempted": false
+}

@@ -1,0 +1,483 @@
+{
+  "upstreamRepository": "https://github.com/ed0ard/CS2-Bot-Improver",
+  "tag": "v1.4.4",
+  "tagRef": "7491e175f83e612dbb1c742c2241d454ed4c15ad",
+  "officialRelease": "https://github.com/ed0ard/CS2-Bot-Improver/releases/tag/v1.4.4",
+  "officialWindowsAsset": {
+    "id": 544130826,
+    "name": "CS2BotImprover.zip",
+    "size": 68536430,
+    "sha256": "cba05fdc239bf0e3e95dff7d8670863fe69de9fb03ade8512b6d4f79f88664db",
+    "githubDigest": "sha256:cba05fdc239bf0e3e95dff7d8670863fe69de9fb03ade8512b6d4f79f88664db",
+    "localPath": "E:\\CS2MOD\\releases\\bot-baseline\\upstream-control-v1.4.4\\CS2BotImprover.zip"
+  },
+  "historicalInstall": {
+    "recordPath": "E:\\CS2MOD\\backups\\bot-baseline\\20260928-193600-upstream-control\\install-record.json",
+    "recordSha256": "15795f9b8e48e3b8aa249b6c05fa2faeed288eb9937289c7b4da1b6a151a180e",
+    "recordedAtUtc": "2026-09-28T11:36:01.0340808Z",
+    "entryCount": 653,
+    "actions": {
+      "overwritten": 13,
+      "created": 640
+    },
+    "controlRecordSha256": "13a5168e7fda5f352415b1a8106fb74e4f5368b57731ab80d778f59be33f7f71",
+    "recordedInstallVerified": true
+  },
+  "originalComponentFiles": [
+    {
+      "path": "addons/BotController/bin/win64/BotController.dll",
+      "length": 1964544,
+      "sha256": "e3d0424ce253b11cffa714b03d53580ea2f176c0a53d4fa06ff1b9de4c46dce8",
+      "assembly": null,
+      "fileVersion": null,
+      "productVersion": null
+    },
+    {
+      "path": "addons/BotHider/bin/win64/BotHider.dll",
+      "length": 1583104,
+      "sha256": "c673fe398ed8e6d4ea9b25183e26ff3dfb013d92fecd5996e5e357df7145e0dd",
+      "assembly": null,
+      "fileVersion": null,
+      "productVersion": null
+    },
+    {
+      "path": "addons/BotVision/bin/win64/BotVision.dll",
+      "length": 1506816,
+      "sha256": "98037731c301f08eaab2321ff2ee9758cb809f8a1552947d4604b3ae9ef0675d",
+      "assembly": null,
+      "fileVersion": null,
+      "productVersion": null
+    },
+    {
+      "path": "addons/counterstrikesharp/api/CounterStrikeSharp.API.dll",
+      "length": 1857024,
+      "sha256": "ebad749e7bac79ab84c2dde819996d8eeba35d7b4c73601dfeceea172cf7b005",
+      "assembly": "CounterStrikeSharp.API, Version=1.0.373.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.373.0",
+      "productVersion": "1.0.373+Branch.main.Sha.3a59f2de87c595afd8b7fbb8b8242d56ec3328ab.3a59f2d"
+    },
+    {
+      "path": "addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+      "length": 3489792,
+      "sha256": "75100a3056d9040392f47b6e492f1b823cfcd898203343b79363971405aa2c4a",
+      "assembly": null,
+      "fileVersion": null,
+      "productVersion": null
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "length": 39424,
+      "sha256": "389814db841820d2e270177eed8daad3a042f9b2631dcb0d3826ab3b765e694b",
+      "assembly": "BotAI, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "0.0.0.0",
+      "productVersion": "0.0.0.0"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll",
+      "length": 16384,
+      "sha256": "dfeedab2080db857db140114ee25769c60c1cae08a26f56faf29eaf2fe67be07",
+      "assembly": "BotAimImprover, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0+91b7be8c8dbcf49ac5746f1c048742937a1f632d"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotBuy/BotBuy.dll",
+      "length": 30720,
+      "sha256": "922c76a6ac5f663abaa2f5596e3d98fb459da216d694f33a2950a32f2dc15f8d",
+      "assembly": "BotBuy, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.dll",
+      "length": 28672,
+      "sha256": "5230c28c8c4745011e796e807c03755cb9afd9216c8f5d91dc5e996f9b75da62",
+      "assembly": "BotControllerImpl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0+64f676c708b555080806e0402490379eb2cffc6f"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotHiderImpl/BotHiderImpl.dll",
+      "length": 33792,
+      "sha256": "33ed13cc969095f6e5fab80aafd8ce453f6550e5022c8b7262811b0e63af4c1c",
+      "assembly": "BotHiderImpl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.dll",
+      "length": 105472,
+      "sha256": "92e1b9090c59c42677d4291f64b94f5fd3c4b6894d3745bc597b8d018557b911",
+      "assembly": "BotRandomizer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/BotState/BotState.dll",
+      "length": 51712,
+      "sha256": "0bad35697b254f0fd5f6f93ec7fdf872cb2d3b62cb705c27887c0c8553526d34",
+      "assembly": "BotState, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.dll",
+      "length": 72192,
+      "sha256": "9e4fc0cfd6b78d67c5eaec86f76c76a7accc59820fca3b02cbc517451d4074e4",
+      "assembly": "NadeSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/RayTraceImpl/CounterStrikeSharp.API.dll",
+      "length": 1849856,
+      "sha256": "ec8b64f478d4e89e8bed74538fd3b2348cb948ce4a980ee3dd54c38edf3d2c4a",
+      "assembly": "CounterStrikeSharp.API, Version=1.0.371.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.371.0",
+      "productVersion": "1.0.371+Branch.main.Sha.3923c5d7b9aafe971884a3bd9287500da34bfa6d.3923c5d"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/RayTraceImpl/RayTraceApi.dll",
+      "length": 7168,
+      "sha256": "adfe79b62ebe119ffb03f268a8e00d2ac6bf675c692f5728e843cf65592e0ca8",
+      "assembly": "RayTraceApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0+b6c81b3b53839628ed58085b6f57237d7868ab55"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/RayTraceImpl/RayTraceImpl.dll",
+      "length": 8192,
+      "sha256": "301ac4ed23ae75c220ab88f6bb9604822eac32a94285fea8d2c388e5fd4420e0",
+      "assembly": "RayTraceImpl, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0+b6c81b3b53839628ed58085b6f57237d7868ab55"
+    },
+    {
+      "path": "addons/counterstrikesharp/plugins/RoundDamageRecap/RoundDamageRecap.dll",
+      "length": 18432,
+      "sha256": "7075101b5d7ac0369eac102b04d23561611b88d5ce44ea0fcc68ff1fe55ad71b",
+      "assembly": "RoundDamageRecap, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0"
+    },
+    {
+      "path": "addons/counterstrikesharp/shared/BotControllerApi/BotControllerApi.dll",
+      "length": 10752,
+      "sha256": "8fb089d875993d5efe2c2bae5d4c47ef86cb0684ca4d0fd61018c56aa2ec9f9d",
+      "assembly": "BotControllerApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0+64f676c708b555080806e0402490379eb2cffc6f"
+    },
+    {
+      "path": "addons/counterstrikesharp/shared/BotHiderApi/BotHiderApi.dll",
+      "length": 5120,
+      "sha256": "4241f0900dee26a024e519aeaf2fcbf596cdecd70ed3b5fa863cc5f8b6f20d1e",
+      "assembly": "BotHiderApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0+f4037fc97ecd536599da6ab32bd4e722b42634b5"
+    },
+    {
+      "path": "addons/counterstrikesharp/shared/RayTraceApi/CounterStrikeSharp.API.dll",
+      "length": 1849856,
+      "sha256": "ec8b64f478d4e89e8bed74538fd3b2348cb948ce4a980ee3dd54c38edf3d2c4a",
+      "assembly": "CounterStrikeSharp.API, Version=1.0.371.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.371.0",
+      "productVersion": "1.0.371+Branch.main.Sha.3923c5d7b9aafe971884a3bd9287500da34bfa6d.3923c5d"
+    },
+    {
+      "path": "addons/counterstrikesharp/shared/RayTraceApi/RayTraceApi.dll",
+      "length": 7168,
+      "sha256": "adfe79b62ebe119ffb03f268a8e00d2ac6bf675c692f5728e843cf65592e0ca8",
+      "assembly": "RayTraceApi, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "fileVersion": "1.0.0.0",
+      "productVersion": "1.0.0+b6c81b3b53839628ed58085b6f57237d7868ab55"
+    },
+    {
+      "path": "addons/metamod/bin/win64/metamod.2.cs2.dll",
+      "length": 1439232,
+      "sha256": "2b076a140fcac4d148f64f53e7a2d43f605aa4be7255e404633134a193c9ba2c",
+      "assembly": null,
+      "fileVersion": "2.0.0-dev+1410",
+      "productVersion": "2.0.0-dev+1410"
+    },
+    {
+      "path": "addons/metamod/bin/win64/server.dll",
+      "length": 218624,
+      "sha256": "4a73c366b7658763079ec07fb958b3a06cd5e276964e9405a9ce1522b37fda0b",
+      "assembly": null,
+      "fileVersion": "2.0.0-dev+1410",
+      "productVersion": "2.0.0-dev+1410"
+    },
+    {
+      "path": "addons/RayTrace/bin/win64/RayTrace.dll",
+      "length": 815104,
+      "sha256": "5b18a8d43acc500960368875dd8670b695b3ea3f467832bbf61fe4989ab44093",
+      "assembly": null,
+      "fileVersion": null,
+      "productVersion": null
+    }
+  ],
+  "nativeConfigSourceComparison": [
+    {
+      "path": "addons/BotController/gamedata.json",
+      "length": 6879,
+      "sha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e",
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "tagJsonEqualsPackage": false
+    },
+    {
+      "path": "addons/BotHider/gamedata.json",
+      "length": 5458,
+      "sha256": "633d5a96446b7ae34fe661315ec51459306352020806e83c7069db300bc6ee89",
+      "tagSourceSha256": "ca46b133801fad911672e0b3ce5b75476c9b36038a8a9443895dcc37ae7a3fa4",
+      "tagJsonEqualsPackage": true
+    },
+    {
+      "path": "addons/BotVision/gamedata.json",
+      "length": 2869,
+      "sha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6",
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "tagJsonEqualsPackage": false
+    }
+  ],
+  "managedSignatureLiteralCheck": [
+    {
+      "name": "BotAI/HasVisitedEnemySpawn",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/GameState_Reset",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Idle_IsSafeAlwaysFalse",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnEnter_NoEquipKnife",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnUpdate_NoEquipKnife",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/EscapeFromFlames_OnEnter_NoEquipKnife",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/PlantBombLookAtPriorityLow",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/DefuseBombLookAtPriorityLow",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/DefuseBomb_SkipIsVisibleCheck",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipFireRateCheck",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/SprayAllDistances_ForceHoldTrigger",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipSteadyFireShortcut",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipZoomFireShortcut",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipSniperSpreadCheck",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_DodgeDuringReload",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/SniperCrouchDodge_jb",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/LowSKill_JumpChance0",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_DodgeChance100_Always",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_RetreatOnSniper_Disable",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AllSkill_KeepMoving_WhenSeeSniper",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/AttackState_CanStrafe_jne",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/SniperDodge_SkipIsSniper_DodgeA",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Vision_AlwaysWatchApproachPoints",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipSkillCheck",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipHidingSpotCheck",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Vision_SkipIsMovingGate",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Vision_AlwaysEnterApproachBody",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/IsNoticable_AlwaysTrue",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/InViewCone_RemoveOuterFOV",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/InViewCone_RemoveInnerFOV",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Upkeep_BotCOS_ZeroDrift",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/Upkeep_BotSIN_ZeroDrift",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/InvestigateNoise_SkipSelfDefenseCheck",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/TBot_BombsiteSearch_UseKnownPlantedSite",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/BombBeep_CT_GlobalHearRange",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/BombPickup_CT_GlobalHearRange",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/OnAudibleEvent_GlobalHearRange",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/OnBombPlanted_AllBotsLearnSite",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/CT_Defuse_EngageAndInvestigate",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnUpdate_EngageAndInvestigate",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnEnter_EngageAndInvestigate",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAI/FlashbangAvoidance_Disable",
+      "dll": "addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotState/DefuseBombWindowsSignature",
+      "dll": "addons/counterstrikesharp/plugins/BotState/BotState.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotState/BotBlindWindowsSignature",
+      "dll": "addons/counterstrikesharp/plugins/BotState/BotState.dll",
+      "signatureLiteralPresent": false
+    },
+    {
+      "name": "BotState/IsVisiblePos_IgnoreFOV",
+      "dll": "addons/counterstrikesharp/plugins/BotState/BotState.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotState/IsVisiblePlayer_IgnoreFOV",
+      "dll": "addons/counterstrikesharp/plugins/BotState/BotState.dll",
+      "signatureLiteralPresent": true
+    },
+    {
+      "name": "BotAimImprover/PickNewAimSpot",
+      "dll": "addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll",
+      "signatureLiteralPresent": true
+    }
+  ],
+  "nativeSourceIdentityLimit": "The official ZIP does not supply an exact native source commit map. Binary SHA256 is authoritative; managed ProductVersion source hints are not promoted to proven native refs.",
+  "candidateBuilt": false,
+  "candidateInstalled": false
+}

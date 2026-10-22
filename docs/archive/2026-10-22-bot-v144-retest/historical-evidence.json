@@ -1,0 +1,30 @@
+{
+  "laneA": {
+    "observationFile": "E:\\CS2MOD\\diagnostics\\bot-baseline\\20260928-112553-posttest\\user-observations.md",
+    "sha256": "02c106eb896a971e4b39b7b6eb2848a2a5680830db4e083e78d99412bcaf800d",
+    "userReportedFps": "30-40",
+    "status": "failed-mixed-lane-not-official-v1.4.4-control"
+  },
+  "officialControl": {
+    "userReportFromCurrentTask": "FPS roughly normal, Bot behavior apparently recovered, silent crash after a little over ten seconds; qualitative report, no instrumented frame data.",
+    "cssLog": "E:\\CS2MOD\\diagnostics\\bot-baseline\\20261002-manual-bot-feedback\\cssharp-logs\\log-cssharp20260928.txt",
+    "cssLogSha256": "fb77934b966045ebcfa75b181946af836c1c43a4a1869f327736e0b13e726233",
+    "sessionStartLocal": "2026-09-28 19:45:47 +08:00",
+    "observedErrors": [
+      "BotControllerImpl: DllNotFoundException loading BotController (0x8007007E)",
+      "BotBuy callback: Failed to find signature for CEntitySystem_AddEntityIOEvent"
+    ],
+    "crashWer": "E:\\CS2MOD\\diagnostics\\cosmetics-lab\\20260928-221018-posttest\\windows-crash-evidence\\wer-AppCrash_cs2.exe_e097eee3e460fb4a0c35211392b8fa1505cf37e_00d8b146_9ebb66b7-5708-4519-91bc-55b7e99c2c28.wer",
+    "crashWerSha256": "51f07bdeb9dd9ec3e08871c92ac05cb307e72eaff142394903916d028df0ce3c",
+    "werEventTimeLocal": "2026-09-28T19:47:26.553180+08:00",
+    "eventType": "AutoVerifierV2",
+    "reportIdentifier": "9ebb66b7-5708-4519-91bc-55b7e99c2c28",
+    "faultingModule": "coreclr.dll",
+    "moduleVersion": "10.0.326.7603",
+    "exceptionCode": "0x80131623",
+    "faultOffset": "0x00000000002d21ee",
+    "crashCause": "unknown; WER fault module and nearby CSS errors do not establish the initiating failure",
+    "dumpAvailability": "No September 28 dump found in current LocalAppData/CrashDumps or WER ReportArchive. Retained WER references historical temporary dumps; no usable September dump located.",
+    "excludedEvents": "22:03 and 22:04 InventorySimulator startup failures are a separate Human C1 experiment."
+  }
+}

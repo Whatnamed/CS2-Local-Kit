@@ -1,0 +1,43 @@
+2026-09-28 19:45:47.989 +08:00 [INFO] (cssharp:PluginContext) Loading plugin BotAI
+2026-09-28 19:45:48.214 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin Patches - Bot AI
+2026-09-28 19:45:48.227 +08:00 [INFO] (cssharp:PluginContext) Loading plugin BotAimImprover
+2026-09-28 19:45:48.286 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin BotAimImprover
+2026-09-28 19:45:48.319 +08:00 [INFO] (cssharp:PluginContext) Loading plugin BotBuy
+2026-09-28 19:45:48.321 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin BotBuyPatch
+2026-09-28 19:45:48.332 +08:00 [INFO] (cssharp:PluginContext) Loading plugin BotControllerImpl
+2026-09-28 19:45:48.362 +08:00 [EROR] (cssharp:PluginContext) Failed to load plugin BotControllerImpl
+System.DllNotFoundException: Unable to load DLL 'BotController' or one of its dependencies: 找不到指定的模块。 (0x8007007E)
+   at BotControllerApi.BotController.BotController_GetVersion()
+   at BotControllerApi.BotController.BotController_GetVersion()
+   at BotControllerImpl.BotControllerPlugin.Load(Boolean hotReload)
+   at CounterStrikeSharp.API.Core.Plugin.PluginContext.Load(Boolean hotReload) in /home/runner/work/CounterStrikeSharp/CounterStrikeSharp/managed/CounterStrikeSharp.API/Core/Plugin/PluginContext.cs:line 236
+2026-09-28 19:45:48.373 +08:00 [INFO] (cssharp:PluginContext) Unloading plugin BotControllerImpl
+2026-09-28 19:45:48.392 +08:00 [EROR] (cssharp:PluginContext) Failed to unload BotControllerImpl during error recovery, forcing cleanup
+2026-09-28 19:45:48.409 +08:00 [INFO] (cssharp:PluginContext) Loading plugin BotHiderImpl
+2026-09-28 19:45:48.713 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin BotHiderImpl
+2026-09-28 19:45:48.727 +08:00 [INFO] (cssharp:PluginContext) Loading plugin BotRandomizer
+2026-09-28 19:45:49.162 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin BotRandomizer
+2026-09-28 19:45:49.177 +08:00 [INFO] (cssharp:PluginContext) Loading plugin BotState
+2026-09-28 19:45:49.194 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin Smarter-Bot
+2026-09-28 19:45:49.207 +08:00 [INFO] (cssharp:PluginContext) Loading plugin NadeSystem
+2026-09-28 19:45:49.339 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin NadeSystem
+2026-09-28 19:45:49.353 +08:00 [INFO] (cssharp:PluginContext) Loading plugin RayTraceImpl
+2026-09-28 19:45:49.355 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin RayTraceImpl
+2026-09-28 19:45:49.371 +08:00 [INFO] (cssharp:PluginContext) Loading plugin RoundDamageRecap
+2026-09-28 19:45:49.373 +08:00 [INFO] (cssharp:PluginContext) Finished loading plugin RoundDamageRecap
+2026-09-28 19:46:19.836 +08:00 [EROR] (cssharp:Core) Error invoking callback
+System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+ ---> CounterStrikeSharp.API.Core.NativeException: Failed to find signature for 'CEntitySystem_AddEntityIOEvent'
+   at CounterStrikeSharp.API.Core.NativeAPI.AddEntityIoEvent(IntPtr ptarget, String inputname, IntPtr activator, IntPtr caller, String value, Single delay, Int32 outputid) in /home/runner/work/CounterStrikeSharp/CounterStrikeSharp/managed/CounterStrikeSharp.API/Generated/Natives/API.cs:line 1062
+   at CounterStrikeSharp.API.Core.CEntityInstance.AddEntityIOEvent(String inputName, CEntityInstance activator, CEntityInstance caller, String value, Single delay, Int32 outputId) in /home/runner/work/CounterStrikeSharp/CounterStrikeSharp/managed/CounterStrikeSharp.API/Core/Model/CEntityInstance.cs:line 108
+   at CounterStrikeSharp.API.Utilities.RemoveItemByDesignerName(CCSPlayerController player, String designerName) in /home/runner/work/CounterStrikeSharp/CounterStrikeSharp/managed/CounterStrikeSharp.API/Utilities.cs:line 110
+   at BotBuyPatch.BotBuyPatch.Refund(CCSPlayerController player, String itemName) in C:\Games\BETTERBOTS\FINAL\BotBuy\BotBuy.cs:line 806
+   at BotBuyPatch.BotBuyPatch.Swap(CCSPlayerController player, String oldItem, String newItem) in C:\Games\BETTERBOTS\FINAL\BotBuy\BotBuy.cs:line 846
+   at BotBuyPatch.BotBuyPatch.OnRoundStart(EventRoundStart event, GameEventInfo info) in C:\Games\BETTERBOTS\FINAL\BotBuy\BotBuy.cs:line 109
+   at InvokeStub_GameEventHandler`1.Invoke(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   --- End of inner exception stack trace ---
+   at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Delegate.DynamicInvokeImpl(Object[] args)
+   at CounterStrikeSharp.API.Core.FunctionReference.<CreateWrappedCallback>b__18_0(fxScriptContext* context) in /home/runner/work/CounterStrikeSharp/CounterStrikeSharp/managed/CounterStrikeSharp.API/Core/FunctionReference.cs:line 101
