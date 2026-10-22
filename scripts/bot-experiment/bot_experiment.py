@@ -20,6 +20,9 @@ REPO = Path(__file__).resolve().parents[2]
 MM_FILES = {'addons/metamod/bin/win64/metamod.2.cs2.dll', 'addons/metamod/bin/win64/server.dll'}
 PLUGINS = {'BotAI', 'BotAimImprover', 'BotBuy', 'BotRandomizer', 'BotState', 'NadeSystem', 'BotControllerImpl', 'BotHiderImpl'}
 GAME_BINARIES = {'game/csgo/bin/win64/server.dll','game/bin/win64/engine2.dll','game/csgo/bin/win64/client.dll','game/bin/win64/schemasystem.dll','game/bin/win64/cs2.exe'}
+HUMAN_PLUGIN = 'game/csgo/addons/counterstrikesharp/plugins/InventorySimulator'
+HUMAN_CONFIG = 'game/csgo/addons/counterstrikesharp/configs/plugins/InventorySimulator'
+HUMAN_GAMEDATA = 'game/csgo/addons/counterstrikesharp/gamedata/inventory-simulator.json'
 
 
 def require(condition, message):
@@ -113,6 +116,46 @@ def ensure_closed():
         require(not re.search(r'(?im)^cs2\.exe\s', output), 'cs2.exe is running; operation refused')
 
 
+def steam_idle(root):
+    """Read the local Steam update state; never changes Steam settings."""
+    path = no_links(Path(root).parent.parent / 'appmanifest_730.acf')
+    raw = path.read_bytes()
+    text = raw.decode('utf-8-sig')
+    def value(key, required=False):
+        matches = re.findall(r'"'+re.escape(key)+r'"\s+"([^"\r\n]*)"', text)
+        require(len(matches) <= 1 and (not required or len(matches) == 1), 'Steam state missing/ambiguous: '+key)
+        return matches[0] if matches else None
+    require(value('StateFlags', True) == '4', 'Steam update/install activity or unknown state; operation refused')
+    build = value('buildid', True)
+    require(value('TargetBuildID') in {None, '', '0', build}, 'Steam target build is changing')
+    for total, done in [('BytesToDownload','BytesDownloaded'),('BytesToStage','BytesStaged')]:
+        a,b = value(total),value(done)
+        require(a is None and b is None or a is not None and a == b, 'Steam transfer/staging incomplete')
+    return digest(raw)
+
+
+def human_path(path):
+    return path == HUMAN_GAMEDATA or any(path.startswith(p+'/') for p in [HUMAN_PLUGIN,HUMAN_CONFIG])
+
+
+def validate_coexistence(m):
+    policy = m.get('humanPolicy', 'isolate')
+    require(policy in {'isolate','preserve'}, 'Unknown Human policy')
+    if policy == 'isolate':
+        require('coexistence' not in m, 'Coexistence evidence requires preserve policy')
+        return
+    c = m['coexistence']
+    require(c['status'] == 'ready-for-manual-test' and c['reviewedBuild'] == m['targetBuild'], 'Joint compatibility gate has not passed for this exact build')
+    require(re.fullmatch('[0-9a-f]{64}', c.get('evidenceSha256','')), 'Exact joint compatibility evidence digest required')
+    protected = {p:h for p,h in m['baselineFiles'].items() if human_path(p)}
+    required = {HUMAN_PLUGIN+'/InventorySimulator.dll', HUMAN_CONFIG+'/inventories.json', HUMAN_GAMEDATA}
+    require(required <= set(protected) and protected == c['humanFiles'], 'Complete Human plugin/config/gamedata preimages required')
+    require(not any(human_path(e['target']) for e in m['files']), 'Joint payload cannot overwrite Human projection')
+    for rel in c['isolatedModules']:
+        relative(rel)
+        require(not human_path(rel+'/') and rel != HUMAN_PLUGIN, 'Human plugin cannot be isolated in joint mode')
+
+
 def validate_root(root, fake):
     root = no_links(root)
     require((root / 'game/csgo').is_dir(), 'Explicit CS2 root must contain game/csgo')
@@ -171,6 +214,7 @@ def load_candidate(release, expected_sha, fake=False):
     for path in m['baselineFiles']:
         relative(path)
     validate_profile(release, m)
+    validate_coexistence(m)
     return release, m
 
 
@@ -246,10 +290,13 @@ def active_history(root, backup_root):
                 require(r.get('cs2Root') != str(root) or r.get('state') in {'restored','rolled-back'}, f'Unrestored transaction: {p.name}')
 
 
-def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_human=False):
+def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_human=False, preserve_human=False):
     ensure_closed()
     root = validate_root(root, fake)
+    steam_idle(root)
     release, m = load_candidate(release, manifest_sha, fake)
+    require(not (preserve_human and isolate_human), 'Human policies are mutually exclusive')
+    require(preserve_human == (m.get('humanPolicy','isolate') == 'preserve'), 'Explicit preserve-Human intent must match candidate policy')
     backup_root = no_links(backup_root)
     require(not backup_root.is_relative_to(root) and not root.is_relative_to(backup_root), 'Backup and target roots must be disjoint')
     require(not release.is_relative_to(root) and not root.is_relative_to(release), 'Release and target roots must be disjoint')
@@ -279,6 +326,8 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
                 continue
             if p.is_dir() and inventory(p) or p.is_file() and p.suffix.lower()=='.dll':
                 if p.name == 'InventorySimulator':
+                    if m.get('humanPolicy') == 'preserve':
+                        continue
                     require(isolate_human, 'Explicit -IsolateHumanCosmetics required')
                 isolated.append(p.relative_to(root).as_posix())
     meta = under(root, 'game/csgo/addons/metamod')
@@ -292,6 +341,8 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
     for p in under(root,'game/csgo/addons').glob('*.vdf'):
         if p.name.lower() not in {'metamod.vdf','metamod_x64.vdf'}:
             isolated.append(p.relative_to(root).as_posix())
+    if m.get('humanPolicy') == 'preserve':
+        require({p:identity(under(root,p)) for p in isolated} == m['coexistence']['isolatedModules'], 'Unknown/unreviewed executable module; joint isolation ownership mismatch')
     for rel in isolated:
         entries.append({'target':rel,'action':'isolated','before':identity(under(root,rel)),'after':None,'surface':'isolation'})
     for e in m['files']:
@@ -320,11 +371,14 @@ def save_record(backup, record):
 
 def preflight_restore(root, backup, record, partial=False):
     ensure_closed()
+    steam_idle(root)
     require(record['schemaVersion']==1 and record['lane']=='bot-experiment', 'Unsupported install record')
     require(record['cs2Root']==str(root) and record['installId']==backup.name, 'Install ID / root mismatch')
     require(record['state'] in {'installed','installing','restoring','restore-failed'}, 'Transaction is not active')
     require(sha(under(backup,'candidate-manifest.json'))==record['manifestSha256'], 'Backup manifest corrupted')
     candidate = read_json(under(backup,'candidate-manifest.json'))
+    validate_coexistence(candidate)
+    require(record.get('humanPolicy','isolate') == candidate.get('humanPolicy','isolate') and record.get('coexistence') == candidate.get('coexistence'), 'Recorded Human policy/evidence mismatch')
     require(record.get('profile') == candidate.get('profile'), 'Recorded profile mismatch')
     if record.get('profile'):
         selected = [e for e in record['entries'] if e['target']=='game/csgo/overrides/botprofile.vpk']
@@ -369,8 +423,11 @@ def restore(backup, apply=False, fake=False):
     if not apply:return record
     record['state']='restoring';save_record(backup,record)
     try:
+        steam_identity = steam_idle(root)
         for e in reversed(record['entries']):
             if e['action']=='retained':continue
+            ensure_closed()
+            require(steam_idle(root) == steam_identity, 'Steam manifest changed during restoration; preserve the exact recovery record')
             target=under(root,e['target']);live=identity(target)
             if live==e['before']:continue
             require(live==e['after'], f'Drift after preflight: {e["target"]}')
@@ -401,19 +458,23 @@ def restore(backup, apply=False, fake=False):
         raise
 
 
-def install(release, manifest_sha, root, backup_root, apply=False, fake=False, isolate_human=False, fault=None):
-    root,release,m,entries,new_gi=make_plan(release,manifest_sha,root,backup_root,fake,isolate_human)
+def install(release, manifest_sha, root, backup_root, apply=False, fake=False, isolate_human=False, fault=None, preserve_human=False):
+    root,release,m,entries,new_gi=make_plan(release,manifest_sha,root,backup_root,fake,isolate_human,preserve_human)
     require(not fault or fake, 'Fault injection is fake-tree only')
     if not apply:return {'state':'preview','entries':entries}
     install_id=uuid.uuid4().hex
     backup=under(backup_root,install_id)
-    marker_bytes=json_bytes({'installId':install_id,'manifestSha256':manifest_sha,'backupRoot':str(no_links(backup_root))})
+    marker={'installId':install_id,'manifestSha256':manifest_sha,'backupRoot':str(no_links(backup_root))}
+    if m.get('humanPolicy') == 'preserve': marker['humanPolicy']='preserve'
+    marker_bytes=json_bytes(marker)
     # Marker is applied first and restored last.
     entries.insert(0,{'target':MARKER,'surface':'marker','action':'created','before':None,'after':{'kind':'file','sha256':digest(marker_bytes)}})
     backup.mkdir(parents=True)
     shutil.copyfile(release/'experiment-manifest.json',backup/'candidate-manifest.json')
     record={'schemaVersion':1,'lane':'bot-experiment','installId':install_id,'cs2Root':str(root),'manifestSha256':manifest_sha,'testFixture':fake,'state':'installing','entries':entries,'createdDirectories':[],'baselineFiles':m['baselineFiles']}
     if 'profile' in m: record['profile']=m['profile']
+    if 'humanPolicy' in m: record['humanPolicy']=m['humanPolicy']
+    if 'coexistence' in m: record['coexistence']=m['coexistence']
     # Copy and verify every preimage before the first mutation of the target.
     for e in entries:
         if e['before'] is not None and e['action']!='retained':
@@ -437,9 +498,11 @@ def install(release, manifest_sha, root, backup_root, apply=False, fake=False, i
     record['createdDirectories']=sorted(parents,key=lambda x:x.count('/'))
     save_record(backup,record)
     try:
+        steam_identity = steam_idle(root)
         for e in entries:
             if e['action']=='retained':continue
             ensure_closed()
+            require(steam_idle(root) == steam_identity, 'Steam manifest changed during installation; preserve the exact recovery record')
             target=under(root,e['target'])
             require(identity(target)==e['before'], f'Changed after preflight: {e["target"]}')
             target.parent.mkdir(parents=True,exist_ok=True)
@@ -474,13 +537,14 @@ def main():
     parser.add_argument('--backup-root',default=r'E:\CS2MOD\backups\bot-experiment')
     parser.add_argument('--install-id');parser.add_argument('--apply',action='store_true')
     parser.add_argument('--isolate-human',action='store_true');parser.add_argument('--fake',action='store_true')
+    parser.add_argument('--preserve-human',action='store_true')
     args=parser.parse_args()
     if args.action in {'restore','diagnostics'}:
         require(re.fullmatch('[0-9a-f]{32}',args.install_id or ''),'Exact install ID is required')
         result=restore(under(args.backup_root,args.install_id),apply=args.apply and args.action=='restore',fake=args.fake)
     else:
         require(args.root and args.release,'Explicit root and release are required')
-        result=install(args.release,args.manifest_sha256,args.root,args.backup_root,apply=args.apply and args.action=='install',fake=args.fake,isolate_human=args.isolate_human)
+        result=install(args.release,args.manifest_sha256,args.root,args.backup_root,apply=args.apply and args.action=='install',fake=args.fake,isolate_human=args.isolate_human,preserve_human=args.preserve_human)
     result['mode']='apply' if args.apply and args.action in {'install','restore'} else 'preview-read-only'
     print(json.dumps(result,indent=2,ensure_ascii=False))
 

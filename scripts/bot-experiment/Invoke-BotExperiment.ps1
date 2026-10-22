@@ -8,6 +8,7 @@ param(
     [string]$BackupRoot = 'E:\CS2MOD\backups\bot-experiment',
     [string]$InstallId,
     [switch]$IsolateHumanCosmetics,
+    [switch]$PreserveHumanCosmetics,
     [switch]$AllowFakeTree,
     [switch]$Apply,
     [string]$PythonExe = 'python'
@@ -19,6 +20,7 @@ if ($ManifestSha256) { $arguments += @('--manifest-sha256', $ManifestSha256) }
 if ($Cs2Root) { $arguments += @('--root', $Cs2Root) }
 if ($InstallId) { $arguments += @('--install-id', $InstallId) }
 if ($IsolateHumanCosmetics) { $arguments += '--isolate-human' }
+if ($PreserveHumanCosmetics) { $arguments += '--preserve-human' }
 if ($AllowFakeTree) { $arguments += '--fake' }
 if ($Apply) { $arguments += '--apply' }
 & $PythonExe @arguments

@@ -49,7 +49,7 @@ class TransactionTests(unittest.TestCase):
         self.binaries={p:'fake-'+p for p in ['game/csgo/bin/win64/server.dll','game/bin/win64/engine2.dll','game/csgo/bin/win64/client.dll','game/bin/win64/schemasystem.dll','game/bin/win64/cs2.exe']}
         baseline.update(self.binaries)
         for p,v in baseline.items():write(self.root/p,v)
-        write(self.root.parent.parent/'appmanifest_730.acf','"AppState" { "buildid" "25966348" }')
+        write(self.root.parent.parent/'appmanifest_730.acf','"AppState" { "buildid" "25966348" "StateFlags" "4" }')
         write(self.home/'presets/personal.json','private preset sentinel')
         (self.root/'game/csgo/addons/counterstrikesharp/plugins/BotAI/recordings').mkdir(parents=True)
         files=[]
@@ -299,6 +299,118 @@ class TransactionTests(unittest.TestCase):
         home=tx.inventory(self.home)
         subprocess.run(['python',str(tx.REPO/'scripts/bot-experiment/bot_experiment.py'),'preview','--release',str(self.release),'--manifest-sha256',self.manifest_sha,'--root',str(self.root),'--backup-root',str(self.backups),'--fake','--isolate-human'],check=True,capture_output=True)
         self.assertEqual(home,tx.inventory(self.home))
+
+
+class CoexistenceTests(unittest.TestCase):
+    # Reuse the same synthetic fixture and transaction, without inheriting the isolation-only tests.
+    seal = TransactionTests.seal
+    snap = TransactionTests.snap
+    assert_rejected = TransactionTests.assert_rejected
+
+    def setUp(self):
+        guard=patch.object(tx,'ensure_closed')
+        guard.start();self.addCleanup(guard.stop)
+        TransactionTests.setUp(self)
+        write(self.root/tx.HUMAN_CONFIG/'inventories.json','private CT/T fixture sentinel')
+        write(self.root/tx.HUMAN_GAMEDATA,'accepted Human gamedata')
+        self.manifest['baselineFiles']={p:v['sha256'] for p,v in tx.inventory(self.root).items() if v['kind']=='file' and p!='.bot-experiment-fake-root'}
+        self.seal()
+        old_plan=tx.make_plan(self.release,self.manifest_sha,self.root,self.backups,fake=True,isolate_human=True)[3]
+        self.manifest['humanPolicy']='preserve'
+        self.manifest['coexistence']={'status':'ready-for-manual-test','reviewedBuild':self.manifest['targetBuild'],
+            'evidenceSha256':tx.digest(b'synthetic compatibility evidence, not a real candidate'),
+            'humanFiles':{p:h for p,h in self.manifest['baselineFiles'].items() if tx.human_path(p)},
+            'isolatedModules':{e['target']:e['before'] for e in old_plan if e['action']=='isolated' and e['target']!=tx.HUMAN_PLUGIN}}
+        self.seal()
+
+    def run_install(self,apply=True,**kwargs):
+        return tx.install(self.release,self.manifest_sha,self.root,self.backups,apply=apply,fake=True,preserve_human=True,**kwargs)
+
+    def test_normal_joint_normal_repeat_and_human_unchanged(self):
+        before=self.snap();human=tx.inventory(self.root/tx.HUMAN_PLUGIN)
+        for _ in range(2):
+            all_before=tx.inventory(self.home)
+            preview=self.run_install(False)
+            self.assertEqual(all_before,tx.inventory(self.home))
+            self.assertFalse(any(e['action']=='isolated' and e['target']==tx.HUMAN_PLUGIN for e in preview['entries']))
+            installed=self.run_install();backup=Path(installed['backupDir'])
+            self.assertEqual(tx.inventory(self.root/tx.HUMAN_PLUGIN),human)
+            self.assertEqual(tx.read_json(backup/'install-record.json')['coexistence'],self.manifest['coexistence'])
+            tx.restore(backup,apply=True,fake=True)
+            self.assertEqual(self.snap(),before)
+
+    def test_joint_failure_and_hard_interruption_all_four_stages(self):
+        for surface in ['framework','isolation','bot','gameinfo']:
+            before=self.snap()
+            with self.assertRaisesRegex(RuntimeError,'rolled back'):self.run_install(fault=surface)
+            self.assertEqual(self.snap(),before)
+            with self.assertRaises(KeyboardInterrupt):self.run_install(fault=surface+'-interrupt')
+            marker=tx.read_json(self.root/tx.MARKER)
+            tx.restore(self.backups/marker['installId'],apply=True,fake=True)
+            self.assertEqual(self.snap(),before)
+
+    def test_joint_restore_interruption_resumes_exactly(self):
+        before=self.snap();installed=self.run_install();backup=Path(installed['backupDir'])
+        real=tx.shutil.copyfile
+        def interrupt(source,target,*args,**kwargs):
+            real(source,target,*args,**kwargs)
+            raise KeyboardInterrupt('synthetic restore interruption')
+        with patch.object(tx.shutil,'copyfile',side_effect=interrupt):
+            with self.assertRaises(KeyboardInterrupt):tx.restore(backup,apply=True,fake=True)
+        self.assertEqual(tx.read_json(backup/'install-record.json')['state'],'restoring')
+        tx.restore(backup,apply=True,fake=True);self.assertEqual(self.snap(),before)
+
+    def test_joint_human_file_drift_and_bad_backup_refuse_without_writes(self):
+        installed=self.run_install();backup=Path(installed['backupDir'])
+        for path in [self.root/tx.HUMAN_CONFIG/'inventories.json',backup/'preimages/game/csgo/addons/metamod/bin/win64/server.dll']:
+            raw=path.read_bytes();write(path,b'changed')
+            self.assert_rejected(lambda:tx.restore(backup,apply=True,fake=True))
+            write(path,raw)
+
+    def test_joint_unknown_module_and_game_update_refuse(self):
+        path=self.root/'game/csgo/addons/counterstrikesharp/plugins/Unreviewed/Unknown.dll'
+        write(path,'unknown')
+        self.assert_rejected(self.run_install)
+        path.unlink();path.parent.rmdir()
+        write(self.root/'game/csgo/bin/win64/server.dll','new game build')
+        self.assert_rejected(self.run_install)
+
+    def test_joint_evidence_and_explicit_policy_required(self):
+        self.assert_rejected(lambda:tx.install(self.release,self.manifest_sha,self.root,self.backups,apply=True,fake=True))
+        self.manifest['coexistence']['status']='blocked';self.seal();self.assert_rejected(self.run_install)
+        self.manifest['coexistence']['status']='ready-for-manual-test'
+        self.manifest['coexistence']['humanFiles'].pop(tx.HUMAN_GAMEDATA);self.seal();self.assert_rejected(self.run_install)
+
+    def test_joint_steam_update_before_and_during_write_keeps_recovery(self):
+        steam=self.root.parent.parent/'appmanifest_730.acf';raw=steam.read_bytes()
+        write(steam,raw.replace(b'"4"',b'"1026"'));self.assert_rejected(self.run_install)
+        write(steam,raw);before=self.snap();real=tx.os.replace
+        def update(source,target):
+            real(source,target)
+            if str(target).replace('\\','/').endswith('game/csgo/addons/metamod/bin/win64/metamod.2.cs2.dll'):
+                write(steam,raw.replace(b'"4"',b'"1026"'))
+        with patch.object(tx.os,'replace',side_effect=update):
+            with self.assertRaisesRegex(RuntimeError,'recovery blocked'):self.run_install()
+        marker=tx.read_json(self.root/tx.MARKER)
+        backup=self.backups/marker['installId']
+        self.assertTrue((backup/'install-record.json').is_file())
+        self.assertTrue((backup/'preimages').is_dir())
+        write(steam,raw);tx.restore(backup,apply=True,fake=True);self.assertEqual(before,self.snap())
+
+    def test_public_joint_wrapper_roundtrip_without_real_target(self):
+        before=self.snap()
+        def invoke(action,apply=False,install_id=None):
+            args=['pwsh','-NoProfile','-File',str(tx.REPO/'scripts/bot-experiment/Invoke-BotExperiment.ps1'),'-Action',action,'-BackupRoot',str(self.backups),'-AllowFakeTree']
+            if action in {'Preview','Install'}:args+=['-ReleaseDir',str(self.release),'-ManifestSha256',self.manifest_sha,'-Cs2Root',str(self.root),'-PreserveHumanCosmetics']
+            else:args+=['-InstallId',install_id]
+            if apply:args+=['-Apply']
+            result=subprocess.run(args,capture_output=True,text=True,encoding='utf-8',errors='replace')
+            self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+            return json.loads(result.stdout)
+        snapshot=tx.inventory(self.home);invoke('Preview');self.assertEqual(snapshot,tx.inventory(self.home))
+        installed=invoke('Install',True);self.assertTrue((self.root/tx.HUMAN_PLUGIN).exists())
+        snapshot=tx.inventory(self.home);invoke('Diagnostics',install_id=installed['installId']);self.assertEqual(snapshot,tx.inventory(self.home))
+        invoke('Restore',True,installed['installId']);self.assertEqual(self.snap(),before)
 
 
 if __name__=='__main__':

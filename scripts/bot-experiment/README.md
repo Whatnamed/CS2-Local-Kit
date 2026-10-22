@@ -1,7 +1,8 @@
 # Bot experimental candidate
 
 这是单一 CS2 安装上的临时实验事务，不是 accepted runtime，也不是可独立启动的第二份游戏。
-它将 MetaMod 1473→1481、Bot 文件、Human/其他可执行插件隔离和 gameinfo 修改放入同一 install ID。
+它将 framework、Bot 文件、经核查的可执行插件隔离和 gameinfo 修改放入同一 install ID。
+历史候选隔离 Human；日常联合模式只接受保留 Human 且有完整共存证据的独立候选。
 CSS 1.0.376 保留原样；正式 Bot/Human locks 不参与候选升级。
 
 需要已有 PowerShell 7 和 Python 3.12+。脚本不下载依赖、不启动或结束 CS2。
@@ -20,9 +21,21 @@ CSS 1.0.376 保留原样；正式 Bot/Human locks 不参与候选升级。
 - 默认备份 `E:\CS2MOD\backups\bot-experiment\<install-id>`；active marker 关联唯一事务。不得改用旧 Bot/Human restore 或靠最近时间猜 backup。
 - 对真正的 CS2 根目录显式调用；脚本不会自动寻找第二个安装。fixture/fake mode 只能用于 worktree `temp/` 中带哨兵且没有 PE executable 的合成树。
 
+## 联合模式合约
+
+manifest 可选 `humanPolicy`，缺省为历史 `isolate`；`preserve` 必须由调用方明确提供 `-PreserveHumanCosmetics`，不能同时提供 `-IsolateHumanCosmetics`。
+联合模式沿用同一事务、完整 baseline/模块 inventory 与 pre/post image 校验，且要求 `coexistence`：
+
+- `status: ready-for-manual-test`、与 `targetBuild` 完全相同的 `reviewedBuild`、外部核查证据的 `evidenceSha256`；
+- `humanFiles` 与 baseline 中全部 InventorySimulator 插件、配置、gamedata 文件的 hash 完全一致，至少包含 DLL、`inventories.json` 和 gamedata；payload 不得覆盖这些路径；
+- `isolatedModules` 与预检枚举出的其他可执行模块的完整身份完全相同；未知第三方模块拒绝安装，Human 不得隔离。
+
+这些字段是候选的审查契约，不能用手填 `ready` 替代共享 MetaMod/CSS/API/native Hook 的兼容核查。Controller 仍须将候选及其完整 manifest digest 编译进白名单；缺少通过门禁的联合候选时只显示阻断原因。
+现有 `Build-BotExperiment.ps1` 继续生成历史隔离格式，不会自动把旧候选升级为联合候选。联合事务已在合成目录验证，不代表真实组合已获准安装。
+
 ## 将来手动操作
 
-以下是显式手动入口。首次操作前先关闭 CS2；具体交付是否已安装以带日期证据和精确 install ID 为准。
+以下是将来具备独立联合候选时的显式入口，不授权使用过期候选。首次操作前先关闭 CS2；具体交付是否已安装以带日期证据和精确 install ID 为准。
 
 ```powershell
 $candidate = 'E:\CS2MOD\releases\bot-experiment\<exact-candidate-id>'
@@ -30,11 +43,11 @@ $sha = '<manifest SHA256 from delivery report>'
 $tool = Join-Path $candidate 'tools/Invoke-BotExperiment.ps1'
 $cs2 = 'E:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive'
 
-# 完整安装预览，包含需要隔离的 Human 和其他可执行模块清单；零写入
-pwsh -File $tool -ReleaseDir $candidate -ManifestSha256 $sha -Cs2Root $cs2 -IsolateHumanCosmetics
+# 联合候选完整安装预览；保留 Human，零写入
+pwsh -File $tool -ReleaseDir $candidate -ManifestSha256 $sha -Cs2Root $cs2 -PreserveHumanCosmetics
 
 # 人工确认 exact preview 后才使用；打印唯一 installId 和 backupDir
-pwsh -File $tool -Action Install -ReleaseDir $candidate -ManifestSha256 $sha -Cs2Root $cs2 -IsolateHumanCosmetics -Apply
+pwsh -File $tool -Action Install -ReleaseDir $candidate -ManifestSha256 $sha -Cs2Root $cs2 -PreserveHumanCosmetics -Apply
 
 # 关闭游戏后，只读核验 installed image、backup 和恢复可用性
 pwsh -File $tool -Action Diagnostics -InstallId '<exact-install-id>'
@@ -56,6 +69,7 @@ pwsh -File $tool -Action Restore -InstallId '<exact-install-id>' -Apply
 
 任何 live 或 backup 漂移（包括游戏/用户改动本事务拥有的 cfg/plugin 文件）、Human 目录重新出现、备份缺失，
 均在恢复写入之前拒绝。保存整个 backup/record 和报错；不要删除 active marker、改 manifest/hash、清空插件目录或加 Force。
+安装与恢复还检查 Steam `StateFlags`、目标 build 和下载/暂存完成状态，并在每项 live 修改前检查 CS2 进程及 Steam manifest 是否变化。更新中断时保留救援记录，待更新停止后重新预检，不绕过 build/hash 门禁。
 需人工定位并保存发生漂移的内容，再据其身份单独决策；本工具没有强制丢弃用户修改的入口。
 不能从 fake-tree PASS 推断真实 KHook/CSS/游戏加载、aim、性能或恢复后的 Human 渲染已经通过。
 
