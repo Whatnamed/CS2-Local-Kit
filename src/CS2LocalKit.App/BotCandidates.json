@@ -52,5 +52,26 @@
     "ManifestSha256": "41f95720d36b3c5ade50d09cb3df5b2fdae638663e20f05cb0f74c43d89af41e",
     "PreservesHuman": true,
     "MatchSetup": true
+  },
+  {
+    "Difficulty": 0,
+    "Directory": "bot-match-closure-0895f2557419",
+    "ManifestSha256": "cac3a72fa944e5b2e79909d058fe0c6fb54ab06bb4c9c079ef0208c01b32f88a",
+    "PreservesHuman": true,
+    "MatchSetup": true
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "bot-match-closure-34f5fa2c8ff9",
+    "ManifestSha256": "b71c6cbd9990be37ceff4e3cfe787dcb8902b4919b43553b7096c487a45b4b3e",
+    "PreservesHuman": true,
+    "MatchSetup": true
+  },
+  {
+    "Difficulty": 2,
+    "Directory": "bot-match-closure-3d9a1306b56f",
+    "ManifestSha256": "e4d29aeff607f1af731d5d303971dc49a3facc4bac19819a9ec374a270356a0f",
+    "PreservesHuman": true,
+    "MatchSetup": true
   }
 ]

@@ -153,9 +153,9 @@ Panel 允许：
 
 Panel 不通过“隐藏模式切换”批量启停无关插件来制造产品状态。
 
-Controller 的「人机」页通过固定候选白名单和参数列表调用包内版本明确的实验事务，不在 C# 复制安装器。普通与增强本地模式的目标偏好不代表真实安装状态。联合候选必须绑定当前 build、Human 完整文件身份、共享依赖及共存核查证据；缺失证据时禁用启用入口。难度由不可变 profile 变体决定，更换需先恢复再安装。对局请求通过独立 app-data 合约交给小型本地 CSS 适配层；瞄准/道具经插件就绪后应用和读回，复制命令仅作诊断回退。
+Controller 的「对局配置」通过固定候选白名单和参数列表调用包内版本明确的实验事务，不在 C# 复制安装器。普通与增强本地模式的目标偏好不代表真实安装状态。活动联合安装按自身 manifest、精确记录和磁盘 postimage 核实；无活动事务时才按纯 Human 基线核实。联合候选必须绑定当前 build、Human 完整文件身份、共享依赖及共存核查证据；缺失证据时禁用启用入口。难度由不可变 profile 变体决定，更换需先预检旧事务的精确恢复和目标恢复后基线，再恢复旧安装、重新完整预检并安装目标。组合操作保留阶段 journal，未知状态不盲目重试。对局请求通过独立 app-data 合约交给小型本地 CSS 适配层；瞄准/道具经插件就绪后应用和读回，复制命令仅作诊断回退。
 
-旧隔离实验仅用于精确恢复；联合事务保留 Human 插件、fixture 与预设。两者活动期间均阻止 Human Apply/Restore 与 MetaMod 启动修复，以保持 preimages 和精确恢复边界。执行前及文件变更期间检查游戏关闭、Steam 安装状态稳定；漂移时保留事务与备份并拒绝覆盖。恢复只能使用原事务的精确 install ID，执行成功后还须复核磁盘及记录。
+旧隔离实验仅用于精确恢复；联合事务保留 Human 插件、fixture 与预设。活动联合事务中，只有其余 postimage、Human 保留文件和 build 均核实后，Human fixture 才能通过独立 sidecar 更新；原 Bot manifest、install record 和备份保持不变。精确恢复前把 fixture 暂时放回记录的基线，恢复结束后验证并重放最新版，切换候选时将其移交新事务。Bot 文件操作与 Human 写入共用进程间排他 gate。活动事务期间仍阻止 MetaMod 启动修复。执行前及文件变更期间检查游戏关闭、Steam 安装状态稳定；漂移时保留事务与备份并拒绝覆盖。恢复只能使用原事务的精确 install ID，执行成功后还须复核磁盘及记录。这些路径的真实游戏效果与真实安装/恢复仍待实机验收。
 
 ## 9. 数据与 catalog
 
@@ -180,7 +180,7 @@ Controller 的「人机」页通过固定候选白名单和参数列表调用包
 
 ## 11. 有界开局配置
 
-`Core/MatchSetup` 拥有版本化阵容、选手身份、整局预设、人数/替代席位与 CT/T 映射。内置快照不可编辑，个人副本与上游 BotHider 原文件分离。`MatchSetupStore` 只拥有 `app-data/match-setup`，以 request ID / preset checksum 区分草稿、已保存、已排队和收到请求的会话。
+`Core/MatchSetup` 拥有版本化阵容、选手身份、整局预设、人数/替代席位与 CT/T 映射。内置快照不可编辑，个人副本与上游 BotHider 原文件分离。`MatchSetupStore` 只拥有 `app-data/match-setup`，以 request ID / preset checksum 区分草稿、已保存、已排队和收到请求的会话；请求仅可由匹配的地图会话一次性 claim，过期或已 claim 的请求不重放。
 
 `LocalKitMatchSetup` 是独立的候选 CSS 适配层，与 Human cosmetics 无调用或 ownership 关系。它在新地图读一次请求，异步校验活动事务、五项 binary、payload、CSS 与 Human 身份，再检查 `-insecure` listen server、唯一真人、已装 profile 及首回合/计分前窗口。保留既有 offline cfg 的基础 CVar 加载；没有请求时不改变默认阵容。只有实际插件就绪和真人选边后才发出一次性的默认 Bot 清理、目标 Bot 添加、persona 绑定、队名/logo 与行为设置。
 

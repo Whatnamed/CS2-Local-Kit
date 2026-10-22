@@ -77,6 +77,40 @@ public sealed class BotHumanFixtureSidecarTests : IDisposable
         Assert.Throws<InvalidDataException>(() => sidecar.Inspect());
         Assert.Equal("new", File.ReadAllText(Fixture));
     }
+    [Fact] public void UpdatedHumanFixtureTransfersAcrossExactBotSwitch()
+    {
+        var old = Sidecar();
+        var edited = System.Text.Encoding.UTF8.GetBytes("new private fixture");
+        old.Begin(edited); File.WriteAllBytes(Fixture, edited); old.Complete();
+        old.SuspendForExactRestore();
+        var oldRecord = Path.Combine(Backup, "install-record.json");
+        Put(oldRecord, File.ReadAllText(oldRecord).Replace("\"installed\"", "\"restored\""));
+        File.Delete(Marker);
+        old.FinishExactRestore(replayHuman: false);
+        var nextId = Guid.NewGuid().ToString("N");
+        var nextBackup = Path.Combine(Backups, nextId);
+        Directory.CreateDirectory(nextBackup);
+        var nextManifest = Path.Combine(nextBackup, "candidate-manifest.json");
+        File.Copy(Path.Combine(Backup, "candidate-manifest.json"), nextManifest);
+        Put(Marker, JsonSerializer.Serialize(new { installId = nextId, backupRoot = Backups, manifestSha256 = Hash(nextManifest), humanPolicy = "preserve" }));
+        var entries = new object[]
+        {
+            new { target = BotHumanFixtureSidecar.Target, action = "retained", before = new { kind = "file", sha256 = Hash(Fixture) }, after = new { kind = "file", sha256 = Hash(Fixture) } },
+            new { target = "game/csgo/addons/metamod/bin/win64/server.dll", action = "overwritten", before = new { kind = "file", sha256 = Hash(Path.Combine(Backup, "preimages", "game/csgo/addons/metamod/bin/win64/server.dll")) }, after = new { kind = "file", sha256 = Hash(Other) } },
+            new { target = "game/csgo/.cs2-local-kit-bot-experiment.json", action = "created", before = (object?)null, after = new { kind = "file", sha256 = Hash(Marker) } }
+        };
+        Put(Path.Combine(nextBackup, "install-record.json"), JsonSerializer.Serialize(new
+        {
+            schemaVersion = 1, lane = "bot-experiment", installId = nextId, cs2Root = Root,
+            manifestSha256 = Hash(nextManifest), state = "installed", humanPolicy = "preserve",
+            entries, createdDirectories = Array.Empty<string>()
+        }));
+        var next = new BotHumanFixtureSidecar(Root, Backups, nextId);
+        old.TransferTo(next);
+        Assert.Equal("new private fixture", File.ReadAllText(Fixture));
+        Assert.Equal(Hash(Fixture), next.Inspect()!.CurrentSha256);
+        Assert.Equal("transferred", JsonDocument.Parse(File.ReadAllText(Path.Combine(Backup, "human-fixture-update/update.json"))).RootElement.GetProperty("Stage").GetString());
+    }
     [Fact] public void InterruptedUpdateKeepsTheOriginalHumanImageAndRecord()
     {
         var sidecar = Sidecar();

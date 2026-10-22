@@ -16,4 +16,4 @@ Value, SelectionItem, Invoke, RangeValue and ExpandCollapse providers are exerci
 
 DPI captures explicitly set WPF root DPI and encode matching pixel dimensions. The report records the hidden source's native DPI before overrides. 1000x610 additionally bounds the client area of a 1024x660 window with native chrome. Alpha coverage and non-flat pixels are checked to reject blank/transparent captures; actual screenshots still require visual inspection.
 
-The suite exercises save/queue/activation and confirmation cancellation only against synthetic data. It never invokes Bot install/restore; disabled gates are checked. Existing Core tests cover the actual install/apply/restore semantics in their own fixtures.
+The suite exercises the two primary pages, secondary settings, roster edits, plan save, guarded match preparation, Human apply confirmation/cancellation and state retention only against synthetic data. It never invokes Bot install/restore or a real game. Core tests and the candidate roundtrip script cover isolated transaction behavior; actual CS2 behavior requires manual acceptance.
