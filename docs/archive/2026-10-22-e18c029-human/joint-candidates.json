@@ -1,0 +1,56 @@
+[
+  {
+    "releaseDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-fe80b9e1c101",
+    "manifestSha256": "0b2b0a7b5a871e2e25199361ea883f235ad2c492959dee1741e69706abcbcf58",
+    "zip": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-fe80b9e1c101.zip",
+    "zipSha256": "f75c39cb7ae422f0e21bf83abb21ad988c5d1e8ceda5df1bdbf2ed08215adfa1",
+    "profile": {
+      "difficulty": "Low",
+      "upstreamPath": "overrides/Low/botprofile.db",
+      "dbSource": "profiles/Low/botprofile.db",
+      "dbSha256": "c392b1f07b85fdc6fb5032c4c18c8b9662c7f9642b3dcded1ad3c61989f60f53",
+      "vpkSha256": "875248a54d5b3e4f7b67b92f87b10a3989929580f2dabbb857fda4523bd80cf1"
+    },
+    "sourceManifestSha256": "4de43c63d71492c9a3954193f378980145ce80da5c2efd8dce84b8352dc5ee71",
+    "compatibilityEvidenceSha256": "f0829783759213db7361901aa702ebb3df8489789bf276f97b81f5c987510d68",
+    "payloadFileCount": 105,
+    "installed": false,
+    "realGameAccepted": false
+  },
+  {
+    "releaseDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-839994079f8b",
+    "manifestSha256": "caafc349e6eef737f5f8f85a0ff637d3af7f861a99fc205857fb1528590d9582",
+    "zip": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-839994079f8b.zip",
+    "zipSha256": "6ab53d92e99ec377678b80c6e81e01e3b3fad5f72aad5eaaf1d40c04b54b8a04",
+    "profile": {
+      "difficulty": "Medium",
+      "upstreamPath": "overrides/Medium/botprofile.db",
+      "dbSource": "profiles/Medium/botprofile.db",
+      "dbSha256": "82df33bcec25fd5f199599d5bfbbf2e9a2828dbd1b65c070ca561f16370e910d",
+      "vpkSha256": "ada94c66acfb78695d5b2d2f5a897842bb8378c618e48be865070e840b7c6a01"
+    },
+    "sourceManifestSha256": "e6f028042b7fc778d62df9a17211ea9701b6e8bab034da4b3170e8331b3483b4",
+    "compatibilityEvidenceSha256": "f0829783759213db7361901aa702ebb3df8489789bf276f97b81f5c987510d68",
+    "payloadFileCount": 105,
+    "installed": false,
+    "realGameAccepted": false
+  },
+  {
+    "releaseDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-e74391e3537c",
+    "manifestSha256": "6181e1310e78df74dc941b00904bc79e3b6ff01ef17be85fa5d0b9ff4be36cfc",
+    "zip": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-e74391e3537c.zip",
+    "zipSha256": "d213c0f6f34210f4b91756837f8703c1e11f93b1e224e766764910db5f33f1e0",
+    "profile": {
+      "difficulty": "High",
+      "upstreamPath": "overrides/High/botprofile.db",
+      "dbSource": "profiles/High/botprofile.db",
+      "dbSha256": "3b192024382eee76028d42e0f06ff453fb9093332136c77ffc3810d742207986",
+      "vpkSha256": "06d02f2e5e59ff844cf3e224604bd3a95d01f6d7a5604d698b534aff0d54a1cf"
+    },
+    "sourceManifestSha256": "6b879f841088de02ebf10d7710a10f1a4f8a1cd681b2ba116db61e788936cc52",
+    "compatibilityEvidenceSha256": "f0829783759213db7361901aa702ebb3df8489789bf276f97b81f5c987510d68",
+    "payloadFileCount": 105,
+    "installed": false,
+    "realGameAccepted": false
+  }
+]

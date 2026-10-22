@@ -1,0 +1,123 @@
+[
+  {
+    "repository": "roflmuffin/CounterStrikeSharp",
+    "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+    "path": "managed/CounterStrikeSharp.API/Modules/Memory/DynamicFunctions/BaseMemoryFunction.cs",
+    "sha256": "c29d0bb326004c8180363fb0640b3135aef5286a44c5bd0bd3f90064c5f0d718"
+  },
+  {
+    "repository": "roflmuffin/CounterStrikeSharp",
+    "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+    "path": "managed/CounterStrikeSharp.API/Modules/Memory/DynamicFunctions/DynamicHook.cs",
+    "sha256": "d3278b57873eeb4b916c52ae5d7cfa5e4cc76180a846507bbe81a0c5e08a2d96"
+  },
+  {
+    "repository": "roflmuffin/CounterStrikeSharp",
+    "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+    "path": "src/core/dynamic_hook.cpp",
+    "sha256": "78183628a0c16f996b9ede17854f1d699f3f78689f46e1ced862454cc6d81262"
+  },
+  {
+    "repository": "roflmuffin/CounterStrikeSharp",
+    "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+    "path": "src/scripting/natives/natives_dynamichooks.cpp",
+    "sha256": "3dde62bf3a761d12144dc2c6d2228162d3662acd3fd34d1163387328d64f31de"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/InventorySimulator.cs",
+    "sha256": "1e63849c2c5dbc38133cb704c75b72196f5c307c544cf5e76a68c784d6a1a9cc"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/InventorySimulator.Hooks.cs",
+    "sha256": "e7dd323ea1c2043475c87e4af83d33dc2cf0ea06115a2068d10d01ff037a59e5"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/InventorySimulator.CoreEvents.cs",
+    "sha256": "341413144d5d1bf1182f7b7c1fd511e382f54acd930af1a7d2be5fe7560445db"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/InventorySimulator.GameEvents.cs",
+    "sha256": "c55ad12718d61e84c802aa228e41d7c74d8123c908e019120cd6adf7347ba6b5"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/Helpers/PlayerHelper.cs",
+    "sha256": "a9c1a9aaf96cd441b9e02dbf36147ed2d34292ee03113b67a11f8425a39df243"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/Services/Runtime.cs",
+    "sha256": "8eb9b72d9043857c48ca81f87540f82055e181cd20a8cae681d6982db0224b28"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/Services/Inventories.cs",
+    "sha256": "6fd58ee97219ba5682963fab3a3b6934cdee870793ad1f440f0646d5176dbde7"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/Extensions/CCSPlayerControllerExtensions.cs",
+    "sha256": "52abbe416b385d52bfd89be04e5c909f7b9902707a3d833a8b606d5ebd0f62e0"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/Extensions/CCSPlayerPawnExtensions.cs",
+    "sha256": "1de0b15667292cdea11824d6ca2ce47c9788a8e3b9bbe738a5c1137e79dbc8fb"
+  },
+  {
+    "repository": "ianlucas/cs2-css-inventory-simulator",
+    "ref": "fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "path": "source/InventorySimulator/Natives/Natives.CCSPlayer_ItemServices.cs",
+    "sha256": "59fa4a66d66b6cd76de7b70a55c47502c7c14ead440235ef3756f37832afe6bc"
+  },
+  {
+    "repository": "roflmuffin/CounterStrikeSharp",
+    "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+    "path": "src/core/function.cpp",
+    "sha256": "74fa58476550e30a9f00c07a9813776f3eddb9845d50a5699ad44ac96692a541"
+  },
+  {
+    "repository": "roflmuffin/CounterStrikeSharp",
+    "ref": "653d651f1ac09ac1ddb423d588f871b891038860",
+    "path": "managed/CounterStrikeSharp.API/Modules/Memory/VirtualFunctions.cs",
+    "sha256": "c2b5cd799eeaf06e470a88acef3a3ccdbe810de0f4ad618ce46f1fc5ddfff26b"
+  },
+  {
+    "repository": "e18c029 recursive source",
+    "path": "addons/BotHider/csharp/BotHiderImpl/IsBotPatch.cs",
+    "sha256": "dd9ec2e9be2c9a40e82f5be658885a74a3c2ac45ebd3415fc38802bd6571b1d9"
+  },
+  {
+    "repository": "e18c029 recursive source",
+    "path": "addons/BotHider/csharp/BotHiderImpl/BotHiderImplPlugin.cs",
+    "sha256": "fe89c687ad7d90980874f215b863f96abe259f067b5506b5a2b19c7f1ba6a04a"
+  },
+  {
+    "repository": "e18c029 recursive source",
+    "path": "addons/BotHider/src/features/identity/identity_runtime.cpp",
+    "sha256": "9373d3904e939cbf8bfd0fac8219713bf902c2d7e93961483bd98ffa6ae4c9d3"
+  },
+  {
+    "repository": "e18c029 recursive source",
+    "path": "addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.cs",
+    "sha256": "8196ab805c0cfbdc9e072cf29a4fff3b3521da5d5fbe8e2b9a05df46d925a291"
+  },
+  {
+    "repository": "e18c029 recursive source",
+    "path": "addons/counterstrikesharp/plugins/BotRandomizer/Cosmetics/WeaponItemViewStore.cs",
+    "sha256": "72bfdd735acf0b07456881fb45c5ef47f37f4325369c378c41ca55856fe46cbb"
+  }
+]

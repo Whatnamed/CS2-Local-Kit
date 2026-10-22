@@ -1,0 +1,6 @@
+  正在确定要还原的项目…
+  已还原 E:\Projects\CS2-Local-Kit\CS2-Local-Kit\src\CS2LocalKit.App\CS2LocalKit.App.csproj (用时 220 毫秒)。
+  已还原 E:\Projects\CS2-Local-Kit\CS2-Local-Kit\src\CS2LocalKit.Core\CS2LocalKit.Core.csproj (用时 215 毫秒)。
+  CS2LocalKit.Core -> E:\Projects\CS2-Local-Kit\CS2-Local-Kit\src\CS2LocalKit.Core\bin\Release\net10.0\CS2LocalKit.Core.dll
+  CS2LocalKit.App -> E:\Projects\CS2-Local-Kit\CS2-Local-Kit\src\CS2LocalKit.App\bin\Release\net10.0-windows\win-x64\CS2LocalKit.App.dll
+  CS2LocalKit.App -> E:\CS2MOD\releases\controller\controller-bot-joint-20261022-d763d9c\payload\

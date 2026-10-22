@@ -1,0 +1,317 @@
+[
+  {
+    "component": "BotController",
+    "name": "CBaseEntity_Teleport",
+    "windows": 165,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BuyState::InitialDelay",
+    "windows": 8,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BuyState::DoneBuying",
+    "windows": 24,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "CCSBot::Profile",
+    "windows": 8,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Aggression",
+    "windows": 8,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Skill",
+    "windows": 12,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Teamwork",
+    "windows": 16,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::WeaponPref",
+    "windows": 36,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::WeaponPrefCount",
+    "windows": 68,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Cost",
+    "windows": 72,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::Difficulty",
+    "windows": 80,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::ReactionTime",
+    "windows": 88,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::AttackDelay",
+    "windows": 92,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::LookAngleMaxAccelAttacking",
+    "windows": 120,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::LookAngleStiffnessAttacking",
+    "windows": 124,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "BotProfile::LookAngleDampingAttacking",
+    "windows": 128,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "CEntityIdentity::EHandle",
+    "windows": 16,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "CCSPlayer_MovementServices::Pawn",
+    "windows": 56,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "CMoveData::Velocity",
+    "windows": 56,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "CMoveData::AbsOrigin",
+    "windows": 200,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "vtidx::PlayerRunCommand",
+    "windows": 25,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "vtidx::FinishMove",
+    "windows": 38,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "vtidx::DropWeapon",
+    "windows": 28,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotController",
+    "name": "vtidx::ControllerCommandSetup",
+    "windows": 240,
+    "source": "addons/BotController/configs/addons/BotController/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::SetName",
+    "windows": 61,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntitySystem::m_EntityList",
+    "windows": 16,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntityIdentity::Size",
+    "windows": 112,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntityIdentity::m_pInstance",
+    "windows": 0,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CEntityIdentity::m_designerName",
+    "windows": 32,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CNetworkGameServerBase::m_Clients",
+    "windows": 616,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_UserIDString",
+    "windows": 56,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_Name",
+    "windows": 64,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nClientSlot",
+    "windows": 72,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nEntityIndex",
+    "windows": 76,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_Server",
+    "windows": 80,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_NetChannel",
+    "windows": 88,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nConnectionTypeFlags",
+    "windows": 96,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_nSignonState",
+    "windows": 100,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_pAttachedTo",
+    "windows": 144,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_bFakePlayer",
+    "windows": 160,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_UserID",
+    "windows": 168,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_SteamID",
+    "windows": 171,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_SteamIDMirror",
+    "windows": 179,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotHider",
+    "name": "CServerSideClient::m_bIsHLTV",
+    "windows": 322,
+    "source": "addons/BotHider/configs/addons/BotHider/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  },
+  {
+    "component": "BotVision",
+    "name": "CNavPhysicsInterface::TraceShape",
+    "windows": 3,
+    "source": "addons/BotVision/configs/addons/BotVision/gamedata.json",
+    "status": "configured-only; not established by pattern match"
+  }
+]

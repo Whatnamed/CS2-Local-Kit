@@ -1,0 +1,10 @@
+{
+  "directory": "E:\\CS2MOD\\releases\\controller\\controller-bot-joint-20261022-d763d9c",
+  "executable": "E:\\CS2MOD\\releases\\controller\\controller-bot-joint-20261022-d763d9c\\payload\\CS2LocalKit.App.exe",
+  "manifestSha256": "724b4d035a8397361cbc89ea16b4b338eb34f54f53d46cab340366220f9026d6",
+  "sourceHead": "d763d9c77b41a90441926f4055649b7cac841c89",
+  "verifiedPayloadFiles": 404,
+  "selfContained": true,
+  "publishedAppDllSha256": "a420aed345f13cad770ddcbb23e34967e0e82dfda3f749fd6cc1b277907b5b11",
+  "probeUsedExactPublishedAssemblies": true
+}

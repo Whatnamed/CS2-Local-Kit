@@ -1,0 +1,197 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "05e6f04972bb2983f463c08824c3133626e0703e881443589288b68e200acc4d"
+    },
+    "engine2": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\engine2.dll",
+      "sha256": "6456df18d8f954394024c2c07da8c848df15a5ace74ce7390d78970ceb39ee21"
+    }
+  },
+  "results": [
+    {
+      "name": "Human/CAttributeList::SetOrAddAttributeValueByName",
+      "library": "server",
+      "pattern": "48 89 4C 24 ? 53 41 55 41 56",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1067910",
+          "fileOffset": "0x1066d10"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerPawn::IsAbleToApplySpray",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 78 ? 55 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 4C 89 70",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xaca130",
+          "fileOffset": "0xac9530"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerController::ProcessUsercmds",
+      "library": "server",
+      "pattern": "48 8B C4 44 88 48 20 44 89 40 18 48 89 50 10 53",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb60700",
+          "fileOffset": "0xb5fb00"
+        }
+      ]
+    },
+    {
+      "name": "Human/CServerSideClientBase::ActivatePlayer",
+      "library": "engine2",
+      "pattern": "40 53 48 83 EC ? 48 89 6C 24 ? 48 8B D9 48 89 74 24 ? 48 89 7C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbde30",
+          "fileOffset": "0xbd230"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerInventory::GetItemInLoadout",
+      "library": "server",
+      "pattern": "48 8B C4 56 48 83 EC ? 49 63 F0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa2cf20",
+          "fileOffset": "0xa2c320"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemView::CEconItemView",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 48 8B F9 48 8D 05",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1059310",
+          "fileOffset": "0x1058710"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemView::operator=",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 48 83 EC ? 48 8B F9 48 8B F2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x105a300",
+          "fileOffset": "0x1059700"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerInventory::SendInventoryUpdateEvent",
+      "library": "server",
+      "pattern": "83 79 ? ? 0F 10 49",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x104fc80",
+          "fileOffset": "0x104f080"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayer_ItemServices::SetWearables",
+      "library": "server",
+      "pattern": "40 55 56 48 83 EC ? 48 83 79",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xac0130",
+          "fileOffset": "0xabf530"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerPawn::SetModelFromClass",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 56 57 41 56 48 83 EC ? 48 8B D9 48 81 C1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1e5c00",
+          "fileOffset": "0x1e5000"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerPawn::SetModelFromLoadout",
+      "library": "server",
+      "pattern": "40 56 57 41 54 48 83 EC ? 48 8B F9 45 33 E4",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1c1650",
+          "fileOffset": "0x1c0a50"
+        }
+      ]
+    },
+    {
+      "name": "Human/GetItemSchema",
+      "library": "server",
+      "pattern": "48 83 EC ? 48 8B 05 ? ? ? ? 48 85 C0 0F 85 ? ? ? ? 48 89 5C 24 ? B9 ? ? ? ? 48 89 7C 24 ? E8 ? ? ? ? 33 FF 48 8B D8 48 85 C0 74 ? 48 8D 05 ? ? ? ? 48 89 7B ? B9 ? ? ? ? 48 89 03 E8 ? ? ? ? 48 85 C0 74 ? 48 8B C8 E8 ? ? ? ? 48 8B F8 48 8D 05 ? ? ? ? 48 89 7B ? 48 89 03 48 8B C7 48 8B 7C 24 ? 48 89 1D ? ? ? ? 48 8B 5C 24 ? 48 83 C4 ? C3 48 8B 47 ? 48 8B 5C 24 ? 48 89 3D ? ? ? ? 48 8B 7C 24 ? 48 83 C4 ? C3 48 8B 40 ? 48 83 C4 ? C3 CC CC CC CC CC CC CC CC CC CC CC CC 48 8B 41",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1022f40",
+          "fileOffset": "0x1022340"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemSchema::GetItemDefinitionByName",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 80 B9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1022740",
+          "fileOffset": "0x1021b40"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemSchema::GetItemDefinition",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B D9 89 54 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x10226a0",
+          "fileOffset": "0x1021aa0"
+        }
+      ]
+    }
+  ]
+}

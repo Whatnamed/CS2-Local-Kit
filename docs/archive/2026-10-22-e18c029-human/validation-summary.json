@@ -1,0 +1,31 @@
+{
+  "dotnetTests": {
+    "passed": 198,
+    "failed": 0
+  },
+  "transactionTests": {
+    "passed": 40,
+    "failed": 0,
+    "joint": 8,
+    "legacy": 32
+  },
+  "actualPayloadRoundtrip": {
+    "Low": "PASS; 105 actual payloads; exact paths/types/hashes restored; Human retained; zero-write previews",
+    "Medium": "PASS; 105 actual payloads; exact paths/types/hashes restored; Human retained; zero-write previews",
+    "High": "PASS; 105 actual payloads; exact paths/types/hashes restored; Human retained; zero-write previews"
+  },
+  "staticPatterns": {
+    "bot": 81,
+    "css": 28,
+    "human": 14,
+    "unique": 123,
+    "originalBytesPassed": 42
+  },
+  "schemaFieldsUnchanged": 43,
+  "realInstallations": 1,
+  "liveRestorePreflight": "PASS; read-only",
+  "actualLiveRestoreApplied": false,
+  "actualGameStarted": false,
+  "manualGameplay": "pending",
+  "privateOffsetsRuntimeProof": "45 configured offsets plus non-schema private layouts remain baseline/runtime-only; no guessed replacement"
+}

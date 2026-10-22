@@ -1,0 +1,38 @@
+[
+  {
+    "difficulty": "Low",
+    "state": "preview",
+    "actions": {
+      "isolated": 2,
+      "overwritten": 14,
+      "created": 91,
+      "modified": 1,
+      "retained": 524
+    },
+    "humanIsolated": false
+  },
+  {
+    "difficulty": "Medium",
+    "state": "preview",
+    "actions": {
+      "isolated": 2,
+      "overwritten": 14,
+      "created": 91,
+      "modified": 1,
+      "retained": 524
+    },
+    "humanIsolated": false
+  },
+  {
+    "difficulty": "High",
+    "state": "preview",
+    "actions": {
+      "isolated": 2,
+      "overwritten": 14,
+      "created": 91,
+      "modified": 1,
+      "retained": 524
+    },
+    "humanIsolated": false
+  }
+]

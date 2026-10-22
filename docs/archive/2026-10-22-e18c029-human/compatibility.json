@@ -1,0 +1,70 @@
+{
+  "status": "ready-for-manual-test",
+  "botRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+  "targetBuild": {
+    "PatchVersion": "1.41.9.1",
+    "ClientVersion": "2000934",
+    "buildId": "26087496"
+  },
+  "gameBinaries": {
+    "game/bin/win64/schemasystem.dll": "d2a9b5164cb68953e77d0ef424c1263d2cc452a75e935316bc8b4c4500e63648",
+    "game/bin/win64/engine2.dll": "6456df18d8f954394024c2c07da8c848df15a5ace74ce7390d78970ceb39ee21",
+    "game/csgo/bin/win64/client.dll": "5a46a09b521bbd607012146364dafae2abfa50364246638391990d4c7dfb9d49",
+    "game/csgo/bin/win64/server.dll": "05e6f04972bb2983f463c08824c3133626e0703e881443589288b68e200acc4d",
+    "game/bin/win64/cs2.exe": "8614097aaa2761b0a7157c0045861713e769fb1e8235f50fc68f411294dd60cf"
+  },
+  "sourceManifests": {
+    "0": "4de43c63d71492c9a3954193f378980145ce80da5c2efd8dce84b8352dc5ee71",
+    "1": "e6f028042b7fc778d62df9a17211ea9701b6e8bab034da4b3170e8331b3483b4",
+    "2": "6b879f841088de02ebf10d7710a10f1a4f8a1cd681b2ba116db61e788936cc52"
+  },
+  "prerequisiteFiles": {
+    "game/csgo/addons/metamod/bin/win64/metamod.2.cs2.dll": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+    "game/csgo/addons/metamod/bin/win64/server.dll": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba",
+    "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+    "game/csgo/addons/counterstrikesharp/api/CounterStrikeSharp.API.dll": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+    "game/csgo/addons/metamod/counterstrikesharp.vdf": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a",
+    "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+    "game/csgo/addons/counterstrikesharp/gamedata/inventory-simulator.json": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a"
+  },
+  "humanFiles": {
+    "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.deps.json": "621d28168b2e9b1292679d672827cdb9226c1fc1a586320cb35cf2f0a666d7a6",
+    "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+    "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.pdb": "7f678ba43eea204fc2e01f83b9e72a228a2e4a8fbe9ad922752a153f5efb1fd7",
+    "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/lang/en.json": "2a97299d5e627339a4e88cc7214e1ae0011dceba9296944a89768a1f84cd433b",
+    "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/lang/pt-BR.json": "f04273f5c7e94c31c778590332949700633a51daf8c07f81df4931014dbb293d",
+    "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/lang/zh-Hans.json": "c177f2c235504c6f6ca2a4c1322dfc7278a3707eb7d1ee3baae46a05999c20a3",
+    "game/csgo/addons/counterstrikesharp/configs/plugins/InventorySimulator/inventories.json": "7d1353dc377868dc4d7fe85e3152f1efba80c8f5fe16d6856e04cc33ef6de3d5",
+    "game/csgo/addons/counterstrikesharp/gamedata/inventory-simulator.json": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a"
+  },
+  "isolatedModules": {
+    "game/csgo/addons/counterstrikesharp/plugins/PlusMatchCoordinator": {
+      "kind": "directory",
+      "sha256": "8db7372ecef213a18d370cd07674b33fdde39be9f4394bcda11c0cee1f4c020b"
+    },
+    "game/csgo/addons/counterstrikesharp/plugins/RayTraceImpl": {
+      "kind": "directory",
+      "sha256": "09e7beb1a90e3caf614750c6eaf78d4792d0104a8c16db20915c6bb37f44d5ee"
+    }
+  },
+  "evidenceFiles": {
+    "bot-signatures.json": "e06c0cc5468baa3ac5361cc05e02139a4ec8a8ff29f6c8e70779d6e3b6a0a57d",
+    "css-signatures.json": "90be12c27ab7991bdd4cc73e8931d8f52eaaacb0ed85d8d2bbf6624bf612a76f",
+    "human-signatures.json": "afcac9b7bb0777567cb1546f1a9b9a07cfc6e82a688491d71d62a17d294d51b5",
+    "schema.json": "60676824235590f6f3090ddfb35895d96323149da1e9dff4226d093eacb4d761",
+    "configured-offsets.json": "00a08e423dd23fa4bbe13d6f0cdf64f90e83d9f152f5aea9fa86583491fa5cca",
+    "review-source-hashes.json": "dc2f68cfc29b5a362f867a14d7151128096c4848d5830db350b8b39fe6f288f9"
+  },
+  "reviewedFindings": [
+    "Complete frozen e18c029 payload and recursive component refs are retained. All 81 Bot, 28 CSS and 14 Human signatures are unique; all 42 expected patch original-byte checks pass on the exact current server.dll.",
+    "All previously reviewed schema fields, including inherited fields and all four Aim offsets, are unchanged. 45 private/vtable configured offsets and non-schema m_gameState are unchanged baseline values, not newly inferred offsets; their current runtime semantics remain a manual validation limit.",
+    "Both plugins use the same installed CSS API VirtualFunctions.GiveNamedItemFunc: six pointer/string arguments and pointer return. CSS registers a listener list on one function handle and DispatchHook shares the DynamicHookContext; both callbacks return Continue, SetParam(3) changes are retained. No duplicate independent detour is added by these two plugins.",
+    "BotRandomizer resolves IsBot:true, IsValid:true, IsHLTV:false before preparing/writing its view. BotHider assigns synthetic SteamIDs and patches IsBot through its managed-slot API; a nonzero SteamID alone is not proof of a Human. Human connect/spawn/reload/MVP flows exclude IsBot. Human GiveNamedItem has no explicit IsBot test but only writes when its separately populated controllerState.Inventory has a matching slot; Bot states do not fetch the Human inventory through those event paths. Slot reuse, Harmony/IPC readiness and both hook orders require actual gameplay validation.",
+    "Bot and Human own separate econ-item-view stores; the accepted Human DLL and complete plugin/config/gamedata file set remain byte-identical. No Human fixture or private preset is bundled. CT/T projection, knives, gloves and music kits must be checked in game.",
+    "The exact MetaMod1481 pair is retained from the previously running Bot baseline, satisfying the frozen native KHook dependency. CSS376 and its complete host remain unchanged; accepted Human ran with CSS376. This supports a controlled combined manual test, not a claim of combined startup acceptance.",
+    "BotControllerApi, BotHiderApi and Harmony identities remain those of the verified source bundles. PlusMatchCoordinator and RayTraceImpl contain only empty directory scaffolds, no executable or data files; record their exact directory identities for reversible isolation. No extra match or RayTrace runtime is loaded.",
+    "User explicitly selected e18c029 and accepted its observed FPS loss. No v1.3.0/v1.4.4/main port, performance optimization or component performance A/B is performed."
+  ],
+  "manualRuntimeAcceptance": false,
+  "authorization": "One real preserve-Human installation only after actual package roundtrip and complete live restore preflight; Agent never starts CS2."
+}

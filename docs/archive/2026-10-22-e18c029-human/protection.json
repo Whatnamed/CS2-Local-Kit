@@ -1,0 +1,17 @@
+{
+  "preInstall": "PASS; no protected drift",
+  "postInstall": "PASS; only exact transaction-owned game changes and new exact-ID backup",
+  "privatePresetsUnchanged": true,
+  "privateAppDataUnchanged": true,
+  "acceptedHumanFilesUnchanged": true,
+  "oldBackupsUnchanged": true,
+  "steamManifestAndFiveGameBinariesUnchanged": true,
+  "changedGroupCounts": {
+    "game/csgo/addons": 97,
+    "game/csgo/cfg": 17,
+    "game/csgo/overrides": 1,
+    "E:/CS2MOD/backups": 90,
+    "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\gameinfo.gi": 1
+  },
+  "gameNotStarted": true
+}

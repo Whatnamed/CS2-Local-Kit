@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "candidate": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-e74391e3537c",
+  "manifestSha256": "6181e1310e78df74dc941b00904bc79e3b6ff01ef17be85fa5d0b9ff4be36cfc",
+  "actualPayloadFiles": 105,
+  "publicEntry": "candidate/tools/Invoke-BotExperiment.ps1",
+  "actions": {
+    "isolated": 4,
+    "overwritten": 14,
+    "created": 91,
+    "modified": 1,
+    "retained": 524
+  },
+  "syntheticBaselineFiles": 542,
+  "installId": "9699af4f1747406daef590c8b78f027d",
+  "backupDir": "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\bot-experiment-tests\\actual-payload-phd8e0x6\\backups\\9699af4f1747406daef590c8b78f027d",
+  "byteForByteRestored": true,
+  "previewWrites": 0,
+  "restorePreviewWrites": 0,
+  "realTargetApplied": false,
+  "profile": {
+    "difficulty": "High",
+    "upstreamPath": "overrides/High/botprofile.db",
+    "dbSource": "profiles/High/botprofile.db",
+    "dbSha256": "3b192024382eee76028d42e0f06ff453fb9093332136c77ffc3810d742207986",
+    "vpkSha256": "06d02f2e5e59ff844cf3e224604bd3a95d01f6d7a5604d698b534aff0d54a1cf"
+  },
+  "humanPolicy": "preserve"
+}

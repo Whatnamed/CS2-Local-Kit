@@ -1,0 +1,84 @@
+{
+  "Identity": {
+    "BlocksHuman": false,
+    "Reason": "",
+    "InstallId": null,
+    "BackupRoot": null,
+    "PreservesHuman": false,
+    "State": null,
+    "RecoveryRequired": false
+  },
+  "Candidates": [
+    {
+      "Difficulty": 0,
+      "Directory": "bot-experiment-e18c029-37ce3ef2465c",
+      "ManifestSha256": "4de43c63d71492c9a3954193f378980145ce80da5c2efd8dce84b8352dc5ee71",
+      "PreservesHuman": false
+    },
+    {
+      "Difficulty": 1,
+      "Directory": "bot-experiment-e18c029-b45f4f543985",
+      "ManifestSha256": "e6f028042b7fc778d62df9a17211ea9701b6e8bab034da4b3170e8331b3483b4",
+      "PreservesHuman": false
+    },
+    {
+      "Difficulty": 2,
+      "Directory": "bot-experiment-e18c029-60697f7d93f2",
+      "ManifestSha256": "6b879f841088de02ebf10d7710a10f1a4f8a1cd681b2ba116db61e788936cc52",
+      "PreservesHuman": false
+    },
+    {
+      "Difficulty": 0,
+      "Directory": "bot-joint-e18c029-fe80b9e1c101",
+      "ManifestSha256": "0b2b0a7b5a871e2e25199361ea883f235ad2c492959dee1741e69706abcbcf58",
+      "PreservesHuman": true
+    },
+    {
+      "Difficulty": 1,
+      "Directory": "bot-joint-e18c029-839994079f8b",
+      "ManifestSha256": "caafc349e6eef737f5f8f85a0ff637d3af7f861a99fc205857fb1528590d9582",
+      "PreservesHuman": true
+    },
+    {
+      "Difficulty": 2,
+      "Directory": "bot-joint-e18c029-e74391e3537c",
+      "ManifestSha256": "6181e1310e78df74dc941b00904bc79e3b6ff01ef17be85fa5d0b9ff4be36cfc",
+      "PreservesHuman": true
+    }
+  ],
+  "Readiness": [
+    {
+      "Difficulty": "Low",
+      "State": {
+        "CanEnable": true,
+        "Reason": "\u8054\u5408\u5019\u9009\u53EF\u68C0\u67E5\u5207\u6362\u9884\u89C8\uFF1B\u5B9E\u673A\u6548\u679C\u5C1A\u672A\u9A8C\u6536",
+        "CurrentBuild": "1.41.9.1 / 2000934 / 26087496",
+        "CandidateBuild": "1.41.9.1 / 2000934 / 26087496",
+        "BotRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+        "HumanFilesValid": true
+      }
+    },
+    {
+      "Difficulty": "Medium",
+      "State": {
+        "CanEnable": true,
+        "Reason": "\u8054\u5408\u5019\u9009\u53EF\u68C0\u67E5\u5207\u6362\u9884\u89C8\uFF1B\u5B9E\u673A\u6548\u679C\u5C1A\u672A\u9A8C\u6536",
+        "CurrentBuild": "1.41.9.1 / 2000934 / 26087496",
+        "CandidateBuild": "1.41.9.1 / 2000934 / 26087496",
+        "BotRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+        "HumanFilesValid": true
+      }
+    },
+    {
+      "Difficulty": "High",
+      "State": {
+        "CanEnable": true,
+        "Reason": "\u8054\u5408\u5019\u9009\u53EF\u68C0\u67E5\u5207\u6362\u9884\u89C8\uFF1B\u5B9E\u673A\u6548\u679C\u5C1A\u672A\u9A8C\u6536",
+        "CurrentBuild": "1.41.9.1 / 2000934 / 26087496",
+        "CandidateBuild": "1.41.9.1 / 2000934 / 26087496",
+        "BotRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+        "HumanFilesValid": true
+      }
+    }
+  ]
+}

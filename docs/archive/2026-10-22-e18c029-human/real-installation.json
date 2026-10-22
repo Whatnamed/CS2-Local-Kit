@@ -1,0 +1,44 @@
+{
+  "realInstallationApplied": true,
+  "applyCount": 1,
+  "gameStarted": false,
+  "installId": "b613a8c709c7440998346cb802bb790f",
+  "backupDir": "E:\\CS2MOD\\backups\\bot-experiment\\b613a8c709c7440998346cb802bb790f",
+  "state": "installed",
+  "humanPolicy": "preserve",
+  "candidateDir": "E:\\CS2MOD\\releases\\bot-experiment\\bot-joint-e18c029-839994079f8b",
+  "manifestSha256": "caafc349e6eef737f5f8f85a0ff637d3af7f861a99fc205857fb1528590d9582",
+  "recordSha256": "cf8b43bf01e5d9a5c01703fc8acc8bb286f048552ba0dba9bc218f9ac91cc368",
+  "profile": {
+    "difficulty": "Medium",
+    "upstreamPath": "overrides/Medium/botprofile.db",
+    "dbSource": "profiles/Medium/botprofile.db",
+    "dbSha256": "82df33bcec25fd5f199599d5bfbbf2e9a2828dbd1b65c070ca561f16370e910d",
+    "vpkSha256": "ada94c66acfb78695d5b2d2f5a897842bb8378c618e48be865070e840b7c6a01"
+  },
+  "actionsIncludingMarker": {
+    "created": 92,
+    "isolated": 2,
+    "overwritten": 14,
+    "modified": 1,
+    "retained": 524
+  },
+  "humanFilesUnchanged": 8,
+  "humanIsolated": false,
+  "runtimeLocksUnchanged": true,
+  "frozenPayloadFilesUnchanged": 105,
+  "installedDiagnostics": "PASS",
+  "exactRestorePreflight": "PASS",
+  "controllerIdentity": {
+    "BlocksHuman": true,
+    "Reason": "增强人机 + 我的饰品；事务活动期间请先恢复普通模式，再修改饰品配置",
+    "InstallId": "b613a8c709c7440998346cb802bb790f",
+    "BackupRoot": "E:\\CS2MOD\\backups\\bot-experiment",
+    "PreservesHuman": true,
+    "State": "installed",
+    "RecoveryRequired": false
+  },
+  "restoreHelper": "E:\\CS2MOD\\diagnostics\\bot-experiment\\installed-b613a8c709c7440998346cb802bb790f\\Restore-ExactBotJoint.ps1",
+  "restoreHelperSha256": "28d478241de81d58ba05d10d5f332d4ea0c3af4c2bedeaab94b7f836b98b1aa3",
+  "realGameplayAcceptance": "pending user manual test"
+}
