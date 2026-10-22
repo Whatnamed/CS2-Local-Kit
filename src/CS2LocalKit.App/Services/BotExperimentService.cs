@@ -44,6 +44,7 @@ public sealed class BotExperimentService
     private readonly Func<bool> _running;
     private readonly IReadOnlyList<BotCandidate> _candidates;
     private readonly string _humanLockPath;
+    public string DataRoot { get; }
     public string Cs2Root { get; }
     public string ReleasesRoot { get; }
     public string BackupRoot { get; }
@@ -56,6 +57,7 @@ public sealed class BotExperimentService
 
     public BotExperimentService(string dataRoot, string cs2Root, Func<bool>? running = null, IBotProcessRunner? runner = null, IReadOnlyList<BotCandidate>? candidates = null, string? humanLockPath = null)
     {
+        DataRoot = Path.GetFullPath(dataRoot);
         Cs2Root = Path.GetFullPath(cs2Root);
         ReleasesRoot = Path.Combine(dataRoot, "releases", "bot-experiment");
         BackupRoot = Path.Combine(dataRoot, "backups", "bot-experiment");

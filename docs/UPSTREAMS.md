@@ -108,6 +108,8 @@
 
 ## 5. Source-copy policy
 
+开局阵容 catalog 的数据来源为 pinned Bot-Improver `Commands.txt`、BotHider `bot_info.json` 和逐条注明的赛事历史资料。精确 ref/hash 见 `data/match-setup/provenance.json`；来源快照不表示当前实时阵容，代表赛事日期不推断为转会有效期。只导出 data index，不复制 BotHider native 实现，不为个人阵容修改上游数据库。数据 notice 与候选中的原许可证/对应源码一并保留。
+
 参考一个仓库不等于可以直接复制代码。
 
 在复制任何非琐碎第三方实现前必须：

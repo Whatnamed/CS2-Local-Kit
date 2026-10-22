@@ -43,7 +43,7 @@ def patch_sources(upstream, out, dotnet):
         if name == 'BotAimImprover':
             text = replace_once(text, 'public class BotAimImprover : BasePlugin', 'public partial class BotAimImprover : BasePlugin')
             text = replace_once(text, '        AddCommand("bot_aim",', '        RegisterLocalKitDiagnostics();\n        AddCommand("bot_aim",')
-            text = replace_once(text, '            Server.PrintToConsole(reply);', '            _localKitCount = 0; _localKitEpoch++;\n            info.ReplyToCommand(reply);\n            Logger.LogInformation("{Reply}", reply);\n            Server.PrintToConsole(reply);')
+            text = replace_once(text, '            Server.PrintToConsole(reply);', '            if (arg is "head" or "body" or "mixed") { _localKitCount = 0; _localKitEpoch++; }\n            info.ReplyToCommand(reply);\n            Logger.LogInformation("{Reply}", reply);\n            Server.PrintToConsole(reply);')
             text = replace_once(text, '            // One-time confirmation that the override path actually runs end-to-end.', '            _localKitCount++;\n            // One-time confirmation that the override path actually runs end-to-end.')
             main.write_text(text, encoding='utf-8')
             extra = '''using System;
@@ -130,20 +130,26 @@ def derive(source, digest, output, patches, adapter=None):
         for ext in ['.dll', '.deps.json']:
             asset(Path(patch['output']) / (patch['name'] + ext), 'addons/counterstrikesharp/plugins/' + patch['name'] + '/' + patch['name'] + ext)
         shutil.copyfile(patch['sourceArchive'], output / 'sources' / Path(patch['sourceArchive']).name)
+        for component in m['components']:
+            if component['name'] == patch['name']:
+                component['originalManagedSha256'] = component.get('managedSha256')
+                component['managedSha256'] = tx.sha(Path(patch['output']) / (patch['name'] + '.dll'))
+                component['localKitPatchVersion'] = 1
     for name in ['bot_experiment.py', 'Invoke-BotExperiment.ps1']:
         shutil.copyfile(tx.REPO / 'scripts/bot-experiment' / name, output / 'tools' / name)
-    m['localKitPatch'] = {'version': 1, 'sourceManifestSha256': digest, 'dataLayout': 'plugin-grenades-v1', 'components': [{k:v for k,v in p.items() if k not in {'output','sourceArchive'}} for p in patches], 'liveInstall': False}
+    m['localKitPatch'] = {'version': 1, 'sourceManifestSha256': digest, 'dataLayout': 'plugin-grenades-v1', 'components': [{**{k:v for k,v in p.items() if k not in {'output','sourceArchive'}}, 'sourceArchive': 'sources/' + Path(p['sourceArchive']).name, 'sourceArchiveSha256': tx.sha(p['sourceArchive'])} for p in patches], 'liveInstall': False}
     m['builderHead'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=tx.REPO, text=True).strip()
     if adapter:
         for p in adapter.iterdir():
-            if p.is_file() and p.name.startswith(('LocalKit.MatchSetup', 'CS2LocalKit.Core')) and p.suffix in {'.dll','.json'}:
+            if p.is_file() and p.name.startswith(('LocalKitMatchSetup', 'CS2LocalKit.Core')) and p.suffix in {'.dll','.json'}:
                 asset(p, 'addons/counterstrikesharp/plugins/LocalKitMatchSetup/' + p.name)
         # Core is intentionally dependency-free. Its catalog is embedded, not user data.
-        cfg = output / 'bot/cfg/gamemode_competitive_offline.cfg'
-        cfg.write_text('// LocalKit bootstrap: adapter owns bounded pre-score bot initialization.\nbot_quota 0\nbot_quota_mode normal\nexec my_bot_normal_config.cfg\n', encoding='utf-8')
-        for e in m['files']:
-            if e['source'] == 'bot/cfg/gamemode_competitive_offline.cfg': e['sha256'] = tx.sha(cfg)
-        m['matchSetup'] = {'schemaVersion': 1, 'adapter': 'LocalKitMatchSetup', 'manualAcceptance': 'pending'}
+        tx.require(any(e['target'].endswith('/LocalKitMatchSetup/LocalKitMatchSetup.dll') for e in m['files']), 'Adapter DLL missing')
+        # Existing offline cfg keeps its defaults when no request is queued. All
+        # lineup mutations are gated by the adapter after readiness/human selection.
+        archive = output / ('sources/LocalKitMatchSetup-' + m['builderHead'][:12] + '.zip')
+        subprocess.run(['git', '-C', str(tx.REPO), 'archive', '--format=zip', '-o', str(archive), m['builderHead'], 'src/CS2LocalKit.MatchSetup', 'src/CS2LocalKit.Core', 'data/match-setup'], check=True)
+        m['matchSetup'] = {'schemaVersion': 1, 'adapter': 'LocalKitMatchSetup', 'sourceHead': m['builderHead'], 'sourceArchive': str(archive.relative_to(output)).replace('\\','/'), 'sourceArchiveSha256': tx.sha(archive), 'manualAcceptance': 'pending'}
     m['bundleFiles'] = {p:v['sha256'] for p,v in tx.inventory(output).items() if v['kind'] == 'file' and p not in {'experiment-manifest.json','MANIFEST.sha256'}}
     (output / 'experiment-manifest.json').write_bytes(tx.json_bytes(m))
     sha = tx.sha(output / 'experiment-manifest.json'); (output / 'MANIFEST.sha256').write_text(sha + '  experiment-manifest.json\n')

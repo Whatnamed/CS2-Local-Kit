@@ -69,6 +69,8 @@ public sealed class BotIntegrationTests : IDisposable
         vm.Aim=BotAim.Head;vm.Nades=BotNades.Max;vm.CopyCommandsCommand.Execute(null);
         Assert.Contains("尚未确认游戏中生效",vm.Feedback);Assert.Empty(_runner.Calls);
         var reloaded = Service().LoadPreferences();Assert.Equal(BotAim.Head,reloaded.Aim); Assert.Equal(BotNades.Max,reloaded.Nades);
+        vm.Setup.Aim=CS2LocalKit.Core.MatchSetup.AimSetting.Body;
+        Assert.Equal("bot_aim body; bot_nades max",vm.ConsoleCommands);
     }
     [Fact] public void ShippedCandidateCatalogHasAllThreeExactVariants()
     {

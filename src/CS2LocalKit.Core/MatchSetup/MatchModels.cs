@@ -12,7 +12,7 @@ public enum NadeSetting { Off, Less, Normal, More, Max }
 public enum InstalledProfile { Low, Medium, High }
 public enum MatchApplyState { Saved, Pending, Received, InsufficientEvidence, BehaviorObserved, Failed }
 public sealed record MatchRuntimeStatus(int SchemaVersion, string SessionId, string? RequestId, string? PresetSha256, string Map, DateTimeOffset UpdatedAt,
-    MatchApplyState State, string Reason, int CtCount = 0, int TCount = 0, string? AimReadback = null, string? NadesReadback = null);
+    MatchApplyState State, string Reason, int CtCount = 0, int TCount = 0, string? AimReadback = null, string? NadesReadback = null, int ProcessId = 0, DateTimeOffset ProcessStartUtc = default);
 public sealed record Team(string Id, string Name, string Logo, bool Recommended);
 // PersonaId is BotHider's account ID, not a uniquely inferred nickname or a real-user attribution.
 public sealed record PlayerIdentity(string PersonaId, string Name, ulong SteamId64, bool Enabled);
@@ -46,7 +46,7 @@ public static partial class MatchJson
     public static void Id(string value) { if (value is null || !IdPattern().IsMatch(value)) throw new InvalidDataException("无效的稳定 ID"); }
     public static void Name(string value, int bytes = 31)
     {
-        if (string.IsNullOrWhiteSpace(value) || Encoding.UTF8.GetByteCount(value) > bytes || value.Any(c => char.IsControl(c) || c is '"' or ';' or '\\'))
+        if (string.IsNullOrWhiteSpace(value) || value != value.Trim() || Encoding.UTF8.GetByteCount(value) > bytes || value.Any(c => char.IsControl(c) || char.GetUnicodeCategory(c)==System.Globalization.UnicodeCategory.Format || c is '"' or ';' or '\\'))
             throw new InvalidDataException($"名称须为 1–{bytes} UTF-8 bytes，不能包含控制字符、引号、分号或反斜杠");
     }
     public static void Slots(ImmutableArray<PlayerSlot> slots)

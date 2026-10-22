@@ -29,3 +29,13 @@ Aim 日志在 2026-10-22 16:52:37 与 18:00:48 两次记录 `Active: first overr
 个人 library 与 next-match 请求只写 `app-data/match-setup`；Human 文件不参与。library 保存整局预设、favorites、recent、last-used 与 custom rosters。原子替换前保存具名备份；import 相同 ID 相同内容去重，不同内容拒绝并报告冲突；未知/损坏 schema 保留原文件，禁止猜测迁移。当前没有已存在的旧 MatchSetup schema，测试覆盖未知版本迁移拒绝、损坏文件保留与备份回退。开局请求另有 request ID 和 preset digest。
 
 B 阶段 .NET 自动化 **220/220 PASS**（原有 198 + 22 个 domain/store cases），覆盖替代席位、人数、双方映射、同名、转会跨队重复、disabled/custom、import/export/version/backup 与 built-in 只读。初次 tamper 测试替换了请求中不存在的文案，已改为真实修改 `friendlyBots` 字段后验证 checksum 拒绝。
+
+## C：候选自动应用与实际 WPF 验证
+
+Core 的有界 `PreMatchSession` 和独立 `LocalKitMatchSetup` CSS adapter 按阶段执行一次性初始化。先校验安装/build/files，再等待插件与真人选边，校准 CT/T、清理默认 Bot 一次、添加一次、释放默认 persona 并读回、绑定目标身份并读回、应用行为与队名并读回。初始化期间使用至多 24 次单次 timer；选边等待依靠事件恢复，不常驻轮询。完成后不改阵容、比分、换边或回合；异常停止并显示原因。热加载不获准重建当前图。
+
+Controller 保留安装状态与精确恢复入口，新增双侧战队/历史版本/五席位、persona 搜索、自定义阵容 CRUD/import/export、随机混编、人数/替代位置、整局预设/收藏/最近/上局复用、强度/Aim/Nades、预览与独立排队。草稿和已排队快照明确区分。运行时状态以 request/digest、进程 PID/start 和地图 session 关联；上次会话不会显示为本局验收。原活动安装缺少新适配层时显示不可自动应用。
+
+.NET **251/251 PASS**；CSS 1.0.376 / pinned BotHiderApi 的真实 adapter 构建 **0 warnings / 0 errors**。覆盖阶段顺序、重复通知的幂等策略、缺插件/真人/目标 Bot、先选不同侧、额外旁观 Bot、比分锁定、身份 staging、模式读回、更新/文件漂移拒绝、坏 library 保留、队伍/历史/自定义/导入导出和排队快照。
+
+实际 WPF 窗口在完全隔离的 `temp/match-ui-data` 中运行，game root 指向不存在的合成目录。Computer Use Sky runtime 不可用，改用限定 PID + 精确窗口标题的 Windows UI Automation 和 PrintWindow。真实控件选择 T、替代席位 4、Body/Off 后点击排队，实际 JSON 验证通过；再选择 Head，UI 显示草稿不同而原请求仍为 Body。已检查 1024 DIP 宽度的滚动布局、底部按钮及屏幕命中 PID。截图与结构化证据见同名 archive 子目录。该 probe 未启动 CS2，不能证明游戏内自动应用或玩法效果；窗口已关闭。

@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "nativeWpf": true,
+  "humanSide": "T",
+  "replacement": 3,
+  "aim": "Body",
+  "nades": "Off",
+  "draftBefore": "当前编辑与已排队快照一致",
+  "draftAfter": "当前编辑与排队快照不同；保存为下局后才会应用",
+  "queuedRequestUnchanged": true,
+  "runtimeApplied": false,
+  "gameWrites": false
+}

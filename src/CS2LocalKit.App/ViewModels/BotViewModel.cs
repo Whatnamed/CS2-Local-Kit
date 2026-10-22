@@ -3,6 +3,7 @@ using System.Windows;
 using CS2LocalKit.App.Common;
 using CS2LocalKit.App.Services;
 using CS2LocalKit.Core.Runtime;
+using CS2LocalKit.Core.MatchSetup;
 
 namespace CS2LocalKit.App.ViewModels;
 
@@ -19,6 +20,7 @@ public sealed class BotViewModel : ViewModelBase
     private string _state = "未安装 / 请检查安装条件", _feedback = "", _plan = "尚未预览", _installedDifficulty = "—";
     private BotExperimentIdentity _identity = new(false, "");
     private BotModeReadiness _readiness = new(false, "尚未检查", "未读取", "未提供", "未提供", false);
+    public MatchSetupViewModel Setup { get; }
     public BotViewModel(BotExperimentService service, IDialogService dialogs, Action refreshHuman, Action<string>? clipboard = null)
     {
         _service = service; _dialogs = dialogs; _refreshHuman = refreshHuman; _clipboard = clipboard ?? Clipboard.SetText;
@@ -33,6 +35,10 @@ public sealed class BotViewModel : ViewModelBase
         SwitchModeCommand = new(() => _ = SwitchModeAsync(), () => TargetMode == LocalPlayMode.EnhancedHuman ? InstallCommand.CanExecute(null) : RestoreCommand.CanExecute(null));
         RefreshCommand = new(Observe, () => !IsBusy);
         try { _preferences = service.LoadPreferences(); } catch (Exception ex) { _feedback = "偏好读取失败（保留原文件）：" + ex.Message; }
+        var catalog = RosterCatalog.LoadBuiltIn();
+        Setup = new(new MatchSetupStore(Path.Combine(service.DataRoot,"app-data/match-setup"),catalog),catalog,dialogs,service);
+        if (!File.Exists(Path.Combine(service.DataRoot,"app-data/match-setup/library.json"))) { Setup.Aim=(AimSetting)(int)_preferences.Aim; Setup.Nades=(NadeSetting)(int)_preferences.Nades; Setup.Profile=(InstalledProfile)(int)_preferences.Difficulty; }
+        Setup.PropertyChanged += (_,e) => { if(e.PropertyName is nameof(Setup.Aim) or nameof(Setup.Nades)) { OnPropertyChanged(nameof(Aim));OnPropertyChanged(nameof(Nades));OnPropertyChanged(nameof(ConsoleCommands)); } };
         Observe();
     }
     public IReadOnlyList<BotChoice<BotDifficulty>> DifficultyChoices { get; } = [new(BotDifficulty.Low,"低 · Low"),new(BotDifficulty.Medium,"中 · Medium"),new(BotDifficulty.High,"高 · High")];
@@ -41,8 +47,8 @@ public sealed class BotViewModel : ViewModelBase
     public IReadOnlyList<BotChoice<BotAim>> AimChoices { get; } = [new(BotAim.Mixed,"混合 · Mixed"),new(BotAim.Head,"头部 · Head"),new(BotAim.Body,"身体 · Body")];
     public IReadOnlyList<BotChoice<BotNades>> NadesChoices { get; } = [new(BotNades.Off,"关闭"),new(BotNades.Less,"较少"),new(BotNades.Normal,"正常"),new(BotNades.More,"较多"),new(BotNades.Max,"最多")];
     public BotDifficulty Difficulty { get => _preferences.Difficulty; set { if (!Enum.IsDefined(value) || value == Difficulty) return; _preferences = _preferences with { Difficulty = value }; _previewReady = false; Persist(); Observe(); } }
-    public BotAim Aim { get => _preferences.Aim; set { if (!Enum.IsDefined(value) || value == Aim) return; _preferences = _preferences with { Aim = value }; Persist(); Notify(); } }
-    public BotNades Nades { get => _preferences.Nades; set { if (!Enum.IsDefined(value) || value == Nades) return; _preferences = _preferences with { Nades = value }; Persist(); Notify(); } }
+    public BotAim Aim { get => Setup is null ? _preferences.Aim : (BotAim)(int)Setup.Aim; set { if (!Enum.IsDefined(value) || value == Aim) return; _preferences = _preferences with { Aim = value }; Setup.Aim=(AimSetting)(int)value; Persist(); Notify(); } }
+    public BotNades Nades { get => Setup is null ? _preferences.Nades : (BotNades)(int)Setup.Nades; set { if (!Enum.IsDefined(value) || value == Nades) return; _preferences = _preferences with { Nades = value }; Setup.Nades=(NadeSetting)(int)value; Persist(); Notify(); } }
     public bool IsBusy => _busy;
     public bool CanSelectDifficulty => !_busy && !_active;
     public bool CanSelectMode => !_busy;
@@ -68,7 +74,7 @@ public sealed class BotViewModel : ViewModelBase
     public string BackupPath => _installId is null ? _service.BackupRoot : Path.Combine(_service.BackupRoot, _installId);
     public string Feedback => _feedback;
     public string PlanText => _plan;
-    public string ConsoleCommands => _preferences.ConsoleCommands;
+    public string ConsoleCommands => $"bot_aim {Aim.ToString().ToLowerInvariant()}; bot_nades {Nades.ToString().ToLowerInvariant()}";
     public string DifficultyHint => _active ? "已安装的 profile 不可热改；先恢复原环境，再选择难度重新安装。" : "安装前选择；Low / Medium / High 分别使用固定上游 profile，默认 Medium。";
     public string ActionHint => _running ? "请先退出 CS2，再检查切换条件。" : TargetMode == LocalPlayMode.NormalHuman ? _active ? "检查恢复预览后，按精确事务恢复普通模式。" : "当前无需切换；普通模式保留现有 Human 文件。" : _active ? "先恢复普通模式，再更换联合候选或难度。" : !_readiness.CanEnable ? _readiness.Reason : _previewReady ? "切换预览通过；确认后会再次完整校验。" : "先检查切换预览，确认文件清单后再执行。";
     public string SwitchButtonText => TargetMode == LocalPlayMode.NormalHuman ? "恢复普通模式" : "启用增强模式";

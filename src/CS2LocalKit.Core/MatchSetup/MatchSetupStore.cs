@@ -29,7 +29,7 @@ public sealed class MatchSetupStore(string root, RosterCatalog catalog)
         if (value.CustomRosters.Select(r => r.Id).Distinct().Count() != value.CustomRosters.Length || value.Presets.Select(p => p.Id).Distinct().Count() != value.Presets.Length) throw new InvalidDataException("文件内 ID 冲突，请先消歧");
         foreach (var r in value.CustomRosters)
         {
-            MatchJson.Id(r.Id); MatchJson.Name(r.Name, 120); MatchJson.Slots(r.Slots);
+            MatchJson.Id(r.Id); MatchJson.Name(r.Name, 80); MatchJson.Slots(r.Slots);
             if (catalog.Rosters.Any(b => b.Id == r.Id)) throw new InvalidDataException("内置版本只读，请复制为自定义阵容");
         }
         foreach (var p in value.Presets) catalog.Resolve(p);

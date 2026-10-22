@@ -87,3 +87,16 @@ pwsh -File $tool -Action Restore -InstallId '<exact-install-id>' -Apply
 正式 `scripts/bot-baseline` 未放宽或改写。
 
 Controller「人机」页使用编译进程序的精确候选白名单，校验完整 bundle 后调用包内同一入口。安装/恢复按钮先预览，再独立确认；每次 Apply 内再次完整预检。偏好保存在 `app-data/bot-experiment/preferences.json`，操作 stdout/stderr 保存在 `diagnostics/bot-experiment/`。存在活动实验（包括 marker 缺失的未恢复历史）时，Human Apply/Restore 和 MetaMod1473 启动修复被阻止；不能用旧恢复路径覆盖活动实验。
+
+## 开局配置候选
+
+`build_match_candidate.py --upstream <exact-source-checkout> --dotnet <existing-sdk> --adapter <Release/net10.0>`
+从原 preserve-Human 三档候选派生新不可变目录；先按 pin 导出并离线重建最小 Aim/Nades 诊断 patch，
+再加入本仓库的 `LocalKitMatchSetup`。适配层先以 CSS 1.0.376 / 原 BotHiderApi 编译，构建时指定
+`-p:BotHiderApiPath=<pinned-shared-api.dll>`。调用 builder 前提交对应源：包内 source ZIP 使用当前 HEAD，
+包括 Core、适配层与数据目录；完整 bundle、source archive 和 manifest 分别记录 digest。
+
+配置保存于 `app-data/match-setup`。只在新图、插件就绪、唯一真人选边、首个计分回合之前初始化一次，
+每阶段读回人数、controller 身份、persona、模式 epoch；死亡/换边/后续回合不重建。
+`css_localkit_status` 读取本图诊断；“内部行为已观察”仍须玩法验收。旧活动安装不带该适配层，不能原地覆盖。
+新旧候选并存，Diagnostics / Restore 始终按 install record 的精确 digest 选择原包。

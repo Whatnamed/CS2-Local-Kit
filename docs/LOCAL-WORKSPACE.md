@@ -152,6 +152,8 @@ machine-readable 的默认值以 `src/CS2LocalKit.Core/CorePaths.cs` 为准；`C
 
 Bot 实验 lane 另用 `app-data/bot-experiment/preferences.json` 保存安装前难度与待执行命令偏好，`backups/bot-experiment/<install-id>` 保存精确事务，`diagnostics/bot-experiment/` 保存入口结果。它们不复用 Human preset 或 apply record，不修改用户饰品预设。
 
+开局配置使用独立的 `app-data/match-setup/`：`library.json` 保存个人阵容、整局预设、收藏/最近/上局；`next-match.json` 是带 request ID/checksum 的下局快照；`runtime-status.json` 是绑定进程/地图会话的读回诊断。版本检测失败不覆盖，正常替换前保留具名备份。内置 roster/player 清单打包为只读资源，来源在 `data/match-setup/provenance.json`，不写入上游 `bot_info.json` 或 Human preset。可复用性能/会话证据放 `diagnostics/match-setup/`。
+
 不要每轮实验生成一个难以发现的新 cache 路径。
 
 ## 8. Legacy

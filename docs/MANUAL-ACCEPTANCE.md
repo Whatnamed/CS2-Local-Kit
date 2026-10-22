@@ -131,3 +131,15 @@ CT/T 分别验证：
 - restore 能回到安装前状态；
 - 用户 preset / cfg / 第三方未知文件不丢失；
 - Online/normal CS2 使用方式不被残留文件意外污染。
+
+## 10. 开局配置与行为确认
+
+- 先确认实际安装包含 `LocalKitMatchSetup`，所需 Low/Medium/High 与已安装 profile 一致。配置已保存/待应用不代表旧安装已具备新通道。
+- 在离线 `-insecure` 会话中保存一份内置五人阵容，真人替代一人，确认 4 Bot + 真人 vs 5 Bot。分别以 CT/T 开局，核对最终双方名单、persona/名字、队名/logo 和 TAB。
+- 切换同队另一历史版本，再用跨队选手、自定义名和随机混编；同名/缺失/disabled/重复 persona 的提示、名称降级与实际结果一致。
+- 检查不同 Bot 数量、地图重载、选边先后与重复事件没有重复添加。初始化超时、插件缺失、更新漂移或比分已开始时必须可见失败，不踢 Bot 重试或重开。
+- 死亡/重生、下回合与半场换边保持比分、TAB 和正常 CS2 lifecycle。适配层不得在初始化之后重建阵容。
+- 对照 Aim 两档，以及 Nades off/max：检查模式/epoch 读回及相应实际行为。Hook/投掷计数属于内部证据，不能仅凭命令回显、零计数或文件写入判 PASS。
+- Human CT/T 枪皮、刀、手套、音乐盒仍分别正确；失败不能归咎于未修改的 Human domain。
+- 同图/同设置/同 Bot 数量记录开头、中段、后段的回合、FPS、frametime/long frames、进程内存和日志。没有逐帧证据时相关字段保留 unknown；固定增强 Bot FPS 差距不自动判为本轮回归。
+- 关闭游戏后，真实精确 Restore 必须获得用户明确授权；preview 通过与实际恢复、恢复后的 Human 实机复验分开记录。

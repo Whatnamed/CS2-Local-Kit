@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>LocalKitMatchSetup</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CounterStrikeSharp.API" Version="1.0.376" />
+    <ProjectReference Include="..\CS2LocalKit.Core\CS2LocalKit.Core.csproj" />
+    <Reference Include="BotHiderApi"><HintPath>$(BotHiderApiPath)</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>
