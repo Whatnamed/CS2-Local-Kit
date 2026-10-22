@@ -1,0 +1,45 @@
+{
+  "stage": "A",
+  "realRestoreApplied": false,
+  "realInstallApplied": false,
+  "gameStarted": false,
+  "activeInstallId": "b613a8c709c7440998346cb802bb790f",
+  "diagnostics": "PASS",
+  "restorePreview": "PASS",
+  "transactions": {
+    "passed": 40,
+    "failed": 0
+  },
+  "actualPayloadRoundtrip": [
+    {
+      "status": "PASS",
+      "manifestSha256": "343dee621e7c5b014ef53f315ae642397764a1acd9de9bc70b414aecfa408dfd",
+      "actualPayloadFiles": 105,
+      "byteForByteRestored": true,
+      "realTargetApplied": false,
+      "previewWrites": 0,
+      "restorePreviewWrites": 0,
+      "humanPolicy": "preserve"
+    },
+    {
+      "status": "PASS",
+      "manifestSha256": "99307020c152cca82da87047bbf7489cedc211a8f9c82f800054ed19b2bcac64",
+      "actualPayloadFiles": 105,
+      "byteForByteRestored": true,
+      "realTargetApplied": false,
+      "previewWrites": 0,
+      "restorePreviewWrites": 0,
+      "humanPolicy": "preserve"
+    },
+    {
+      "status": "PASS",
+      "manifestSha256": "407093c80447a0a779a9907c8e191c9d5b3a47b0bf515d427b00e7440996c67e",
+      "actualPayloadFiles": 105,
+      "byteForByteRestored": true,
+      "realTargetApplied": false,
+      "previewWrites": 0,
+      "restorePreviewWrites": 0,
+      "humanPolicy": "preserve"
+    }
+  ]
+}
