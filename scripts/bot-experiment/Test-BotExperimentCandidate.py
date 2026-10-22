@@ -33,7 +33,7 @@ def run(candidate,manifest_sha):
     write(root/'game/csgo/addons/metamod/metaplugins.ini','; synthetic baseline, no active modules\n')
     write(root/'game/csgo/gameinfo.gi','GameInfo\n{\n FileSystem\n {\n  SearchPaths\n  {\n   Game csgo/addons/metamod\n   Game csgo\n  }\n }\n}\n')
     write(root/'game/csgo/steam.inf',''.join(k+'='+v+'\n' for k,v in m['targetBuild'].items() if k!='buildId'))
-    write(root.parent.parent/'appmanifest_730.acf','"AppState" { "buildid" "'+m['targetBuild']['buildId']+'" }')
+    write(root.parent.parent/'appmanifest_730.acf','"AppState" { "StateFlags" "4" "buildid" "'+m['targetBuild']['buildId']+'" }')
     write(root/'game/csgo/addons/counterstrikesharp/plugins/UnknownPlugin/User.dll','unknown plugin sentinel')
     write(root/'game/csgo/addons/metamod/UnknownModule.vdf','"Metamod Plugin" { "file" "addons/User/bin/User" }')
     write(home/'private-presets/personal.json','private preset sentinel')

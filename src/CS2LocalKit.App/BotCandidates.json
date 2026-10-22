@@ -13,5 +13,23 @@
     "Difficulty": 2,
     "Directory": "bot-experiment-e18c029-60697f7d93f2",
     "ManifestSha256": "6b879f841088de02ebf10d7710a10f1a4f8a1cd681b2ba116db61e788936cc52"
+  },
+  {
+    "Difficulty": 0,
+    "Directory": "bot-joint-e18c029-fe80b9e1c101",
+    "ManifestSha256": "0b2b0a7b5a871e2e25199361ea883f235ad2c492959dee1741e69706abcbcf58",
+    "PreservesHuman": true
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "bot-joint-e18c029-839994079f8b",
+    "ManifestSha256": "caafc349e6eef737f5f8f85a0ff637d3af7f861a99fc205857fb1528590d9582",
+    "PreservesHuman": true
+  },
+  {
+    "Difficulty": 2,
+    "Directory": "bot-joint-e18c029-e74391e3537c",
+    "ManifestSha256": "6181e1310e78df74dc941b00904bc79e3b6ff01ef17be85fa5d0b9ff4be36cfc",
+    "PreservesHuman": true
   }
 ]
