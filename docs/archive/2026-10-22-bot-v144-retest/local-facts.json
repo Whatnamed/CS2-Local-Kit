@@ -1,0 +1,84 @@
+{
+  "steamInf": [
+    "ClientVersion=2000934",
+    "ServerVersion=2000934",
+    "PatchVersion=1.41.9.1",
+    "ProductName=cs2",
+    "appID=730",
+    "ServerAppID=2347773",
+    "SourceRevision=11150591",
+    "VersionDate=Oct 20 2026",
+    "VersionTime=11:41:22"
+  ],
+  "buildId": "26087496",
+  "gameBinaries": [
+    {
+      "path": "game/csgo/bin/win64/server.dll",
+      "sha256": "05e6f04972bb2983f463c08824c3133626e0703e881443589288b68e200acc4d",
+      "sameAsOctober20": false
+    },
+    {
+      "path": "game/bin/win64/engine2.dll",
+      "sha256": "6456df18d8f954394024c2c07da8c848df15a5ace74ce7390d78970ceb39ee21",
+      "sameAsOctober20": true
+    },
+    {
+      "path": "game/csgo/bin/win64/client.dll",
+      "sha256": "5a46a09b521bbd607012146364dafae2abfa50364246638391990d4c7dfb9d49",
+      "sameAsOctober20": false
+    },
+    {
+      "path": "game/bin/win64/schemasystem.dll",
+      "sha256": "d2a9b5164cb68953e77d0ef424c1263d2cc452a75e935316bc8b4c4500e63648",
+      "sameAsOctober20": true
+    },
+    {
+      "path": "game/bin/win64/cs2.exe",
+      "sha256": "8614097aaa2761b0a7157c0045861713e769fb1e8235f50fc68f411294dd60cf",
+      "sameAsOctober20": true
+    }
+  ],
+  "acceptedFiles": [
+    {
+      "path": "game/csgo/addons/metamod/counterstrikesharp.vdf",
+      "sha256": "fee4ebccf9194ebfa0f709a8a71a9902fbcea50963a79e38de655de3855fc82a",
+      "matchesAccepted": true
+    },
+    {
+      "path": "game/csgo/addons/counterstrikesharp/gamedata/inventory-simulator.json",
+      "sha256": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a",
+      "matchesAccepted": true
+    },
+    {
+      "path": "game/csgo/addons/metamod/bin/win64/metamod.2.cs2.dll",
+      "sha256": "c22d420985050a1692194249044f173e268e5d1424997315392671fde1db7413",
+      "matchesAccepted": true
+    },
+    {
+      "path": "game/csgo/addons/metamod/bin/win64/server.dll",
+      "sha256": "d669855b95f881104e577188e8d93207e7ddaa098b97d19878abce612b1d00ba",
+      "matchesAccepted": true
+    },
+    {
+      "path": "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll",
+      "sha256": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489",
+      "matchesAccepted": true
+    },
+    {
+      "path": "game/csgo/addons/counterstrikesharp/api/CounterStrikeSharp.API.dll",
+      "sha256": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+      "matchesAccepted": true
+    },
+    {
+      "path": "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+      "sha256": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+      "matchesAccepted": true
+    }
+  ],
+  "cs2Running": false,
+  "gameinfo": {
+    "sha256": "93bb40c2ba4da3ed529a47de39a3aaab4e77663b0dfeaa32371748397545b8c9",
+    "metamodEntries": 1,
+    "botprofileEntries": 0
+  }
+}

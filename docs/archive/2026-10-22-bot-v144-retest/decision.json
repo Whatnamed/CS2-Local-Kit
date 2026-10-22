@@ -1,0 +1,35 @@
+{
+  "status": "stopped-before-candidate-build",
+  "safeToInstall": false,
+  "scope": "Official Windows v1.4.4; no v1.3.0 test, no Human/Bot joint run, no component A/B test",
+  "evidence": {
+    "nativePatterns": 25,
+    "nativeUnique": 14,
+    "nativeMissing": 9,
+    "nativeAmbiguous": 2,
+    "managedPatternsScanned": 47,
+    "managedUnique": 44,
+    "managedMissing": 2,
+    "managedAmbiguous": 1,
+    "uniquePatchOriginalMismatch": [
+      "BotAI/TBot_BombsiteSearch_UseKnownPlantedSite"
+    ],
+    "nativeConfiguredWindowsOffsets": 47,
+    "botAiWindowsDefinitions": 42,
+    "botAiUnique": 39,
+    "managedTagOnlyLiteralAbsent": [
+      "BotState/BotBlindWindowsSignature"
+    ]
+  },
+  "boundedConclusion": "Existing evidence cannot reduce adaptation to a small verified signature/offset/framework patch. At least eleven native bindings need re-identification or disambiguation across three components, and a BotAI relative CALL patch has changed original bytes. Preserving old behavior would require function/branch/layout investigation beyond this bounded preparation. Stop under the user stop condition; this is a scope judgment, not proof that v1.4.4 can never be ported.",
+  "coverageLimit": "Scan includes three native gamedata files, all 42 BotAI Windows patch definitions, four BotState bindings/patches and one Aim binding. It is deliberately not a full compatibility certification of CSS, RayTrace, Randomizer, NadeSystem or all native layouts; stop condition was already reached. BotState/BotBlindWindowsSignature was not found as a UTF16 literal in the shipped DLL and remains tag-source-only evidence; it is not a certified original-package binding. Native signatures come directly from ZIP gamedata and equal tag Windows inputs, although two full gamedata JSON objects differ.",
+  "runtimeCodeChanged": false,
+  "formalLocksChanged": false,
+  "realCs2Written": false,
+  "gameStarted": false,
+  "candidateBuilt": false,
+  "candidateInstalled": false,
+  "newInstallId": null,
+  "newTransactionValidation": "not applicable: stopped before transaction changes or candidate build; no install, failure recovery or rollback claim",
+  "manualTestRequiredNow": false
+}

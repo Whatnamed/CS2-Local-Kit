@@ -1,0 +1,972 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof. These are immutable tag source definitions; literal presence is separately checked in the original official DLL. Literal presence does not prove compiled patch offsets or the complete IL algorithm.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "05e6f04972bb2983f463c08824c3133626e0703e881443589288b68e200acc4d"
+    }
+  },
+  "results": [
+    {
+      "name": "BotAI/HasVisitedEnemySpawn",
+      "library": "server",
+      "pattern": "40 88 B7 20 05 00 00",
+      "patch": "C6 87 20 05 00 00 01",
+      "expectedOriginal": "40 88 B7 20 05 00 00",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xff69d4",
+          "fileOffset": "0xff5dd4",
+          "originalBytes": "40 88 B7 20 05 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/GameState_Reset",
+      "library": "server",
+      "pattern": "83 7F 0C 00 74 07 C7 47 0C 00 00 00 00",
+      "patch": "0F 1F 80 00 00 00 00",
+      "expectedOriginal": "C7 47 0C 00 00 00 00",
+      "patchOffset": 6,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e3c5b",
+          "fileOffset": "0x2e305b",
+          "originalBytes": "C7 47 0C 00 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Idle_IsSafeAlwaysFalse",
+      "library": "server",
+      "pattern": "74 28 33 D2 48 8B CE E8 ? ? ? ? 84 C0 75 1A",
+      "patch": "EB 28",
+      "expectedOriginal": "74 28",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32ee6d",
+          "fileOffset": "0x32e26d",
+          "originalBytes": "74 28",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "C6 83 ? ? 00 00 00 C6 83 ? ? 00 00 00 48 83 C4 20 5B E9",
+      "patch": "C3 90 90 90 90",
+      "expectedOriginal": "E9 ? ? ? ?",
+      "patchOffset": 19,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329a0d",
+          "fileOffset": "0x328e0d",
+          "originalBytes": "E9 EB 42 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnUpdate_NoEquipKnife",
+      "library": "server",
+      "pattern": "75 0F 48 8B 5C 24 50 48 83 C4 40 5F E9 ? ? ? ? E8 ? ? ? ?",
+      "patch": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c732",
+          "fileOffset": "0x32bb32",
+          "originalBytes": "E8 C8 15 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/EscapeFromFlames_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "48 8B CB 40 88 BB ? ? 00 00 40 88 BB ? ? 00 00 E8 ? ? ? ? F3 0F 10 0D",
+      "patch": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329af5",
+          "fileOffset": "0x328ef5",
+          "originalBytes": "E8 05 42 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/PlantBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 F3 0F 10 0D",
+      "patch": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32a57c",
+          "fileOffset": "0x32997c",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/DefuseBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 4C 8B C7",
+      "patch": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c5a6",
+          "fileOffset": "0x32b9a6",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/DefuseBomb_SkipIsVisibleCheck",
+      "library": "server",
+      "pattern": "0F 2F C8 0F 86 ? ? ? ? 45 33 C9 45 33 C0 48 8B D3 48 8B CE E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 48 8B CE",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 84 D9 00 00 00",
+      "patchOffset": 28,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33150f",
+          "fileOffset": "0x33090f",
+          "originalBytes": "0F 84 D9 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipFireRateCheck",
+      "library": "server",
+      "pattern": "0F 2F 8B ? ? 00 00 0F 82",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 82 87 00 00 00",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x300030",
+          "fileOffset": "0x2ff430",
+          "originalBytes": "0F 82 87 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/SprayAllDistances_ForceHoldTrigger",
+      "library": "server",
+      "pattern": "76 12 48 8B 05 ? ? ? ? 0F 2F 40 30 76 05 40 B5 01 EB 03 40 32 ED",
+      "patch": "40 32 ED",
+      "expectedOriginal": "40 B5 01",
+      "patchOffset": 15,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2fe8a3",
+          "fileOffset": "0x2fdca3",
+          "originalBytes": "40 B5 01",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipSteadyFireShortcut",
+      "library": "server",
+      "pattern": "0F B6 F0 84 C0 74 3C 48 8B 4B 18 48 8B 11 FF 92 90 00 00 00",
+      "patch": "90 90",
+      "expectedOriginal": "74 3C",
+      "patchOffset": 5,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ff860",
+          "fileOffset": "0x2fec60",
+          "originalBytes": "74 3C",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipZoomFireShortcut",
+      "library": "server",
+      "pattern": "FF 90 ? ? 00 00 84 C0 74 15 48 8D 8B ? ? 00 00 48 89 AB",
+      "patch": "90 90",
+      "expectedOriginal": "74 15",
+      "patchOffset": 8,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ff884",
+          "fileOffset": "0x2fec84",
+          "originalBytes": "74 15",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_SkipSniperSpreadCheck",
+      "library": "server",
+      "pattern": "41 0F 28 C8 0F 57 C0 FF 15 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 86 ? ? ? ? 48 8B 9E ? ? 00 00",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 86 ? ? ? ?",
+      "patchOffset": 24,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 0,
+      "matches": [],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_DodgeDuringReload",
+      "library": "server",
+      "pattern": "E9 ? ? ? ? 0F 2F BB ? 00 00 00 76 74",
+      "patch": "EB 74",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3000bf",
+          "fileOffset": "0x2ff4bf",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/SniperCrouchDodge_jb",
+      "library": "server",
+      "pattern": "0F 2F BB ? 00 00 00 0F 28 7C 24 30 76 74",
+      "patch": "90 90",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3001ab",
+          "fileOffset": "0x2ff5ab",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/LowSKill_JumpChance0",
+      "library": "server",
+      "pattern": "FF 90 90 00 00 00 0F 2F 05 ? ? ? ? 76 11",
+      "patch": "EB 40",
+      "expectedOriginal": "76 11",
+      "patchOffset": 13,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30276a",
+          "fileOffset": "0x301b6a",
+          "originalBytes": "76 11",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_DodgeChance100_Always",
+      "library": "server",
+      "pattern": "0F 28 F0 F3 0F 59 35 ? ? ? ? 76 ?",
+      "patch": "EB 11",
+      "expectedOriginal": "76 ?",
+      "patchOffset": 11,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329590",
+          "fileOffset": "0x328990",
+          "originalBytes": "76 14",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_RetreatOnSniper_Disable",
+      "library": "server",
+      "pattern": "74 ? 48 8B CE E8 ? ? ? ? 84 C0 74 ? 48 8B CE E8 ? ? ? ? 84 C0",
+      "patch": "EB",
+      "expectedOriginal": "74",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32aca8",
+          "fileOffset": "0x32a0a8",
+          "originalBytes": "74",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AllSkill_KeepMoving_WhenSeeSniper",
+      "library": "server",
+      "pattern": "0F 2F 05 ? ? ? ? 76 0D 80 BF ? ? 00 00 00 0F 85",
+      "patch": "90 90",
+      "expectedOriginal": "76 0D",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d91ff",
+          "fileOffset": "0x2d85ff",
+          "originalBytes": "76 0D",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/AttackState_CanStrafe_jne",
+      "library": "server",
+      "pattern": "0F 2F 8B ? ? 00 00 0F 82 ? ? ? ? 48 8B CB E8 ? ? ? ? 84 C0 74 7B",
+      "patch": "90 90",
+      "expectedOriginal": "74 7B",
+      "patchOffset": 23,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x300030",
+          "fileOffset": "0x2ff430",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/SniperDodge_SkipIsSniper_DodgeA",
+      "library": "server",
+      "pattern": "84 F6 75 6A 48 8B 05",
+      "patch": "90 90",
+      "expectedOriginal": "75 6A",
+      "patchOffset": 2,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30013d",
+          "fileOffset": "0x2ff53d",
+          "originalBytes": "75 6A",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Vision_AlwaysWatchApproachPoints",
+      "library": "server",
+      "pattern": "80 BF ? ? 00 00 00 75 25 0F 2F",
+      "patch": "EB 25",
+      "expectedOriginal": "75 25",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32851d",
+          "fileOffset": "0x32791d",
+          "originalBytes": "75 25",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipSkillCheck",
+      "library": "server",
+      "pattern": "F3 0F 10 40 0C 0F 2F ? 76 ?",
+      "patch": "90 90",
+      "expectedOriginal": "76 ?",
+      "patchOffset": 8,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 2,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d91fa",
+          "fileOffset": "0x2d85fa",
+          "originalBytes": "76 03",
+          "expectedOriginalMatches": true
+        },
+        {
+          "section": ".text",
+          "rva": "0x32856d",
+          "fileOffset": "0x32796d",
+          "originalBytes": "76 33",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipHidingSpotCheck",
+      "library": "server",
+      "pattern": "80 BF ? 5C 00 00 00 74 ?",
+      "patch": "90 90",
+      "expectedOriginal": "74 ?",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x328577",
+          "fileOffset": "0x327977",
+          "originalBytes": "74 2A",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Vision_SkipIsMovingGate",
+      "library": "server",
+      "pattern": "0F 2F 35 ? ? ? ? 77 ? 49 8B ? 48 8B CF E8 ? ? ? ? 84 C0 75 ?",
+      "patch": "90 90",
+      "expectedOriginal": "77 ?",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x328526",
+          "fileOffset": "0x327926",
+          "originalBytes": "77 0F",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Vision_AlwaysEnterApproachBody",
+      "library": "server",
+      "pattern": "84 C0 75 ? ? C7 ? 08 00 00 00 00 E9 ? ? ? ?",
+      "patch": "EB",
+      "expectedOriginal": "75",
+      "patchOffset": 2,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32853a",
+          "fileOffset": "0x32793a",
+          "originalBytes": "75",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/IsNoticable_AlwaysTrue",
+      "library": "server",
+      "pattern": "40 53 48 83 EC 30 48 8B D9 BA FF FF FF FF 48 8D 0D ? ? ? ? E8 ? ? ? ? 48 85 C0 75",
+      "patch": "B0 01 C3",
+      "expectedOriginal": "40 53 48",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 0,
+      "matches": [],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/InViewCone_RemoveOuterFOV",
+      "library": "server",
+      "pattern": "FF 90 ? ? 00 00 0F 2F 05 ? ? ? ? 76 08 33 C0 48 83 C4 20 5B C3 48 8B 03 48 8B CB FF 90 ? ? 00 00",
+      "patch": "90 90",
+      "expectedOriginal": "76 08",
+      "patchOffset": 13,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2c6697",
+          "fileOffset": "0x2c5a97",
+          "originalBytes": "76 08",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/InViewCone_RemoveInnerFOV",
+      "library": "server",
+      "pattern": "0F 96 C0 FF C0 48 83 C4 20 5B C3",
+      "patch": "B0 01 90",
+      "expectedOriginal": "0F 96 C0",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2c66c3",
+          "fileOffset": "0x2c5ac3",
+          "originalBytes": "0F 96 C0",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Upkeep_BotCOS_ZeroDrift",
+      "library": "server",
+      "pattern": "F3 0F 10 35 ? ? ? ? 48 8B 05 ? ? ? ? F3 0F 10 40 30 F3 0F 59 05 ? ? ? ? E8 ? ? ? ? F3 0F 59 C6 F3 0F 58 87 ? ? 00 00 F3 0F 11 87 ? ? 00 00",
+      "patch": "0F 57 C0 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 28,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e6f4f",
+          "fileOffset": "0x2e634f",
+          "originalBytes": "E8 30 84 03 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/Upkeep_BotSIN_ZeroDrift",
+      "library": "server",
+      "pattern": "F3 0F 11 87 ? ? 00 00 48 8B 05 ? ? ? ? F3 0F 10 40 30 F3 0F 59 05 ? ? ? ? E8 ? ? ? ? F3 0F 59 C6 F3 0F 58 87 ? ? 00 00 F3 0F 11 87 ? ? 00 00",
+      "patch": "0F 57 C0 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 28,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e6f7c",
+          "fileOffset": "0x2e637c",
+          "originalBytes": "E8 43 84 03 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/InvestigateNoise_SkipSelfDefenseCheck",
+      "library": "server",
+      "pattern": "83 BB ? ? 00 00 02 74 1E",
+      "patch": "90 90",
+      "expectedOriginal": "74 1E",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32820f",
+          "fileOffset": "0x32760f",
+          "originalBytes": "74 1E",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/TBot_BombsiteSearch_UseKnownPlantedSite",
+      "library": "server",
+      "pattern": "48 8B 8E ? ? 00 00 E8 ? ? ? ? ? 8B ? E8 ? ? ? ? 4C 8B 05 ? ? ? ? 85 C0",
+      "patch": "E8 28 41 F9 FF",
+      "expectedOriginal": "E8 38 3B F9 FF",
+      "patchOffset": 15,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32fe4c",
+          "fileOffset": "0x32f24c",
+          "originalBytes": "E8 40 51 F9 FF",
+          "expectedOriginalMatches": false
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/BombBeep_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "0F 2F ? 76 67 48 8B ? 18 80 B8 44 03 00 00 03",
+      "patch": "90 90",
+      "expectedOriginal": "76 67",
+      "patchOffset": 3,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d1507",
+          "fileOffset": "0x2d0907",
+          "originalBytes": "76 67",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/BombPickup_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "0F 2F ? 76 23 48 8B ? ? 5E 00 00 E8",
+      "patch": "90 90",
+      "expectedOriginal": "76 23",
+      "patchOffset": 3,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d1ec3",
+          "fileOffset": "0x2d12c3",
+          "originalBytes": "76 23",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/OnAudibleEvent_GlobalHearRange",
+      "library": "server",
+      "pattern": "F3 44 0F 51 CA EB 0C 0F 28 C2 E8 ? ? ? ? 44 0F 28 C8 45 0F 2F D1 0F 86 ? ? ? ?",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 86 ? ? ? ?",
+      "patchOffset": 23,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d0b93",
+          "fileOffset": "0x2cff93",
+          "originalBytes": "0F 86 65 03 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/OnBombPlanted_AllBotsLearnSite",
+      "library": "server",
+      "pattern": "80 BA ? ? 00 00 02 0F 85 ? ? ? ? 48 85 DB 0F 84 ? ? ? ?",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 85 ? ? ? ?",
+      "patchOffset": 7,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d20d6",
+          "fileOffset": "0x2d14d6",
+          "originalBytes": "0F 85 8E 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/CT_Defuse_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "C7 86 ? ? 00 00 03 00 00 00 BA 02 00 00 00 48 8B CE",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 10,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3301c8",
+          "fileOffset": "0x32f5c8",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnUpdate_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 8D 8A ? ? 00 00 48 8B DA E8 ? ? ? ? BA 02 00 00 00 48 8B CB",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 15,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x32c54a",
+          "fileOffset": "0x32b94a",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnEnter_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 89 5C 24 08 57 48 83 EC 20 48 8B DA BA 02 00 00 00 48 8B CB",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 13,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x329940",
+          "fileOffset": "0x328d40",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAI/FlashbangAvoidance_Disable",
+      "library": "server",
+      "pattern": "E8 ? ? ? ? 49 8B 06 C6 80 ? 5C 00 00 00 32 C0",
+      "patch": "90 90 90 90 90 90 90 90 90 90 90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ? 49 8B 06 C6 80 ? 5C 00 00 00",
+      "patchOffset": 0,
+      "source": "addons/counterstrikesharp/plugins/BotAI/WindowsPatchDefinitions.cs",
+      "sourceSha256": "2e486d0bd9c38df33c141539dfc986b860274ad284d39dad63c694e2147c093e",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2b3291",
+          "fileOffset": "0x2b2691",
+          "originalBytes": "E8 7A A4 02 00 49 8B 06 C6 80 74 5C 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotState/DefuseBombWindowsSignature",
+      "library": "server",
+      "pattern": "48 8D 91 08 04 00 00 E9 ? ? ? ?",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.cs",
+      "sourceSha256": "682016826bb5470662aa59897c3658d216ad733d9171b54cc265a5948eb2e397",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2bca90",
+          "fileOffset": "0x2bbe90"
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotState/BotBlindWindowsSignature",
+      "library": "server",
+      "pattern": "40 53 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8D 15",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.cs",
+      "sourceSha256": "682016826bb5470662aa59897c3658d216ad733d9171b54cc265a5948eb2e397",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d0f70",
+          "fileOffset": "0x2d0370"
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": false
+    },
+    {
+      "name": "BotState/IsVisiblePos_IgnoreFOV",
+      "library": "server",
+      "pattern": "48 8D 05 ? ? ? ? 48 C7 45 98 1F 01 00 00 48 89 45 90 45 0F B6 E8 0F 10 45 90",
+      "patchOffset": 19,
+      "expectedOriginal": "45 0F B6 E8",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.cs",
+      "sourceSha256": "682016826bb5470662aa59897c3658d216ad733d9171b54cc265a5948eb2e397",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd0c7",
+          "fileOffset": "0x2cc4c7",
+          "originalBytes": "45 0F B6 E8",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotState/IsVisiblePlayer_IgnoreFOV",
+      "library": "server",
+      "pattern": "48 8D 05 ? ? ? ? 48 C7 45 CF 4D 01 00 00 48 89 45 C7 41 0F B6 D8 0F 10 45 C7",
+      "patchOffset": 19,
+      "expectedOriginal": "41 0F B6 D8",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.cs",
+      "sourceSha256": "682016826bb5470662aa59897c3658d216ad733d9171b54cc265a5948eb2e397",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd391",
+          "fileOffset": "0x2cc791",
+          "originalBytes": "41 0F B6 D8",
+          "expectedOriginalMatches": true
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    },
+    {
+      "name": "BotAimImprover/PickNewAimSpot",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC ? ? ? ? 48 8B F9 0F 29 70 ? 8B 89 ? ? ? ? 83 F9 FF",
+      "source": "addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.cs",
+      "sourceSha256": "d585bf0e74b50c03da050f0506ce4654a65b4461e8e35a59b8a6aa47996bbbfe",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d8050",
+          "fileOffset": "0x2d7450"
+        }
+      ],
+      "signatureLiteralPresentInOfficialDll": true
+    }
+  ]
+}

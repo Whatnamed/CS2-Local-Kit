@@ -1,0 +1,371 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "05e6f04972bb2983f463c08824c3133626e0703e881443589288b68e200acc4d"
+    },
+    "engine2": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\engine2.dll",
+      "sha256": "6456df18d8f954394024c2c07da8c848df15a5ace74ce7390d78970ceb39ee21"
+    }
+  },
+  "results": [
+    {
+      "name": "BotController/CCSBot::EquipBestWeapon",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B F9 84 D2",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSBot::EquipPistol",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B D9 84 D2",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 2,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2bd930",
+          "fileOffset": "0x2bcd30"
+        },
+        {
+          "section": ".text",
+          "rva": "0x2bde30",
+          "fileOffset": "0x2bd230"
+        }
+      ],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSPlayer_WeaponServices::SelectItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 41 8B E8 48 8B DA 48 8B F1",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC ? 45 33 E4 45 8B F0",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc7e7e0",
+          "fileOffset": "0xc7dbe0"
+        }
+      ],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSBot::Update",
+      "library": "server",
+      "pattern": "40 55 56 57 41 54 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? C6 81 ? ? ? ? 00",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e2120",
+          "fileOffset": "0x2e1520"
+        }
+      ],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSBot::Upkeep",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 83 EC ? 4C 8B F1 33 ED 48 8B 49 ? 48 39 A9 ? ? ? ?",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e15c0",
+          "fileOffset": "0x2e09c0"
+        }
+      ],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/BuyState::OnUpdate",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 48 89 4C 24 ? 55 57 41 54 48 8D AC 24",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSBot::UpdateLookAngles",
+      "library": "server",
+      "pattern": "40 55 53 56 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8D 05",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSPlayerPawn::SetEyeAngles",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B DA 48 8B F1 48 8D 55",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CCSPlayer_MovementServices::ProcessMovement",
+      "library": "server",
+      "pattern": "40 57 41 57 48 81 EC B8 00 00 00",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xad7a20",
+          "fileOffset": "0xad6e20"
+        }
+      ],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotController/CBasePlayerController::OnSimulateUserCommands",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 55 41 56 48 8D AC 24 08 F9 FF FF",
+      "source": "official-zip:addons/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb5ea20",
+          "fileOffset": "0xb5de20"
+        }
+      ],
+      "tagSourceSha256": "db643b50896e3112ba98b3715ea53314742855972f81cb0d599a5f848b649d6b",
+      "sourceSha256": "336f8e99898e6f53c4facbd849c6680c0d78ee744c660b407641febd2c9c551e"
+    },
+    {
+      "name": "BotHider/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D ? ? ? ?",
+      "source": "official-zip:addons/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc28dd0",
+          "fileOffset": "0xc281d0"
+        }
+      ],
+      "tagSourceSha256": "ca46b133801fad911672e0b3ce5b75476c9b36038a8a9443895dcc37ae7a3fa4",
+      "sourceSha256": "633d5a96446b7ae34fe661315ec51459306352020806e83c7069db300bc6ee89"
+    },
+    {
+      "name": "BotHider/CCSBotManager::MaintainBotQuota",
+      "library": "server",
+      "pattern": "40 55 41 56 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4C 8B F1 FF 15",
+      "source": "official-zip:addons/BotHider/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "ca46b133801fad911672e0b3ce5b75476c9b36038a8a9443895dcc37ae7a3fa4",
+      "sourceSha256": "633d5a96446b7ae34fe661315ec51459306352020806e83c7069db300bc6ee89"
+    },
+    {
+      "name": "BotHider/CCSPlayerController::HandleCommand_JoinTeam",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 3D",
+      "source": "official-zip:addons/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa758f0",
+          "fileOffset": "0xa74cf0"
+        }
+      ],
+      "tagSourceSha256": "ca46b133801fad911672e0b3ce5b75476c9b36038a8a9443895dcc37ae7a3fa4",
+      "sourceSha256": "633d5a96446b7ae34fe661315ec51459306352020806e83c7069db300bc6ee89"
+    },
+    {
+      "name": "BotHider/MpHumanTeam_ApplyRestriction",
+      "library": "server",
+      "pattern": "40 55 48 8D 6C 24 ? 48 81 EC ? ? ? ? BA",
+      "source": "official-zip:addons/BotHider/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "ca46b133801fad911672e0b3ce5b75476c9b36038a8a9443895dcc37ae7a3fa4",
+      "sourceSha256": "633d5a96446b7ae34fe661315ec51459306352020806e83c7069db300bc6ee89"
+    },
+    {
+      "name": "BotHider/CNetworkGameServer::PackEntities",
+      "library": "engine2",
+      "pattern": "4C 89 4C 24 ? 44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? B8 ? ? ? ? E8 ? ? ? ? 48 2B E0 4D 63 F8",
+      "source": "official-zip:addons/BotHider/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "ca46b133801fad911672e0b3ce5b75476c9b36038a8a9443895dcc37ae7a3fa4",
+      "sourceSha256": "633d5a96446b7ae34fe661315ec51459306352020806e83c7069db300bc6ee89"
+    },
+    {
+      "name": "BotHider/CCSGameRules::SameMapTeardown",
+      "library": "server",
+      "pattern": "41 3B DD 0F 84 99 00 00 00 41 8B 80 88 03 00 00 49 8B C8 C1 E8 08 A8 01 74 44",
+      "source": "official-zip:addons/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x90f110",
+          "fileOffset": "0x90e510"
+        }
+      ],
+      "tagSourceSha256": "ca46b133801fad911672e0b3ce5b75476c9b36038a8a9443895dcc37ae7a3fa4",
+      "sourceSha256": "633d5a96446b7ae34fe661315ec51459306352020806e83c7069db300bc6ee89"
+    },
+    {
+      "name": "BotVision/CBotManager::IsVisibleThroughSmoke",
+      "library": "server",
+      "pattern": "4C 8B DC 49 89 5B ? 49 89 6B ? 49 89 73 ? 49 89 7B ? 41 54 41 56 41 57 48 81 EC",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 2,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x323b90",
+          "fileOffset": "0x322f90"
+        },
+        {
+          "section": ".text",
+          "rva": "0xc26c40",
+          "fileOffset": "0xc26040"
+        }
+      ],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    },
+    {
+      "name": "BotVision/g_AutoList_SmokeProj_Head_Server",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 8B EA 0F 29 74 24",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x345ef4",
+          "fileOffset": "0x3452f4"
+        }
+      ],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    },
+    {
+      "name": "BotVision/GetSmokeDensityInLine",
+      "library": "server",
+      "pattern": "40 55 53 56 41 55 41 57 48 8D 6C 24",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9b8270",
+          "fileOffset": "0x9b7670"
+        }
+      ],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    },
+    {
+      "name": "BotVision/CHEGrenadeProjectile::Detonate",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC A8 00 00 00 48 89 58 ? 48 89 70",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x39e010",
+          "fileOffset": "0x39d410"
+        }
+      ],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    },
+    {
+      "name": "BotVision/BulletPelletTrace",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 55 56 41 57 48 8D AC 24 ? ? ? ? B8 70 29 00 00",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 0,
+      "matches": [],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    },
+    {
+      "name": "BotVision/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 20 45 33 E4 45 8B F0",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc7e7e0",
+          "fileOffset": "0xc7dbe0"
+        }
+      ],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    },
+    {
+      "name": "BotVision/CCSBot::IsVisiblePos",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC A0 01 00 00 48 8D 05",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd0a0",
+          "fileOffset": "0x2cc4a0"
+        }
+      ],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    },
+    {
+      "name": "BotVision/CCSBot::IsVisiblePlayer",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC 90 00 00 00",
+      "source": "official-zip:addons/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2cd370",
+          "fileOffset": "0x2cc770"
+        }
+      ],
+      "tagSourceSha256": "c9e5efb55ffe3cfb14ea9f907503e5e7c774a0b5aa113f6e9284e046006ea008",
+      "sourceSha256": "06f47a7ecea643030eff401167630e3c35884b49cedd4843be4b3a6321e7c1d6"
+    }
+  ]
+}
