@@ -19,3 +19,13 @@ Aim 日志在 2026-10-22 16:52:37 与 18:00:48 两次记录 `Active: first overr
 游戏关闭，无当前进程样本、逐帧 capture、同一会话开头/中段/后段 FPS 或 Bot 数量证据，**无法复现或归因**。源码可见 Nade 高频路径，但多处状态按 round/map 清理；没有可证明的单局增长路径，未作猜测性性能修复，也不把修复数据缺失描述为 FPS 优化。
 
 `scripts/bot-experiment/Collect-MatchPerformance.ps1` 只观察用户已启动的 CS2，最多 30 分钟，每两秒保存进程 private/working-set/handles/threads/CPU，保留相关日志与会话状态；可附用户已有 PresentMon CSV。不安装 capture 工具，不启动游戏。没有逐帧源时 FPS/frametime/long frames 记 unknown。实机时按同图、设置、Bot 数量记录开头/中段/后段回合及对应 frame capture；该性能调查到此停止。
+
+## B：版本化对局领域与阵容数据
+
+`Core/MatchSetup` 定义 Team / PlayerIdentity / RosterSnapshot / CustomRoster / MatchSetupPreset，五席位与真人替代位置分离，按 CT/T 映射计算最终人数。内置数据通过不可变集合提供；只允许复制成新 ID 的自定义阵容。名称限制按 BotHider 的 31 UTF-8 bytes 合约，阻止 console delimiter。显式 persona ID 消歧，disabled / 缺失 ID 降级为名称；同局重复 persona 只绑定第一次，后出现的同名显示带序号，不伪造 persona 唯一性。
+
+数据导出读取 exact Git blobs：40 支队、25 支推荐、40 份来源快照，加 19 份逐赛事核实的 2024–2025 历史阵容，覆盖 Plan 中 17 支重点队伍。每份快照有代表日期/赛事/来源，日期不是推断的转会有效期。来源快照日期取 upstream commit；不做实时同步。5,376 个索引项含 4,861 enabled account ID 和 515 个原 `disabled_players` 名称；后者用明确的 `disabled-<hash>` 本地目录键，SteamId=0，不能当 native persona。4,743 个 distinct enabled nicknames；200 个上游席位的四项缺失名称保持未绑定，详见 `data/match-setup/provenance.json`。历史数据与 upstream 数据均保留原名，不凭相似昵称猜 alias。
+
+个人 library 与 next-match 请求只写 `app-data/match-setup`；Human 文件不参与。library 保存整局预设、favorites、recent、last-used 与 custom rosters。原子替换前保存具名备份；import 相同 ID 相同内容去重，不同内容拒绝并报告冲突；未知/损坏 schema 保留原文件，禁止猜测迁移。当前没有已存在的旧 MatchSetup schema，测试覆盖未知版本迁移拒绝、损坏文件保留与备份回退。开局请求另有 request ID 和 preset digest。
+
+B 阶段 .NET 自动化 **220/220 PASS**（原有 198 + 22 个 domain/store cases），覆盖替代席位、人数、双方映射、同名、转会跨队重复、disabled/custom、import/export/version/backup 与 built-in 只读。初次 tamper 测试替换了请求中不存在的文案，已改为真实修改 `friendlyBots` 字段后验证 checksum 拒绝。

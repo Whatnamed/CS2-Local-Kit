@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "url": "https://github.com/ed0ard/CS2-Bot-Improver",
+      "ref": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+      "path": "Commands.txt",
+      "sha256": "7015cb50ea2733583aaa53dd977d4495d05a5668cc8aedbb197edaa77a5a25fa"
+    },
+    {
+      "url": "https://github.com/XBribo/CS2-Bot-Hider",
+      "ref": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+      "path": "configs/addons/BotHider/bot_info.json",
+      "sha256": "549850eb45c98d4211a3cdad15711bec238d1752eff2f30035c6ec1fdf27d416"
+    }
+  ],
+  "license": "AGPL-3.0; data-only derived index, original notices retained in NOTICE.txt",
+  "teams": 40,
+  "recommended": 25,
+  "snapshots": 59,
+  "enabledPlayers": 4861,
+  "disabledPlayers": 515,
+  "distinctEnabledNicknames": 4743,
+  "upstreamUnmatchedNames": [
+    "DarkMeister",
+    "MartinezSa",
+    "Techno",
+    "vsm"
+  ]
+}

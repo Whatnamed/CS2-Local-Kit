@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="CS2LocalKit.Core.Tests" />
+    <EmbeddedResource Include="..\..\data\match-setup\*.json" LogicalName="CS2LocalKit.MatchSetup.%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

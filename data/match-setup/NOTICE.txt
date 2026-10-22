@@ -1,0 +1,5 @@
+Data-only derived catalog; no BotHider implementation is copied here.
+40 initial teams: ed0ard/CS2-Bot-Improver@e18c029a76b7515ea5cb15cb08c41f03de4c0a57, Commands.txt.
+Player account IDs/nicknames: XBribo/CS2-Bot-Hider@9a77fbaf1ee106ec45a451f482e64f26127f2f21, configs/addons/BotHider/bot_info.json.
+Both projects identify AGPL-3.0 as their applicable license. Original notices are retained with the corresponding source archives in every Bot candidate; original source is available at the exact GitHub refs above. This index does not modify upstream files.
+Historical roster facts are attributed individually in history-input.json and rosters.json. Dates represent the cited match or pinned source snapshot, not inferred transfer validity ranges. No automatic live synchronization. Account ID + 76561197960265728 follows the pinned BotHider bot_info.cpp mapping; it is a Bot persona identity and does not attribute actual gameplay to that real person.

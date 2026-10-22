@@ -1,0 +1,2019 @@
+{
+  "schemaVersion": 1,
+  "botRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+  "botHiderRef": "9a77fbaf1ee106ec45a451f482e64f26127f2f21",
+  "teams": [
+    {
+      "id": "team-1",
+      "name": "Falcons",
+      "logo": "fal",
+      "recommended": true
+    },
+    {
+      "id": "team-2",
+      "name": "Team Vitality",
+      "logo": "vita",
+      "recommended": true
+    },
+    {
+      "id": "team-3",
+      "name": "Spirit",
+      "logo": "spir",
+      "recommended": true
+    },
+    {
+      "id": "team-4",
+      "name": "FURIA Esports",
+      "logo": "furi",
+      "recommended": true
+    },
+    {
+      "id": "team-5",
+      "name": "Natus Vincere",
+      "logo": "navi",
+      "recommended": true
+    },
+    {
+      "id": "team-6",
+      "name": "9z",
+      "logo": "nine",
+      "recommended": true
+    },
+    {
+      "id": "team-7",
+      "name": "BetBoom",
+      "logo": "bb",
+      "recommended": true
+    },
+    {
+      "id": "team-8",
+      "name": "Aurora",
+      "logo": "aura",
+      "recommended": true
+    },
+    {
+      "id": "team-9",
+      "name": "G2 Esports",
+      "logo": "g2",
+      "recommended": true
+    },
+    {
+      "id": "team-10",
+      "name": "MOUZ",
+      "logo": "mouz",
+      "recommended": true
+    },
+    {
+      "id": "team-11",
+      "name": "Legacy",
+      "logo": "lgcy",
+      "recommended": false
+    },
+    {
+      "id": "team-12",
+      "name": "The MongolZ",
+      "logo": "mngz",
+      "recommended": true
+    },
+    {
+      "id": "team-13",
+      "name": "FaZe Clan",
+      "logo": "faze",
+      "recommended": true
+    },
+    {
+      "id": "team-14",
+      "name": "FUT",
+      "logo": "fut",
+      "recommended": false
+    },
+    {
+      "id": "team-15",
+      "name": "Astralis",
+      "logo": "astr",
+      "recommended": true
+    },
+    {
+      "id": "team-16",
+      "name": "B8",
+      "logo": "b8",
+      "recommended": false
+    },
+    {
+      "id": "team-17",
+      "name": "PARIVISION",
+      "logo": "pari",
+      "recommended": false
+    },
+    {
+      "id": "team-18",
+      "name": "paiN Gaming",
+      "logo": "pain",
+      "recommended": true
+    },
+    {
+      "id": "team-19",
+      "name": "GamerLegion",
+      "logo": "gl",
+      "recommended": true
+    },
+    {
+      "id": "team-20",
+      "name": "Team Liquid",
+      "logo": "liq",
+      "recommended": true
+    },
+    {
+      "id": "team-21",
+      "name": "TYLOO",
+      "logo": "tyl",
+      "recommended": true
+    },
+    {
+      "id": "team-22",
+      "name": "3DMAX",
+      "logo": "3dm",
+      "recommended": true
+    },
+    {
+      "id": "team-23",
+      "name": "BIG",
+      "logo": "big",
+      "recommended": true
+    },
+    {
+      "id": "team-24",
+      "name": "Luminosity",
+      "logo": "lumi",
+      "recommended": false
+    },
+    {
+      "id": "team-25",
+      "name": "MIBR",
+      "logo": "mibr",
+      "recommended": true
+    },
+    {
+      "id": "team-26",
+      "name": "M80",
+      "logo": "m80",
+      "recommended": false
+    },
+    {
+      "id": "team-27",
+      "name": "Ninjas in Pyjamas",
+      "logo": "nip",
+      "recommended": true
+    },
+    {
+      "id": "team-28",
+      "name": "HEROIC",
+      "logo": "hero",
+      "recommended": true
+    },
+    {
+      "id": "team-29",
+      "name": "FlyQuest",
+      "logo": "fq",
+      "recommended": false
+    },
+    {
+      "id": "team-30",
+      "name": "Lynn Vision",
+      "logo": "lynn",
+      "recommended": true
+    },
+    {
+      "id": "team-31",
+      "name": "100 Thieves",
+      "logo": "thv",
+      "recommended": false
+    },
+    {
+      "id": "team-32",
+      "name": "NRG",
+      "logo": "nrg",
+      "recommended": false
+    },
+    {
+      "id": "team-33",
+      "name": "Virtus.pro",
+      "logo": "vp",
+      "recommended": true
+    },
+    {
+      "id": "team-34",
+      "name": "SINNERS",
+      "logo": "sinn",
+      "recommended": false
+    },
+    {
+      "id": "team-35",
+      "name": "Imperial",
+      "logo": "imp",
+      "recommended": false
+    },
+    {
+      "id": "team-36",
+      "name": "Fluxo",
+      "logo": "flux",
+      "recommended": false
+    },
+    {
+      "id": "team-37",
+      "name": "9INE",
+      "logo": "nein",
+      "recommended": false
+    },
+    {
+      "id": "team-38",
+      "name": "Rare Atom",
+      "logo": "ratm",
+      "recommended": true
+    },
+    {
+      "id": "team-39",
+      "name": "OG",
+      "logo": "og",
+      "recommended": false
+    },
+    {
+      "id": "team-40",
+      "name": "Sharks",
+      "logo": "shrk",
+      "recommended": false
+    }
+  ],
+  "rosters": [
+    {
+      "id": "team-1-upstream-e18c029",
+      "teamId": "team-1",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "NiKo",
+          "personaId": "81417650"
+        },
+        {
+          "name": "TeSeS",
+          "personaId": "36412550"
+        },
+        {
+          "name": "m0NESY",
+          "personaId": "114497073"
+        },
+        {
+          "name": "karrigan",
+          "personaId": "29164525"
+        },
+        {
+          "name": "kyousuke",
+          "personaId": "1071740496"
+        }
+      ]
+    },
+    {
+      "id": "team-2-upstream-e18c029",
+      "teamId": "team-2",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "apEX",
+          "personaId": "29478439"
+        },
+        {
+          "name": "ZywOo",
+          "personaId": "153400465"
+        },
+        {
+          "name": "ropz",
+          "personaId": "31006590"
+        },
+        {
+          "name": "mezii",
+          "personaId": "12874964"
+        },
+        {
+          "name": "flameZ",
+          "personaId": "18569432"
+        }
+      ]
+    },
+    {
+      "id": "team-3-upstream-e18c029",
+      "teamId": "team-3",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "sh1ro",
+          "personaId": "121219047"
+        },
+        {
+          "name": "magixx",
+          "personaId": "1102972837"
+        },
+        {
+          "name": "tN1R",
+          "personaId": "911747440"
+        },
+        {
+          "name": "zont1x",
+          "personaId": "1035615149"
+        },
+        {
+          "name": "donk",
+          "personaId": "425999755"
+        }
+      ]
+    },
+    {
+      "id": "team-4-upstream-e18c029",
+      "teamId": "team-4",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "yuurih",
+          "personaId": "204704832"
+        },
+        {
+          "name": "FalleN",
+          "personaId": "424467"
+        },
+        {
+          "name": "KSCERATO",
+          "personaId": "98234764"
+        },
+        {
+          "name": "YEKINDAR",
+          "personaId": "174136197"
+        },
+        {
+          "name": "molodoy",
+          "personaId": "240716562"
+        }
+      ]
+    },
+    {
+      "id": "team-5-upstream-e18c029",
+      "teamId": "team-5",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Aleksib",
+          "personaId": "52977598"
+        },
+        {
+          "name": "iM",
+          "personaId": "89984505"
+        },
+        {
+          "name": "b1t",
+          "personaId": "286341748"
+        },
+        {
+          "name": "w0nderful",
+          "personaId": "1102803112"
+        },
+        {
+          "name": "makazze",
+          "personaId": "1115923884"
+        }
+      ]
+    },
+    {
+      "id": "team-6-upstream-e18c029",
+      "teamId": "team-6",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "max",
+          "personaId": "282684656"
+        },
+        {
+          "name": "dgt",
+          "personaId": "256625848"
+        },
+        {
+          "name": "meyern",
+          "personaId": "235377137"
+        },
+        {
+          "name": "luchov",
+          "personaId": "107456470"
+        },
+        {
+          "name": "HUASOPEEK",
+          "personaId": "359457480"
+        }
+      ]
+    },
+    {
+      "id": "team-7-upstream-e18c029",
+      "teamId": "team-7",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Boombl4",
+          "personaId": "185941338"
+        },
+        {
+          "name": "S1ren",
+          "personaId": "207519341"
+        },
+        {
+          "name": "d1Ledez",
+          "personaId": "899162551"
+        },
+        {
+          "name": "zorte",
+          "personaId": "99348674"
+        },
+        {
+          "name": "Magnojez",
+          "personaId": "411757486"
+        }
+      ]
+    },
+    {
+      "id": "team-8-upstream-e18c029",
+      "teamId": "team-8",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Jimpphat",
+          "personaId": "895109597"
+        },
+        {
+          "name": "XANTARES",
+          "personaId": "83853068"
+        },
+        {
+          "name": "woxic",
+          "personaId": "123219778"
+        },
+        {
+          "name": "kyxsan",
+          "personaId": "97016704"
+        },
+        {
+          "name": "Wicadia",
+          "personaId": "852248195"
+        }
+      ]
+    },
+    {
+      "id": "team-9-upstream-e18c029",
+      "teamId": "team-9",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "huNter-",
+          "personaId": "52606325"
+        },
+        {
+          "name": "NertZ",
+          "personaId": "92860917"
+        },
+        {
+          "name": "r1nkle",
+          "personaId": "334115362"
+        },
+        {
+          "name": "HeavyGod",
+          "personaId": "107737265"
+        },
+        {
+          "name": "MATYS",
+          "personaId": "1086212773"
+        }
+      ]
+    },
+    {
+      "id": "team-10-upstream-e18c029",
+      "teamId": "team-10",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "PR",
+          "personaId": null
+        },
+        {
+          "name": "torzsi",
+          "personaId": "395473484"
+        },
+        {
+          "name": "Spinx",
+          "personaId": "103070679"
+        },
+        {
+          "name": "xelex",
+          "personaId": "1038000482"
+        },
+        {
+          "name": "xertioN",
+          "personaId": "232908406"
+        }
+      ]
+    },
+    {
+      "id": "team-11-upstream-e18c029",
+      "teamId": "team-11",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "dumau",
+          "personaId": "234059589"
+        },
+        {
+          "name": "latto",
+          "personaId": "889754458"
+        },
+        {
+          "name": "n1ssim",
+          "personaId": "101497868"
+        },
+        {
+          "name": "arT",
+          "personaId": null
+        },
+        {
+          "name": "try",
+          "personaId": "404852560"
+        }
+      ]
+    },
+    {
+      "id": "team-12-upstream-e18c029",
+      "teamId": "team-12",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "bLitz",
+          "personaId": "999558360"
+        },
+        {
+          "name": "Techno",
+          "personaId": null
+        },
+        {
+          "name": "DarkMeister",
+          "personaId": null
+        },
+        {
+          "name": "910",
+          "personaId": "1243297617"
+        },
+        {
+          "name": "tikuak",
+          "personaId": "1430173287"
+        }
+      ]
+    },
+    {
+      "id": "team-13-upstream-e18c029",
+      "teamId": "team-13",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "JBOEN",
+          "personaId": "55872799"
+        },
+        {
+          "name": "frozen",
+          "personaId": null
+        },
+        {
+          "name": "Twistzz",
+          "personaId": "55989477"
+        },
+        {
+          "name": "Neityu",
+          "personaId": "1011452664"
+        },
+        {
+          "name": "jcobbb",
+          "personaId": "218471701"
+        }
+      ]
+    },
+    {
+      "id": "team-14-upstream-e18c029",
+      "teamId": "team-14",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "xfl0ud",
+          "personaId": "217943381"
+        },
+        {
+          "name": "dem0n",
+          "personaId": "915367451"
+        },
+        {
+          "name": "Krabeni",
+          "personaId": "1031012697"
+        },
+        {
+          "name": "cmtry",
+          "personaId": "1353702531"
+        },
+        {
+          "name": "dziugss",
+          "personaId": "1140460110"
+        }
+      ]
+    },
+    {
+      "id": "team-15-upstream-e18c029",
+      "teamId": "team-15",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "HooXi",
+          "personaId": "38661042"
+        },
+        {
+          "name": "phzy",
+          "personaId": "447933315"
+        },
+        {
+          "name": "jabbi",
+          "personaId": "160291620"
+        },
+        {
+          "name": "Staehr",
+          "personaId": "44842089"
+        },
+        {
+          "name": "ryu",
+          "personaId": null
+        }
+      ]
+    },
+    {
+      "id": "team-16-upstream-e18c029",
+      "teamId": "team-16",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "s1zzi",
+          "personaId": "1041272634"
+        },
+        {
+          "name": "alex666",
+          "personaId": "343849791"
+        },
+        {
+          "name": "npl",
+          "personaId": "344771176"
+        },
+        {
+          "name": "kensizor",
+          "personaId": "421907931"
+        },
+        {
+          "name": "esenthial",
+          "personaId": "1189546625"
+        }
+      ]
+    },
+    {
+      "id": "team-17-upstream-e18c029",
+      "teamId": "team-17",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Jame",
+          "personaId": "75859856"
+        },
+        {
+          "name": "HObbit",
+          "personaId": "68027030"
+        },
+        {
+          "name": "xiELO",
+          "personaId": "181006324"
+        },
+        {
+          "name": "slaxejezzz",
+          "personaId": "395986293"
+        },
+        {
+          "name": "zweih",
+          "personaId": "250361011"
+        }
+      ]
+    },
+    {
+      "id": "team-18-upstream-e18c029",
+      "teamId": "team-18",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "vsm",
+          "personaId": null
+        },
+        {
+          "name": "biguzera",
+          "personaId": "55043156"
+        },
+        {
+          "name": "piriajr",
+          "personaId": "436072455"
+        },
+        {
+          "name": "saffee",
+          "personaId": "25299957"
+        },
+        {
+          "name": "snow",
+          "personaId": "417070118"
+        }
+      ]
+    },
+    {
+      "id": "team-19-upstream-e18c029",
+      "teamId": "team-19",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Snax",
+          "personaId": "21875845"
+        },
+        {
+          "name": "REZ",
+          "personaId": "73906687"
+        },
+        {
+          "name": "Tauson",
+          "personaId": "356440446"
+        },
+        {
+          "name": "FL4MUS",
+          "personaId": "53993406"
+        },
+        {
+          "name": "hypex",
+          "personaId": "294421006"
+        }
+      ]
+    },
+    {
+      "id": "team-20-upstream-e18c029",
+      "teamId": "team-20",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "NAF",
+          "personaId": "40885967"
+        },
+        {
+          "name": "EliGE",
+          "personaId": "106428011"
+        },
+        {
+          "name": "malbsMd",
+          "personaId": "120437415"
+        },
+        {
+          "name": "JT",
+          "personaId": null
+        },
+        {
+          "name": "Jorko",
+          "personaId": "218120778"
+        }
+      ]
+    },
+    {
+      "id": "team-21-upstream-e18c029",
+      "teamId": "team-21",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "JamYoung",
+          "personaId": "404671310"
+        },
+        {
+          "name": "Jee",
+          "personaId": "400141913"
+        },
+        {
+          "name": "Mercury",
+          "personaId": "148530751"
+        },
+        {
+          "name": "Moseyuh",
+          "personaId": "394931794"
+        },
+        {
+          "name": "Zero",
+          "personaId": null
+        }
+      ]
+    },
+    {
+      "id": "team-22-upstream-e18c029",
+      "teamId": "team-22",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "misutaaa",
+          "personaId": "121263183"
+        },
+        {
+          "name": "Maka",
+          "personaId": "85474033"
+        },
+        {
+          "name": "Lucky",
+          "personaId": "71624387"
+        },
+        {
+          "name": "Kursy",
+          "personaId": "390340721"
+        },
+        {
+          "name": "Graviti",
+          "personaId": "219272777"
+        }
+      ]
+    },
+    {
+      "id": "team-23-upstream-e18c029",
+      "teamId": "team-23",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "tabseN",
+          "personaId": "1225952"
+        },
+        {
+          "name": "JDC",
+          "personaId": "118505645"
+        },
+        {
+          "name": "faveN",
+          "personaId": "157930364"
+        },
+        {
+          "name": "blameF",
+          "personaId": "68193075"
+        },
+        {
+          "name": "gr1ks",
+          "personaId": "409910954"
+        }
+      ]
+    },
+    {
+      "id": "team-24-upstream-e18c029",
+      "teamId": "team-24",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Rainwaker",
+          "personaId": "177848062"
+        },
+        {
+          "name": "Bymas",
+          "personaId": "133120627"
+        },
+        {
+          "name": "afro",
+          "personaId": "75315373"
+        },
+        {
+          "name": "lux",
+          "personaId": "113751940"
+        },
+        {
+          "name": "AZUWU",
+          "personaId": "1014228401"
+        }
+      ]
+    },
+    {
+      "id": "team-25-upstream-e18c029",
+      "teamId": "team-25",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "LNZ",
+          "personaId": "144361165"
+        },
+        {
+          "name": "nqz",
+          "personaId": "390076777"
+        },
+        {
+          "name": "brnz4n",
+          "personaId": "895610852"
+        },
+        {
+          "name": "insani",
+          "personaId": "101158002"
+        },
+        {
+          "name": "venomzera",
+          "personaId": "257999525"
+        }
+      ]
+    },
+    {
+      "id": "team-26-upstream-e18c029",
+      "teamId": "team-26",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "slaxz-",
+          "personaId": "104087441"
+        },
+        {
+          "name": "Swisher",
+          "personaId": "222737943"
+        },
+        {
+          "name": "s1n",
+          "personaId": "230197733"
+        },
+        {
+          "name": "JBa",
+          "personaId": "223887847"
+        },
+        {
+          "name": "Lake",
+          "personaId": "377218468"
+        }
+      ]
+    },
+    {
+      "id": "team-27-upstream-e18c029",
+      "teamId": "team-27",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Snappi",
+          "personaId": "29157337"
+        },
+        {
+          "name": "sjuush",
+          "personaId": "200443857"
+        },
+        {
+          "name": "stavn",
+          "personaId": "62099910"
+        },
+        {
+          "name": "xKacpersky",
+          "personaId": "402698604"
+        },
+        {
+          "name": "cairne",
+          "personaId": "923855288"
+        }
+      ]
+    },
+    {
+      "id": "team-28-upstream-e18c029",
+      "teamId": "team-28",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Brollan",
+          "personaId": "178562747"
+        },
+        {
+          "name": "nilo",
+          "personaId": "200790839"
+        },
+        {
+          "name": "susp",
+          "personaId": "382452440"
+        },
+        {
+          "name": "MartinezSa",
+          "personaId": null
+        },
+        {
+          "name": "Chr1zN",
+          "personaId": "332333083"
+        }
+      ]
+    },
+    {
+      "id": "team-29-upstream-e18c029",
+      "teamId": "team-29",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "jks",
+          "personaId": "16839456"
+        },
+        {
+          "name": "INS",
+          "personaId": null
+        },
+        {
+          "name": "Vexite",
+          "personaId": "92622415"
+        },
+        {
+          "name": "nettik",
+          "personaId": "372579523"
+        },
+        {
+          "name": "story",
+          "personaId": "105182632"
+        }
+      ]
+    },
+    {
+      "id": "team-30-upstream-e18c029",
+      "teamId": "team-30",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Westmelon",
+          "personaId": "146974312"
+        },
+        {
+          "name": "z4KR",
+          "personaId": "177517735"
+        },
+        {
+          "name": "Starry",
+          "personaId": "920033815"
+        },
+        {
+          "name": "EmiliaQAQ",
+          "personaId": "856465673"
+        },
+        {
+          "name": "C4LLM3SU3",
+          "personaId": "456122416"
+        }
+      ]
+    },
+    {
+      "id": "team-31-upstream-e18c029",
+      "teamId": "team-31",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Gizmy",
+          "personaId": "383961258"
+        },
+        {
+          "name": "device",
+          "personaId": "27447936"
+        },
+        {
+          "name": "poiii",
+          "personaId": "34912753"
+        },
+        {
+          "name": "sirah",
+          "personaId": "348675310"
+        },
+        {
+          "name": "rain",
+          "personaId": null
+        }
+      ]
+    },
+    {
+      "id": "team-32-upstream-e18c029",
+      "teamId": "team-32",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "nitr0",
+          "personaId": "35624002"
+        },
+        {
+          "name": "Sonic",
+          "personaId": null
+        },
+        {
+          "name": "hallzerk",
+          "personaId": "100101582"
+        },
+        {
+          "name": "Grim",
+          "personaId": "230970467"
+        },
+        {
+          "name": "Jeorge",
+          "personaId": "393603607"
+        }
+      ]
+    },
+    {
+      "id": "team-33-upstream-e18c029",
+      "teamId": "team-33",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "mir",
+          "personaId": "40562076"
+        },
+        {
+          "name": "b1st",
+          "personaId": "882192528"
+        },
+        {
+          "name": "F0R3VER",
+          "personaId": "1052115620"
+        },
+        {
+          "name": "AquaRS",
+          "personaId": "839881894"
+        },
+        {
+          "name": "tO0RO",
+          "personaId": "1156066660"
+        }
+      ]
+    },
+    {
+      "id": "team-34-upstream-e18c029",
+      "teamId": "team-34",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "beastik",
+          "personaId": "73173022"
+        },
+        {
+          "name": "SHOCK",
+          "personaId": "209294569"
+        },
+        {
+          "name": "MoDo",
+          "personaId": "389955370"
+        },
+        {
+          "name": "kisserek",
+          "personaId": "292476348"
+        },
+        {
+          "name": "stressarN",
+          "personaId": "344171388"
+        }
+      ]
+    },
+    {
+      "id": "team-35-upstream-e18c029",
+      "teamId": "team-35",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "chelo",
+          "personaId": "107498100"
+        },
+        {
+          "name": "VINI",
+          "personaId": "36104456"
+        },
+        {
+          "name": "decenty",
+          "personaId": "346906182"
+        },
+        {
+          "name": "noway",
+          "personaId": "839943839"
+        },
+        {
+          "name": "saadzin",
+          "personaId": "140229234"
+        }
+      ]
+    },
+    {
+      "id": "team-36-upstream-e18c029",
+      "teamId": "team-36",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "dav1deus",
+          "personaId": "160225583"
+        },
+        {
+          "name": "zevy",
+          "personaId": "1462253534"
+        },
+        {
+          "name": "Ltz",
+          "personaId": "398968766"
+        },
+        {
+          "name": "kye",
+          "personaId": "1135765413"
+        },
+        {
+          "name": "exit",
+          "personaId": "50230614"
+        }
+      ]
+    },
+    {
+      "id": "team-37-upstream-e18c029",
+      "teamId": "team-37",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "raalz",
+          "personaId": "35794427"
+        },
+        {
+          "name": "kraghen",
+          "personaId": "86933217"
+        },
+        {
+          "name": "bnox",
+          "personaId": "400417045"
+        },
+        {
+          "name": "cej0t",
+          "personaId": "120183772"
+        },
+        {
+          "name": "flayy",
+          "personaId": "452134916"
+        }
+      ]
+    },
+    {
+      "id": "team-38-upstream-e18c029",
+      "teamId": "team-38",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "Summer",
+          "personaId": "52964519"
+        },
+        {
+          "name": "3gl",
+          "personaId": "1486870340"
+        },
+        {
+          "name": "Trash",
+          "personaId": null
+        },
+        {
+          "name": "L1haNg",
+          "personaId": "1055940590"
+        },
+        {
+          "name": "chengking",
+          "personaId": "912308148"
+        }
+      ]
+    },
+    {
+      "id": "team-39-upstream-e18c029",
+      "teamId": "team-39",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "cadiaN",
+          "personaId": "43849788"
+        },
+        {
+          "name": "spooke",
+          "personaId": "118917633"
+        },
+        {
+          "name": "arrozdoce",
+          "personaId": "13492074"
+        },
+        {
+          "name": "adamb",
+          "personaId": "890801811"
+        },
+        {
+          "name": "bodyy",
+          "personaId": "53029647"
+        }
+      ]
+    },
+    {
+      "id": "team-40-upstream-e18c029",
+      "teamId": "team-40",
+      "name": "2026-10-19 · upstream e18c029",
+      "representativeDate": "2026-10-19",
+      "event": "固定上游命令快照（不表示实时阵容）",
+      "source": "https://github.com/ed0ard/CS2-Bot-Improver/blob/e18c029a76b7515ea5cb15cb08c41f03de4c0a57/Commands.txt",
+      "slots": [
+        {
+          "name": "gafolo",
+          "personaId": "174962930"
+        },
+        {
+          "name": "koala",
+          "personaId": "849196548"
+        },
+        {
+          "name": "maxxkor",
+          "personaId": "1070706470"
+        },
+        {
+          "name": "rdnzao",
+          "personaId": "347468740"
+        },
+        {
+          "name": "doc",
+          "personaId": "135630812"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Copenhagen Major",
+      "representativeDate": "2024-03-31",
+      "event": "PGL Major Copenhagen 2024 · Final",
+      "source": "https://www.hltv.org/matches/2370727/faze-vs-natus-vincere-pgl-cs2-major-copenhagen-2024",
+      "id": "team-13-2024-03-31",
+      "teamId": "team-13",
+      "slots": [
+        {
+          "name": "karrigan",
+          "personaId": "29164525"
+        },
+        {
+          "name": "ropz",
+          "personaId": "31006590"
+        },
+        {
+          "name": "broky",
+          "personaId": "241354762"
+        },
+        {
+          "name": "frozen",
+          "personaId": null
+        },
+        {
+          "name": "rain",
+          "personaId": null
+        }
+      ]
+    },
+    {
+      "name": "2024 · Copenhagen Major",
+      "representativeDate": "2024-03-31",
+      "event": "PGL Major Copenhagen 2024 · Final",
+      "source": "https://www.hltv.org/matches/2370727/faze-vs-natus-vincere-pgl-cs2-major-copenhagen-2024",
+      "id": "team-5-2024-03-31",
+      "teamId": "team-5",
+      "slots": [
+        {
+          "name": "w0nderful",
+          "personaId": "1102803112"
+        },
+        {
+          "name": "Aleksib",
+          "personaId": "52977598"
+        },
+        {
+          "name": "iM",
+          "personaId": "89984505"
+        },
+        {
+          "name": "b1t",
+          "personaId": "286341748"
+        },
+        {
+          "name": "jL",
+          "personaId": "216612575"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-14",
+      "event": "Perfect World Shanghai Major 2024 · Semi-final",
+      "source": "https://www.hltv.org/matches/2377733/mouz-vs-spirit-perfect-world-shanghai-major-2024",
+      "id": "team-10-2024-12-14",
+      "teamId": "team-10",
+      "slots": [
+        {
+          "name": "Jimpphat",
+          "personaId": "895109597"
+        },
+        {
+          "name": "xertioN",
+          "personaId": "232908406"
+        },
+        {
+          "name": "siuhy",
+          "personaId": "190407632"
+        },
+        {
+          "name": "Brollan",
+          "personaId": "178562747"
+        },
+        {
+          "name": "torzsi",
+          "personaId": "395473484"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-14",
+      "event": "Perfect World Shanghai Major 2024 · Semi-final",
+      "source": "https://www.hltv.org/matches/2377733/mouz-vs-spirit-perfect-world-shanghai-major-2024",
+      "id": "team-3-2024-12-14",
+      "teamId": "team-3",
+      "slots": [
+        {
+          "name": "chopper",
+          "personaId": "85633136"
+        },
+        {
+          "name": "magixx",
+          "personaId": "1102972837"
+        },
+        {
+          "name": "donk",
+          "personaId": "425999755"
+        },
+        {
+          "name": "zont1x",
+          "personaId": "1035615149"
+        },
+        {
+          "name": "sh1ro",
+          "personaId": "121219047"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-13",
+      "event": "Perfect World Shanghai Major 2024 · Quarter-final",
+      "source": "https://www.hltv.org/matches/2377731/g2-vs-heroic-perfect-world-shanghai-major-2024",
+      "id": "team-9-2024-12-13",
+      "teamId": "team-9",
+      "slots": [
+        {
+          "name": "Snax",
+          "personaId": "21875845"
+        },
+        {
+          "name": "malbsMd",
+          "personaId": "120437415"
+        },
+        {
+          "name": "NiKo",
+          "personaId": "81417650"
+        },
+        {
+          "name": "m0NESY",
+          "personaId": "114497073"
+        },
+        {
+          "name": "huNter-",
+          "personaId": "52606325"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-13",
+      "event": "Perfect World Shanghai Major 2024 · Quarter-final",
+      "source": "https://www.hltv.org/matches/2377731/g2-vs-heroic-perfect-world-shanghai-major-2024",
+      "id": "team-28-2024-12-13",
+      "teamId": "team-28",
+      "slots": [
+        {
+          "name": "kyxsan",
+          "personaId": "97016704"
+        },
+        {
+          "name": "TeSeS",
+          "personaId": "36412550"
+        },
+        {
+          "name": "sjuush",
+          "personaId": "200443857"
+        },
+        {
+          "name": "NertZ",
+          "personaId": "92860917"
+        },
+        {
+          "name": "degster",
+          "personaId": "839074394"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-12",
+      "event": "Perfect World Shanghai Major 2024 · Quarter-final",
+      "source": "https://www.hltv.org/matches/2377730/spirit-vs-liquid-perfect-world-shanghai-major-2024",
+      "id": "team-20-2024-12-12",
+      "teamId": "team-20",
+      "slots": [
+        {
+          "name": "jks",
+          "personaId": "16839456"
+        },
+        {
+          "name": "NAF",
+          "personaId": "40885967"
+        },
+        {
+          "name": "ultimate",
+          "personaId": null
+        },
+        {
+          "name": "Twistzz",
+          "personaId": "55989477"
+        },
+        {
+          "name": "YEKINDAR",
+          "personaId": "174136197"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-05",
+      "event": "Perfect World Shanghai Major 2024 · Elimination",
+      "source": "https://www.hltv.org/matches/2377705/vitality-vs-furia-perfect-world-shanghai-major-2024",
+      "id": "team-2-2024-12-05",
+      "teamId": "team-2",
+      "slots": [
+        {
+          "name": "mezii",
+          "personaId": "12874964"
+        },
+        {
+          "name": "apEX",
+          "personaId": "29478439"
+        },
+        {
+          "name": "Spinx",
+          "personaId": "103070679"
+        },
+        {
+          "name": "ZywOo",
+          "personaId": "153400465"
+        },
+        {
+          "name": "flameZ",
+          "personaId": "18569432"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-05",
+      "event": "Perfect World Shanghai Major 2024 · Elimination",
+      "source": "https://www.hltv.org/matches/2377705/vitality-vs-furia-perfect-world-shanghai-major-2024",
+      "id": "team-4-2024-12-05",
+      "teamId": "team-4",
+      "slots": [
+        {
+          "name": "skullz",
+          "personaId": "158380916"
+        },
+        {
+          "name": "yuurih",
+          "personaId": "204704832"
+        },
+        {
+          "name": "KSCERATO",
+          "personaId": "98234764"
+        },
+        {
+          "name": "chelo",
+          "personaId": "107498100"
+        },
+        {
+          "name": "FalleN",
+          "personaId": "424467"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Major",
+      "representativeDate": "2024-12-05",
+      "event": "Perfect World Shanghai Major 2024 · Elimination",
+      "source": "https://www.hltv.org/matches/2377707/mouz-vs-the-mongolz-perfect-world-shanghai-major-2024",
+      "id": "team-12-2024-12-05",
+      "teamId": "team-12",
+      "slots": [
+        {
+          "name": "910",
+          "personaId": "1243297617"
+        },
+        {
+          "name": "bLitz",
+          "personaId": "999558360"
+        },
+        {
+          "name": "Techno",
+          "personaId": null
+        },
+        {
+          "name": "mzinho",
+          "personaId": "878556854"
+        },
+        {
+          "name": "Senzu",
+          "personaId": "960454289"
+        }
+      ]
+    },
+    {
+      "name": "2024 · BLAST Fall Groups",
+      "representativeDate": "2024-08-02",
+      "event": "BLAST Premier Fall Groups 2024",
+      "source": "https://www.hltv.org/matches/2373788/astralis-vs-falcons-blast-premier-fall-groups-2024",
+      "id": "team-15-2024-08-02",
+      "teamId": "team-15",
+      "slots": [
+        {
+          "name": "Staehr",
+          "personaId": "44842089"
+        },
+        {
+          "name": "device",
+          "personaId": "27447936"
+        },
+        {
+          "name": "stavn",
+          "personaId": "62099910"
+        },
+        {
+          "name": "br0",
+          "personaId": "100218065"
+        },
+        {
+          "name": "jabbi",
+          "personaId": "160291620"
+        }
+      ]
+    },
+    {
+      "name": "2024 · BLAST Fall Groups",
+      "representativeDate": "2024-08-02",
+      "event": "BLAST Premier Fall Groups 2024",
+      "source": "https://www.hltv.org/matches/2373788/astralis-vs-falcons-blast-premier-fall-groups-2024",
+      "id": "team-1-2024-08-02",
+      "teamId": "team-1",
+      "slots": [
+        {
+          "name": "SunPayus",
+          "personaId": "349573813"
+        },
+        {
+          "name": "Snappi",
+          "personaId": "29157337"
+        },
+        {
+          "name": "Maden",
+          "personaId": "205186299"
+        },
+        {
+          "name": "Magisk",
+          "personaId": "23690923"
+        },
+        {
+          "name": "dupreeh",
+          "personaId": "44589228"
+        }
+      ]
+    },
+    {
+      "name": "2024 · FiReLEAGUE",
+      "representativeDate": "2024-06-14",
+      "event": "FiReLEAGUE 2024 Global Finals",
+      "source": "https://www.hltv.org/matches/2372777/ninjas-in-pyjamas-vs-9z-fireleague-2024-global-finals",
+      "id": "team-27-2024-06-14",
+      "teamId": "team-27",
+      "slots": [
+        {
+          "name": "maxster",
+          "personaId": "1171951805"
+        },
+        {
+          "name": "REZ",
+          "personaId": "73906687"
+        },
+        {
+          "name": "r1nkle",
+          "personaId": "334115362"
+        },
+        {
+          "name": "alex",
+          "personaId": null
+        },
+        {
+          "name": "isak",
+          "personaId": "111644637"
+        }
+      ]
+    },
+    {
+      "name": "2025 · PGL Bucharest",
+      "representativeDate": "2025-04-11",
+      "event": "PGL Bucharest 2025",
+      "source": "https://www.hltv.org/matches/2381327/complexity-vs-aurora-pgl-bucharest-2025",
+      "id": "team-8-2025-04-11",
+      "teamId": "team-8",
+      "slots": [
+        {
+          "name": "jottAAA",
+          "personaId": "450484535"
+        },
+        {
+          "name": "XANTARES",
+          "personaId": "83853068"
+        },
+        {
+          "name": "Wicadia",
+          "personaId": "852248195"
+        },
+        {
+          "name": "MAJ3R",
+          "personaId": "7167161"
+        },
+        {
+          "name": "woxic",
+          "personaId": "123219778"
+        }
+      ]
+    },
+    {
+      "name": "2024 · Shanghai Asia RMR",
+      "representativeDate": "2024-11-11",
+      "event": "Perfect World Shanghai Major 2024 Asia RMR",
+      "source": "https://www.hltv.org/matches/2376928/rare-atom-vs-gr-perfect-world-shanghai-major-2024-asia-rmr",
+      "id": "team-38-2024-11-11",
+      "teamId": "team-38",
+      "slots": [
+        {
+          "name": "somebody",
+          "personaId": "85131873"
+        },
+        {
+          "name": "Summer",
+          "personaId": "52964519"
+        },
+        {
+          "name": "ChildKing",
+          "personaId": "392390376"
+        },
+        {
+          "name": "L1haNg",
+          "personaId": "1055940590"
+        },
+        {
+          "name": "kaze",
+          "personaId": "16127541"
+        }
+      ]
+    },
+    {
+      "name": "2025 · Austin Major",
+      "representativeDate": "2025-06-08",
+      "event": "BLAST.tv Austin Major 2025 Stage 2",
+      "source": "https://www.hltv.org/matches/2382571/tyloo-vs-lynn-vision-blasttv-austin-major-2025-stage-2",
+      "id": "team-21-2025-06-08",
+      "teamId": "team-21",
+      "slots": [
+        {
+          "name": "JamYoung",
+          "personaId": "404671310"
+        },
+        {
+          "name": "Attacker",
+          "personaId": "88001036"
+        },
+        {
+          "name": "Mercury",
+          "personaId": "148530751"
+        },
+        {
+          "name": "Moseyuh",
+          "personaId": "394931794"
+        },
+        {
+          "name": "Jee",
+          "personaId": "400141913"
+        }
+      ]
+    },
+    {
+      "name": "2025 · Austin Major",
+      "representativeDate": "2025-06-08",
+      "event": "BLAST.tv Austin Major 2025 Stage 2",
+      "source": "https://www.hltv.org/matches/2382571/tyloo-vs-lynn-vision-blasttv-austin-major-2025-stage-2",
+      "id": "team-30-2025-06-08",
+      "teamId": "team-30",
+      "slots": [
+        {
+          "name": "EmiliaQAQ",
+          "personaId": "856465673"
+        },
+        {
+          "name": "Starry",
+          "personaId": "920033815"
+        },
+        {
+          "name": "Westmelon",
+          "personaId": "146974312"
+        },
+        {
+          "name": "z4KR",
+          "personaId": "177517735"
+        },
+        {
+          "name": "C4LLM3SU3",
+          "personaId": "456122416"
+        }
+      ]
+    },
+    {
+      "name": "2025 · BLAST Rivals S1",
+      "representativeDate": "2025-05-04",
+      "event": "BLAST Rivals 2025 Season 1 · Final",
+      "source": "https://www.hltv.org/matches/2381918/falcons-vs-vitality-blast-rivals-2025-season-1",
+      "id": "team-1-2025-05-04",
+      "teamId": "team-1",
+      "slots": [
+        {
+          "name": "m0NESY",
+          "personaId": "114497073"
+        },
+        {
+          "name": "Magisk",
+          "personaId": "23690923"
+        },
+        {
+          "name": "kyxsan",
+          "personaId": "97016704"
+        },
+        {
+          "name": "NiKo",
+          "personaId": "81417650"
+        },
+        {
+          "name": "TeSeS",
+          "personaId": "36412550"
+        }
+      ]
+    },
+    {
+      "name": "2025 · BLAST Rivals S1",
+      "representativeDate": "2025-05-04",
+      "event": "BLAST Rivals 2025 Season 1 · Final",
+      "source": "https://www.hltv.org/matches/2381918/falcons-vs-vitality-blast-rivals-2025-season-1",
+      "id": "team-2-2025-05-04",
+      "teamId": "team-2",
+      "slots": [
+        {
+          "name": "ropz",
+          "personaId": "31006590"
+        },
+        {
+          "name": "apEX",
+          "personaId": "29478439"
+        },
+        {
+          "name": "ZywOo",
+          "personaId": "153400465"
+        },
+        {
+          "name": "mezii",
+          "personaId": "12874964"
+        },
+        {
+          "name": "flameZ",
+          "personaId": "18569432"
+        }
+      ]
+    }
+  ]
+}
