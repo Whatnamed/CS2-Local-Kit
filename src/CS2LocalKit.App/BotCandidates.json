@@ -31,5 +31,26 @@
     "Directory": "bot-joint-e18c029-e74391e3537c",
     "ManifestSha256": "6181e1310e78df74dc941b00904bc79e3b6ff01ef17be85fa5d0b9ff4be36cfc",
     "PreservesHuman": true
+  },
+  {
+    "Difficulty": 0,
+    "Directory": "bot-match-e18c029-c27663bfb255",
+    "ManifestSha256": "f8908b5976fd66bb68a6b47e27d63c3032fa2d980ad7eb11ee22663b8d0a7f40",
+    "PreservesHuman": true,
+    "MatchSetup": true
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "bot-match-e18c029-cae179c78c6a",
+    "ManifestSha256": "e8e4d64abdafc27af8abe9a9b502d9d69966084a660c8f7716d011a5e978beec",
+    "PreservesHuman": true,
+    "MatchSetup": true
+  },
+  {
+    "Difficulty": 2,
+    "Directory": "bot-match-e18c029-01caceaf4200",
+    "ManifestSha256": "41f95720d36b3c5ade50d09cb3df5b2fdae638663e20f05cb0f74c43d89af41e",
+    "PreservesHuman": true,
+    "MatchSetup": true
   }
 ]

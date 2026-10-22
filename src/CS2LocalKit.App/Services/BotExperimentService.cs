@@ -14,7 +14,7 @@ public sealed record BotPreferences(BotDifficulty Difficulty = BotDifficulty.Med
 {
     public string ConsoleCommands => $"bot_aim {Aim.ToString().ToLowerInvariant()}; bot_nades {Nades.ToString().ToLowerInvariant()}";
 }
-public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false);
+public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false, bool MatchSetup = false);
 public sealed record BotModeReadiness(bool CanEnable, string Reason, string CurrentBuild, string CandidateBuild, string BotRef, bool HumanFilesValid);
 public sealed record BotProcessResult(int ExitCode, string Stdout, string Stderr);
 public interface IBotProcessRunner { Task<BotProcessResult> RunAsync(string executable, IReadOnlyList<string> arguments); }
@@ -92,8 +92,8 @@ public sealed class BotExperimentService
         File.Move(tmp, PreferencesPath, true);
     }
 
-    public BotCandidate Candidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty).OrderByDescending(c => c.PreservesHuman).FirstOrDefault() ?? throw new InvalidOperationException("该难度没有已固定候选，禁止安装");
-    private BotCandidate JointCandidate(BotDifficulty difficulty) => _candidates.SingleOrDefault(c => c.Difficulty == difficulty && c.PreservesHuman)
+    public BotCandidate Candidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty).OrderByDescending(c => c.PreservesHuman).ThenByDescending(c => c.MatchSetup).FirstOrDefault() ?? throw new InvalidOperationException("该难度没有已固定候选，禁止安装");
+    private BotCandidate JointCandidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty && c.PreservesHuman).OrderByDescending(c => c.MatchSetup).FirstOrDefault()
         ?? throw new InvalidOperationException("暂无通过门禁的 Bot + Human 联合候选；旧隔离实验仅保留精确恢复入口");
 
     private (bool Valid, string Reason) HumanBaseline()
@@ -122,7 +122,7 @@ public sealed class BotExperimentService
         var build = "未提供"; var botRef = "未提供";
         try
         {
-            var candidate = _candidates.FirstOrDefault(c => c.Difficulty == difficulty && c.PreservesHuman) ?? Candidate(difficulty);
+            var candidate = Candidate(difficulty);
             using var doc = JsonDocument.Parse(File.ReadAllText(SafePath(CandidatePath(candidate), "experiment-manifest.json")));
             var m = doc.RootElement; botRef = m.GetProperty("botRef").GetString()!;
             var target = m.GetProperty("targetBuild");
@@ -168,6 +168,7 @@ public sealed class BotExperimentService
         using var doc = JsonDocument.Parse(File.ReadAllText(manifest)); var m = doc.RootElement;
         if (m.GetProperty("schemaVersion").GetInt32() != 1 || m.GetProperty("lane").GetString() != "bot-experiment" || m.GetProperty("testFixture").GetBoolean() || m.GetProperty("botRef").GetString() != "e18c029a76b7515ea5cb15cb08c41f03de4c0a57" || m.GetProperty("metamod").GetProperty("build").GetInt32() != 1481 || m.GetProperty("cssVersion").GetString() != "1.0.376" || m.GetProperty("profile").GetProperty("difficulty").GetString() != candidate.Difficulty.ToString()) throw new InvalidDataException("候选身份/profile 不匹配");
         if (candidate.PreservesHuman && (m.GetProperty("humanPolicy").GetString() != "preserve" || m.GetProperty("coexistence").GetProperty("status").GetString() != "ready-for-manual-test")) throw new InvalidDataException("联合候选身份不匹配");
+        if (candidate.MatchSetup && (!m.TryGetProperty("matchSetup",out var setup) || setup.GetProperty("schemaVersion").GetInt32()!=1 || setup.GetProperty("adapter").GetString()!="LocalKitMatchSetup")) throw new InvalidDataException("候选缺少固定开局配置适配层");
         var expected = m.GetProperty("bundleFiles").EnumerateObject().ToDictionary(x => x.Name, x => x.Value.GetString()!, StringComparer.OrdinalIgnoreCase);
         void Walk(string directory)
         {

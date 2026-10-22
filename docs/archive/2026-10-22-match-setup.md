@@ -39,3 +39,20 @@ Controller 保留安装状态与精确恢复入口，新增双侧战队/历史�
 .NET **251/251 PASS**；CSS 1.0.376 / pinned BotHiderApi 的真实 adapter 构建 **0 warnings / 0 errors**。覆盖阶段顺序、重复通知的幂等策略、缺插件/真人/目标 Bot、先选不同侧、额外旁观 Bot、比分锁定、身份 staging、模式读回、更新/文件漂移拒绝、坏 library 保留、队伍/历史/自定义/导入导出和排队快照。
 
 实际 WPF 窗口在完全隔离的 `temp/match-ui-data` 中运行，game root 指向不存在的合成目录。Computer Use Sky runtime 不可用，改用限定 PID + 精确窗口标题的 Windows UI Automation 和 PrintWindow。真实控件选择 T、替代席位 4、Body/Off 后点击排队，实际 JSON 验证通过；再选择 Head，UI 显示草稿不同而原请求仍为 Body。已检查 1024 DIP 宽度的滚动布局、底部按钮及屏幕命中 PID。截图与结构化证据见同名 archive 子目录。该 probe 未启动 CS2，不能证明游戏内自动应用或玩法效果；窗口已关闭。
+
+## D：最小人工验收入口与停止点
+
+当前活动安装仍为原 Medium 联合包，**没有新适配层**。可以先审查 Controller 与保存配置，但此时不会自动应用到原安装。真正体验新候选之前，必须另行明确授权原 ID 的真实 Restore，再对新 profile 做完整 preview/确认安装；本轮仅完成原包 Diagnostics / Restore preview。禁止叠加安装或现场覆盖文件。变更没有合并 main，正式 runtime pin 未提升。
+
+授权安装新候选之后，最小步骤：
+
+1. Controller「人机」页选 Medium，保存为下局；我方 FaZe 的 Copenhagen 2024、敌方 Spirit 的 Shanghai 2024，真人替代一个席位，确认预览 5 vs 5。若有同名/未绑定提示，核对名称降级或从明确 persona ID 中选择。由用户启动 `-insecure` 离线地图，先在 CT，再以 T 开新图。确认人数、名字、队名/logo、TAB/score，并刷新应用状态；用 `css_localkit_status` 留存对应 request/session/epoch。状态“行为验证不足”不能判玩法 PASS。
+2. 切同队另一历史版本再开新图，然后保存跨队选手和自定义名的自由阵容再开新图。检查相同队伍/跨版本重复选手的消歧；换边、死亡重生、下一回合不重复加 Bot、不清比分、不自动重开。分别检查 Human CT/T 枪皮、刀、手套、音乐盒。
+3. 以相同地图、人数和设置对照 Aim Head/Body 与 Nades Off/Max，每份请求都重新载图，确认内部模式/epoch 与实际 Hook/投掷行为。Off 的零计数不足以证明抑制；Max 还需要当前地图 lineup 数和实际投掷。记录一局开头/中段/后段回合、FPS、frametime/long frames。可在用户已运行游戏时执行 `Collect-MatchPerformance.ps1 -Seconds 1800`，附已有 `-PresentMonCsv`；没有逐帧源的指标保留 unknown。
+4. 退出 CS2 后，另行明确授权对**新安装的精确 ID**执行 Diagnostics、Restore preview 和真实 Restore；核对原始 hashes/目录/配置与 Human，随后由用户在普通模式复验。原活动事务的 preview PASS、合成树的精确 roundtrip 都不能替代这两次真实恢复与游戏呈现验收。
+
+本轮停止于“可供复审和授权后实机测试的候选交付”。游戏内自动应用、Aim 两档/Nades Off-Max、Human 呈现、TAB/score/换边及真实 Restore 均 pending；FPS 逐局下降的原因未获证实，未作 Bot AI/原生组件性能重构。
+
+## 固定完整候选与白名单
+
+完整三档均为 108-file payload，包含独立 adapter、Core/embedded catalog 和两个最小 patched managed 组件。对应适配层源码 HEAD 为 `c556b665b19f2d965b7e5c67c7c6a0222ed00f3b`；source ZIP 与其 SHA、各源文件 before/after hash 随 manifest 固定。精确路径/digest 见 `2026-10-22-match-setup/fixed-candidates.json`。三个候选通过各自公开 PowerShell 工具的完整真实 payload 合成 Install/Diagnostics/Restore roundtrip，恢复后路径/类型/hash 完全一致，两个 preview 零写入，未指向真实游戏目录。原六包完整保留，Controller 新增三项白名单并优先选开局配置候选，旧事务仍按原 digest 恢复；相应 .NET 验证总数 **252/252 PASS**。

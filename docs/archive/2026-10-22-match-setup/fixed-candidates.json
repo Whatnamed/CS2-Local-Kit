@@ -1,0 +1,197 @@
+[
+  {
+    "directory": "E:\\CS2MOD\\releases\\bot-experiment\\bot-match-e18c029-c27663bfb255",
+    "manifestSha256": "f8908b5976fd66bb68a6b47e27d63c3032fa2d980ad7eb11ee22663b8d0a7f40",
+    "profile": "Low",
+    "files": 108,
+    "installed": false,
+    "livePreview": "requires original exact restore first",
+    "matchSetup": {
+      "schemaVersion": 1,
+      "adapter": "LocalKitMatchSetup",
+      "sourceHead": "c556b665b19f2d965b7e5c67c7c6a0222ed00f3b",
+      "sourceArchive": "sources/LocalKitMatchSetup-c556b665b19f.zip",
+      "sourceArchiveSha256": "de34898ffffcd2163596d8b08ebeeb258df02189b32cd92fa0bdddaa2b23d2b8",
+      "manualAcceptance": "pending"
+    },
+    "localKitPatch": {
+      "version": 1,
+      "sourceManifestSha256": "0b2b0a7b5a871e2e25199361ea883f235ad2c492959dee1741e69706abcbcf58",
+      "dataLayout": "plugin-grenades-v1",
+      "components": [
+        {
+          "name": "BotAimImprover",
+          "ref": "d796572b6d258b938a9d8db3c5d4c802a46049f7",
+          "sourceChanges": {
+            "BotAimImprover.cs": {
+              "before": "69b5c39da32cc9d80c243715506c96d483092a431f8112b975cf6e898650c453",
+              "after": "11a71b4207beeb97eef35015408458069e8c8bcb85afbf929a2dd9eea2ea2234"
+            },
+            "LocalKitDiagnostics.cs": {
+              "before": null,
+              "after": "a03fb9f3a1ab198cc1685f84d16105d35635cc6aff914b27f17dd8faaf4a4779"
+            }
+          },
+          "sourceArchive": "sources/BotAimImprover-localkit-diagnostics.zip",
+          "sourceArchiveSha256": "91394acf7abba244b3dde9fb556c628f8b30541e688123becc63e616cb56689f"
+        },
+        {
+          "name": "NadeSystem",
+          "ref": "009ce03005af68ba68dae62967bddc8e92ad172c",
+          "sourceChanges": {
+            "LocalKitDiagnostics.cs": {
+              "before": null,
+              "after": "b861eae98aba5bd6d1f0bcc40b2a9b05dad22cc35cd4d9b3898d8ac1a0b42db8"
+            },
+            "NadeSystemPlugin.Audio.cs": {
+              "before": "c722d62d0c7c76f14777e4dfea564332dcabebf0141554eea5aa413d884615d3",
+              "after": "5fcb3e2e06b380cf53452bc7a335b3adf236c65743aa8fb93de3df14ac2a0e6c"
+            },
+            "NadeSystemPlugin.Commands.cs": {
+              "before": "27bf1cfdc7531fab5bdc69cee73e5493ab596a56e7cc0af7ddfe633c3b6c9b64",
+              "after": "81a1394c4c229235f05b3829bfc2654281c5459359594fcfb32db5eb0d01057d"
+            },
+            "NadeSystemPlugin.Lifecycle.cs": {
+              "before": "f4702b757978270ae0f21b11c43a06176dcc71b404d871fbed6e954047d1f597",
+              "after": "7aa74462c2be40d016a14ff71db40d235f76befd56e276f74db3f890c1efd2fe"
+            }
+          },
+          "sourceArchive": "sources/NadeSystem-localkit-diagnostics.zip",
+          "sourceArchiveSha256": "ae670dda409a812db7c7c95e4f4b232e946084807ee701f2378308920ddc2a14"
+        }
+      ],
+      "liveInstall": false
+    },
+    "fullBundleVerified": true
+  },
+  {
+    "directory": "E:\\CS2MOD\\releases\\bot-experiment\\bot-match-e18c029-cae179c78c6a",
+    "manifestSha256": "e8e4d64abdafc27af8abe9a9b502d9d69966084a660c8f7716d011a5e978beec",
+    "profile": "Medium",
+    "files": 108,
+    "installed": false,
+    "livePreview": "requires original exact restore first",
+    "matchSetup": {
+      "schemaVersion": 1,
+      "adapter": "LocalKitMatchSetup",
+      "sourceHead": "c556b665b19f2d965b7e5c67c7c6a0222ed00f3b",
+      "sourceArchive": "sources/LocalKitMatchSetup-c556b665b19f.zip",
+      "sourceArchiveSha256": "de34898ffffcd2163596d8b08ebeeb258df02189b32cd92fa0bdddaa2b23d2b8",
+      "manualAcceptance": "pending"
+    },
+    "localKitPatch": {
+      "version": 1,
+      "sourceManifestSha256": "caafc349e6eef737f5f8f85a0ff637d3af7f861a99fc205857fb1528590d9582",
+      "dataLayout": "plugin-grenades-v1",
+      "components": [
+        {
+          "name": "BotAimImprover",
+          "ref": "d796572b6d258b938a9d8db3c5d4c802a46049f7",
+          "sourceChanges": {
+            "BotAimImprover.cs": {
+              "before": "69b5c39da32cc9d80c243715506c96d483092a431f8112b975cf6e898650c453",
+              "after": "11a71b4207beeb97eef35015408458069e8c8bcb85afbf929a2dd9eea2ea2234"
+            },
+            "LocalKitDiagnostics.cs": {
+              "before": null,
+              "after": "a03fb9f3a1ab198cc1685f84d16105d35635cc6aff914b27f17dd8faaf4a4779"
+            }
+          },
+          "sourceArchive": "sources/BotAimImprover-localkit-diagnostics.zip",
+          "sourceArchiveSha256": "91394acf7abba244b3dde9fb556c628f8b30541e688123becc63e616cb56689f"
+        },
+        {
+          "name": "NadeSystem",
+          "ref": "009ce03005af68ba68dae62967bddc8e92ad172c",
+          "sourceChanges": {
+            "LocalKitDiagnostics.cs": {
+              "before": null,
+              "after": "b861eae98aba5bd6d1f0bcc40b2a9b05dad22cc35cd4d9b3898d8ac1a0b42db8"
+            },
+            "NadeSystemPlugin.Audio.cs": {
+              "before": "c722d62d0c7c76f14777e4dfea564332dcabebf0141554eea5aa413d884615d3",
+              "after": "5fcb3e2e06b380cf53452bc7a335b3adf236c65743aa8fb93de3df14ac2a0e6c"
+            },
+            "NadeSystemPlugin.Commands.cs": {
+              "before": "27bf1cfdc7531fab5bdc69cee73e5493ab596a56e7cc0af7ddfe633c3b6c9b64",
+              "after": "81a1394c4c229235f05b3829bfc2654281c5459359594fcfb32db5eb0d01057d"
+            },
+            "NadeSystemPlugin.Lifecycle.cs": {
+              "before": "f4702b757978270ae0f21b11c43a06176dcc71b404d871fbed6e954047d1f597",
+              "after": "7aa74462c2be40d016a14ff71db40d235f76befd56e276f74db3f890c1efd2fe"
+            }
+          },
+          "sourceArchive": "sources/NadeSystem-localkit-diagnostics.zip",
+          "sourceArchiveSha256": "ae670dda409a812db7c7c95e4f4b232e946084807ee701f2378308920ddc2a14"
+        }
+      ],
+      "liveInstall": false
+    },
+    "fullBundleVerified": true
+  },
+  {
+    "directory": "E:\\CS2MOD\\releases\\bot-experiment\\bot-match-e18c029-01caceaf4200",
+    "manifestSha256": "41f95720d36b3c5ade50d09cb3df5b2fdae638663e20f05cb0f74c43d89af41e",
+    "profile": "High",
+    "files": 108,
+    "installed": false,
+    "livePreview": "requires original exact restore first",
+    "matchSetup": {
+      "schemaVersion": 1,
+      "adapter": "LocalKitMatchSetup",
+      "sourceHead": "c556b665b19f2d965b7e5c67c7c6a0222ed00f3b",
+      "sourceArchive": "sources/LocalKitMatchSetup-c556b665b19f.zip",
+      "sourceArchiveSha256": "de34898ffffcd2163596d8b08ebeeb258df02189b32cd92fa0bdddaa2b23d2b8",
+      "manualAcceptance": "pending"
+    },
+    "localKitPatch": {
+      "version": 1,
+      "sourceManifestSha256": "6181e1310e78df74dc941b00904bc79e3b6ff01ef17be85fa5d0b9ff4be36cfc",
+      "dataLayout": "plugin-grenades-v1",
+      "components": [
+        {
+          "name": "BotAimImprover",
+          "ref": "d796572b6d258b938a9d8db3c5d4c802a46049f7",
+          "sourceChanges": {
+            "BotAimImprover.cs": {
+              "before": "69b5c39da32cc9d80c243715506c96d483092a431f8112b975cf6e898650c453",
+              "after": "11a71b4207beeb97eef35015408458069e8c8bcb85afbf929a2dd9eea2ea2234"
+            },
+            "LocalKitDiagnostics.cs": {
+              "before": null,
+              "after": "a03fb9f3a1ab198cc1685f84d16105d35635cc6aff914b27f17dd8faaf4a4779"
+            }
+          },
+          "sourceArchive": "sources/BotAimImprover-localkit-diagnostics.zip",
+          "sourceArchiveSha256": "91394acf7abba244b3dde9fb556c628f8b30541e688123becc63e616cb56689f"
+        },
+        {
+          "name": "NadeSystem",
+          "ref": "009ce03005af68ba68dae62967bddc8e92ad172c",
+          "sourceChanges": {
+            "LocalKitDiagnostics.cs": {
+              "before": null,
+              "after": "b861eae98aba5bd6d1f0bcc40b2a9b05dad22cc35cd4d9b3898d8ac1a0b42db8"
+            },
+            "NadeSystemPlugin.Audio.cs": {
+              "before": "c722d62d0c7c76f14777e4dfea564332dcabebf0141554eea5aa413d884615d3",
+              "after": "5fcb3e2e06b380cf53452bc7a335b3adf236c65743aa8fb93de3df14ac2a0e6c"
+            },
+            "NadeSystemPlugin.Commands.cs": {
+              "before": "27bf1cfdc7531fab5bdc69cee73e5493ab596a56e7cc0af7ddfe633c3b6c9b64",
+              "after": "81a1394c4c229235f05b3829bfc2654281c5459359594fcfb32db5eb0d01057d"
+            },
+            "NadeSystemPlugin.Lifecycle.cs": {
+              "before": "f4702b757978270ae0f21b11c43a06176dcc71b404d871fbed6e954047d1f597",
+              "after": "7aa74462c2be40d016a14ff71db40d235f76befd56e276f74db3f890c1efd2fe"
+            }
+          },
+          "sourceArchive": "sources/NadeSystem-localkit-diagnostics.zip",
+          "sourceArchiveSha256": "ae670dda409a812db7c7c95e4f4b232e946084807ee701f2378308920ddc2a14"
+        }
+      ],
+      "liveInstall": false
+    },
+    "fullBundleVerified": true
+  }
+]
