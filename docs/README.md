@@ -7,6 +7,7 @@
 这些文档描述当前仍然成立的长期事实：
 
 - [PRODUCT-SCOPE.md](PRODUCT-SCOPE.md) — 产品目标、用户行为、功能边界与非目标。
+- [CONTROLLER-UX.md](CONTROLLER-UX.md) — Controller 目标信息架构、统一命名、逐页布局、交互与状态验收（目标规格，非已实现证据）。
 - [ARCHITECTURE.md](ARCHITECTURE.md) — 模块边界、ownership、依赖方向和失效隔离。
 - [UPSTREAMS.md](UPSTREAMS.md) — 外部 dependency、compatibility reference、catalog source 和 provenance 策略。
 - [LOCAL-WORKSPACE.md](LOCAL-WORKSPACE.md) — 本机固定目录、worktree 与持久数据约定。

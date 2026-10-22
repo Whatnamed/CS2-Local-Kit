@@ -8,6 +8,7 @@
 ## Canonical sources
 
 - `docs/PRODUCT-SCOPE.md`：产品目标、长期行为和明确非目标。
+- `docs/CONTROLLER-UX.md`：Controller 目标信息架构、统一命名、逐页交互与状态合同；不代表实现/实机已验收。
 - `docs/ARCHITECTURE.md`：模块边界、ownership 与失效隔离原则。
 - `docs/UPSTREAMS.md`：第三方 dependency / reference / provenance 政策。
 - `docs/LOCAL-WORKSPACE.md`：本机项目目录、worktree 与持久数据位置。
