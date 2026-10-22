@@ -31,7 +31,13 @@ manifest 可选 `humanPolicy`，缺省为历史 `isolate`；`preserve` 必须由
 - `isolatedModules` 与预检枚举出的其他可执行模块的完整身份完全相同；未知第三方模块拒绝安装，Human 不得隔离。
 
 这些字段是候选的审查契约，不能用手填 `ready` 替代共享 MetaMod/CSS/API/native Hook 的兼容核查。Controller 仍须将候选及其完整 manifest digest 编译进白名单；缺少通过门禁的联合候选时只显示阻断原因。
-现有 `Build-BotExperiment.ps1` 继续生成历史隔离格式，不会自动把旧候选升级为联合候选。联合事务已在合成目录验证，不代表真实组合已获准安装。
+`Build-BotExperiment.ps1` 保留历史隔离构建入口。`build_joint_candidate.py` 读取显式指定且完整校验的历史 payload 和绑定当前五项 binary 的兼容核查；检查全部 Bot/CSS/Human 签名与补丁原字节、前置文件及完整 Human 清单，再生成新的不可变联合包。Bot DLL、API、profile 与对应源码保持原身份；只更新构建证据、事务工具及当前目标的精确 preimages。不会自动选择最新 build 或将旧包原地改标。
+
+兼容核查的 `ready-for-manual-test` 只允许受控联合安装与用户实机测试；signature、schema、回调源码审查及合成 roundtrip 不证明真实加载或 Hook 执行安全。核查保留私有 offsets、Hook 顺序、Harmony/IPC 等运行时验证限制，不通过猜 offsets 或更换 Bot 版本消除这些限制。
+
+```powershell
+python -B scripts/bot-experiment/build_joint_candidate.py --source '<exact-verified-source-bundle>' --source-manifest-sha256 '<source-sha256>' --evidence '<compatibility.json>' --evidence-sha256 '<review-sha256>' --root 'E:\SteamLibrary\steamapps\common\Counter-Strike Global Offensive'
+```
 
 ## 将来手动操作
 

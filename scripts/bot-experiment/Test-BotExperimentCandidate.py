@@ -32,8 +32,8 @@ def run(candidate,manifest_sha):
     write(root/'.bot-experiment-fake-root','synthetic-test-only')
     write(root/'game/csgo/addons/metamod/metaplugins.ini','; synthetic baseline, no active modules\n')
     write(root/'game/csgo/gameinfo.gi','GameInfo\n{\n FileSystem\n {\n  SearchPaths\n  {\n   Game csgo/addons/metamod\n   Game csgo\n  }\n }\n}\n')
-    write(root/'game/csgo/steam.inf','PatchVersion=1.41.9.1\nClientVersion=2000933\n')
-    write(root.parent.parent/'appmanifest_730.acf','"AppState" { "buildid" "25966348" }')
+    write(root/'game/csgo/steam.inf',''.join(k+'='+v+'\n' for k,v in m['targetBuild'].items() if k!='buildId'))
+    write(root.parent.parent/'appmanifest_730.acf','"AppState" { "buildid" "'+m['targetBuild']['buildId']+'" }')
     write(root/'game/csgo/addons/counterstrikesharp/plugins/UnknownPlugin/User.dll','unknown plugin sentinel')
     write(root/'game/csgo/addons/metamod/UnknownModule.vdf','"Metamod Plugin" { "file" "addons/User/bin/User" }')
     write(home/'private-presets/personal.json','private preset sentinel')
@@ -42,12 +42,19 @@ def run(candidate,manifest_sha):
     for rel in ['game/csgo/addons/counterstrikesharp/plugins/UnknownPlugin/User.dll','game/csgo/addons/metamod/UnknownModule.vdf']:m['baselineFiles'][rel]=tx.sha(root/rel)
     m['gameBinaries']={rel:tx.sha(root/rel) for rel in m['gameBinaries']}
     m['moduleInventory']=tx.module_inventory(root)
+    joint=m.get('humanPolicy')=='preserve'
+    if joint:
+        m['coexistence']['humanFiles']={p:h for p,h in m['baselineFiles'].items() if tx.human_path(p)}
+        # Synthetic unknown-module sentinels have explicit synthetic ownership.
+        # The actual candidate was verified above; no real manifest is modified.
+        isolated=set(m['coexistence']['isolatedModules'])|{'game/csgo/addons/counterstrikesharp/plugins/UnknownPlugin','game/csgo/addons/metamod/UnknownModule.vdf'}
+        m['coexistence']['isolatedModules']={p:tx.identity(root/p) for p in isolated}
     m['bundleFiles']={rel:v['sha256'] for rel,v in tx.inventory(release).items() if v['kind']=='file'}
     write(release/'experiment-manifest.json',tx.json_bytes(m));synthetic_sha=tx.sha(release/'experiment-manifest.json')
     backups=home/'backups';tool=release/'tools/Invoke-BotExperiment.ps1'
     def command(action,apply=False,install_id=None):
         args=['pwsh','-NoProfile','-File',str(tool),'-Action',action,'-BackupRoot',str(backups),'-AllowFakeTree']
-        if action in {'Preview','Install'}:args+=['-ReleaseDir',str(release),'-ManifestSha256',synthetic_sha,'-Cs2Root',str(root),'-IsolateHumanCosmetics']
+        if action in {'Preview','Install'}:args+=['-ReleaseDir',str(release),'-ManifestSha256',synthetic_sha,'-Cs2Root',str(root),'-PreserveHumanCosmetics' if joint else '-IsolateHumanCosmetics']
         else:args+=['-InstallId',install_id]
         if apply:args+=['-Apply']
         p=subprocess.run(args,capture_output=True,text=True,encoding='utf-8',errors='replace')
@@ -56,7 +63,10 @@ def run(candidate,manifest_sha):
     before=tx.inventory(root);private=tx.inventory(home/'private-presets');home_before=tx.inventory(home)
     preview=command('Preview');tx.require(tx.inventory(home)==home_before,'Preview wrote files')
     installed=command('Install',True);backup=Path(installed['backupDir'])
-    tx.require(not (root/'game/csgo/addons/counterstrikesharp/plugins/InventorySimulator').exists(),'Human was not isolated')
+    if joint:
+        tx.require(all(tx.sha(root/p)==h for p,h in m['coexistence']['humanFiles'].items()),'Human changed during joint installation')
+    else:
+        tx.require(not (root/'game/csgo/addons/counterstrikesharp/plugins/InventorySimulator').exists(),'Human was not isolated')
     tx.require(all(tx.sha(root/e['target'])==e['sha256'] for e in m['files']),'Actual payload hash mismatch')
     home_before=tx.inventory(home);command('Restore',install_id=installed['installId'])
     tx.require(tx.inventory(home)==home_before,'Restore preview wrote files')
@@ -66,6 +76,7 @@ def run(candidate,manifest_sha):
     from collections import Counter
     result={'status':'PASS','candidate':str(candidate),'manifestSha256':manifest_sha,'actualPayloadFiles':len(m['files']),'publicEntry':'candidate/tools/Invoke-BotExperiment.ps1','actions':dict(Counter(e['action'] for e in preview['entries'])),'syntheticBaselineFiles':sum(v['kind']=='file' for v in before.values()),'installId':installed['installId'],'backupDir':str(backup),'byteForByteRestored':True,'previewWrites':0,'restorePreviewWrites':0,'realTargetApplied':False}
     result['profile']=m.get('profile')
+    result['humanPolicy']=m.get('humanPolicy','isolate')
     write(tx.REPO/'temp/actual-candidate-test.json',tx.json_bytes(result))
     write(tx.REPO/f"temp/actual-candidate-{m.get('defaultDifficulty','Medium')}-test.json",tx.json_bytes(result))
     print(json.dumps(result,indent=2))
