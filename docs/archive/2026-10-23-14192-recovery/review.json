@@ -1,0 +1,67 @@
+{
+  "status": "ready-for-manual-test",
+  "realGameAccepted": false,
+  "targetBuild": {
+    "PatchVersion": "1.41.9.2",
+    "ClientVersion": "2000935",
+    "buildId": "26144732"
+  },
+  "botRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+  "gameBinaries": {
+    "game/bin/win64/cs2.exe": "8614097aaa2761b0a7157c0045861713e769fb1e8235f50fc68f411294dd60cf",
+    "game/bin/win64/engine2.dll": "e8533af07adc3426eac95391cb70804a0a27f8391c03d36f1cfa06f50d901d29",
+    "game/bin/win64/schemasystem.dll": "2d2d04c4aa2ed8aca1c9b57f3f0d82278907e898156c417a2dd38f48c63c44f0",
+    "game/csgo/bin/win64/client.dll": "ccaf4e4926babc052994502b19ec61198a11008a39dce712921b93dd993be9f5",
+    "game/csgo/bin/win64/server.dll": "2a229dd46c8af0b52c1f49a3e343b99d9ffe946c102c56102a45b00f6a52349c"
+  },
+  "nativeSha256": "7f799ae466d4e58ff8bba3fdf810c1505358c5e5dcb51dc5d73f7eb098e5d4a2",
+  "payloadSha256": {
+    "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll": "7f799ae466d4e58ff8bba3fdf810c1505358c5e5dcb51dc5d73f7eb098e5d4a2",
+    "game/csgo/addons/counterstrikesharp/gamedata/gamedata.json": "da22c205abba36e7a2b45f2f7d1c3d0f04687dc5f132e9454b63b8162f61acf4",
+    "game/csgo/addons/BotVision/gamedata.json": "10280eead1c603b1badcab76cd7b6a52d732e985acf65cfad26b5b32f4d75f95",
+    "game/csgo/addons/BotVision/bin/win64/BotVision.dll": "a9f2925b3b717d644c5a3c9805e64e7fe56b34a0c3a32ce243dc9ecc14124461",
+    "game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll": "27b1bdcf3ab36b127f95df3a60dbe6d942ee57cc3eb53e06793e7b8b03784134"
+  },
+  "evidenceFiles": {
+    "crash-evidence.json": "ec3f8821292ec2f52c4cb7f137a6e8adfbb8c150a5cdbaedaf371370fb958228",
+    "windows-crash-events.json": "6e39abd1a81161783bad0ae48e4eb208a3e25459c255303303998d4d3a3641e0",
+    "bot-installed-signatures.json": "6f57d81f468fa246e89097f1038e73bd877b23acafa985f6ed732832ba751ee3",
+    "bot-candidate-signatures.json": "4ea77c6104fdddbebddc4e5b1f91a7ca3f0cfd2eff612bb27aa4b99aa9f91f79",
+    "css-installed-signatures.json": "57ab2cae84887749ef1afd485dabe027e5526c4769e40353d3433d474d092016",
+    "css-candidate-signatures.json": "cdd7e844fdbdb796c78b5cb9b8453a05901ceeae518e188eb1daac3b6c8a4a6a",
+    "human-candidate-signatures.json": "3ccca214c800da47480ce427d9f3f6e006c9c2df24afd6fcefeeca5532321dd0",
+    "schema.json": "cd88433039cc83de56c48e941996af78c384ba044fe6c1b0e190335c0c405f39",
+    "schema-comparison.json": "d0f5039d9b3c2451e7fe81807321a03be35d335b1df13d2476f93f90378ed725",
+    "css-auth-compiled.txt": "9877d308750646231aa34747ec023f4bc8df69f2e4c9bed330892a4d198ada4c",
+    "botvision-time-compiled.txt": "a55818e7175fd12dac948ec12c9ca2e87aa32c346fb8362975d44c5a7f000ee8",
+    "native-pe-validation.json": "eae24102bc4445b69b0d77a38978cbf5f8a30a850f9d528d129e4083c0881d46",
+    "css-submodule-refs.txt": "81ac64399624560388182780ef012eefa5d6bc0528d673f3cf2d82dd2bda14c5",
+    "css-build.log": "6b6e87633d81ab675d5d0d7e7899bf93d93d5fd21422490e1f75be171f2311eb",
+    "bot-adapter-build.json": "787ef2fb451a6e08bf362f4464788ebe87d02a44d186ec1dae7827474840301c",
+    "upstream-status.json": "95254c045ec19c254d7af6ed7a0a8b4e8edf2113d037a33c7f523359a0e2d3f6",
+    "bot-adapter-build-0.log": "7fd26f981302e48a6615b1ee7e6696624ae2cd4da4db998ab5578c950a768568",
+    "bot-adapter-build-1.log": "0fd0e78a1349e99288d4698bb8f074c89a161fff50bf2a9387fc0e95e81c1da3",
+    "bot-adapter-build-2.log": "34506536b9cb7c830e591f35afdb4eb08a6ff7a37204662ea48c1f0511c8a593",
+    "bot-adapter-build-3.log": "28690f03b9191d67dac6c54b0b45a1b446a75d39d5045c8daece4fdea52ea4f1",
+    "patches/botaim-pbot.patch": "68a3ae754c53c31a65ff4c6b086868222446d4d6453fafa77f931f3bce35fc15",
+    "patches/botvision-density.patch": "94c8ae0e1b2c102a51fa9471e9f3a0f6b9bc255f40737c06ac78509ee536e20d",
+    "patches/botvision-s2sdk.patch": "78e6433697f3e299fea6bde879c364bcf7450026c576aa76a21be5fc541fe216",
+    "patches/css-hl2sdk.patch": "2334149b86d8f1a0763873381fc4c307beecaae13459c806660234d3bcbe1037",
+    "patches/css-postthink.patch": "54c1a25a3bc0925947ab66e9091a2da424c143a51e05d3338b6dcb3fc93d4a13",
+    "recovery-tests.json": "721d0630dabe88665978d052c9b9438748e1a3b2aeaf732b279da3651277fc0a"
+  },
+  "sourceArchiveSha256": "e2494f3da96cf786b68bf5eec10b6d68a76e407356f953a8ece8a031a14adb77",
+  "adapterSourceArchiveSha256": "1b5caf81d6e955aad208265c8295743d08f1a25364aca8fb37e48498c03f9c23",
+  "findings": [
+    "Two current local minidumps: counterstrikesharp.dll+0x7e354, READ 0x2da, RAX 730. Matches CSS #1466; direct evidence identifies engine authorization ABI mismatch.",
+    "CSS 1.0.376 native rebuilt with only one method inserted into pinned HL2SDK. Authorization source is unchanged; emitted RunAuthChecks calls slots at +0x258 and +0x230; callbacks retained.",
+    "CSS #1467 PostThink signature now uniquely matches. All 28 candidate CSS and 14 retained Human patterns are unique.",
+    "BotVision frozen 9884848 rebuilt with the same one-method insertion in its pinned s2sdk. Compiled game-time call uses +0x260. Only density pattern is backported from e951169; no full BotVision/main update.",
+    "43 selected schema fields parsed from current server.dll. m_pBot moved 0x14f8 to 0x1500 and m_angEyeAngles moved 0x15ac to 0x15b4. Frozen native bindings resolve these from SchemaSystem; only managed Aim hardcodes PBot and receives the one-number source fix. Other 41 selected fields unchanged.",
+    "All 81 Bot signatures checked: 80 unique; all native component signatures unique after density fix. 41/42 patch original checks match; one guarded BotAI CALL patch is skipped exactly as existing current logs show. No relative CALL bytes guessed.",
+    "NadeSystem SmokeCreate unresolved. CSS CreateVirtualFunctionBySignature returns a native error and managed wrapper keeps zero; ExecuteVirtualFunction rejects zero. Special/recorded smoke replay not claimed fixed; plugin loaded in both failed sessions. No unrelated Bot upgrade or disablement.",
+    "MetaMod1481 pair exactly matches frozen package; observed current logs reach all 10 managed plugins. No captured fault in MetaMod. Its legacy CGlobals interface and other private vtables are not promoted to current runtime proof. Active plugins do not use GetCGlobals; native Engine methods before inserted slot remain unchanged; BotVision later GetServerGlobals call is rebuilt.",
+    "InventorySimulator C1.1 DLL, all eight Human files, profile Medium VPK, other Bot modules, CSS API/host and user data remain protected. New recovery layer writes five reviewed files and preserves original active transaction byte-for-byte.",
+    "Private/vtable layouts and real offline Bot/Human gameplay remain manual test limits. Candidate readiness is build/static/transaction evidence, not real-game acceptance."
+  ]
+}

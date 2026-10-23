@@ -1,0 +1,767 @@
+{
+  "serverSha256": "2a229dd46c8af0b52c1f49a3e343b99d9ffe946c102c56102a45b00f6a52349c",
+  "method": "Read-only static schema registration, unique class-name reference with classSize at +24, fieldCount +28 and fieldTable VA +40; all 32-byte records parsed and every field offset checked within class bounds; selected raw records retained. Inheritance uses baseCount +33 and baseTable +48 with 16-byte base records. No DLL load or live SchemaSystem query; private native layouts remain unproven.",
+  "bindings": [
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSBot",
+      "fieldName": "m_bEyeAnglesUnderPathFinderControl"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBot",
+      "fieldName": "m_pPlayer"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CEntityInstance",
+      "fieldName": "m_pEntity"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_MoveType"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_nActualMoveType"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_fFlags"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_vecAbsVelocity"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_CBodyComponent"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBodyComponent",
+      "fieldName": "m_pSceneNode"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CGameSceneNode",
+      "fieldName": "m_vecAbsOrigin"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pWeaponServices"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pItemServices"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pMovementServices"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_hController"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayerPawnBase",
+      "fieldName": "m_hOriginalController"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "v_angle"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "v_anglePrevious"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_ServerViewAngleChanges"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayerPawn",
+      "fieldName": "m_angEyeAngles"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CPlayer_WeaponServices",
+      "fieldName": "m_hActiveWeapon"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_vecLadderNormal"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CPlayer_MovementServices",
+      "fieldName": "m_vecOldViewAngles"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_bDucked"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_flDuckAmount"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_flDuckSpeed"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_bDesiresDuck"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_bDucking"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CGameSceneNode",
+      "fieldName": "m_angAbsRotation"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CEconEntity",
+      "fieldName": "m_AttributeManager"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CAttributeContainer",
+      "fieldName": "m_Item"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CEconItemView",
+      "fieldName": "m_iItemDefinitionIndex"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CPlayer_MovementServices",
+      "fieldName": "m_nButtons"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CInButtonState",
+      "fieldName": "m_pButtonStates"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/features/weapons/WeaponLocker.cpp",
+      "className": "CBasePlayerController",
+      "fieldName": "m_hPawn"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/features/weapons/WeaponLocker.cpp",
+      "className": "CCSPlayerPawn",
+      "fieldName": "m_pBot"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/features/weapons/WeaponLocker.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_lifeState"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_fFlags"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_iTeamNum"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CBasePlayerController",
+      "fieldName": "m_hPawn"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CCSPlayerController",
+      "fieldName": "m_hPlayerPawn"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/features/identity/identity_hooks.cpp",
+      "className": "CCSGameRules",
+      "fieldName": "m_bPickNewTeamsOnReset"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pWeaponServices"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CPlayer_WeaponServices",
+      "fieldName": "m_hActiveWeapon"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CBasePlayerWeapon",
+      "fieldName": "m_AttributeManager"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CAttributeContainer",
+      "fieldName": "m_Item"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CEconItemView",
+      "fieldName": "m_iItemDefinitionIndex"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/he/HeVision.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_CBodyComponent"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/he/HeVision.cpp",
+      "className": "CBodyComponent",
+      "fieldName": "m_pSceneNode"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/he/HeVision.cpp",
+      "className": "CGameSceneNode",
+      "fieldName": "m_vecAbsOrigin"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/smoke/SmokeVision.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_hController"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/smoke/SmokeVision.cpp",
+      "className": "CBot",
+      "fieldName": "m_pPlayer"
+    }
+  ],
+  "classes": [
+    {
+      "name": "CCSPlayerPawn",
+      "classSize": "0x15d0",
+      "fieldCount": 106,
+      "classNameRefFileOffset": "0x1da4678",
+      "fieldTableVa": "0x181da5240",
+      "fields": [
+        {
+          "name": "m_pBot",
+          "offset": "0x1500",
+          "recordFileOffset": "0x1da41e0",
+          "rawRecord": "70 76 79 81 01 00 00 00 00 00 00 00 00 00 00 00 00 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_angEyeAngles",
+          "offset": "0x15b4",
+          "recordFileOffset": "0x1da4560",
+          "rawRecord": "10 7a 79 81 01 00 00 00 16 00 00 00 00 00 00 f0 b4 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSBot",
+      "classSize": "0x5e38",
+      "fieldCount": 140,
+      "classNameRefFileOffset": "0x1da8e98",
+      "fieldTableVa": "0x181da9700",
+      "fields": [
+        {
+          "name": "m_bEyeAnglesUnderPathFinderControl",
+          "offset": "0x610",
+          "recordFileOffset": "0x1da80c0",
+          "rawRecord": "48 30 7b 81 01 00 00 00 10 00 00 00 00 00 00 f0 10 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_targetSpot",
+          "offset": "0x5994",
+          "recordFileOffset": "0x1da8740",
+          "rawRecord": "f8 34 7b 81 01 00 00 00 00 00 00 00 00 00 00 00 94 59 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_enemy",
+          "offset": "0x5a00",
+          "recordFileOffset": "0x1da8880",
+          "rawRecord": "c8 35 7b 81 01 00 00 00 00 00 00 00 00 00 00 00 00 5a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_isEnemyVisible",
+          "offset": "0x5a04",
+          "recordFileOffset": "0x1da88a0",
+          "rawRecord": "d0 35 7b 81 01 00 00 00 10 00 00 00 00 00 00 f0 04 5a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBot",
+      "classSize": "0x100",
+      "fieldCount": 13,
+      "classNameRefFileOffset": "0x1daa0d8",
+      "fieldTableVa": "0x181dab930",
+      "fields": [
+        {
+          "name": "m_pPlayer",
+          "offset": "0x18",
+          "recordFileOffset": "0x1da9f50",
+          "rawRecord": "18 00 7c 81 01 00 00 00 00 00 00 00 00 00 00 00 18 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CEntityInstance",
+      "classSize": "0x30",
+      "fieldCount": 3,
+      "classNameRefFileOffset": "0x1e66138",
+      "fieldTableVa": "0x181e67ad0",
+      "fields": [
+        {
+          "name": "m_pEntity",
+          "offset": "0x10",
+          "recordFileOffset": "0x1e660f0",
+          "rawRecord": "68 8f 93 81 01 00 00 00 00 00 00 00 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBaseEntity",
+      "classSize": "0x4a8",
+      "fieldCount": 85,
+      "classNameRefFileOffset": "0x1de2888",
+      "fieldTableVa": "0x181de33b0",
+      "fields": [
+        {
+          "name": "m_CBodyComponent",
+          "offset": "0x30",
+          "recordFileOffset": "0x1de19b0",
+          "rawRecord": "10 a7 81 81 01 00 00 00 00 00 00 00 00 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_lifeState",
+          "offset": "0x2d8",
+          "recordFileOffset": "0x1de1bd0",
+          "rawRecord": "90 95 7c 81 01 00 00 00 07 00 00 00 00 00 00 f0 d8 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_MoveType",
+          "offset": "0x2f3",
+          "recordFileOffset": "0x1de1c90",
+          "rawRecord": "90 a8 81 81 01 00 00 00 00 00 00 00 00 00 00 00 f3 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nActualMoveType",
+          "offset": "0x2f5",
+          "recordFileOffset": "0x1de1cd0",
+          "rawRecord": "c0 a8 81 81 01 00 00 00 00 00 00 00 00 00 00 00 f5 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iTeamNum",
+          "offset": "0x344",
+          "recordFileOffset": "0x1de1eb0",
+          "rawRecord": "38 42 7f 81 01 00 00 00 07 00 00 00 00 00 00 f0 44 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fFlags",
+          "offset": "0x388",
+          "recordFileOffset": "0x1de1fb0",
+          "rawRecord": "c0 fd 7a 81 01 00 00 00 0b 00 00 00 00 00 00 f0 88 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_vecAbsVelocity",
+          "offset": "0x38c",
+          "recordFileOffset": "0x1de1fd0",
+          "rawRecord": "38 aa 81 81 01 00 00 00 12 00 00 00 00 00 00 f0 8c 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBodyComponent",
+      "classSize": "0x78",
+      "fieldCount": 2,
+      "classNameRefFileOffset": "0x1da17f8",
+      "fieldTableVa": "0x181da31a0",
+      "fields": [
+        {
+          "name": "m_pSceneNode",
+          "offset": "0x8",
+          "recordFileOffset": "0x1da17a0",
+          "rawRecord": "00 6f 78 81 01 00 00 00 00 00 00 00 00 00 00 00 08 00 00 00 01 00 00 00 10 73 78 81 01 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CGameSceneNode",
+      "classSize": "0x110",
+      "fieldCount": 31,
+      "classNameRefFileOffset": "0x1dee638",
+      "fieldTableVa": "0x181defc50",
+      "fields": [
+        {
+          "name": "m_vecAbsOrigin",
+          "offset": "0xc8",
+          "recordFileOffset": "0x1dee370",
+          "rawRecord": "10 71 83 81 01 00 00 00 00 00 00 00 00 00 00 00 c8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_angAbsRotation",
+          "offset": "0xd4",
+          "recordFileOffset": "0x1dee390",
+          "rawRecord": "20 71 83 81 01 00 00 00 16 00 00 00 00 00 00 f0 d4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBasePlayerPawn",
+      "classSize": "0xcd0",
+      "fieldCount": 25,
+      "classNameRefFileOffset": "0x1de2dd8",
+      "fieldTableVa": "0x181de4410",
+      "fields": [
+        {
+          "name": "m_pWeaponServices",
+          "offset": "0xb10",
+          "recordFileOffset": "0x1de2a10",
+          "rawRecord": "c8 c7 79 81 01 00 00 00 00 00 00 00 00 00 00 00 10 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_pItemServices",
+          "offset": "0xb18",
+          "recordFileOffset": "0x1de2a30",
+          "rawRecord": "e0 c7 79 81 01 00 00 00 00 00 00 00 00 00 00 00 18 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_pMovementServices",
+          "offset": "0xb50",
+          "recordFileOffset": "0x1de2b10",
+          "rawRecord": "70 5b 79 81 01 00 00 00 00 00 00 00 00 00 00 00 50 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_ServerViewAngleChanges",
+          "offset": "0xb60",
+          "recordFileOffset": "0x1de2b30",
+          "rawRecord": "10 ad 81 81 01 00 00 00 00 00 00 00 00 00 00 00 60 0b 00 00 01 00 00 00 98 ae 81 81 01 00 00 00"
+        },
+        {
+          "name": "v_angle",
+          "offset": "0xbc8",
+          "recordFileOffset": "0x1de2b50",
+          "rawRecord": "18 af 81 81 01 00 00 00 16 00 00 00 00 00 00 f0 c8 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "v_anglePrevious",
+          "offset": "0xbd4",
+          "recordFileOffset": "0x1de2b70",
+          "rawRecord": "20 af 81 81 01 00 00 00 16 00 00 00 00 00 00 f0 d4 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_hController",
+          "offset": "0xc98",
+          "recordFileOffset": "0x1de2c70",
+          "rawRecord": "98 af 81 81 01 00 00 00 00 00 00 00 00 00 00 00 98 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSPlayerPawnBase",
+      "classSize": "0xe20",
+      "fieldCount": 15,
+      "classNameRefFileOffset": "0x1da45d8",
+      "fieldTableVa": "0x181da6110",
+      "fields": [
+        {
+          "name": "m_hOriginalController",
+          "offset": "0xe14",
+          "recordFileOffset": "0x1da48d0",
+          "rawRecord": "18 7c 79 81 01 00 00 00 00 00 00 00 00 00 00 00 14 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CPlayer_WeaponServices",
+      "classSize": "0xb0",
+      "fieldCount": 5,
+      "classNameRefFileOffset": "0x1e25398",
+      "fieldTableVa": "0x181e26ce0",
+      "fields": [
+        {
+          "name": "m_hActiveWeapon",
+          "offset": "0x60",
+          "recordFileOffset": "0x1e25300",
+          "rawRecord": "30 a1 95 81 01 00 00 00 00 00 00 00 00 00 00 00 60 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSPlayer_MovementServices",
+      "classSize": "0xfe0",
+      "fieldCount": 50,
+      "classNameRefFileOffset": "0x1e191f8",
+      "fieldTableVa": "0x181e1a5a0",
+      "fields": [
+        {
+          "name": "m_vecLadderNormal",
+          "offset": "0x3f8",
+          "recordFileOffset": "0x1e18c00",
+          "rawRecord": "e0 72 92 81 01 00 00 00 12 00 00 00 00 00 00 f0 f8 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bDucked",
+          "offset": "0x408",
+          "recordFileOffset": "0x1e18c40",
+          "rawRecord": "18 73 92 81 01 00 00 00 10 00 00 00 00 00 00 f0 08 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flDuckAmount",
+          "offset": "0x40c",
+          "recordFileOffset": "0x1e18c60",
+          "rawRecord": "28 73 92 81 01 00 00 00 0e 00 00 00 00 00 00 f0 0c 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flDuckSpeed",
+          "offset": "0x410",
+          "recordFileOffset": "0x1e18c80",
+          "rawRecord": "38 73 92 81 01 00 00 00 0e 00 00 00 00 00 00 f0 10 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bDesiresDuck",
+          "offset": "0x415",
+          "recordFileOffset": "0x1e18cc0",
+          "rawRecord": "58 73 92 81 01 00 00 00 10 00 00 00 00 00 00 f0 15 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bDucking",
+          "offset": "0x416",
+          "recordFileOffset": "0x1e18ce0",
+          "rawRecord": "68 73 92 81 01 00 00 00 10 00 00 00 00 00 00 f0 16 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CPlayer_MovementServices",
+      "classSize": "0x258",
+      "fieldCount": 18,
+      "classNameRefFileOffset": "0x1e24928",
+      "fieldTableVa": "0x181e260d0",
+      "fields": [
+        {
+          "name": "m_nButtons",
+          "offset": "0x50",
+          "recordFileOffset": "0x1e246f0",
+          "rawRecord": "28 7e 95 81 01 00 00 00 00 00 00 00 00 00 00 00 50 00 00 00 01 00 00 00 e8 7d 95 81 01 00 00 00"
+        },
+        {
+          "name": "m_vecOldViewAngles",
+          "offset": "0x240",
+          "recordFileOffset": "0x1e248f0",
+          "rawRecord": "98 7f 95 81 01 00 00 00 16 00 00 00 00 00 00 f0 40 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CEconEntity",
+      "classSize": "0xeb0",
+      "fieldCount": 9,
+      "classNameRefFileOffset": "0x1e561a8",
+      "fieldTableVa": "0x181e57a60",
+      "fields": [
+        {
+          "name": "m_AttributeManager",
+          "offset": "0xa58",
+          "recordFileOffset": "0x1e56060",
+          "rawRecord": "98 1f 7c 81 01 00 00 00 00 00 00 00 00 00 00 00 58 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CAttributeContainer",
+      "classSize": "0x438",
+      "fieldCount": 1,
+      "classNameRefFileOffset": "0x1e55fe8",
+      "fieldTableVa": "0x181e579b0",
+      "fields": [
+        {
+          "name": "m_Item",
+          "offset": "0x50",
+          "recordFileOffset": "0x1e55fb0",
+          "rawRecord": "3c 08 a1 81 01 00 00 00 00 00 00 00 00 00 00 00 50 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CEconItemView",
+      "classSize": "0x3e8",
+      "fieldCount": 15,
+      "classNameRefFileOffset": "0x1e567e8",
+      "fieldTableVa": "0x181e57ff0",
+      "fields": [
+        {
+          "name": "m_iItemDefinitionIndex",
+          "offset": "0x38",
+          "recordFileOffset": "0x1e565f0",
+          "rawRecord": "00 85 a1 81 01 00 00 00 00 00 00 00 00 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CInButtonState",
+      "classSize": "0x20",
+      "fieldCount": 1,
+      "classNameRefFileOffset": "0x1ded418",
+      "fieldTableVa": "0x181deede8",
+      "fields": [
+        {
+          "name": "m_pButtonStates",
+          "offset": "0x8",
+          "recordFileOffset": "0x1ded3e8",
+          "rawRecord": "80 60 83 81 01 00 00 00 00 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBasePlayerController",
+      "classSize": "0x7d8",
+      "fieldCount": 25,
+      "classNameRefFileOffset": "0x1e1c9e8",
+      "fieldTableVa": "0x181e1e0b0",
+      "fields": [
+        {
+          "name": "m_hPawn",
+          "offset": "0x4e0",
+          "recordFileOffset": "0x1e1c6f0",
+          "rawRecord": "30 55 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 e0 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSPlayerController",
+      "classSize": "0xab8",
+      "fieldCount": 93,
+      "classNameRefFileOffset": "0x1e18928",
+      "fieldTableVa": "0x181e19750",
+      "fields": [
+        {
+          "name": "m_hPlayerPawn",
+          "offset": "0x8ec",
+          "recordFileOffset": "0x1e183f0",
+          "rawRecord": "d8 45 92 81 01 00 00 00 00 00 00 00 00 00 00 00 ec 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSGameRules",
+      "classSize": "0x11448",
+      "fieldCount": 189,
+      "classNameRefFileOffset": "0x1e06b38",
+      "fieldTableVa": "0x181e0b4e0",
+      "fields": [
+        {
+          "name": "m_bPickNewTeamsOnReset",
+          "offset": "0xdbe",
+          "recordFileOffset": "0x1e0a5e0",
+          "rawRecord": "b8 87 8c 81 01 00 00 00 10 00 00 00 00 00 00 f0 be 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBasePlayerWeapon",
+      "classSize": "0xef0",
+      "fieldCount": 8,
+      "classNameRefFileOffset": "0x1e1c4c8",
+      "fieldTableVa": "0x181e1ddb0",
+      "fields": []
+    }
+  ],
+  "missing": [
+    {
+      "name": "CCSBot",
+      "field": "m_gameState",
+      "status": "not directly registered; no invented offset"
+    }
+  ],
+  "inheritedFields": [
+    {
+      "offset": "0xa58",
+      "classChain": [
+        "CBasePlayerWeapon",
+        "CEconEntity"
+      ],
+      "recordFileOffset": "0x1e56060",
+      "rawRecord": "98 1f 7c 81 01 00 00 00 00 00 00 00 00 00 00 00 58 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+      "baseRecordFileOffset": "0x1e1c4b0",
+      "baseRawRecord": "00 00 00 00 00 00 00 00 a0 7b e5 81 01 00 00 00",
+      "name": "CBasePlayerWeapon",
+      "field": "m_AttributeManager"
+    }
+  ]
+}

@@ -1,0 +1,375 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "2a229dd46c8af0b52c1f49a3e343b99d9ffe946c102c56102a45b00f6a52349c"
+    }
+  },
+  "results": [
+    {
+      "name": "CSS-installed/UTIL_ClientPrintAll",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 8B E9 49 8B D9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xfef360",
+          "fileOffset": "0xfee760"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/ClientPrint",
+      "library": "server",
+      "pattern": "48 85 C9 0F 84 ? ? ? ? 48 89 5C 24 ? 55",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x98df30",
+          "fileOffset": "0x98d330"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CCSPlayerController_SwitchTeam",
+      "library": "server",
+      "pattern": "40 53 57 48 81 EC ? ? ? ? 48 8B D9 8B FA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xaa1f00",
+          "fileOffset": "0xaa1300"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBasePlayerController_SetPawn",
+      "library": "server",
+      "pattern": "44 88 4C 24 ? 53 57 41 54",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb7bb50",
+          "fileOffset": "0xb7af50"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CCSPlayerPawnBase_PostThink",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 54 48 8B EC 48 83 EC ? 4C 89 AC 24 ? ? ? ? 48 8B F1 E8 ? ? ? ?",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2235e0",
+          "fileOffset": "0x2229e0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CGameEventManager_Init",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B 01 48 8B D9 FF 50 ? 48 8B 03",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc0a420",
+          "fileOffset": "0xc09820"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/GiveNamedItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 44 89 44 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xabdcd0",
+          "fileOffset": "0xabd0d0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc36270",
+          "fileOffset": "0xc35670"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBaseModelEntity_SetModel",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B D9 4C 8B C2 48 8B 0D ? ? ? ? 48 8D 54 24 ? 48 8B 01 FF 50 ? 48 8B 54 24 ? 48 8B CB E8 ? ? ? ? 48 83 C4 ? 5B C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC 48 89 5C 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb7b450",
+          "fileOffset": "0xb7a850"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CCSPlayer_WeaponServices_CanUse",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 54 41 56 41 57 48 83 EC ? 48 8B 01 48 8B FA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb07d20",
+          "fileOffset": "0xb07120"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CCSPlayer_ItemServices_CanAcquire",
+      "library": "server",
+      "pattern": "44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8B EC",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xabed00",
+          "fileOffset": "0xabe100"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/GetCSWeaponDataFromKey",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 33 FF 4C 8B CA 8B D9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x5506f0",
+          "fileOffset": "0x54faf0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CCSGameRules_TerminateRound",
+      "library": "server",
+      "pattern": "48 8B C4 4C 89 48 ? 48 89 48 ? 55 41 54",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x96ae60",
+          "fileOffset": "0x96a260"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/UTIL_CreateEntityByName",
+      "library": "server",
+      "pattern": "48 83 EC ? C6 44 24 ? ? 4C 8B C1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbf4c90",
+          "fileOffset": "0xbf4090"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBaseEntity_DispatchSpawn",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 48 85 C9 0F 84 ? ? ? ? 48 85 D2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xcafc70",
+          "fileOffset": "0xcaf070"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBaseEntity_EmitSoundFilter",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 4C 89 4C 24 ? 48 8B D9 45 8B C8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xf6edf0",
+          "fileOffset": "0xf6e1f0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CEntityInstance_AcceptInput",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 81 EC ? ? ? ? 4D 8B F0 48 8B F1",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13ae4d0",
+          "fileOffset": "0x13ad8d0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CEntitySystem_AddEntityIOEvent",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 49 8B F1 48 8B F9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1380a60",
+          "fileOffset": "0x137fe60"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/LegacyGameEventListener",
+      "library": "server",
+      "pattern": "48 8B 15 ? ? ? ? 48 85 D2 74 ? 85 C9",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc080f0",
+          "fileOffset": "0xc074f0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBasePlayerPawn_RemovePlayerItem",
+      "library": "server",
+      "pattern": "48 85 D2 0F 84 ? ? ? ? 48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb0a0a0",
+          "fileOffset": "0xb094a0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBaseEntity_TakeDamageOld",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 54 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4D 8B E0",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3f3ae0",
+          "fileOffset": "0x3f2ee0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBaseTrigger_StartTouch",
+      "library": "server",
+      "pattern": "40 57 41 56 48 83 EC ? 48 8B 01",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3f37a0",
+          "fileOffset": "0x3f2ba0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CBaseTrigger_EndTouch",
+      "library": "server",
+      "pattern": "40 53 41 55 48 83 EC ? 83 BA",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x14b1530",
+          "fileOffset": "0x14b0930"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CEntityIOOutput_FireOutputInternal",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 48 ? 55",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1397a40",
+          "fileOffset": "0x1396e40"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/IGameSystem_InitAllSystems_pFirst",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 85 DB 0F 84 ? ? ? ? BD",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x54c4c3",
+          "fileOffset": "0x54b8c3"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/NetworkStateChanged",
+      "library": "server",
+      "pattern": "4C 8B C2 48 8B D1 48 8B 09",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13b19a0",
+          "fileOffset": "0x13b0da0"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/Host_Say",
+      "library": "server",
+      "pattern": "44 89 4C 24 ? 44 88 44 24",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xd00210",
+          "fileOffset": "0xcff610"
+        }
+      ]
+    },
+    {
+      "name": "CSS-installed/CCSNavArea_IsValidNavMesh",
+      "library": "server",
+      "pattern": "48 83 3D ? ? ? ? ? 0F 95 C0 C3 CC CC CC CC C2",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xdde880",
+          "fileOffset": "0xdddc80"
+        }
+      ]
+    }
+  ]
+}

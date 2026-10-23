@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "commands": [
+    [
+      "E:\\Dev\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+      "-S",
+      "E:\\Projects\\CS2-Local-Kit\\wt-compat-14192-20261023\\temp\\bot-adapters-14192\\BotVision",
+      "-B",
+      "E:\\Projects\\CS2-Local-Kit\\wt-compat-14192-20261023\\temp\\bot-adapters-14192\\vision-build",
+      "-G",
+      "Visual Studio 17 2022",
+      "-A",
+      "x64",
+      "-DCMAKE_DISABLE_FIND_PACKAGE_Git=ON",
+      "-DPLUGIN_VERSION=0.4.0-local.14192"
+    ],
+    [
+      "E:\\Dev\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+      "--build",
+      "E:\\Projects\\CS2-Local-Kit\\wt-compat-14192-20261023\\temp\\bot-adapters-14192\\vision-build",
+      "--config",
+      "Release",
+      "--parallel",
+      "4"
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "restore",
+      "E:\\Projects\\CS2-Local-Kit\\wt-compat-14192-20261023\\temp\\bot-adapters-14192\\BotAimImprover\\BotAimImprover.csproj",
+      "--source",
+      "C:\\Users\\hasee\\.nuget\\packages",
+      "-p:NuGetAudit=false",
+      "-p:RestoreFallbackFolders="
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "build",
+      "E:\\Projects\\CS2-Local-Kit\\wt-compat-14192-20261023\\temp\\bot-adapters-14192\\BotAimImprover\\BotAimImprover.csproj",
+      "-c",
+      "Release",
+      "--no-restore",
+      "-p:NuGetAudit=false",
+      "-p:SourceRevisionId=d796572+14192"
+    ]
+  ],
+  "botVisionSha256": "a9f2925b3b717d644c5a3c9805e64e7fe56b34a0c3a32ce243dc9ecc14124461",
+  "botAimSha256": "27b1bdcf3ab36b127f95df3a60dbe6d942ee57cc3eb53e06793e7b8b03784134",
+  "changes": [
+    "BotVision s2sdk IsSpawnGroupLoadedForClient insertion",
+    "BotAimImprover Windows PBot 0x14F8 -> 0x1500"
+  ],
+  "baseVisionRef": "9884848b340434c906ecd1b0f7a0d1d5e8ca140c",
+  "baseAimRef": "d796572b6d258b938a9d8db3c5d4c802a46049f7"
+}

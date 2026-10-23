@@ -1,0 +1,199 @@
+-- Selecting Windows SDK version 10.0.26100.0 to target Windows 10.0.26200.
+-- The C compiler identification is MSVC 19.44.35229.0
+-- The CXX compiler identification is MSVC 19.44.35229.0
+-- The ASM compiler identification is MSVC
+-- Found assembler: E:/Dev/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: E:/Dev/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: E:/Dev/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/cl.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Build spdlog: 1.12.0
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE
+-- Build type: Release
+CMake Deprecation Warning at libraries/dyncall/CMakeLists.txt:21 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+-- Performing Test COMPILER_HAS_FPIC
+-- Performing Test COMPILER_HAS_FPIC - Failed
+-- The ASM_MASM compiler identification is MSVC
+-- Found assembler: E:/Dev/BuildTools/VC/Tools/MSVC/14.44.35207/bin/Hostx64/x64/ml64.exe
+-- Could NOT find LATEX (missing: LATEX_COMPILER) 
+-- Configuring done (8.7s)
+-- Generating done (0.7s)
+-- Build files have been written to: E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/css-build
+适用于 .NET Framework MSBuild 版本 17.14.60+43b635718
+
+  1>Checking Build System
+  Generating protobuf file
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: network_connection.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: networkbasetypes.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: valveextensions.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+networkbasetypes.proto(3,1): warning G4EC7C31A: Import network_connection.proto is unused. [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: cs_gameevents.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: engine_gcmessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+engine_gcmessages.proto(1,1): warning GB15E7FD0: Import google/protobuf/descriptor.proto is unused. [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: gcsdk_gcmessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: steammessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: cstrike15_gcmessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: cstrike15_usermessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: source2_steam_stats.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: netmessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: usermessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: gameevents.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: clientmessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: te.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Protobufs.vcxproj]
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/upstream/css/libraries/dyncall/dyncallback/CMakeLists.txt
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/upstream/css/libraries/dyncall/dyncall/CMakeLists.txt
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/upstream/css/libraries/dyncall/dynload/CMakeLists.txt
+  Assembling E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\dyncall\dyncallback\dyncall_callback_x64_masm.asm...
+  Assembling E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\dyncall\dyncall\dyncall_call_x64_generic_masm.asm...
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/upstream/css/libraries/spdlog/CMakeLists.txt
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/upstream/css/CMakeLists.txt
+  dyncall_vector.c
+  dyncall_thunk.c
+  dyncall_alloc_wx.c
+  dyncall_struct.c
+  network_connection.pb.cc
+  networkbasetypes.pb.cc
+  cs_gameevents.pb.cc
+  engine_gcmessages.pb.cc
+  dynload.c
+  gcsdk_gcmessages.pb.cc
+  dyncall_api.c
+  cstrike15_gcmessages.pb.cc
+  dyncall_callvm.c
+  spdlog.cpp
+  stdout_sinks.cpp
+  cstrike15_usermessages.pb.cc
+  valveextensions.pb.cc
+  color_sinks.cpp
+  file_sinks.cpp
+  source2_steam_stats.pb.cc
+  async.cpp
+  netmessages.pb.cc
+  steammessages.pb.cc
+  cfg.cpp
+  bundled_fmtlib_format.cpp
+  usermessages.pb.cc
+  dyncall_callvm_base.c
+  dyncall_callf.c
+  正在生成代码...
+  dynload_syms.c
+  dyncall_args.c
+  dyncall_callback.c
+  正在生成代码...
+  正在生成代码...
+  dyncall_s.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\libraries\dyncall\dyncall\Release\dyncall_s.lib
+  dyncallback_s.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\libraries\dyncall\dyncallback\Release\dyncallback_s.lib
+  gameevents.pb.cc
+  clientmessages.pb.cc
+  te.pb.cc
+  dynload_s.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\libraries\dyncall\dynload\Release\dynload_s.lib
+  spdlog.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\libraries\spdlog\Release\spdlog.lib
+  Protobufs.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Release\Protobufs.lib
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/upstream/css/CMakeLists.txt
+  memoverride.cpp
+  mm_plugin.cpp
+  convar.cpp
+  keyvalues3.cpp
+  entityidentity.cpp
+  entitysystem.cpp
+  entitykeyvalues.cpp
+  dotnet_host.cpp
+  globals.cpp
+  coreconfig.cpp
+  gameconfig.cpp
+  gameconfig_updater.cpp
+  log.cpp
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/libraries/hl2sdk-cs2/tier1/keyvalues3.cpp”)
+  
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/libraries/hl2sdk-cs2/entity2/entitykeyvalues.cpp”)
+  
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/libraries/hl2sdk-cs2/tier1/convar.cpp”)
+  
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/libraries/hl2sdk-cs2/entity2/entitysystem.cpp”)
+  
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/libraries/hl2sdk-cs2/entity2/entityidentity.cpp”)
+  
+  script_engine.cpp
+  callback_manager.cpp
+  event_manager.cpp
+  timer_system.cpp
+  tick_scheduler.cpp
+  natives_engine.cpp
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\httplib\httplib.h(618,33): warning C4355: “this”: 用于基成员初始值设定项列表 [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/src/core/gameconfig_updater.cpp”)
+  
+  natives_callbacks.cpp
+  player_manager.cpp
+  natives_vector.cpp
+  natives_timers.cpp
+  natives_events.cpp
+  memory.cpp
+  con_command_manager.cpp
+  natives_commands.cpp
+  natives_convars.cpp
+  memory_module.cpp
+  cs2_interfaces.cpp
+  navphysicsinterface.cpp
+  schema.cpp
+  dynamic_hook.cpp
+  function.cpp
+  natives_memory.cpp
+  natives_schema.cpp
+  natives_entities.cpp
+  natives_voice.cpp
+  natives_metamod.cpp
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/src/scripting/natives/natives_entities.cpp”)
+  
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/src/scripting/natives/natives_voice.cpp”)
+  
+  natives_cvariant.cpp
+  natives_cutil.cpp
+  entity_manager.cpp
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/src/scripting/natives/natives_cutil.cpp”)
+  
+E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\upstream\css\libraries\hl2sdk-cs2\public\tier1\utlbuffer.h(965,6): warning C4312: “类型强制转换”: 从“unsigned int”转换到更大的“void *” [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\counterstrikesharp.vcxproj]
+  (编译源文件“../upstream/css/src/scripting/natives/natives_cvariant.cpp”)
+  
+  chat_manager.cpp
+  server_manager.cpp
+  natives_server.cpp
+  natives_usermessages.cpp
+  voice_manager.cpp
+  usermessage_manager.cpp
+  natives_raytrace.cpp
+  natives_dynamichooks.cpp
+  game_system.cpp
+  UserMessage.cpp
+  customhudlayout.cpp
+  natives_customhud.cpp
+    正在创建库 E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/css-build/Release/counterstrikesharp.lib 和对象 E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/css-build/Release/counterstrikesharp.exp
+  counterstrikesharp.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\css-build\Release\counterstrikesharp.dll
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/upstream/css/CMakeLists.txt

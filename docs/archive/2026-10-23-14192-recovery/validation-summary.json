@@ -1,0 +1,32 @@
+{
+  "status": "ready-for-authorized-install",
+  "actualWritesApplied": false,
+  "cs2StartedByAgent": false,
+  "targetBuild": {
+    "PatchVersion": "1.41.9.2",
+    "ClientVersion": "2000935",
+    "buildId": "26144732"
+  },
+  "parentInstallId": "b613a8c709c7440998346cb802bb790f",
+  "newRecoveryRoot": "E:/CS2MOD/backups/compat-14192",
+  "recoveryChecksPassed": 21,
+  "existingTransactionTestsPassed": 40,
+  "protectedFiles": 631,
+  "retainedFiles": 626,
+  "changedFiles": 5,
+  "signatureResults": {
+    "css": "28/28 unique",
+    "human": "14/14 unique",
+    "bot": "80/81 unique; SmokeCreate unresolved",
+    "patchOriginalBytes": "41/42 match; mismatched BotAI patch guarded/skipped"
+  },
+  "schemaFields": {
+    "reviewed": 43,
+    "unchanged": 41,
+    "moved": [
+      "CCSPlayerPawn.m_pBot",
+      "CCSPlayerPawn.m_angEyeAngles"
+    ]
+  },
+  "realGameAccepted": false
+}

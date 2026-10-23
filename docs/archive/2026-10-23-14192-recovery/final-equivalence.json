@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "finalManifestSha256": "efaba2fadecb7c016cd843e7f35f691b70847946c6c5d35bb97f4f0c7d9fb073",
+  "testedManifestSha256": "bb416a89fd4de456a6b1b63731b96e3564978125f0077271b90f2b84c5d925f5",
+  "sameFivePayloadsAndThreeRuntimeTools": true,
+  "sameProtectedParentAndTargetIdentities": true,
+  "finalZipCompleteAndHashesVerified": true,
+  "personalFixtureNotBundled": true,
+  "newRealGameAcceptance": false
+}

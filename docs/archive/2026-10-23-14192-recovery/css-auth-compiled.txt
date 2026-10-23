@@ -1,0 +1,271 @@
+?IsAuthStringValidated@CPlayer@counterstrikesharp@@QEBA_NXZ (public: bool __cdecl counterstrikesharp::CPlayer::IsAuthStringValidated(void)const ):
+  0000000000000000: 80 79 41 00        cmp         byte ptr [rcx+41h],0
+  0000000000000004: 48 8B D1           mov         rdx,rcx
+  0000000000000007: 75 14              jne         000000000000001D
+  0000000000000009: 48 8B 0D 00 00 00  mov         rcx,qword ptr [?engine@globals@counterstrikesharp@@3PEAVIVEngineServer2@@EA]
+                    00
+  0000000000000010: 8B 52 48           mov         edx,dword ptr [rdx+48h]
+  0000000000000013: 48 8B 01           mov         rax,qword ptr [rcx]
+  0000000000000016: 48 FF A0 58 02 00  jmp         qword ptr [rax+258h]
+                    00
+  000000000000001D: 32 C0              xor         al,al
+  000000000000001F: C3                 ret
+
+
+?OnAuthorized@PlayerManager@counterstrikesharp@@QEBAXPEAVCPlayer@2@@Z (public: void __cdecl counterstrikesharp::PlayerManager::OnAuthorized(class counterstrikesharp::CPlayer *)const ):
+  0000000000000000: 48 89 5C 24 18     mov         qword ptr [rsp+18h],rbx
+  0000000000000005: 55                 push        rbp
+  0000000000000006: 56                 push        rsi
+  0000000000000007: 57                 push        rdi
+  0000000000000008: 48 81 EC 90 00 00  sub         rsp,90h
+                    00
+  000000000000000F: 48 83 7A 18 0F     cmp         qword ptr [rdx+18h],0Fh
+  0000000000000014: 48 8B F9           mov         rdi,rcx
+  0000000000000017: 48 8B 42 50        mov         rax,qword ptr [rdx+50h]
+  000000000000001B: 48 8B DA           mov         rbx,rdx
+  000000000000001E: 48 8B 35 00 00 00  mov         rsi,qword ptr [?m_core_logger@Log@counterstrikesharp@@0V?$shared_ptr@Vlogger@spdlog@@@std@@A]
+                    00
+  0000000000000025: 48 8B CA           mov         rcx,rdx
+  0000000000000028: 4C 8B 00           mov         r8,qword ptr [rax]
+  000000000000002B: 4C 89 84 24 B0 00  mov         qword ptr [rsp+0B0h],r8
+                    00 00
+  0000000000000033: 76 03              jbe         0000000000000038
+  0000000000000035: 48 8B 0A           mov         rcx,qword ptr [rdx]
+  0000000000000038: E8 00 00 00 00     call        strdup
+  000000000000003D: 48 89 84 24 B8 00  mov         qword ptr [rsp+0B8h],rax
+                    00 00
+  0000000000000045: 4C 8D 4C 24 30     lea         r9,[rsp+30h]
+  000000000000004A: 33 C0              xor         eax,eax
+  000000000000004C: 48 8D 54 24 70     lea         rdx,[rsp+70h]
+  0000000000000051: 48 89 44 24 40     mov         qword ptr [rsp+40h],rax
+  0000000000000056: 33 ED              xor         ebp,ebp
+  0000000000000058: 0F 57 C0           xorps       xmm0,xmm0
+  000000000000005B: 48 89 6C 24 50     mov         qword ptr [rsp+50h],rbp
+  0000000000000060: 0F 11 44 24 30     movups      xmmword ptr [rsp+30h],xmm0
+  0000000000000065: 89 6C 24 38        mov         dword ptr [rsp+38h],ebp
+  0000000000000069: 45 33 C0           xor         r8d,r8d
+  000000000000006C: 48 8B 44 24 38     mov         rax,qword ptr [rsp+38h]
+  0000000000000071: 48 8B CE           mov         rcx,rsi
+  0000000000000074: 48 C1 E8 20        shr         rax,20h
+  0000000000000078: 89 44 24 5C        mov         dword ptr [rsp+5Ch],eax
+  000000000000007C: 48 8D 05 00 00 00  lea         rax,[??_C@_0CG@NBNLCLLK@?$FLPlayerManager?$FN?$FLOnAuthorized?$FN?5?9@]
+                    00
+  0000000000000083: 48 89 44 24 30     mov         qword ptr [rsp+30h],rax
+  0000000000000088: 48 8D 84 24 B0 00  lea         rax,[rsp+0B0h]
+                    00 00
+  0000000000000090: 48 89 44 24 28     mov         qword ptr [rsp+28h],rax
+  0000000000000095: 48 8D 84 24 B8 00  lea         rax,[rsp+0B8h]
+                    00 00
+  000000000000009D: 89 6C 24 58        mov         dword ptr [rsp+58h],ebp
+  00000000000000A1: 0F 10 44 24 50     movups      xmm0,xmmword ptr [rsp+50h]
+  00000000000000A6: 48 89 6C 24 60     mov         qword ptr [rsp+60h],rbp
+  00000000000000AB: F2 0F 10 4C 24 60  movsd       xmm1,mmword ptr [rsp+60h]
+  00000000000000B1: 48 89 44 24 20     mov         qword ptr [rsp+20h],rax
+  00000000000000B6: 48 C7 44 24 38 25  mov         qword ptr [rsp+38h],25h
+                    00 00 00
+  00000000000000BF: 0F 29 44 24 70     movaps      xmmword ptr [rsp+70h],xmm0
+  00000000000000C4: F2 0F 11 8C 24 80  movsd       mmword ptr [rsp+80h],xmm1
+                    00 00 00
+  00000000000000CD: E8 00 00 00 00     call        ??$log_@PEBD_K@logger@spdlog@@IEAAXUsource_loc@1@W4level_enum@level@1@V?$basic_string_view@D@v9@fmt@@$$QEAPEBD$$QEA_K@Z
+  00000000000000D2: 48 8B 8F 80 00 00  mov         rcx,qword ptr [rdi+80h]
+                    00
+  00000000000000D9: 48 83 C1 58        add         rcx,58h
+  00000000000000DD: E8 00 00 00 00     call        ?Reset@ScriptContext@counterstrikesharp@@QEAAXXZ
+  00000000000000E2: 4C 8B 87 80 00 00  mov         r8,qword ptr [rdi+80h]
+                    00
+  00000000000000E9: 8B 53 48           mov         edx,dword ptr [rbx+48h]
+  00000000000000EC: 49 63 40 60        movsxd      rax,dword ptr [r8+60h]
+  00000000000000F0: 49 8B 48 58        mov         rcx,qword ptr [r8+58h]
+  00000000000000F4: 48 89 2C C1        mov         qword ptr [rcx+rax*8],rbp
+  00000000000000F8: 49 63 40 60        movsxd      rax,dword ptr [r8+60h]
+  00000000000000FC: 89 14 C1           mov         dword ptr [rcx+rax*8],edx
+  00000000000000FF: 41 FF 40 60        inc         dword ptr [r8+60h]
+  0000000000000103: 49 8B 80 80 00 00  mov         rax,qword ptr [r8+80h]
+                    00
+  000000000000010A: FF 00              inc         dword ptr [rax]
+  000000000000010C: 4C 8B 87 80 00 00  mov         r8,qword ptr [rdi+80h]
+                    00
+  0000000000000113: 48 8B 43 50        mov         rax,qword ptr [rbx+50h]
+  0000000000000117: 49 63 50 60        movsxd      rdx,dword ptr [r8+60h]
+  000000000000011B: 48 8B 00           mov         rax,qword ptr [rax]
+  000000000000011E: 49 8B 48 58        mov         rcx,qword ptr [r8+58h]
+  0000000000000122: 48 89 04 D1        mov         qword ptr [rcx+rdx*8],rax
+  0000000000000126: B2 01              mov         dl,1
+  0000000000000128: 41 FF 40 60        inc         dword ptr [r8+60h]
+  000000000000012C: 49 8B 80 80 00 00  mov         rax,qword ptr [r8+80h]
+                    00
+  0000000000000133: FF 00              inc         dword ptr [rax]
+  0000000000000135: 48 8B 8F 80 00 00  mov         rcx,qword ptr [rdi+80h]
+                    00
+  000000000000013C: 48 8B 9C 24 C0 00  mov         rbx,qword ptr [rsp+0C0h]
+                    00 00
+  0000000000000144: 48 81 C4 90 00 00  add         rsp,90h
+                    00
+  000000000000014B: 5F                 pop         rdi
+  000000000000014C: 5E                 pop         rsi
+  000000000000014D: 5D                 pop         rbp
+  000000000000014E: E9 00 00 00 00     jmp         ?Execute@ScriptCallback@counterstrikesharp@@QEAAX_N@Z
+
+
+?RunAuthChecks@PlayerManager@counterstrikesharp@@QEAAXXZ (public: void __cdecl counterstrikesharp::PlayerManager::RunAuthChecks(void)):
+  0000000000000000: 40 55              push        rbp
+  0000000000000002: 48 81 EC A0 00 00  sub         rsp,0A0h
+                    00
+  0000000000000009: 48 8B E9           mov         rbp,rcx
+  000000000000000C: 48 8D 0D 00 00 00  lea         rcx,[?timerSystem@globals@counterstrikesharp@@3VTimerSystem@2@A]
+                    00
+  0000000000000013: E8 00 00 00 00     call        ?GetTickedTime@TimerSystem@counterstrikesharp@@QEAANXZ
+  0000000000000018: F3 0F 10 4D 48     movss       xmm1,dword ptr [rbp+48h]
+  000000000000001D: F2 0F 10 15 00 00  movsd       xmm2,mmword ptr [__real@3fe0000000000000]
+                    00 00
+  0000000000000025: 0F 5A C9           cvtps2pd    xmm1,xmm1
+  0000000000000028: F2 0F 5C C1        subsd       xmm0,xmm1
+  000000000000002C: 66 0F 2F D0        comisd      xmm2,xmm0
+  0000000000000030: 0F 87 38 02 00 00  ja          000000000000026E
+  0000000000000036: 48 89 B4 24 C8 00  mov         qword ptr [rsp+0C8h],rsi
+                    00 00
+  000000000000003E: 48 8D 0D 00 00 00  lea         rcx,[?timerSystem@globals@counterstrikesharp@@3VTimerSystem@2@A]
+                    00
+  0000000000000045: 4C 89 BC 24 80 00  mov         qword ptr [rsp+80h],r15
+                    00 00
+  000000000000004D: E8 00 00 00 00     call        ?GetTickedTime@TimerSystem@counterstrikesharp@@QEAANXZ
+  0000000000000052: 0F 57 C9           xorps       xmm1,xmm1
+  0000000000000055: 45 33 FF           xor         r15d,r15d
+  0000000000000058: F2 0F 5A C8        cvtsd2ss    xmm1,xmm0
+  000000000000005C: 41 8B F7           mov         esi,r15d
+  000000000000005F: F3 0F 11 4D 48     movss       dword ptr [rbp+48h],xmm1
+  0000000000000064: E8 00 00 00 00     call        ?getGlobalVars@globals@counterstrikesharp@@YAPEAVCGlobalVars@@XZ
+  0000000000000069: 44 39 78 10        cmp         dword ptr [rax+10h],r15d
+  000000000000006D: 0F 8C EB 01 00 00  jl          000000000000025E
+  0000000000000073: 48 89 BC 24 98 00  mov         qword ptr [rsp+98h],rdi
+                    00 00
+  000000000000007B: 41 8B FF           mov         edi,r15d
+  000000000000007E: 4C 89 A4 24 90 00  mov         qword ptr [rsp+90h],r12
+                    00 00
+  0000000000000086: 4C 8D 25 00 00 00  lea         r12,[??_C@_0CG@NBNLCLLK@?$FLPlayerManager?$FN?$FLOnAuthorized?$FN?5?9@]
+                    00
+  000000000000008D: 48 89 9C 24 C0 00  mov         qword ptr [rsp+0C0h],rbx
+                    00 00
+  0000000000000095: 4C 89 B4 24 88 00  mov         qword ptr [rsp+88h],r14
+                    00 00
+  000000000000009D: 0F 1F 00           nop         dword ptr [rax]
+  00000000000000A0: 48 8B 45 28        mov         rax,qword ptr [rbp+28h]
+  00000000000000A4: 44 38 7C 07 40     cmp         byte ptr [rdi+rax+40h],r15b
+  00000000000000A9: 0F 84 78 01 00 00  je          0000000000000227
+  00000000000000AF: 44 38 7C 07 43     cmp         byte ptr [rdi+rax+43h],r15b
+  00000000000000B4: 0F 85 6D 01 00 00  jne         0000000000000227
+  00000000000000BA: 44 38 7C 07 41     cmp         byte ptr [rdi+rax+41h],r15b
+  00000000000000BF: 0F 85 62 01 00 00  jne         0000000000000227
+  00000000000000C5: 48 8B 0D 00 00 00  mov         rcx,qword ptr [?engine@globals@counterstrikesharp@@3PEAVIVEngineServer2@@EA]
+                    00
+  00000000000000CC: 8B D6              mov         edx,esi
+  00000000000000CE: 48 8B 01           mov         rax,qword ptr [rcx]
+  00000000000000D1: FF 90 58 02 00 00  call        qword ptr [rax+258h]
+  00000000000000D7: 84 C0              test        al,al
+  00000000000000D9: 0F 84 48 01 00 00  je          0000000000000227
+  00000000000000DF: 48 8B 45 28        mov         rax,qword ptr [rbp+28h]
+  00000000000000E3: 8B D6              mov         edx,esi
+  00000000000000E5: C6 44 07 43 01     mov         byte ptr [rdi+rax+43h],1
+  00000000000000EA: 48 8B 0D 00 00 00  mov         rcx,qword ptr [?engine@globals@counterstrikesharp@@3PEAVIVEngineServer2@@EA]
+                    00
+  00000000000000F1: 48 8B 5D 28        mov         rbx,qword ptr [rbp+28h]
+  00000000000000F5: 48 8B 01           mov         rax,qword ptr [rcx]
+  00000000000000F8: FF 90 30 02 00 00  call        qword ptr [rax+230h]
+  00000000000000FE: 48 89 44 1F 50     mov         qword ptr [rdi+rbx+50h],rax
+  0000000000000103: 48 8B 5D 28        mov         rbx,qword ptr [rbp+28h]
+  0000000000000107: 4C 8B 35 00 00 00  mov         r14,qword ptr [?m_core_logger@Log@counterstrikesharp@@0V?$shared_ptr@Vlogger@spdlog@@@std@@A]
+                    00
+  000000000000010E: 48 03 DF           add         rbx,rdi
+  0000000000000111: 48 83 7B 18 0F     cmp         qword ptr [rbx+18h],0Fh
+  0000000000000116: 48 8B 43 50        mov         rax,qword ptr [rbx+50h]
+  000000000000011A: 48 8B 08           mov         rcx,qword ptr [rax]
+  000000000000011D: 48 89 8C 24 B0 00  mov         qword ptr [rsp+0B0h],rcx
+                    00 00
+  0000000000000125: 48 8B CB           mov         rcx,rbx
+  0000000000000128: 76 03              jbe         000000000000012D
+  000000000000012A: 48 8B 0B           mov         rcx,qword ptr [rbx]
+  000000000000012D: E8 00 00 00 00     call        strdup
+  0000000000000132: 48 89 84 24 B8 00  mov         qword ptr [rsp+0B8h],rax
+                    00 00
+  000000000000013A: 4C 8D 4C 24 30     lea         r9,[rsp+30h]
+  000000000000013F: 33 C0              xor         eax,eax
+  0000000000000141: 4C 89 7C 24 40     mov         qword ptr [rsp+40h],r15
+  0000000000000146: 48 89 44 24 70     mov         qword ptr [rsp+70h],rax
+  000000000000014B: 48 8D 54 24 60     lea         rdx,[rsp+60h]
+  0000000000000150: 0F 57 C0           xorps       xmm0,xmm0
+  0000000000000153: 44 89 7C 24 48     mov         dword ptr [rsp+48h],r15d
+  0000000000000158: 66 0F 73 D8 08     psrldq      xmm0,8
+  000000000000015D: 45 33 C0           xor         r8d,r8d
+  0000000000000160: 66 48 0F 7E C0     movq        rax,xmm0
+  0000000000000165: 4C 89 7C 24 50     mov         qword ptr [rsp+50h],r15
+  000000000000016A: F2 0F 10 4C 24 50  movsd       xmm1,mmword ptr [rsp+50h]
+  0000000000000170: 49 8B CE           mov         rcx,r14
+  0000000000000173: 48 C1 E8 20        shr         rax,20h
+  0000000000000177: 89 44 24 4C        mov         dword ptr [rsp+4Ch],eax
+  000000000000017B: 48 8D 84 24 B0 00  lea         rax,[rsp+0B0h]
+                    00 00
+  0000000000000183: 0F 10 44 24 40     movups      xmm0,xmmword ptr [rsp+40h]
+  0000000000000188: 48 89 44 24 28     mov         qword ptr [rsp+28h],rax
+  000000000000018D: 48 8D 84 24 B8 00  lea         rax,[rsp+0B8h]
+                    00 00
+  0000000000000195: 48 89 44 24 20     mov         qword ptr [rsp+20h],rax
+  000000000000019A: 4C 89 64 24 30     mov         qword ptr [rsp+30h],r12
+  000000000000019F: 48 C7 44 24 38 25  mov         qword ptr [rsp+38h],25h
+                    00 00 00
+  00000000000001A8: 0F 29 44 24 60     movaps      xmmword ptr [rsp+60h],xmm0
+  00000000000001AD: F2 0F 11 4C 24 70  movsd       mmword ptr [rsp+70h],xmm1
+  00000000000001B3: E8 00 00 00 00     call        ??$log_@PEBD_K@logger@spdlog@@IEAAXUsource_loc@1@W4level_enum@level@1@V?$basic_string_view@D@v9@fmt@@$$QEAPEBD$$QEA_K@Z
+  00000000000001B8: 48 8B 8D 80 00 00  mov         rcx,qword ptr [rbp+80h]
+                    00
+  00000000000001BF: 48 83 C1 58        add         rcx,58h
+  00000000000001C3: E8 00 00 00 00     call        ?Reset@ScriptContext@counterstrikesharp@@QEAAXXZ
+  00000000000001C8: 4C 8B 85 80 00 00  mov         r8,qword ptr [rbp+80h]
+                    00
+  00000000000001CF: 8B 53 48           mov         edx,dword ptr [rbx+48h]
+  00000000000001D2: 49 63 40 60        movsxd      rax,dword ptr [r8+60h]
+  00000000000001D6: 49 8B 48 58        mov         rcx,qword ptr [r8+58h]
+  00000000000001DA: 4C 89 3C C1        mov         qword ptr [rcx+rax*8],r15
+  00000000000001DE: 49 63 40 60        movsxd      rax,dword ptr [r8+60h]
+  00000000000001E2: 89 14 C1           mov         dword ptr [rcx+rax*8],edx
+  00000000000001E5: 41 FF 40 60        inc         dword ptr [r8+60h]
+  00000000000001E9: 49 8B 80 80 00 00  mov         rax,qword ptr [r8+80h]
+                    00
+  00000000000001F0: FF 00              inc         dword ptr [rax]
+  00000000000001F2: 4C 8B 85 80 00 00  mov         r8,qword ptr [rbp+80h]
+                    00
+  00000000000001F9: 48 8B 43 50        mov         rax,qword ptr [rbx+50h]
+  00000000000001FD: 49 63 50 60        movsxd      rdx,dword ptr [r8+60h]
+  0000000000000201: 48 8B 00           mov         rax,qword ptr [rax]
+  0000000000000204: 49 8B 48 58        mov         rcx,qword ptr [r8+58h]
+  0000000000000208: 48 89 04 D1        mov         qword ptr [rcx+rdx*8],rax
+  000000000000020C: B2 01              mov         dl,1
+  000000000000020E: 41 FF 40 60        inc         dword ptr [r8+60h]
+  0000000000000212: 49 8B 80 80 00 00  mov         rax,qword ptr [r8+80h]
+                    00
+  0000000000000219: FF 00              inc         dword ptr [rax]
+  000000000000021B: 48 8B 8D 80 00 00  mov         rcx,qword ptr [rbp+80h]
+                    00
+  0000000000000222: E8 00 00 00 00     call        ?Execute@ScriptCallback@counterstrikesharp@@QEAAX_N@Z
+  0000000000000227: FF C6              inc         esi
+  0000000000000229: 48 81 C7 90 03 00  add         rdi,390h
+                    00
+  0000000000000230: E8 00 00 00 00     call        ?getGlobalVars@globals@counterstrikesharp@@YAPEAVCGlobalVars@@XZ
+  0000000000000235: 3B 70 10           cmp         esi,dword ptr [rax+10h]
+  0000000000000238: 0F 8E 62 FE FF FF  jle         00000000000000A0
+  000000000000023E: 4C 8B B4 24 88 00  mov         r14,qword ptr [rsp+88h]
+                    00 00
+  0000000000000246: 4C 8B A4 24 90 00  mov         r12,qword ptr [rsp+90h]
+                    00 00
+  000000000000024E: 48 8B BC 24 98 00  mov         rdi,qword ptr [rsp+98h]
+                    00 00
+  0000000000000256: 48 8B 9C 24 C0 00  mov         rbx,qword ptr [rsp+0C0h]
+                    00 00
+  000000000000025E: 48 8B B4 24 C8 00  mov         rsi,qword ptr [rsp+0C8h]
+                    00 00
+  0000000000000266: 4C 8B BC 24 80 00  mov         r15,qword ptr [rsp+80h]
+                    00 00
+  000000000000026E: 48 81 C4 A0 00 00  add         rsp,0A0h
+                    00
+  0000000000000275: 5D                 pop         rbp
+  0000000000000276: C3                 ret
+

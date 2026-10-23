@@ -1,0 +1,76 @@
+Microsoft (R) COFF/PE Dumper Version 14.44.35229.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file temp\bot-adapters-14192\vision-build\BotVision.dir\Release\game_time.obj
+
+File Type: COFF OBJECT
+
+??_H@YAXPEAX_K1P6APEAX0@Z@Z (void __cdecl `vector constructor iterator'(void *,unsigned __int64,unsigned __int64,void * (__cdecl*)(void *))):
+  0000000000000000: 4D 85 C0           test        r8,r8
+  0000000000000003: 74 42              je          0000000000000047
+  0000000000000005: 48 89 5C 24 08     mov         qword ptr [rsp+8],rbx
+  000000000000000A: 48 89 6C 24 10     mov         qword ptr [rsp+10h],rbp
+  000000000000000F: 48 89 74 24 18     mov         qword ptr [rsp+18h],rsi
+  0000000000000014: 57                 push        rdi
+  0000000000000015: 48 83 EC 20        sub         rsp,20h
+  0000000000000019: 49 8B F1           mov         rsi,r9
+  000000000000001C: 49 8B D8           mov         rbx,r8
+  000000000000001F: 48 8B EA           mov         rbp,rdx
+  0000000000000022: 48 8B F9           mov         rdi,rcx
+  0000000000000025: 48 8B CF           mov         rcx,rdi
+  0000000000000028: FF D6              call        rsi
+  000000000000002A: 48 03 FD           add         rdi,rbp
+  000000000000002D: 48 83 EB 01        sub         rbx,1
+  0000000000000031: 75 F2              jne         0000000000000025
+  0000000000000033: 48 8B 5C 24 30     mov         rbx,qword ptr [rsp+30h]
+  0000000000000038: 48 8B 6C 24 38     mov         rbp,qword ptr [rsp+38h]
+  000000000000003D: 48 8B 74 24 40     mov         rsi,qword ptr [rsp+40h]
+  0000000000000042: 48 83 C4 20        add         rsp,20h
+  0000000000000046: 5F                 pop         rdi
+  0000000000000047: C3                 ret
+
+?Now@game_time@cs2bv@@YAMXZ (float __cdecl cs2bv::game_time::Now(void)):
+  0000000000000000: 48 83 EC 28        sub         rsp,28h
+  0000000000000004: 48 8B 0D 00 00 00  mov         rcx,qword ptr [?g_engine@?A0x4b1a3cc8@game_time@cs2bv@@3PEAVIVEngineServer2@@EA]
+                    00
+  000000000000000B: 48 85 C9           test        rcx,rcx
+  000000000000000E: 74 18              je          0000000000000028
+  0000000000000010: 48 8B 01           mov         rax,qword ptr [rcx]
+  0000000000000013: FF 90 60 02 00 00  call        qword ptr [rax+260h]
+  0000000000000019: 48 85 C0           test        rax,rax
+  000000000000001C: 74 0A              je          0000000000000028
+  000000000000001E: F3 0F 10 40 30     movss       xmm0,dword ptr [rax+30h]
+  0000000000000023: 48 83 C4 28        add         rsp,28h
+  0000000000000027: C3                 ret
+  0000000000000028: 0F 57 C0           xorps       xmm0,xmm0
+  000000000000002B: 48 83 C4 28        add         rsp,28h
+  000000000000002F: C3                 ret
+
+?SetEngine@game_time@cs2bv@@YAXPEAX@Z (void __cdecl cs2bv::game_time::SetEngine(void *)):
+  0000000000000000: 48 89 0D 00 00 00  mov         qword ptr [?g_engine@?A0x4b1a3cc8@game_time@cs2bv@@3PEAVIVEngineServer2@@EA],rcx
+                    00
+  0000000000000007: C3                 ret
+
+?__empty_global_delete@@YAXPEAX@Z (void __cdecl __empty_global_delete(void *)):
+  0000000000000000: C2 00 00           ret         0
+
+?__empty_global_delete@@YAXPEAXW4align_val_t@std@@@Z (void __cdecl __empty_global_delete(void *,enum std::align_val_t)):
+  0000000000000000: C2 00 00           ret         0
+
+?__empty_global_delete@@YAXPEAX_K@Z (void __cdecl __empty_global_delete(void *,unsigned __int64)):
+  0000000000000000: C2 00 00           ret         0
+
+?__empty_global_delete@@YAXPEAX_KW4align_val_t@std@@@Z (void __cdecl __empty_global_delete(void *,unsigned __int64,enum std::align_val_t)):
+  0000000000000000: C2 00 00           ret         0
+
+  Summary
+
+          2C .bss
+          88 .chks64
+          18 .data
+          CC .debug$S
+         176 .drectve
+          18 .pdata
+          8C .text$mn
+          1C .xdata

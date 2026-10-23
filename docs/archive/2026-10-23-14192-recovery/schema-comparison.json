@@ -1,0 +1,26 @@
+{
+  "selectedFields": 43,
+  "unchanged": 41,
+  "changes": [
+    {
+      "class": "CCSPlayerPawn",
+      "field": "m_angEyeAngles",
+      "before": "0x15ac",
+      "after": "0x15b4"
+    },
+    {
+      "class": "CCSPlayerPawn",
+      "field": "m_pBot",
+      "before": "0x14f8",
+      "after": "0x1500"
+    }
+  ],
+  "unproven": [
+    {
+      "name": "CCSBot",
+      "field": "m_gameState",
+      "status": "not directly registered; no invented offset"
+    }
+  ],
+  "repair": "Native Bot bindings resolve schema dynamically; managed Aim PBot source patched to 0x1500. Other private/vtable values are baseline configuration, not proved by this scan."
+}

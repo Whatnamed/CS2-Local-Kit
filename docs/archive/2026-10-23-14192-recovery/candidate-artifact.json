@@ -1,0 +1,32 @@
+{
+  "releaseDir": "E:\\CS2MOD\\releases\\compatibility\\cs2-14192-medium-human-20261023-425a2c1",
+  "manifestSha256": "efaba2fadecb7c016cd843e7f35f691b70847946c6c5d35bb97f4f0c7d9fb073",
+  "zip": "E:\\CS2MOD\\releases\\compatibility\\cs2-14192-medium-human-20261023-425a2c1.zip",
+  "zipSha256": "fac04e77ebe0e16bd36c7b47cfa178a19a525fbb797124b012cda9a8327a3c21",
+  "parentInstallId": "b613a8c709c7440998346cb802bb790f",
+  "retainedBotPayloadFiles": 105,
+  "changedFiles": {
+    "game/csgo/addons/BotVision/bin/win64/BotVision.dll": {
+      "source": "payload/game/csgo/addons/BotVision/bin/win64/BotVision.dll",
+      "sha256": "a9f2925b3b717d644c5a3c9805e64e7fe56b34a0c3a32ce243dc9ecc14124461"
+    },
+    "game/csgo/addons/BotVision/gamedata.json": {
+      "source": "payload/game/csgo/addons/BotVision/gamedata.json",
+      "sha256": "10280eead1c603b1badcab76cd7b6a52d732e985acf65cfad26b5b32f4d75f95"
+    },
+    "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll": {
+      "source": "payload/game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+      "sha256": "7f799ae466d4e58ff8bba3fdf810c1505358c5e5dcb51dc5d73f7eb098e5d4a2"
+    },
+    "game/csgo/addons/counterstrikesharp/gamedata/gamedata.json": {
+      "source": "payload/game/csgo/addons/counterstrikesharp/gamedata/gamedata.json",
+      "sha256": "da22c205abba36e7a2b45f2f7d1c3d0f04687dc5f132e9454b63b8162f61acf4"
+    },
+    "game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll": {
+      "source": "payload/game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll",
+      "sha256": "27b1bdcf3ab36b127f95df3a60dbe6d942ee57cc3eb53e06793e7b8b03784134"
+    }
+  },
+  "installed": false,
+  "realGameAccepted": false
+}

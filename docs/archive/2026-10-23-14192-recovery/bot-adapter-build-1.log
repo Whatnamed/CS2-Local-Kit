@@ -1,0 +1,60 @@
+适用于 .NET Framework MSBuild 版本 17.14.60+43b635718
+
+  Checking File Globs
+  1>Checking Build System
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/bot-adapters-14192/BotVision/src/core/cs2_sdk/libraries/spdlog/CMakeLists.txt
+  spdlog.cpp
+  stdout_sinks.cpp
+  color_sinks.cpp
+  file_sinks.cpp
+  async.cpp
+  cfg.cpp
+  bundled_fmtlib_format.cpp
+  正在生成代码...
+  spdlog.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\spdlog\Release\spdlog.lib
+  Generating pinned s2sdk protobuf messages
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: network_connection.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: networkbasetypes.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: valveextensions.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+networkbasetypes.proto(3,1): warning G4EC7C31A: Import network_connection.proto is unused. [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: source2_steam_stats.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: netmessages.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: usercmd.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+CUSTOMBUILD : [libprotobuf warning G: \misc-source\protobuf\src\google\protobuf\compiler\parser.cc:646] No syntax specified for the proto file: cs_usercmd.proto. Please use 'syntax = "proto2";' or 'syntax = "proto3";' to specify a syntax version. (Defaulted to proto2 syntax.) [E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.vcxproj]
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/bot-adapters-14192/BotVision/src/core/cs2_sdk/CMakeLists.txt
+  schema.cpp
+  memory_module.cpp
+  module_view.cpp
+  gameconfig.cpp
+  log.cpp
+  memory.cpp
+  rtti.cpp
+  platform.cpp
+  interfaces.cpp
+  memoverride.cpp
+  keyvalues3.cpp
+  convar.cpp
+  network_connection.pb.cc
+  networkbasetypes.pb.cc
+  source2_steam_stats.pb.cc
+  netmessages.pb.cc
+  valveextensions.pb.cc
+  usercmd.pb.cc
+  cs_usercmd.pb.cc
+  正在生成代码...
+  cs2_sdk.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\src\core\cs2_sdk\cs2_sdk.dir\Release\cs2_sdk.lib
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/bot-adapters-14192/BotVision/CMakeLists.txt
+  plugin.cpp
+  BotVision.cpp
+  SmokeVision.cpp
+  HeVision.cpp
+  BulletVision.cpp
+  commands.cpp
+  config.cpp
+  game_time.cpp
+  gamedata.cpp
+  memory.cpp
+  正在生成代码...
+    正在创建库 E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/bot-adapters-14192/vision-build/Release/BotVision.lib 和对象 E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/bot-adapters-14192/vision-build/Release/BotVision.exp
+  BotVision.vcxproj -> E:\Projects\CS2-Local-Kit\wt-compat-14192-20261023\temp\bot-adapters-14192\vision-build\package\addons\BotVision\bin\win64\BotVision.dll
+  Building Custom Rule E:/Projects/CS2-Local-Kit/wt-compat-14192-20261023/temp/bot-adapters-14192/BotVision/CMakeLists.txt

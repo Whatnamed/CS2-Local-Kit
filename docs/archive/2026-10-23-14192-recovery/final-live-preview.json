@@ -1,0 +1,14 @@
+{
+  "state": "preview",
+  "changes": [
+    "game/csgo/addons/BotVision/bin/win64/BotVision.dll",
+    "game/csgo/addons/BotVision/gamedata.json",
+    "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+    "game/csgo/addons/counterstrikesharp/gamedata/gamedata.json",
+    "game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll"
+  ],
+  "retainedFiles": 626,
+  "parentInstallId": "b613a8c709c7440998346cb802bb790f",
+  "difficulty": "Medium",
+  "humanPolicy": "preserve"
+}

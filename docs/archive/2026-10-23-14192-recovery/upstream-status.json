@@ -1,0 +1,184 @@
+[
+  {
+    "source": 0,
+    "status": "fulfilled",
+    "data": {
+      "url": "https://github.com/roflmuffin/CounterStrikeSharp/pull/1468",
+      "number": 1468,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "body": "Fixes #1466.\r\n\r\nBackport alliedmodders/hl2sdk#438 onto the current SDK revision to restore the engine vtable layout without pulling in unrelated SDK API changes. This keeps client authorization working instead of disabling its callback.\r\n\r\nConfirmed the same Windows crash locally: the old SteamID call returns AppID 730. \r\n",
+      "title": "fix: restore engine authorization calls after CS2 1.41.9.2",
+      "base": "main",
+      "base_sha": "428450abb83c4e89cf66ff320f3182a8ffaa6e3a",
+      "head": "fix/cs2-1.41.9.2-engine-auth",
+      "head_sha": "a297b0a72a3cf5a9dce93b6b96298a88cd1e0c65",
+      "head_repo_id": 1385270721,
+      "head_repo_full_name": "unicbm/CounterStrikeSharp",
+      "merge_commit_sha": "4f28495093a36adf719a3aa06377757a56db20c7",
+      "user": {
+        "login": "unicbm",
+        "name": "unicbm",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/136828391?v=4",
+        "id": 136828391
+      },
+      "requested_reviewers": [
+        {
+          "login": "roflmuffin",
+          "name": "roflmuffin",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/4160975?v=4",
+          "id": 4160975
+        }
+      ],
+      "requested_team_reviewers": null,
+      "diff": null,
+      "comments": null,
+      "created_at": "2026-10-23T03:49:46Z",
+      "updated_at": "2026-10-23T03:50:44Z",
+      "closed_at": null,
+      "merged_at": null,
+      "commits": 1,
+      "changed_files": 1,
+      "additions": 1,
+      "deletions": 1,
+      "display_url": "https://github.com/roflmuffin/CounterStrikeSharp/pull/1468",
+      "display_title": "fix: restore engine authorization calls after CS2 1.41.9.2"
+    }
+  },
+  {
+    "source": 1,
+    "status": "fulfilled",
+    "data": {
+      "url": "https://github.com/roflmuffin/CounterStrikeSharp/pull/1467",
+      "number": 1467,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "body": "Update the Windows `CCSPlayerPawnBase_PostThink` signature for CS2 1.41.9.2 (revision 11162119).\r\n",
+      "title": "fix: update Windows PostThink signature for CS2 1.41.9.2",
+      "base": "main",
+      "base_sha": "428450abb83c4e89cf66ff320f3182a8ffaa6e3a",
+      "head": "fix/windows-postthink-signature-1.41.9.2",
+      "head_sha": "eec2e514d1ce20383f364a70fca19b0364cc5a4a",
+      "head_repo_id": 1385270721,
+      "head_repo_full_name": "unicbm/CounterStrikeSharp",
+      "merge_commit_sha": "7266f4fc9292560ac96225d259370bb5e3167108",
+      "user": {
+        "login": "unicbm",
+        "name": "unicbm",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/136828391?v=4",
+        "id": 136828391
+      },
+      "requested_reviewers": [
+        {
+          "login": "roflmuffin",
+          "name": "roflmuffin",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/4160975?v=4",
+          "id": 4160975
+        }
+      ],
+      "requested_team_reviewers": null,
+      "diff": null,
+      "comments": null,
+      "created_at": "2026-10-23T03:28:13Z",
+      "updated_at": "2026-10-23T03:29:30Z",
+      "closed_at": null,
+      "merged_at": null,
+      "commits": 1,
+      "changed_files": 1,
+      "additions": 1,
+      "deletions": 1,
+      "display_url": "https://github.com/roflmuffin/CounterStrikeSharp/pull/1467",
+      "display_title": "fix: update Windows PostThink signature for CS2 1.41.9.2"
+    }
+  },
+  {
+    "source": 2,
+    "status": "fulfilled",
+    "data": {
+      "url": "https://github.com/alliedmodders/hl2sdk/pull/438",
+      "number": 438,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "body": "CS2 1.41.9.2 (2026-10-22) added `IsSpawnGroupLoadedForClient( CPlayerSlot, SpawnGroupHandle_t )` to `IVEngineServer2`, right after `MakeSpawnGroupActive`. Every method after it moved down one slot, so plugins built against the current header call the neighbouring function: `GetClientXUID` lands on `GetPlayerInfo` and crashes the server.\n\nSame change as alliedmodders/s2sdk#116.\n\nTested: CounterStrikeSharp 1.0.377, ServerListPlayersFix and cs2surf rebuilt against it, running on 5 servers since the update.\n",
+      "title": "Add IVEngineServer2::IsSpawnGroupLoadedForClient",
+      "base": "cs2",
+      "base_sha": "3f4110dce3060b352d49bf100f1a43f7705aab06",
+      "head": "cs2-ivengineserver2-1.41.9.2",
+      "head_sha": "192d1267b6f9e6ad65c97dec3324735901fb395c",
+      "head_repo_id": 1430422203,
+      "head_repo_full_name": "0xpierre-dev/hl2sdk",
+      "merge_commit_sha": "5bcda01a611fdbc9e0a808b127fe199d3d020abb",
+      "user": {
+        "login": "0xpierre-dev",
+        "name": "0xpierre-dev",
+        "email": null,
+        "avatar_url": "https://avatars.githubusercontent.com/u/43297207?v=4",
+        "id": 43297207
+      },
+      "requested_reviewers": null,
+      "requested_team_reviewers": null,
+      "diff": null,
+      "comments": null,
+      "created_at": "2026-10-23T01:14:10Z",
+      "updated_at": "2026-10-23T09:59:09Z",
+      "closed_at": null,
+      "merged_at": null,
+      "commits": 1,
+      "changed_files": 1,
+      "additions": 1,
+      "deletions": 0,
+      "display_url": "https://github.com/alliedmodders/hl2sdk/pull/438",
+      "display_title": "Add IVEngineServer2::IsSpawnGroupLoadedForClient"
+    }
+  },
+  {
+    "source": 3,
+    "status": "fulfilled",
+    "data": {
+      "issue": {
+        "url": "https://github.com/ed0ard/CS2-Bot-Improver/issues/209",
+        "title": "[Bug]  fails to launch the game",
+        "issue_number": 209,
+        "body": "### CS2 server operating system\n\nWindows\n\n### How is the CS2 game server hosted?\n\nListen server hosted by a CS2 client\n\n### What happened?\n\nWhen launching Counter-Strike 2 with the plugin enabled, the game begins starting normally. It gets past the Valve logo and reaches the Counter-Strike 2 logo, but then the game closes unexpectedly before reaching the main menu.\n\nThis issue does not occur when launching the game without the plugin enabled. The game launches successfully without the plugin.\n\nSteps to reproduce:\n\nEnable the plugin.\n\nLaunch Counter-Strike 2.\n\nWait for the game to get past the Valve logo and reach the Counter-Strike 2 logo.\n\nObserve that the game closes before reaching the main menu.\n\nExpected behavior: Counter-Strike 2 finishes launching and reaches the main menu.\n\nActual behavior: The game closes during startup at the Counter-Strike 2 logo.\n\nEnvironment: Windows. The issue occurs when using the plugin.\n\n### Does the problem also happen when CS2-Bot-Improver is disabled?\n\nNo, it only happens with CS2-Bot-Improver enabled\n\n### CounterStrikeSharp log\n\n_No response_\n\n### Additional screenshots or video\n\n\nAfter using the plugin to launch Counter-Strike 2, the game crashes during startup at the Counter-Strike 2 logo. After this happens, launching the game through the normal method does not work correctly until I verify the integrity of the game files through Steam.\n\nVerifying the game files resolves the issue and allows the game to launch normally again through Steam. However, using the plugin to launch the game causes the problem to occur again.\n\nThis may be related to the plugin's interaction with the game files or launch process, but I have not confirmed the exact cause.",
+        "state": "open",
+        "user": {
+          "login": "le1285828528",
+          "name": "le1285828528",
+          "email": null,
+          "avatar_url": "https://avatars.githubusercontent.com/u/310807930?v=4",
+          "id": 310807930
+        },
+        "assignees": null,
+        "labels": [
+          {
+            "name": "Sigs & Offsets",
+            "color": "49e77d",
+            "description": "The signatures and offsets of this plugin need updating"
+          }
+        ],
+        "milestone": null,
+        "state_reason": null,
+        "comments": 5,
+        "created_at": "2026-10-23T01:28:16Z",
+        "updated_at": "2026-10-23T12:20:25Z",
+        "closed_at": null,
+        "display_url": "https://github.com/ed0ard/CS2-Bot-Improver/issues/209",
+        "display_title": "[Bug]  fails to launch the game"
+      },
+      "url": "https://github.com/ed0ard/CS2-Bot-Improver/issues/209",
+      "title": "[Bug]  fails to launch the game",
+      "display_url": "https://github.com/ed0ard/CS2-Bot-Improver/issues/209",
+      "display_title": "[Bug]  fails to launch the game"
+    }
+  }
+]

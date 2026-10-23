@@ -1,0 +1,12 @@
+[
+  {
+    "TimeCreated": "2026-10-23T20:43:57.5123107+08:00",
+    "Id": 1000,
+    "Message": "出错应用程序名称： cs2.exe，版本： 0.0.0.0，时间戳： 0x6acfcbec\r\n出错模块名称： counterstrikesharp.dll， 版本： 0.0.0.0，时间戳： 0x6ab897e9\r\n异常代码： 0xc0000005\r\n错误偏移： 0x000000000007e354\r\n出错进程 ID： 0x5DC0\r\n出错应用程序开始时间： 0x1DD62EC204EC389\r\nFaulting 应用程序路径： E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe\r\nFaulting 模块路径： E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\bin\\win64\\counterstrikesharp.dll\r\nReport ID： 3f92858f-511c-403b-bebd-7ff1560d27b9\r\nFaulting 包全名： \r\nFaulting 程序包相对应用程序 ID：  个"
+  },
+  {
+    "TimeCreated": "2026-10-23T20:42:57.2602185+08:00",
+    "Id": 1000,
+    "Message": "出错应用程序名称： cs2.exe，版本： 0.0.0.0，时间戳： 0x6acfcbec\r\n出错模块名称： counterstrikesharp.dll， 版本： 0.0.0.0，时间戳： 0x6ab897e9\r\n异常代码： 0xc0000005\r\n错误偏移： 0x000000000007e354\r\n出错进程 ID： 0x2B0C\r\n出错应用程序开始时间： 0x1DD62EBF110EF32\r\nFaulting 应用程序路径： E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\cs2.exe\r\nFaulting 模块路径： E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\bin\\win64\\counterstrikesharp.dll\r\nReport ID： badb48ac-326c-46c3-b65a-d383ac169b08\r\nFaulting 包全名： \r\nFaulting 程序包相对应用程序 ID：  个"
+  }
+]

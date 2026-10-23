@@ -1,0 +1,28 @@
+[
+  {
+    "dump": "C:\\Users\\hasee\\AppData\\Local\\CrashDumps\\cs2.exe.24000.dmp",
+    "sha256": "2137249f0fc1ddede99e7c64f2ce7961a44a95f44c5f543d1458434458380490",
+    "exception": "0xc0000005",
+    "address": "0x7ff844ebe354",
+    "accessAddress": "0x2da",
+    "rax": "0x2da",
+    "module": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\bin\\win64\\counterstrikesharp.dll",
+      "base": "0x7ff844e40000",
+      "rva": "0x7e354"
+    }
+  },
+  {
+    "dump": "C:\\Users\\hasee\\AppData\\Local\\CrashDumps\\cs2.exe.11020.dmp",
+    "sha256": "256877a3b52fd3185fd33c0fcc2e17a3ab83a5f90a14e2cdd9c067a2f9c25987",
+    "exception": "0xc0000005",
+    "address": "0x7ff83a46e354",
+    "accessAddress": "0x2da",
+    "rax": "0x2da",
+    "module": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\bin\\win64\\counterstrikesharp.dll",
+      "base": "0x7ff83a3f0000",
+      "rva": "0x7e354"
+    }
+  }
+]

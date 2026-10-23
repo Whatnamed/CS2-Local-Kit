@@ -1,0 +1,58 @@
+[
+  {
+    "target": "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+    "before": {
+      "sha256": "1353cbbf1b92e2a12f1dd36cb37fcdd34d31bc7da40ece47a873f8d7eb1e9c9c",
+      "machine": "0x8664",
+      "exports": [
+        "CreateInterface",
+        "InvokeNative"
+      ],
+      "imports": [
+        "KERNEL32.dll",
+        "WS2_32.dll",
+        "tier0.dll"
+      ]
+    },
+    "candidate": {
+      "sha256": "7f799ae466d4e58ff8bba3fdf810c1505358c5e5dcb51dc5d73f7eb098e5d4a2",
+      "machine": "0x8664",
+      "exports": [
+        "CreateInterface",
+        "InvokeNative"
+      ],
+      "imports": [
+        "KERNEL32.dll",
+        "WS2_32.dll",
+        "tier0.dll"
+      ]
+    },
+    "exportsUnchanged": true
+  },
+  {
+    "target": "game/csgo/addons/BotVision/bin/win64/BotVision.dll",
+    "before": {
+      "sha256": "12f46ddbab79a715e99ecc2708b4d87d190f1fd2b9821be6a1c786fdad879816",
+      "machine": "0x8664",
+      "exports": [
+        "CreateInterface"
+      ],
+      "imports": [
+        "KERNEL32.dll",
+        "tier0.dll"
+      ]
+    },
+    "candidate": {
+      "sha256": "a9f2925b3b717d644c5a3c9805e64e7fe56b34a0c3a32ce243dc9ecc14124461",
+      "machine": "0x8664",
+      "exports": [
+        "CreateInterface"
+      ],
+      "imports": [
+        "KERNEL32.dll",
+        "tier0.dll"
+      ]
+    },
+    "exportsUnchanged": true
+  }
+]

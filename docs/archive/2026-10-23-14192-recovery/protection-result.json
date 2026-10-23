@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "presetsAppDataBackupsAndLegacyPresetUnchanged": true,
+  "allOriginalTransactionEntryImagesUnchanged": true,
+  "steamManifestUnchanged": true,
+  "cs2Closed": true,
+  "realTargetApplied": false,
+  "snapshotSha256": "2506e96662767d0b81aea7c360a4cf0f103246c69912b552c53993af29ec3786"
+}
