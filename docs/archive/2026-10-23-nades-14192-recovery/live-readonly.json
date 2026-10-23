@@ -1,0 +1,51 @@
+{
+  "directories": {
+    "data": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\data\\NadeSystem\\grenades",
+      "exists": true,
+      "jsonFiles": 48
+    },
+    "plugins": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons\\counterstrikesharp\\plugins\\NadeSystem\\grenades",
+      "exists": true,
+      "jsonFiles": 0
+    }
+  },
+  "nadeDllSha256": "6969cfc7df31c4a13d1fcb217fe4a48111ac37d7e81fe9b1c73740c438bdfc33",
+  "parentMarker": {
+    "installId": "b613a8c709c7440998346cb802bb790f",
+    "manifestSha256": "caafc349e6eef737f5f8f85a0ff637d3af7f861a99fc205857fb1528590d9582",
+    "backupRoot": "E:\\CS2MOD\\backups\\bot-experiment",
+    "humanPolicy": "preserve"
+  },
+  "compatMarker": {
+    "installId": "5808afffdc44440ab3f0de2159cdb436",
+    "manifestSha256": "efaba2fadecb7c016cd843e7f35f691b70847946c6c5d35bb97f4f0c7d9fb073"
+  },
+  "compatRecord": {
+    "installId": "5808afffdc44440ab3f0de2159cdb436",
+    "manifestSha256": "efaba2fadecb7c016cd843e7f35f691b70847946c6c5d35bb97f4f0c7d9fb073",
+    "cs2Root": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive",
+    "state": "installed"
+  },
+  "sourceArchiveSha256": "268dce5c98be643b40b3e3b72bda5bf5255ab5fe01c400cfe1e6b17baabe4910",
+  "sourceFiles": [
+    ".gitignore",
+    "convert_lineups.py",
+    "LICENSE",
+    "NadeSystem.cs",
+    "NadeSystem.csproj",
+    "NadeSystem.Models.cs",
+    "NadeSystemPlugin.Audio.cs",
+    "NadeSystemPlugin.Commands.cs",
+    "NadeSystemPlugin.Cooldowns.cs",
+    "NadeSystemPlugin.Data.cs",
+    "NadeSystemPlugin.Decision.cs",
+    "NadeSystemPlugin.Information.cs",
+    "NadeSystemPlugin.Lifecycle.cs",
+    "NadeSystemPlugin.Replay.cs",
+    "NadeSystemPlugin.SpecialGrenades.cs",
+    "NadeSystemPlugin.ZoneDetection.cs",
+    "README.md"
+  ]
+}

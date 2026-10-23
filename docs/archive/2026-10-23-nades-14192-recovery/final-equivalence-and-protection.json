@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "finalManifestSha256": "a3a9414b11f507604380abc4abfc9d0ddefd64d6a56ac364cb837cc7910cad33",
+  "zipSha256": "1444c017ad650a234bd8e15fff4e0884d51645591af5b3e206d2e92fb00f3c96",
+  "zipCompleteFileCount": 63,
+  "faultTestedPayload49AndAllRuntimeToolsIdentical": true,
+  "parentAndProtectedIdentitiesIdenticalToFaultTestedBundle": true,
+  "finalChangesOutsideTestedRuntime": "README and archived build script only; builderHead/provenance updated",
+  "protectedGameFilesUnchanged": 631,
+  "bothParentTransactionsAndAllExistingBackupsUnchanged": true,
+  "presetsAppDataAndHumanUnchanged": true,
+  "steamManifestUnchangedDuringThisTask": true,
+  "cs2Closed": true,
+  "realInstallOrRestoreExecuted": false,
+  "activeNadeMarkerExists": false,
+  "realGameAccepted": false
+}

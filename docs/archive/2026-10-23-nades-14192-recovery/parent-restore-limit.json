@@ -1,0 +1,17 @@
+{
+  "compatInstallId": "5808afffdc44440ab3f0de2159cdb436",
+  "parentInstallId": "b613a8c709c7440998346cb802bb790f",
+  "originalRestorePreview": "blocked",
+  "reason": "Steam state/build drift",
+  "oldExpectedWholeSteamManifestSha256": "5132f54dc8f0bc3bba48a2f2e6197da4c0670858996f21a241150f073bd1c876",
+  "currentWholeSteamManifestSha256": "41434e10b7eeaf47375516f4eec566b92ee8f9a1da4b19508a686e8c0670c810",
+  "currentSteamIdentity": {
+    "appid": "730",
+    "buildid": "26144732",
+    "installdir": "Counter-Strike Global Offensive"
+  },
+  "gameBinariesMatch": true,
+  "fiveCompatibilityFilesMatch": true,
+  "oldTransactionsOrGuardsModified": false,
+  "conclusion": "Existing old-layer whole-manifest guard blocks already; separate Nade rollback leaves this original condition unchanged."
+}

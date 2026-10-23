@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "testedSourceSha256": "40df7d491fdcdaac5de6d2b717fd57537d1ad0dcc5695ef777a4cb69bf30d4a0",
+  "sourceMatchesBuiltPlugin": true,
+  "fourTypesTested": true,
+  "failedNativeCreationNeverCountsAsSuccess": true,
+  "offCancelsPriorEpochRequests": true,
+  "modeAndMapEpochReset": true,
+  "boundedReasons": true,
+  "creationCallSitesVerified": 7,
+  "flashCountAfterDispatchSpawnBothRoutes": true,
+  "runtimeGameFunctionsInvoked": false
+}

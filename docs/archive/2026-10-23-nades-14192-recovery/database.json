@@ -1,0 +1,102 @@
+{
+  "total": 3703,
+  "map": "de_mirage",
+  "mapCount": 344,
+  "types": {
+    "flash": 97,
+    "he": 75,
+    "molotov": 84,
+    "decoy": 2,
+    "smoke": 86
+  },
+  "points": {
+    "flash": {
+      "id": "483227d2-f6b2-44c2-9841-9ba0dd161ce5",
+      "mapName": "de_mirage",
+      "grenadeType": "flash",
+      "projectilePosition": {
+        "x": -1239.8918,
+        "y": -910.84875,
+        "z": -94.22809
+      },
+      "projectileVelocity": {
+        "x": 102.0458,
+        "y": 166.84085,
+        "z": 220.98029
+      },
+      "landingPosition": {
+        "x": -1074.0657,
+        "y": -639.72766,
+        "z": -157.63498
+      },
+      "description": null,
+      "source": "de_mirage_flash.json"
+    },
+    "he": {
+      "id": "1e0dab4e-615b-4b45-a1a0-132fd1b5aa31",
+      "mapName": "de_mirage",
+      "grenadeType": "he",
+      "projectilePosition": {
+        "x": -1239.8885,
+        "y": -910.85425,
+        "z": -94.42553
+      },
+      "projectileVelocity": {
+        "x": 102.201485,
+        "y": 166.77109,
+        "z": 222.03806
+      },
+      "landingPosition": {
+        "x": -1073.8085,
+        "y": -639.8474,
+        "z": -156.11374
+      },
+      "description": null,
+      "source": "de_mirage_he.json"
+    },
+    "molotov": {
+      "id": "64029ef1-b331-4701-8275-c82c665b05aa",
+      "mapName": "de_mirage",
+      "grenadeType": "molotov",
+      "projectilePosition": {
+        "x": 239.8508,
+        "y": -200.92798,
+        "z": -99.81104
+      },
+      "projectileVelocity": {
+        "x": -812.60956,
+        "y": -422.77917,
+        "z": 289.51028
+      },
+      "landingPosition": {
+        "x": -1094.5347,
+        "y": -636.7529,
+        "z": -113.8388
+      },
+      "description": null,
+      "source": "de_mirage_molotov.json"
+    },
+    "smoke": {
+      "id": "e246d15c-0eef-41a8-9401-88ce900623b6",
+      "mapName": "de_mirage",
+      "grenadeType": "smoke",
+      "projectilePosition": {
+        "x": 1247.4009,
+        "y": -879.6589,
+        "z": -45.1029
+      },
+      "projectileVelocity": {
+        "x": -453.81454,
+        "y": -324.42633,
+        "z": 653.6427
+      },
+      "landingPosition": {
+        "x": -928.06415,
+        "y": -2429.344,
+        "z": -156.52357
+      },
+      "description": null,
+      "source": "de_mirage_smoke.json"
+    }
+  }
+}

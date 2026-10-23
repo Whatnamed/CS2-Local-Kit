@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checks": [
+    "public-preview-zero-writes",
+    "public-restore-preview-zero-writes",
+    "public-complete-49-file-roundtrip",
+    "public-reject-bundle-tamper-NadeSystem.dll",
+    "public-reject-bundle-tamper-unknown-extra.txt"
+  ],
+  "checkCount": 5,
+  "actualPayloadFiles": 49,
+  "candidateManifestSha256": "a3a9414b11f507604380abc4abfc9d0ddefd64d6a56ac364cb837cc7910cad33",
+  "bothParentsUnchanged": true,
+  "byteForByteRestored": true,
+  "realTargetApplied": false
+}

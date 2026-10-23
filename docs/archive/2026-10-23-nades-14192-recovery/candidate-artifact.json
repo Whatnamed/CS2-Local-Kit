@@ -1,0 +1,22 @@
+{
+  "releaseDir": "E:\\CS2MOD\\releases\\compatibility\\nades-14192-medium-human-20261023-8d359cb",
+  "manifestSha256": "a3a9414b11f507604380abc4abfc9d0ddefd64d6a56ac364cb837cc7910cad33",
+  "zip": "E:\\CS2MOD\\releases\\compatibility\\nades-14192-medium-human-20261023-8d359cb.zip",
+  "zipSha256": "1444c017ad650a234bd8e15fff4e0884d51645591af5b3e206d2e92fb00f3c96",
+  "dllSha256": "75e2573c6db9e60488a75b466468eb791fb108c1ccfd17cac3f70f3b51da8687",
+  "payloadFiles": 49,
+  "preview": {
+    "state": "preview",
+    "changes": 49,
+    "replacedDlls": 1,
+    "newDataFiles": 48,
+    "difficulty": "Medium",
+    "humanPolicy": "preserve",
+    "parentInstallIds": {
+      "bot": "b613a8c709c7440998346cb802bb790f",
+      "compat": "5808afffdc44440ab3f0de2159cdb436"
+    }
+  },
+  "installed": false,
+  "realGameAccepted": false
+}

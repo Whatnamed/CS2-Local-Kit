@@ -1,0 +1,9 @@
+{
+  "gitApplyCheck": true,
+  "patchAppliedAllCSharpSourcesEquivalent": true,
+  "filesCompared": 14,
+  "nativeBindingChange": "Windows SmokeCreate pattern only; all signatures/argument declarations otherwise identical",
+  "flashCountAfterDispatchSpawn": true,
+  "smokeHEMolotovCountAfterValidFactoryAndOwner": true,
+  "runtimeNotInvoked": true
+}

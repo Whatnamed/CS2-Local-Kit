@@ -1,0 +1,53 @@
+{
+  "upstreamRef": "009ce03005af68ba68dae62967bddc8e92ad172c",
+  "upstreamPr": "https://github.com/ed0ard/CS2-Bot-NadeSystem/pull/9",
+  "upstreamPrHead": "d089e2129a3cc5d9c2d344117ea793ece3b522fa",
+  "sourceArchiveSha256": "268dce5c98be643b40b3e3b72bda5bf5255ab5fe01c400cfe1e6b17baabe4910",
+  "sourceChanges": {
+    "LocalKitDiagnostics.cs": {
+      "before": null,
+      "after": "f13526cb8ed839582178410aada7fc83d46e87a66bf30be10cac084fd02875b4"
+    },
+    "NadeEvidence.cs": {
+      "before": null,
+      "after": "40df7d491fdcdaac5de6d2b717fd57537d1ad0dcc5695ef777a4cb69bf30d4a0"
+    },
+    "NadeSystem.cs": {
+      "before": "f1fd4d43cb193b6adc1d29143a7ec64f22c3b640e2d88653838dbe4de345956a",
+      "after": "796f80876563c226e5d52a508af1a7daa0301b4b05f31d2c4df5cbad6ce52c62"
+    },
+    "NadeSystemPlugin.Commands.cs": {
+      "before": "27bf1cfdc7531fab5bdc69cee73e5493ab596a56e7cc0af7ddfe633c3b6c9b64",
+      "after": "ae1b71ca0d51d2f843efd297657f874e549352a3c47bb9c0b8bc6dd8b70c75bc"
+    },
+    "NadeSystemPlugin.Data.cs": {
+      "before": "8af89f14705f1ef474b27abe1226290356e7e44adcfe6b9c63cd244817fc5486",
+      "after": "e5ac33a1f08a525e42996df2e45e63b95b4012c3f23d0b5d07b95cf435679ba7"
+    },
+    "NadeSystemPlugin.Decision.cs": {
+      "before": "ff07486433ba646b53ab09ed02354e6ad921af4e5854b4a32b72b08c71a7e111",
+      "after": "859ffddf95dc3033e922ca8d3701b8da6be74ae83d2271632ed611c5ff0d0375"
+    },
+    "NadeSystemPlugin.Lifecycle.cs": {
+      "before": "f4702b757978270ae0f21b11c43a06176dcc71b404d871fbed6e954047d1f597",
+      "after": "41198855b1d781bb1633382f62f9d86bc2f78d94d1efc4bc5945120738434390"
+    },
+    "NadeSystemPlugin.Replay.cs": {
+      "before": "885ca7eaf5ca25295fc0bc56fddaf4c6aca03fd9a912b8522f81e4785c6ad933",
+      "after": "0027e8a86c0c4aa2d0d7c7004ae86a48b9ad7608605b8ca444ef07ca61ef878f"
+    },
+    "NadeSystemPlugin.SpecialGrenades.cs": {
+      "before": "6f2df4fd35a6ec9c22614ca084862f694dc1d30bfe5efa9d76a74d7fa394daa5",
+      "after": "71f98c0fd801b0e65501b2ef6b63f0388a2b92707dc6571128ca216dd26155d9"
+    },
+    "NadeSystemPlugin.ZoneDetection.cs": {
+      "before": "5b1d4027ceb7d4c4c0cdc0574fb22e13d5bc735049fb2839b11566602cf19e90",
+      "after": "5c3ca86f78a670a1ccbd87dde535b0802a959b9c463b8ad04245de9113f5459a"
+    }
+  },
+  "dll": "E:\\Projects\\CS2-Local-Kit\\wt-nades-14192-20261023\\temp\\nades-build-final\\source\\bin\\Release\\net10.0\\NadeSystem.dll",
+  "dllSha256": "75e2573c6db9e60488a75b466468eb791fb108c1ccfd17cac3f70f3b51da8687",
+  "patchedSourceSha256": "4ee230552ebf3df82be43ee4c064cd19fed11fa4ea51a7e5641e5a8752eb8fa6",
+  "scope": "One Windows pattern plus evidence; no AI strategy or baseline upgrade",
+  "realGameAccepted": false
+}
