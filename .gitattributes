@@ -1,3 +1,5 @@
 # Patch files must not undergo EOL translation: git apply against a fresh upstream
 # checkout fails if CRLF/LF get rewritten in the working tree.
 experiments/**/*.patch -text
+# Unified-diff context preserves upstream tabs, CRLF and blank context lines.
+experiments/compatibility/14192/*.patch whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
