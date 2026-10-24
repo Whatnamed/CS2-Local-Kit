@@ -15,6 +15,11 @@ def fixture(candidate,digest):
         if rel.endswith('.zip'):continue
         write(package/rel,(candidate/rel).read_bytes())
     for rel in original['baselineFiles']:write(root/rel,'synthetic protected '+rel)
+    # Preserve the production retained/changed distinction without copying any
+    # private Human data or real game executables into the synthetic baseline.
+    for e in original['files']:
+        if original['baselineFiles'].get(e['target'])==e['sha256']:
+            write(root/e['target'],(candidate/e['source']).read_bytes())
     for folder,rows in original['moduleInventory'].items():
         if folder=='valveServerPluginDeclarations':continue
         for path,value in rows.items():

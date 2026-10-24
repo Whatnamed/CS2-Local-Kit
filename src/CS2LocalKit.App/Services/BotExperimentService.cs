@@ -289,6 +289,7 @@ public sealed class BotExperimentService
         if (m.GetProperty("schemaVersion").GetInt32() != 1 || m.GetProperty("lane").GetString() != "bot-experiment" || m.GetProperty("testFixture").GetBoolean() || m.GetProperty("botRef").GetString() != "e18c029a76b7515ea5cb15cb08c41f03de4c0a57" || m.GetProperty("metamod").GetProperty("build").GetInt32() != 1481 || m.GetProperty("cssVersion").GetString() != "1.0.376" || m.GetProperty("profile").GetProperty("difficulty").GetString() != candidate.Difficulty.ToString()) throw new InvalidDataException("候选身份/profile 不匹配");
         if (candidate.PreservesHuman && (m.GetProperty("humanPolicy").GetString() != "preserve" || m.GetProperty("coexistence").GetProperty("status").GetString() != "ready-for-manual-test")) throw new InvalidDataException("联合候选身份不匹配");
         if (candidate.MatchSetup && (!m.TryGetProperty("matchSetup",out var setup) || setup.GetProperty("schemaVersion").GetInt32()!=1 || setup.GetProperty("adapter").GetString()!="LocalKitMatchSetup")) throw new InvalidDataException("候选缺少固定开局配置适配层");
+        if (candidate.RuntimeIntegration != m.TryGetProperty("runtimeIntegration",out _)) throw new InvalidDataException("候选整合层身份不匹配");
         var expected = m.GetProperty("bundleFiles").EnumerateObject().ToDictionary(x => x.Name, x => x.Value.GetString()!, StringComparer.OrdinalIgnoreCase);
         void Walk(string directory)
         {
