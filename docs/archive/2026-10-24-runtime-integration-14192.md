@@ -1,6 +1,6 @@
 # 2026-10-24：当前可玩基线上的统一 Controller 整合候选
 
-**状态：隔离准备与交付已完成；真实安装、三档游戏内验证及新安装的真实恢复尚未授权/验收。**
+**状态：隔离准备与交付已完成；用户后续授权的一次 Medium 整合安装已执行，精确 Restore 只读预检通过。三档游戏内验证及新安装的真实恢复仍未执行/验收。**
 本记录不提升 accepted runtime pins，不把 Controller 成功、签名或合成事务当成游戏效果。
 
 ## 当前事实和保护边界
@@ -96,3 +96,19 @@ pwsh -NoProfile -File $entry -Action Install -Apply
 8. 对新安装精确 ID 的真实 Restore 单独授权后执行，核对原基线、三父层/备份、个人配置保留，再实际启动复验。合成 roundtrip 不替代这次真实恢复。
 
 本轮不将任何一项 pending 标为通过，也不因为 Medium 原基线已可玩而提前判定整合任务全部完成。
+
+## 后续单次安装授权与真实事务
+
+用户随后明确回复「授权安装 Medium 整合候选」。在同一任务 worktree、`d7b0ee2b2b29fc13602261497bda504e9ca0b3df` 基础上重新核查：CS2 未运行、固定入口与已提交副本 SHA256 一致，完整只读预检通过。执行固定入口的一次 `Install -Apply`，没有先 Restore 任何父层。
+
+- 新整合 install ID：`cf73e2b17dde4b98808bb42780ea59c6`，state 为 `installed`，profile 为 `Medium`。
+- 精确备份：`E:\CS2MOD\backups\bot-experiment\cf73e2b17dde4b98808bb42780ea59c6`。
+- 固定候选 manifest SHA256：`3542f17be9d9a7e04a3408d7816cf1a68124ffc7c0b2cadfa5b252cfa68341d1`。
+- 实际操作：保留 680 项、替换 Aim DLL 一项、新增 MatchSetup/Core 三文件及独立 marker；685 项 postimage 校验全部通过。
+- 原全部备份（排除本次新增事务目录）、个人预设、app-data 和 Steam manifest 的完整前后身份一致，`unexpectedChanges=[]`。三个父事务未改写，Nade DLL/48 数据库属于保留项。
+- 对新 ID 执行 `Restore` **未加 `-Apply`**：精确恢复预检通过，返回 `mode=preview-read-only`。之后再次验证 installed postimages 与个人数据保护结果。
+- 未启动 CS2、未改变 Steam 启动选项、未执行真实 Restore；没有宣称 Aim/Nade/阵容/饰品或 FPS 游戏内验收通过。
+
+安装摘要与预检文件身份见 [medium-installed.json](2026-10-24-runtime-integration-14192/medium-installed.json)。原始完整日志及私人前后清单保留在 `E:\CS2MOD\diagnostics\runtime-integration-14192-20261024\medium-install-20261024`，不提交私人目录清单。此前 `delivery.json`、`protection.json` 的 installed=false 是隔离交付时的历史快照，以本节及新增安装证据表示这次授权后的状态。
+
+接下来的用户操作：打开已交付 Controller，配置对局并「准备对局」，自行启动离线 CS2。先验证 Medium 的启动、人数/TAB、阵容、Head/Body、Off/Max 与 CT/T Human；Low/High 的真实切换及新 ID 的真实 Restore 仍需各自授权。
