@@ -29,7 +29,22 @@ public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, stri
                     ? "增强人机 + 我的饰品；Human 修改须经活动事务与侧车校验"
                     : "旧 Bot 实验隔离 Human；请先按精确 ID 恢复", id, backupRoot, preserve, state, recovery);
             }
-            var marker = Path.Combine(cs2Root, "game", "csgo", ".cs2-local-kit-bot-experiment.json");
+            var integratedMarker = Path.Combine(cs2Root, "game", "csgo", ".cs2-local-kit-runtime-integration.json");
+            var marker = File.Exists(integratedMarker) ? integratedMarker : Path.Combine(cs2Root, "game", "csgo", ".cs2-local-kit-bot-experiment.json");
+            // A missing integration marker must not silently expose its still-active parent.
+            if (!File.Exists(integratedMarker) && Directory.Exists(backupRoot))
+                foreach (var folder in Directory.EnumerateDirectories(backupRoot))
+                {
+                    var manifest = Path.Combine(folder,"candidate-manifest.json");
+                    var record = Path.Combine(folder,"install-record.json");
+                    if (!File.Exists(manifest) || !File.Exists(record)) continue;
+                    using var m = JsonDocument.Parse(File.ReadAllText(manifest));
+                    using var r = JsonDocument.Parse(File.ReadAllText(record));
+                    if (m.RootElement.TryGetProperty("runtimeIntegration",out _) &&
+                        r.RootElement.GetProperty("cs2Root").GetString() == Path.GetFullPath(cs2Root) &&
+                        r.RootElement.GetProperty("state").GetString() is not ("restored" or "rolled-back"))
+                        return FromRecord(Path.GetFileName(folder),true);
+                }
             if (File.Exists(marker))
             {
                 using var doc = JsonDocument.Parse(File.ReadAllText(marker));

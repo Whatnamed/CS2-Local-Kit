@@ -14,12 +14,12 @@ public sealed record BotPreferences(BotDifficulty Difficulty = BotDifficulty.Med
 {
     public string ConsoleCommands => $"bot_aim {Aim.ToString().ToLowerInvariant()}; bot_nades {Nades.ToString().ToLowerInvariant()}";
 }
-public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false, bool MatchSetup = false);
+public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false, bool MatchSetup = false, bool RuntimeIntegration = false);
 public sealed record BotModeReadiness(bool CanEnable, string Reason, string CurrentBuild, string CandidateBuild, string BotRef, bool HumanFilesValid);
 public sealed record BotInstalledSnapshot(bool Valid, string Reason, BotDifficulty? Difficulty = null, bool HasMatchSetup = false);
 public enum LocalPlayReadinessKind { Ready, NeedsLocalPreparation, NeedsRepair, Unknown }
 public sealed record LocalPlayReadiness(LocalPlayReadinessKind Kind, string Reason, BotDifficulty? InstalledDifficulty = null, bool HasMatchSetup = false);
-public sealed record BotSwitchPlan(string? OldInstallId, BotDifficulty TargetDifficulty, string TargetManifestSha256, bool AlreadyPrepared, string Summary);
+public sealed record BotSwitchPlan(string? OldInstallId, BotDifficulty TargetDifficulty, string TargetManifestSha256, bool AlreadyPrepared, string Summary, bool ProtectsExistingLayers = false, string? HumanHandoffInstallId = null);
 public sealed record BotPrepareJournal(string OperationId, string? OldInstallId, BotDifficulty TargetDifficulty,
     string TargetManifestSha256, string Stage, string? NewInstallId = null, string? Error = null);
 public sealed record BotProcessResult(int ExitCode, string Stdout, string Stderr);
@@ -139,6 +139,7 @@ public sealed class BotExperimentService
             return new(false, identity.Reason);
         try
         {
+            if (IsPlayableSubstrate()) return new(true,"已核实当前三层可玩基线；准备整合候选后才能自动应用阵容",BotDifficulty.Medium,false);
             var backup = SafePath(BackupRoot, identity.InstallId);
             var recordPath = SafePath(backup, "install-record.json");
             var manifestPath = SafePath(backup, "candidate-manifest.json");
@@ -146,6 +147,7 @@ public sealed class BotExperimentService
             using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
             var r = record.RootElement;
             var m = manifest.RootElement;
+            RuntimeIntegrationGuard.VerifyParents(Cs2Root,m);
             if (r.GetProperty("state").GetString() != "installed" ||
                 r.GetProperty("installId").GetString() != identity.InstallId ||
                 r.GetProperty("manifestSha256").GetString() != HashFile(manifestPath) ||
@@ -227,7 +229,7 @@ public sealed class BotExperimentService
             build = $"{target.GetProperty("PatchVersion").GetString()} / {target.GetProperty("ClientVersion").GetString()} / {target.GetProperty("buildId").GetString()}";
             if (Cs2Running) throw new InvalidOperationException("CS2 正在运行，请退出游戏后切换");
             if (!steam.Idle) throw new InvalidOperationException(steam.Reason);
-            if (active.BlocksHuman) throw new InvalidOperationException(human.Reason);
+            if (active.BlocksHuman && !(candidate.RuntimeIntegration && IsPlayableSubstrate())) throw new InvalidOperationException(human.Reason);
             if (!human.Valid) throw new InvalidOperationException(human.Reason);
             if (build != steam.BuildText) throw new InvalidOperationException($"候选 build 已过期（{build}）；禁止套用到当前 build");
             if (!candidate.PreservesHuman) throw new InvalidOperationException("现有候选会隔离 Human，不能用于“增强人机 + 我的饰品”");
@@ -236,6 +238,25 @@ public sealed class BotExperimentService
             return new(true, "联合候选可检查切换预览；实机效果尚未验收", steam.BuildText, build, botRef, human.Valid);
         }
         catch (Exception ex) { return new(false, ex.Message, steam.BuildText, build, botRef, human.Valid); }
+    }
+    private bool IsPlayableSubstrate()
+    {
+        if (File.Exists(Path.Combine(Cs2Root,RuntimeIntegrationGuard.Marker))) return false;
+        var candidate=_candidates.LastOrDefault(c=>c.RuntimeIntegration);
+        if(candidate is null)return false;
+        var file=SafePath(CandidatePath(candidate),"experiment-manifest.json");
+        if(HashFile(file)!=candidate.ManifestSha256)throw new InvalidDataException("整合候选身份漂移");
+        using var doc=JsonDocument.Parse(File.ReadAllText(file));var m=doc.RootElement;
+        RuntimeIntegrationGuard.VerifyParents(Cs2Root,m);
+        var steam=SteamState;var build=m.GetProperty("targetBuild");
+        if(!steam.Idle||steam.BuildId!=build.GetProperty("buildId").GetString()||steam.PatchVersion!=build.GetProperty("PatchVersion").GetString()||steam.ClientVersion!=build.GetProperty("ClientVersion").GetString())return false;
+        foreach(var p in m.GetProperty("baselineFiles").EnumerateObject())
+            if(HashFile(SafePath(Cs2Root,p.Name))!=p.Value.GetString())
+            {
+                if(p.Name!=BotHumanFixtureSidecar.Target)return false;
+                RuntimeIntegrationGuard.RestoredHumanHandoff(Cs2Root,BackupRoot,m);
+            }
+        return Identity.InstallId==m.GetProperty("runtimeIntegration").GetProperty("parents").GetProperty("bot").GetProperty("installId").GetString();
     }
     public string CandidatePath(BotCandidate c)
     {
@@ -324,7 +345,7 @@ public sealed class BotExperimentService
             // Only reconcile a stage whose exact Bot record proves the corresponding disk state.
             var state = ReadRecordState(installId);
             if (state == "installed" && Identity.InstallId == installId) sidecar.AbortSuspendedRestore();
-            else if (state == "restored" && !Identity.BlocksHuman) sidecar.FinishExactRestore();
+            else if (state == "restored" && (!Identity.BlocksHuman || RuntimeIntegrationGuard.IsRestoredSubstrate(Cs2Root,BackupRoot,installId))) sidecar.FinishExactRestore();
             throw;
         }
     }
@@ -380,7 +401,7 @@ public sealed class BotExperimentService
                     throw new InvalidDataException("安装入口结束，但磁盘/事务状态未确认；请检查精确恢复记录");
                 await Invoke("Diagnostics", false);
             }
-            if (apply && action == "Restore" && (Identity.BlocksHuman || ReadRecordState(installId!) != "restored"))
+            if (apply && action == "Restore" && ((Identity.BlocksHuman && !(candidate.RuntimeIntegration && IsPlayableSubstrate())) || ReadRecordState(installId!) != "restored"))
                 throw new InvalidDataException("恢复入口结束，但原环境状态未确认；保留精确备份");
             return result;
     }
@@ -417,6 +438,13 @@ public sealed class BotExperimentService
         if (!target.MatchSetup) throw new InvalidOperationException("目标候选没有开局配置适配层");
         Validate(target);
         var current = Identity;
+        if(target.RuntimeIntegration && IsPlayableSubstrate())
+        {
+            await ExecuteCoreAsync("Preview",difficulty);
+            using var baseline=JsonDocument.Parse(File.ReadAllText(SafePath(CandidatePath(target),"experiment-manifest.json")));
+            return new(current.InstallId,difficulty,target.ManifestSha256,false,"保留当前已验证的三层安装与备份，安装可独立撤回的整合组件；恢复时回到当前可玩基线",true,
+                RuntimeIntegrationGuard.RestoredHumanHandoff(Cs2Root,BackupRoot,baseline.RootElement));
+        }
         if (!current.BlocksHuman)
         {
             await ExecuteCoreAsync("Preview", difficulty);
@@ -456,7 +484,7 @@ public sealed class BotExperimentService
             if (previous is not null && previous.Stage != "completed" && !PreviousPrepareSettled(previous))
                 throw new InvalidOperationException("上次准备操作未完成；保留现场并检查记录，不自动重试");
             var fresh = await PreviewSwitchCoreAsync(approved.TargetDifficulty);
-            if (fresh.OldInstallId != approved.OldInstallId || fresh.TargetManifestSha256 != approved.TargetManifestSha256 || fresh.AlreadyPrepared != approved.AlreadyPrepared)
+            if (fresh.OldInstallId != approved.OldInstallId || fresh.TargetManifestSha256 != approved.TargetManifestSha256 || fresh.AlreadyPrepared != approved.AlreadyPrepared || fresh.ProtectsExistingLayers != approved.ProtectsExistingLayers || fresh.HumanHandoffInstallId != approved.HumanHandoffInstallId)
                 throw new InvalidOperationException("准备预览后安装身份变化，请重新检查并确认");
             if (fresh.AlreadyPrepared) return new(Guid.NewGuid().ToString("N"), fresh.OldInstallId,
                 fresh.TargetDifficulty, fresh.TargetManifestSha256, "completed", fresh.OldInstallId);
@@ -466,7 +494,12 @@ public sealed class BotExperimentService
             BotHumanFixtureSidecar? handoff = null;
             try
             {
-                if (fresh.OldInstallId is not null)
+                if(fresh.HumanHandoffInstallId is not null)
+                {
+                    handoff=new BotHumanFixtureSidecar(Cs2Root,BackupRoot,fresh.HumanHandoffInstallId);
+                    handoff.PrepareRestoredTransfer();
+                }
+                if (fresh.OldInstallId is not null && !fresh.ProtectsExistingLayers)
                 {
                     journal = journal with { Stage = "restoring" }; WritePrepareJournal(journal);
                     if (BotHumanFixtureSidecar.Exists(BackupRoot, fresh.OldInstallId))
@@ -483,7 +516,7 @@ public sealed class BotExperimentService
                         {
                             if (ReadRecordState(fresh.OldInstallId) == "installed" && Identity.InstallId == fresh.OldInstallId)
                                 handoff.AbortSuspendedRestore();
-                            else if (ReadRecordState(fresh.OldInstallId) == "restored" && !Identity.BlocksHuman)
+                            else if (ReadRecordState(fresh.OldInstallId) == "restored" && (!Identity.BlocksHuman || RuntimeIntegrationGuard.IsRestoredSubstrate(Cs2Root,BackupRoot,fresh.OldInstallId)))
                                 handoff.FinishExactRestore(replayHuman: false);
                             throw;
                         }
@@ -508,7 +541,7 @@ public sealed class BotExperimentService
             catch (Exception ex)
             {
                 var reason = ex.Message;
-                if (handoff is not null && !Identity.BlocksHuman)
+                if (handoff is not null && (!Identity.BlocksHuman || IsPlayableSubstrate()))
                 {
                     try { handoff.ReplayAfterFailedSwitch(); }
                     catch (Exception recovery) { reason += "；Human 配置仍保存在旧事务侧车：" + recovery.Message; }
@@ -521,6 +554,7 @@ public sealed class BotExperimentService
     }
     private bool PreviousPrepareSettled(BotPrepareJournal previous)
     {
+        if(IsPlayableSubstrate())return true;
         // This only permits a new user-confirmed plan. It never resumes or retries an unknown write.
         if (previous.OldInstallId is not null && Identity.InstallId == previous.OldInstallId && InspectInstalled().Valid)
             return true;

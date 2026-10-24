@@ -15,7 +15,7 @@ public static class MatchRuntimeContract
             if (string.IsNullOrWhiteSpace(rel) || rel.Contains('\\') || rel.Contains(':') || rel.Split('/').Any(p=>p is "" or "." or "..")) throw new InvalidDataException("安装合约路径无效");
             var path=Path.GetFullPath(Path.Combine(root,rel));MatchSetupStore.CheckPath(path);return path;
         }
-        var markerPath=Safe(cs2Root,"game/csgo/.cs2-local-kit-bot-experiment.json");
+        var markerPath=Safe(cs2Root,File.Exists(Safe(cs2Root,RuntimeIntegrationGuard.Marker))?RuntimeIntegrationGuard.Marker:"game/csgo/.cs2-local-kit-bot-experiment.json");
         var markerHash=Hash(markerPath);
         using var marker=JsonDocument.Parse(File.ReadAllText(markerPath));var id=marker.RootElement.GetProperty("installId").GetString()!;MatchJson.Id(id);
         var backupRoot=Path.Combine(dataRoot,"backups/bot-experiment");
@@ -25,6 +25,7 @@ public static class MatchRuntimeContract
         var recordPath=Safe(backupRoot,id+"/install-record.json");using var record=JsonDocument.Parse(File.ReadAllText(recordPath));var r=record.RootElement;
         if (r.GetProperty("installId").GetString()!=id || !Path.GetFullPath(r.GetProperty("cs2Root").GetString()!).Equals(Path.GetFullPath(cs2Root),StringComparison.OrdinalIgnoreCase) || r.GetProperty("state").GetString()!="installed" || r.GetProperty("manifestSha256").GetString()!=sha || r.GetProperty("humanPolicy").GetString()!="preserve") throw new InvalidDataException("当前安装未完整结束或不是 Human-preserve 候选");
         using var manifest=JsonDocument.Parse(File.ReadAllText(manifestPath));var m=manifest.RootElement;
+        RuntimeIntegrationGuard.VerifyParents(cs2Root,m);
         if (m.GetProperty("schemaVersion").GetInt32()!=1 || m.GetProperty("lane").GetString()!="bot-experiment" || m.GetProperty("humanPolicy").GetString()!="preserve" || m.GetProperty("testFixture").GetBoolean() || m.GetProperty("cssVersion").GetString()!="1.0.376" || m.GetProperty("metamod").GetProperty("build").GetInt32()!=1481) throw new InvalidDataException("运行时 manifest lane/framework/policy 无效");
         var binaries=m.GetProperty("gameBinaries").EnumerateObject().Select(p=>p.Name).ToHashSet(StringComparer.Ordinal);
         if (!binaries.SetEquals(new[]{"game/csgo/bin/win64/server.dll","game/bin/win64/engine2.dll","game/csgo/bin/win64/client.dll","game/bin/win64/schemasystem.dll","game/bin/win64/cs2.exe"})) throw new InvalidDataException("缺少五项游戏 binary 身份");

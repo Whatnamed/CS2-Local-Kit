@@ -16,6 +16,7 @@ import uuid
 
 BOT_REF = 'e18c029a76b7515ea5cb15cb08c41f03de4c0a57'
 MARKER = 'game/csgo/.cs2-local-kit-bot-experiment.json'
+INTEGRATION_MARKER = 'game/csgo/.cs2-local-kit-runtime-integration.json'
 REPO = Path(__file__).resolve().parents[2]
 MM_FILES = {'addons/metamod/bin/win64/metamod.2.cs2.dll', 'addons/metamod/bin/win64/server.dll'}
 PLUGINS = {'BotAI', 'BotAimImprover', 'BotBuy', 'BotRandomizer', 'BotState', 'NadeSystem', 'BotControllerImpl', 'BotHiderImpl', 'LocalKitMatchSetup'}
@@ -23,6 +24,7 @@ GAME_BINARIES = {'game/csgo/bin/win64/server.dll','game/bin/win64/engine2.dll','
 HUMAN_PLUGIN = 'game/csgo/addons/counterstrikesharp/plugins/InventorySimulator'
 HUMAN_CONFIG = 'game/csgo/addons/counterstrikesharp/configs/plugins/InventorySimulator'
 HUMAN_GAMEDATA = 'game/csgo/addons/counterstrikesharp/gamedata/inventory-simulator.json'
+HUMAN_FIXTURE = HUMAN_CONFIG+'/inventories.json'
 
 
 def require(condition, message):
@@ -134,6 +136,60 @@ def steam_idle(root):
     return digest(raw)
 
 
+def steam_installation(root, build_id):
+    steam_idle(root)
+    text = (Path(root).parent.parent / 'appmanifest_730.acf').read_text(encoding='utf-8-sig')
+    result = {}
+    for key in ['appid', 'buildid', 'installdir']:
+        matches = re.findall(r'"'+key+r'"\s+"([^"\r\n]*)"', text)
+        require(len(matches) == 1, 'Steam identity missing/ambiguous: '+key)
+        result[key] = matches[0]
+    require(result == {'appid':'730','buildid':build_id,'installdir':Path(root).name}, 'Steam installation/build mismatch')
+    return result
+
+
+def integration_context(m, root):
+    """Protect the three immutable installed layers; no parent restore or adoption."""
+    c = m['runtimeIntegration']
+    require(c['schemaVersion'] == 1 and set(c['parents']) == {'bot','compat','nades'}, 'Incomplete integration parents')
+    require(str(root) == c['cs2Root'], 'Integration installation root mismatch')
+    steam_installation(root, m['targetBuild']['buildId'])
+    for parent in c['parents'].values():
+        folder = no_links(parent['backupDir'])
+        require(inventory(folder) == parent['inventory'], 'Parent transaction/backup drift: '+str(folder))
+        r = read_json(folder / parent['recordName'])
+        require(r['state'] == 'installed' and r['installId'] == parent['installId'] and r['cs2Root'] == str(root), 'Parent record identity mismatch')
+        require(sha(folder / parent['manifestName']) == r['manifestSha256'], 'Parent manifest digest mismatch')
+        require(identity(under(root,parent['marker'])) == parent['markerIdentity'], 'Parent marker drift')
+        marker = read_json(root / parent['marker'])
+        require(marker['installId'] == r['installId'] and marker['manifestSha256'] == r['manifestSha256'], 'Parent marker/record mismatch')
+    for p,h in m['gameBinaries'].items():
+        require(sha(under(root,p)) == h, 'Integration game binary drift: '+p)
+    inf = under(root,'game/csgo/steam.inf').read_text()
+    for key,value in m['targetBuild'].items():
+        if key != 'buildId': require(re.search(rf'(?m)^{re.escape(key)}={re.escape(value)}\s*$',inf), 'Integration game build drift: '+key)
+
+
+def restored_human_handoff(m, root, backups):
+    """Only an exact completed sidecar may explain a user fixture changed after Restore."""
+    baseline = m['baselineFiles'][HUMAN_FIXTURE]
+    current = sha(root/HUMAN_FIXTURE)
+    if baseline == current: return None
+    for folder in sorted(backups.iterdir()) if backups.exists() else []:
+        no_links(folder)
+        side = folder/'human-fixture-update/update.json'
+        if not folder.is_dir() or not side.exists(): continue
+        value = read_json(side)
+        if value.get('Stage') != 'completed' or value.get('CurrentSha256') != current or value.get('BaselineSha256') != baseline: continue
+        r = read_json(folder/'install-record.json'); old = read_json(folder/'candidate-manifest.json')
+        require(r['installId'] == folder.name == value['InstallId'] and r['state'] == 'restored' and r['cs2Root'] == str(root), 'Restored Human handoff record mismatch')
+        require(sha(folder/'candidate-manifest.json') == r['manifestSha256'] == value['ManifestSha256'], 'Restored Human handoff manifest mismatch')
+        require(old.get('runtimeIntegration') == m['runtimeIntegration'] and old['baselineFiles'] == m['baselineFiles'], 'Restored Human handoff substrate mismatch')
+        require(sha(folder/'human-fixture-update/baseline.json') == baseline and sha(folder/'human-fixture-update/current.json') == current, 'Restored Human backup drift')
+        return folder.name
+    raise ValueError('Human fixture drift has no exact completed integration sidecar')
+
+
 def human_path(path):
     return path == HUMAN_GAMEDATA or any(path.startswith(p+'/') for p in [HUMAN_PLUGIN,HUMAN_CONFIG])
 
@@ -171,6 +227,8 @@ def payload_allowed(target, surface):
     if not target.startswith(prefix):
         return False
     rel = target[len(prefix):]
+    if surface == 'compatibility':
+        return rel in {'addons/counterstrikesharp/bin/win64/counterstrikesharp.dll', 'addons/counterstrikesharp/gamedata/gamedata.json'}
     if surface == 'framework':
         return rel in MM_FILES
     if surface != 'bot':
@@ -209,6 +267,7 @@ def load_candidate(release, expected_sha, fake=False):
         require(key not in seen, f'Duplicate/case-colliding target: {key}')
         seen.add(key)
         require(payload_allowed(e['target'], e['surface']), f'Out-of-lane target: {key}')
+        require(e['surface'] != 'compatibility' or 'runtimeIntegration' in m, 'Compatibility payload requires reviewed integration chain')
         require(sha(under(release, e['source'])) == e['sha256'], f'Payload hash mismatch: {key}')
     require({e['target'][len('game/csgo/'):] for e in m['files'] if e['surface']=='framework'} == MM_FILES, 'Incomplete framework overlay')
     for path in m['baselineFiles']:
@@ -277,7 +336,7 @@ def gameinfo_bytes(root):
     return raw, (b'\xef\xbb\xbf' if raw.startswith(b'\xef\xbb\xbf') else b'') + updated.encode('utf-8')
 
 
-def active_history(root, backup_root):
+def active_history(root, backup_root, protected_ids=()):
     if backup_root.exists():
         no_links(backup_root)
         for p in backup_root.iterdir():
@@ -287,7 +346,7 @@ def active_history(root, backup_root):
             record_path = under(p, 'install-record.json')
             if record_path.exists():
                 r = read_json(record_path)
-                require(r.get('cs2Root') != str(root) or r.get('state') in {'restored','rolled-back'}, f'Unrestored transaction: {p.name}')
+                require(p.name in protected_ids or r.get('cs2Root') != str(root) or r.get('state') in {'restored','rolled-back'}, f'Unrestored transaction: {p.name}')
 
 
 def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_human=False, preserve_human=False):
@@ -295,6 +354,9 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
     root = validate_root(root, fake)
     steam_idle(root)
     release, m = load_candidate(release, manifest_sha, fake)
+    integrated = 'runtimeIntegration' in m
+    require((MARKER == INTEGRATION_MARKER) == integrated, 'Wrong transaction entry for candidate lane')
+    if integrated: integration_context(m,root)
     require(not (preserve_human and isolate_human), 'Human policies are mutually exclusive')
     require(preserve_human == (m.get('humanPolicy','isolate') == 'preserve'), 'Explicit preserve-Human intent must match candidate policy')
     backup_root = no_links(backup_root)
@@ -302,9 +364,12 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
     require(not release.is_relative_to(root) and not root.is_relative_to(release), 'Release and target roots must be disjoint')
     require(root.drive.casefold() == backup_root.drive.casefold(), 'Isolation requires backup on the same volume')
     require(not under(root, MARKER).exists(), 'Active experiment marker; use exact install ID to restore')
-    active_history(root, backup_root)
+    active_history(root, backup_root, [p['installId'] for p in m['runtimeIntegration']['parents'].values()] if integrated else ())
     for rel, expected in m['baselineFiles'].items():
-        require(identity(under(root, rel)) == {'kind':'file','sha256':expected}, f'Baseline identity mismatch: {rel}')
+        if integrated and rel == HUMAN_FIXTURE and sha(under(root,rel)) != expected:
+            restored_human_handoff(m,root,backup_root)
+        else:
+            require(identity(under(root, rel)) == {'kind':'file','sha256':expected}, f'Baseline identity mismatch: {rel}')
     for rel, expected in m['gameBinaries'].items():
         require(sha(under(root, rel)) == expected, f'Game binary drift: {rel}')
     inf = under(root, 'game/csgo/steam.inf').read_text()
@@ -314,11 +379,15 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
     steam_manifest = no_links(root.parent.parent / 'appmanifest_730.acf')
     require(re.search(r'"buildid"\s+"'+re.escape(m['targetBuild']['buildId'])+'"', steam_manifest.read_text()), 'Steam buildId mismatch')
     require(module_inventory(root) == m['moduleInventory'], 'Plugin/module inventory drift')
-    original_gi, new_gi = gameinfo_bytes(root)
+    if integrated:
+        original_gi = new_gi = under(root,'game/csgo/gameinfo.gi').read_bytes()
+        require(original_gi.decode('utf-8-sig').count('csgo/overrides/botprofile.vpk') == 1, 'Integrated profile startup entry mismatch')
+    else:
+        original_gi, new_gi = gameinfo_bytes(root)
     entries = []
     isolated = []
     plugin_dir = under(root, 'game/csgo/addons/counterstrikesharp/plugins')
-    if plugin_dir.exists():
+    if plugin_dir.exists() and not integrated:
         for p in sorted(plugin_dir.iterdir()):
             no_links(p)
             if p.is_dir() and p.name in PLUGINS:
@@ -332,6 +401,7 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
                 isolated.append(p.relative_to(root).as_posix())
     meta = under(root, 'game/csgo/addons/metamod')
     for p in meta.glob('*.vdf'):
+        if integrated: break
         if p.name.lower() == 'counterstrikesharp.vdf':
             continue
         content = p.read_text(encoding='utf-8-sig')
@@ -339,6 +409,7 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
             require(p.name not in {'BotHider.vdf','BotVision.vdf','BotController.vdf'}, 'Old Bot module declaration')
             isolated.append(p.relative_to(root).as_posix())
     for p in under(root,'game/csgo/addons').glob('*.vdf'):
+        if integrated: break
         if p.name.lower() not in {'metamod.vdf','metamod_x64.vdf'}:
             isolated.append(p.relative_to(root).as_posix())
     if m.get('humanPolicy') == 'preserve':
@@ -353,7 +424,7 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
         after = {'kind':'file','sha256':e['sha256']}
         action = 'retained' if before == after else 'overwritten' if before else 'created'
         entries.append({**e,'action':action,'before':before,'after':after})
-    entries.append({'target':'game/csgo/gameinfo.gi','action':'modified','surface':'gameinfo','before':{'kind':'file','sha256':digest(original_gi)},'after':{'kind':'file','sha256':digest(new_gi)}})
+    entries.append({'target':'game/csgo/gameinfo.gi','action':'retained' if integrated else 'modified','surface':'gameinfo','before':{'kind':'file','sha256':digest(original_gi)},'after':{'kind':'file','sha256':digest(new_gi)}})
     targets = {e['target'] for e in entries}
     for rel, value in m['baselineFiles'].items():
         if rel in targets or any(rel.startswith(p+'/') for p in isolated):
@@ -377,6 +448,24 @@ def preflight_restore(root, backup, record, partial=False):
     require(record['state'] in {'installed','installing','restoring','restore-failed'}, 'Transaction is not active')
     require(sha(under(backup,'candidate-manifest.json'))==record['manifestSha256'], 'Backup manifest corrupted')
     candidate = read_json(under(backup,'candidate-manifest.json'))
+    integrated = 'runtimeIntegration' in candidate
+    require((MARKER == INTEGRATION_MARKER) == integrated, 'Wrong recovery entry for candidate lane')
+    if integrated: integration_context(candidate,root)
+    if integrated:
+        actual = module_inventory(root)
+        expected = json.loads(json.dumps(candidate['moduleInventory']))
+        for e in record['entries']:
+            for folder,rows in actual.items():
+                if not e['target'].startswith(folder+'/'): continue
+                key = e['target'][len(folder)+1:]
+                live = rows.get(key)
+                require(live in [e['after'],e['before']] if partial else live == e['after'], 'Integrated module image drift: '+e['target'])
+                if e['before'] is None: rows.pop(key,None)
+                else: rows[key] = e['before']
+        for folder,rows in actual.items():
+            for key in list(rows):
+                if rows[key]['kind']=='directory' and folder+'/'+key in record['createdDirectories']:del rows[key]
+        require(actual == expected,'Integrated module inventory drift')
     validate_coexistence(candidate)
     require(record.get('humanPolicy','isolate') == candidate.get('humanPolicy','isolate') and record.get('coexistence') == candidate.get('coexistence'), 'Recorded Human policy/evidence mismatch')
     require(record.get('profile') == candidate.get('profile'), 'Recorded profile mismatch')
@@ -412,21 +501,24 @@ def preflight_restore(root, backup, record, partial=False):
                 require(full.casefold() in targets, f'Unknown file in created directory: {full}')
 
 
-def restore(backup, apply=False, fake=False):
+def restore(backup, apply=False, fake=False, fault=None):
     backup=no_links(backup)
     require(backup.is_dir(), 'Exact backup directory is required')
     record=read_json(under(backup,'install-record.json'))
     root=validate_root(record['cs2Root'],fake)
     require(bool(record['testFixture'])==bool(fake), 'Fake/production record mismatch')
     partial=record['state']!='installed'
+    require(fault is None or fake,'Fault injection is synthetic-only')
     preflight_restore(root,backup,record,partial)
     if not apply:return record
     record['state']='restoring';save_record(backup,record)
     try:
         steam_identity = steam_idle(root)
-        for e in reversed(record['entries']):
+        candidate=read_json(backup/'candidate-manifest.json')
+        for index,e in enumerate(reversed(record['entries'])):
             if e['action']=='retained':continue
             ensure_closed()
+            if 'runtimeIntegration' in candidate: integration_context(candidate,root)
             require(steam_idle(root) == steam_identity, 'Steam manifest changed during restoration; preserve the exact recovery record')
             target=under(root,e['target']);live=identity(target)
             if live==e['before']:continue
@@ -445,6 +537,7 @@ def restore(backup, apply=False, fake=False):
                 require(identity(staged)==e['before'], 'Restoration staging mismatch')
                 os.replace(staged,target)
             require(identity(target)==e['before'], f'Restore verification failed: {e["target"]}')
+            if fault == index: raise KeyboardInterrupt('Synthetic restore interruption')
         for rel in sorted(set(record['createdDirectories']),key=lambda x:x.count('/'),reverse=True):
             p=under(root,rel)
             if p.exists():
@@ -462,6 +555,8 @@ def install(release, manifest_sha, root, backup_root, apply=False, fake=False, i
     root,release,m,entries,new_gi=make_plan(release,manifest_sha,root,backup_root,fake,isolate_human,preserve_human)
     require(not fault or fake, 'Fault injection is fake-tree only')
     if not apply:return {'state':'preview','entries':entries}
+    if 'runtimeIntegration' in m:
+        require(sha(root/HUMAN_FIXTURE) == m['baselineFiles'][HUMAN_FIXTURE], 'Suspend the exact completed Human handoff before installation')
     install_id=uuid.uuid4().hex
     backup=under(backup_root,install_id)
     marker={'installId':install_id,'manifestSha256':manifest_sha,'backupRoot':str(no_links(backup_root))}
@@ -499,9 +594,10 @@ def install(release, manifest_sha, root, backup_root, apply=False, fake=False, i
     save_record(backup,record)
     try:
         steam_identity = steam_idle(root)
-        for e in entries:
+        for index,e in enumerate(entries):
             if e['action']=='retained':continue
             ensure_closed()
+            if 'runtimeIntegration' in m: integration_context(m,root)
             require(steam_idle(root) == steam_identity, 'Steam manifest changed during installation; preserve the exact recovery record')
             target=under(root,e['target'])
             require(identity(target)==e['before'], f'Changed after preflight: {e["target"]}')
@@ -516,6 +612,8 @@ def install(release, manifest_sha, root, backup_root, apply=False, fake=False, i
             require(identity(target)==e['after'], f'Postimage verification failed: {e["target"]}')
             if fault==e['surface']:raise RuntimeError('Injected failure: '+fault)
             if fault==e['surface']+'-interrupt':raise KeyboardInterrupt('Injected hard interruption: '+fault)
+            if fault=='write-'+str(index):raise RuntimeError('Synthetic file write failure')
+            if fault=='interrupt-'+str(index):raise KeyboardInterrupt('Synthetic file interruption')
         require(all(identity(under(root,e['target']))==e['after'] for e in entries),'Installed image verification failed')
         record['moduleInventoryAfter']=module_inventory(root)
         record['state']='installed';save_record(backup,record)

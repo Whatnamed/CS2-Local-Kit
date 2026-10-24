@@ -80,6 +80,7 @@ public sealed class BotHumanFixtureSidecar
         using var record = JsonDocument.Parse(File.ReadAllText(Safe(_backup, "install-record.json")));
         using var manifest = JsonDocument.Parse(File.ReadAllText(Safe(_backup, "candidate-manifest.json")));
         var r = record.RootElement; var m = manifest.RootElement;
+        RuntimeIntegrationGuard.VerifyParents(_root,m);
         var manifestHash = Hash(Safe(_backup, "candidate-manifest.json"));
         if (r.GetProperty("manifestSha256").GetString() != manifestHash ||
             m.GetProperty("humanPolicy").GetString() != "preserve" ||
@@ -239,7 +240,8 @@ public sealed class BotHumanFixtureSidecar
         if (value.Stage != "suspended" || Hash(_target) != value.BaselineSha256)
             throw new InvalidDataException("原事务恢复后 Human 基线未验证，保留当前记录");
         using var record = JsonDocument.Parse(File.ReadAllText(Safe(_backup, "install-record.json")));
-        if (record.RootElement.GetProperty("state").GetString() != "restored" || BotExperimentIdentity.Inspect(_root, Path.GetDirectoryName(_backup)).BlocksHuman)
+        if (record.RootElement.GetProperty("state").GetString() != "restored" ||
+            BotExperimentIdentity.Inspect(_root, Path.GetDirectoryName(_backup)).BlocksHuman && !RuntimeIntegrationGuard.IsRestoredSubstrate(_root,Path.GetDirectoryName(_backup)!,_installId))
             throw new InvalidDataException("Bot 原事务尚未精确恢复，不能重放 Human 配置");
         if (!replayHuman) { Write(value with { Stage = "transferring" }); return; }
         File.Copy(_current, _target, true);
@@ -251,7 +253,7 @@ public sealed class BotHumanFixtureSidecar
     {
         var value = Read() ?? throw new InvalidDataException("没有 Human 更新侧车");
         if (value.Stage != "transferring" || Hash(_target) != value.BaselineSha256 ||
-            BotExperimentIdentity.Inspect(_root, Path.GetDirectoryName(_backup)).BlocksHuman)
+            BotExperimentIdentity.Inspect(_root, Path.GetDirectoryName(_backup)).BlocksHuman && !RuntimeIntegrationGuard.IsRestoredSubstrate(_root,Path.GetDirectoryName(_backup)!,_installId))
             throw new InvalidDataException("组合安装未回到可验证基线，保留 Human 副本等待精确恢复");
         File.Copy(_current, _target, true);
         if (Hash(_target) != value.CurrentSha256) throw new IOException("Human 配置重放未验证");
@@ -272,5 +274,17 @@ public sealed class BotHumanFixtureSidecar
         File.Move(temp, _target, true);
         next.Complete();
         Write(value with { Stage = "transferred" });
+    }
+    public void PrepareRestoredTransfer()
+    {
+        var value=Read()??throw new InvalidDataException("缺少已恢复的 Human 移交记录");
+        using var manifest=JsonDocument.Parse(File.ReadAllText(Safe(_backup,"candidate-manifest.json")));
+        if(RuntimeIntegrationGuard.RestoredHumanHandoff(_root,Path.GetDirectoryName(_backup)!,manifest.RootElement)!=_installId ||
+            value.Stage!="completed" || Hash(_target)!=value.CurrentSha256)
+            throw new InvalidDataException("Human 移交来源无法确认");
+        var temp=Safe(Path.GetDirectoryName(_target)!,"inventories.json.localkit-next");
+        File.Copy(_baseline,temp,true);
+        if(Hash(temp)!=value.BaselineSha256)throw new IOException("Human 基线副本漂移");
+        Write(value with { Stage="transferring" });File.Move(temp,_target,true);
     }
 }

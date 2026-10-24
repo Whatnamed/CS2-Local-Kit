@@ -230,7 +230,7 @@ public sealed class BotViewModel : ViewModelBase
             var plan=await _service.PreviewSwitchAsync(desired);
             if (!plan.AlreadyPrepared)
             {
-                if (!_dialogs.Confirm("准备对局", $"{plan.Summary}\n目标难度：{desired}\n原事务：{plan.OldInstallId ?? "无"}\n目标 manifest：{plan.TargetManifestSha256}\n\n将精确恢复旧安装、实时预检并安装目标。游戏内表现待验证。是否执行？"))
+                if (!_dialogs.Confirm("准备对局", $"{plan.Summary}\n目标难度：{desired}\n\n关闭游戏后执行上述准备，并保留个人饰品。游戏内表现待验证。是否执行？"))
                 { _feedback="准备已取消；当前方案保留。"; return; }
                 var journal=await _service.ApplySwitchAsync(plan);
                 _installId=journal.NewInstallId;
