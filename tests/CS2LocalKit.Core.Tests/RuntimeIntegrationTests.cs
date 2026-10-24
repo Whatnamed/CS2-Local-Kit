@@ -101,6 +101,11 @@ public sealed class RuntimeIntegrationTests : IDisposable
         });
         var service=new BotExperimentService(_home,Root,()=>false,runner,[candidate]);
         var plan=await service.PreviewSwitchAsync(BotDifficulty.Medium);Assert.True(plan.ProtectsExistingLayers);
+        Assert.True(service.InspectInstalled().Valid); // Populate display observation.
+        var sentinel=Path.Combine(_parentFolders["compat"],"preimages/sentinel");var original=File.ReadAllText(sentinel);
+        Put(sentinel,"external backup drift after preview");
+        await Assert.ThrowsAsync<InvalidDataException>(()=>service.ApplySwitchAsync(plan));
+        Assert.DoesNotContain("Install",runner.Actions);Put(sentinel,original);
         var journal=await service.ApplySwitchAsync(plan);Assert.Equal("completed",journal.Stage);Assert.Equal(_id,journal.NewInstallId);
         Assert.Contains(runner.Actions,a=>a=="Install");
         using var parent=JsonDocument.Parse(File.ReadAllText(Path.Combine(_parentFolders["bot"],"install-record.json")));

@@ -73,5 +73,29 @@
     "ManifestSha256": "e4d29aeff607f1af731d5d303971dc49a3facc4bac19819a9ec374a270356a0f",
     "PreservesHuman": true,
     "MatchSetup": true
+  },
+  {
+    "Difficulty": 0,
+    "Directory": "bot-integrated-14192-low-1e1dc33",
+    "ManifestSha256": "a0bd599514f551e03efb817052acb57b1f0021d21c9d7b78ab025dac32fe2865",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "bot-integrated-14192-medium-eda1676",
+    "ManifestSha256": "3542f17be9d9a7e04a3408d7816cf1a68124ffc7c0b2cadfa5b252cfa68341d1",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true
+  },
+  {
+    "Difficulty": 2,
+    "Directory": "bot-integrated-14192-high-1e1dc33",
+    "ManifestSha256": "20967841f00e8625fd713ff99790660fdd0d7948df9b6224d969de17c8fca687",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true
   }
 ]

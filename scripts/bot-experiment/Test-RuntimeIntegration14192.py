@@ -113,6 +113,37 @@ def run(candidate,digest,faults=False):
     result={'status':'PASS','candidate':str(candidate),'manifestSha256':digest,'payloadFiles':len(m['files']),'profile':m['profile']['difficulty'],'checks':checks,'syntheticRoot':str(root),'actualGameModified':False,'gameplayAcceptance':'pending'}
     output=tx.REPO/'temp/integration'/('transactions-'+m['profile']['difficulty']+'.json');output.write_bytes(tx.json_bytes(result));print(tx.json_bytes(result).decode())
 
+def switches():
+    tx.MARKER=tx.INTEGRATION_MARKER
+    catalog=tx.read_json(tx.REPO/'src/CS2LocalKit.App/BotCandidates.json')
+    selected={c['Difficulty']:c for c in catalog if c.get('RuntimeIntegration')}
+    releases=Path('E:/CS2MOD/releases/bot-experiment');c=selected[1]
+    home,root,package,backups,baseline,expected=fixture(releases/c['Directory'],c['ManifestSha256'])
+    bundles={1:(package,expected)}
+    for level in [0,2]:
+        c=selected[level];source,original=tx.load_candidate(releases/c['Directory'],c['ManifestSha256'])
+        dest=home/('profile-'+str(level))
+        for rel in original['bundleFiles']:
+            if not rel.endswith('.zip'):write(dest/rel,(source/rel).read_bytes())
+        m=copy.deepcopy(original);m['testFixture']=True
+        for key in ['runtimeIntegration','baselineFiles','gameBinaries','moduleInventory']:m[key]=copy.deepcopy(baseline[key])
+        m['coexistence']['humanFiles']=baseline['coexistence']['humanFiles']
+        m['bundleFiles']={p:v['sha256'] for p,v in tx.inventory(dest).items() if v['kind']=='file'}
+        write(dest/'experiment-manifest.json',tx.json_bytes(m));bundles[level]=(dest,tx.sha(dest/'experiment-manifest.json'))
+    before=tx.inventory(root);ids=[];sequence=[1,0,2,1]
+    for level in sequence:
+        package,expected=bundles[level]
+        installed=tx.install(package,expected,root,backups,apply=True,fake=True,preserve_human=True);id=installed['installId'];ids.append(id)
+        record=tx.read_json(backups/id/'install-record.json')
+        tx.require(record['profile']['difficulty']==['Low','Medium','High'][level],'Wrong installed difficulty')
+        tx.require(tx.sha(root/'game/csgo/overrides/botprofile.vpk')==record['profile']['vpkSha256'],'Wrong profile VPK')
+        tx.restore(backups/id,apply=True,fake=True)
+        tx.require(tx.inventory(root)==before,'Cross-profile restore lost the playable substrate')
+    result={'status':'PASS','sequence':['Medium','Low','High','Medium'],'exactInstallIds':ids,'fullSubstrateRestoredAfterEveryStep':True,'actualGameModified':False,'gameplay':'pending'}
+    (tx.REPO/'temp/integration/profile-switches.json').write_bytes(tx.json_bytes(result));print(tx.json_bytes(result).decode())
+
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate',required=True);p.add_argument('--manifest-sha256',required=True);p.add_argument('--faults',action='store_true')
-    a=p.parse_args();run(a.candidate,a.manifest_sha256,a.faults)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--candidate');p.add_argument('--manifest-sha256');p.add_argument('--faults',action='store_true');p.add_argument('--switches',action='store_true')
+    a=p.parse_args()
+    if a.switches:switches()
+    else:run(a.candidate,a.manifest_sha256,a.faults)

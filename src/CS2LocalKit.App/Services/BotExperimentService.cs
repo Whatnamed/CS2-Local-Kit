@@ -16,7 +16,7 @@ public sealed record BotPreferences(BotDifficulty Difficulty = BotDifficulty.Med
 }
 public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false, bool MatchSetup = false, bool RuntimeIntegration = false);
 public sealed record BotModeReadiness(bool CanEnable, string Reason, string CurrentBuild, string CandidateBuild, string BotRef, bool HumanFilesValid);
-public sealed record BotInstalledSnapshot(bool Valid, string Reason, BotDifficulty? Difficulty = null, bool HasMatchSetup = false);
+public sealed record BotInstalledSnapshot(bool Valid, string Reason, BotDifficulty? Difficulty = null, bool HasMatchSetup = false, bool RuntimeIntegration = false);
 public enum LocalPlayReadinessKind { Ready, NeedsLocalPreparation, NeedsRepair, Unknown }
 public sealed record LocalPlayReadiness(LocalPlayReadinessKind Kind, string Reason, BotDifficulty? InstalledDifficulty = null, bool HasMatchSetup = false);
 public sealed record BotSwitchPlan(string? OldInstallId, BotDifficulty TargetDifficulty, string TargetManifestSha256, bool AlreadyPrepared, string Summary, bool ProtectsExistingLayers = false, string? HumanHandoffInstallId = null);
@@ -50,6 +50,13 @@ public sealed class BotExperimentService
     private readonly Func<bool> _running;
     private readonly IReadOnlyList<BotCandidate> _candidates;
     private readonly string _humanLockPath;
+    private readonly object _observationLock = new();
+    private (DateTime At,BotInstalledSnapshot Value)? _installedObservation;
+    private (DateTime At,bool Value)? _substrateObservation;
+    public void InvalidateObservation()
+    {
+        lock(_observationLock){_installedObservation=null;_substrateObservation=null;}
+    }
     public string DataRoot { get; }
     public string Cs2Root { get; }
     public string ReleasesRoot { get; }
@@ -133,6 +140,18 @@ public sealed class BotExperimentService
     /// <summary>Read the active transaction against its own postimages. The pure Human lock describes only the restored baseline.</summary>
     public BotInstalledSnapshot InspectInstalled()
     {
+        // Presentation getters share a recent observation. Serialized operations
+        // bypass this cache; public transactions and MatchRuntimeContract still
+        // perform their complete fresh verification before any write or queue.
+        if(_operation.CurrentCount==0)return InspectInstalledCore();
+        lock(_observationLock)
+            if(_installedObservation is {} v && DateTime.UtcNow-v.At<TimeSpan.FromSeconds(5))return v.Value;
+        var value=InspectInstalledCore();
+        lock(_observationLock)_installedObservation=(DateTime.UtcNow,value);
+        return value;
+    }
+    private BotInstalledSnapshot InspectInstalledCore()
+    {
         var identity = Identity;
         if (!identity.BlocksHuman) return new(false, "没有活动增强人机事务");
         if (identity.InstallId is null || identity.RecoveryRequired || !identity.PreservesHuman)
@@ -183,7 +202,7 @@ public sealed class BotExperimentService
                 if (HashFile(SafePath(Cs2Root, file.Name)) != (file.Name == BotHumanFixtureSidecar.Target && humanUpdate is not null ? humanUpdate.CurrentSha256 : file.Value.GetString()))
                     throw new InvalidDataException("Human 文件漂移：" + file.Name);
             var level = Enum.Parse<BotDifficulty>(r.GetProperty("profile").GetProperty("difficulty").GetString()!);
-            return new(true, "活动联合安装文件身份匹配；游戏内行为待验证", level, m.TryGetProperty("matchSetup", out _));
+            return new(true, "活动联合安装文件身份匹配；游戏内行为待验证", level, m.TryGetProperty("matchSetup", out _),m.TryGetProperty("runtimeIntegration",out _));
         }
         catch (Exception ex) { return new(false, "无法确认活动安装：" + ex.Message); }
     }
@@ -240,6 +259,15 @@ public sealed class BotExperimentService
         catch (Exception ex) { return new(false, ex.Message, steam.BuildText, build, botRef, human.Valid); }
     }
     private bool IsPlayableSubstrate()
+    {
+        if(_operation.CurrentCount==0)return IsPlayableSubstrateCore();
+        lock(_observationLock)
+            if(_substrateObservation is {} v && DateTime.UtcNow-v.At<TimeSpan.FromSeconds(5))return v.Value;
+        var value=IsPlayableSubstrateCore();
+        lock(_observationLock)_substrateObservation=(DateTime.UtcNow,value);
+        return value;
+    }
+    private bool IsPlayableSubstrateCore()
     {
         if (File.Exists(Path.Combine(Cs2Root,RuntimeIntegrationGuard.Marker))) return false;
         var candidate=_candidates.LastOrDefault(c=>c.RuntimeIntegration);
@@ -317,7 +345,7 @@ public sealed class BotExperimentService
             using var gameWrite = apply ? BotHumanOperationGate.Acquire(Cs2Root) : null;
             return await ExecuteWithHumanUpdateAsync(action, difficulty, apply, installId);
         }
-        finally { _operation.Release(); }
+        finally { InvalidateObservation(); _operation.Release(); }
     }
 
     private async Task<JsonElement> ExecuteWithHumanUpdateAsync(string action, BotDifficulty difficulty, bool apply, string? installId)
@@ -428,8 +456,8 @@ public sealed class BotExperimentService
     public async Task<BotSwitchPlan> PreviewSwitchAsync(BotDifficulty difficulty)
     {
         if (!await _operation.WaitAsync(0)) throw new InvalidOperationException("另一个 Bot 操作正在执行");
-        try { return await PreviewSwitchCoreAsync(difficulty); }
-        finally { _operation.Release(); }
+        try { return await Task.Run(()=>PreviewSwitchCoreAsync(difficulty)); }
+        finally { InvalidateObservation(); _operation.Release(); }
     }
 
     private async Task<BotSwitchPlan> PreviewSwitchCoreAsync(BotDifficulty difficulty)
@@ -484,7 +512,7 @@ public sealed class BotExperimentService
             var previous = ReadPrepareJournal();
             if (previous is not null && previous.Stage != "completed" && !PreviousPrepareSettled(previous))
                 throw new InvalidOperationException("上次准备操作未完成；保留现场并检查记录，不自动重试");
-            var fresh = await PreviewSwitchCoreAsync(approved.TargetDifficulty);
+            var fresh = await Task.Run(()=>PreviewSwitchCoreAsync(approved.TargetDifficulty));
             if (fresh.OldInstallId != approved.OldInstallId || fresh.TargetManifestSha256 != approved.TargetManifestSha256 || fresh.AlreadyPrepared != approved.AlreadyPrepared || fresh.ProtectsExistingLayers != approved.ProtectsExistingLayers || fresh.HumanHandoffInstallId != approved.HumanHandoffInstallId)
                 throw new InvalidOperationException("准备预览后安装身份变化，请重新检查并确认");
             if (fresh.AlreadyPrepared) return new(Guid.NewGuid().ToString("N"), fresh.OldInstallId,
@@ -551,7 +579,7 @@ public sealed class BotExperimentService
                 throw;
             }
         }
-        finally { _operation.Release(); }
+        finally { InvalidateObservation(); _operation.Release(); }
     }
     private bool PreviousPrepareSettled(BotPrepareJournal previous)
     {

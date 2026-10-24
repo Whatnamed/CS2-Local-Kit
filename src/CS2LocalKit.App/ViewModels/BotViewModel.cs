@@ -21,6 +21,8 @@ public sealed class BotViewModel : ViewModelBase
     private BotExperimentIdentity _identity = new(false, "");
     private BotModeReadiness _readiness = new(false, "尚未检查", "未读取", "未提供", "未提供", false);
     private BotSwitchPlan? _switchPlan;
+    private bool _integrated;
+    public string RestoreSummary => _integrated ? "撤回整合组件后，返回已验证可玩的中等人机、个人饰品与道具基线。个人饰品修改保留。" : "按当前安装的精确记录恢复；未知文件或备份变化会阻止操作。";
     public MatchSetupViewModel Setup { get; }
     public BotViewModel(BotExperimentService service, IDialogService dialogs, Action refreshHuman, Action<string>? clipboard = null)
     {
@@ -38,7 +40,7 @@ public sealed class BotViewModel : ViewModelBase
                 : DiagnosticsCommand.CanExecute(null)));
         SwitchModeCommand = new(() => _ = SwitchModeAsync(), () => TargetMode == LocalPlayMode.EnhancedHuman ? !IsBusy && !_running && _switchPlan is { AlreadyPrepared: false } : RestoreCommand.CanExecute(null));
         PrepareMatchCommand = new(() => _ = PrepareMatchAsync(), () => !IsBusy);
-        RefreshCommand = new(Observe, () => !IsBusy);
+        RefreshCommand = new(()=>{_service.InvalidateObservation();Observe();}, () => !IsBusy);
         try { _preferences = service.LoadPreferences(); } catch (Exception ex) { _feedback = "偏好读取失败（保留原文件）：" + ex.Message; }
         var catalog = RosterCatalog.LoadBuiltIn();
         Setup = new(new MatchSetupStore(Path.Combine(service.DataRoot,"app-data/match-setup"),catalog),catalog,dialogs,service);
@@ -125,6 +127,7 @@ public sealed class BotViewModel : ViewModelBase
     public void Observe()
     {
         _running = _service.Cs2Running;
+        _integrated=false;
         var identity = _service.Identity;
         _identity = identity;
         _readiness = _service.Readiness(Difficulty);
@@ -142,6 +145,7 @@ public sealed class BotViewModel : ViewModelBase
                 try
                 {
                     var installed = _service.InspectInstalled();
+                    _integrated=installed.Valid && installed.RuntimeIntegration;
                     _installedDifficulty = installed.Valid ? installed.Difficulty!.Value.ToString() : "无法确认";
                     _state = identity.RecoveryRequired ? "安装/恢复中断 · 保留备份并检查恢复条件"
                         : installed.Valid ? installed.HasMatchSetup ? "增强组件已安装；开局适配层就绪，游戏内效果待验证" : "旧增强组件已安装；开局配置尚不能应用"
@@ -180,7 +184,7 @@ public sealed class BotViewModel : ViewModelBase
     public Task RestoreAsync() => Run(async () =>
     {
         if (!_restoreReady || !_active || _installId is null) throw new InvalidOperationException("先检查精确事务的恢复条件");
-        if (!_dialogs.Confirm("恢复普通人机 + 我的饰品", $"install ID: {_installId}\n备份: {BackupPath}\n{_plan.Split('\n')[0]}（完整路径见页面预览）\n\n精确恢复本事务记录的 framework 与 gameinfo，保留 Human 和预设；文件漂移将拒绝恢复。是否继续？")) return;
+        if (!_dialogs.Confirm("恢复配置", $"{RestoreSummary}\n\n{_plan.Split('\n')[0]}\n关闭游戏后执行，失败时保留备份。是否继续？")) return;
         _restoreReady = false;
         await _service.ExecuteAsync("Restore", Difficulty, true, _installId);
         _state = "已恢复 · Human 实机呈现仍需检查"; _installedDifficulty = "—"; _feedback = "原文件已按精确事务恢复。Bot 本局偏好保留。";
@@ -268,7 +272,7 @@ public sealed class BotViewModel : ViewModelBase
     }
     private void Notify()
     {
-        foreach (var name in new[] { nameof(TargetMode),nameof(CurrentMode),nameof(CanSelectMode),nameof(AvailabilityText),nameof(AvailabilitySummary),nameof(ActionSummary),nameof(HumanStatusText),nameof(SwitchButtonText),nameof(Difficulty),nameof(Aim),nameof(Nades),nameof(IsBusy),nameof(CanSelectDifficulty),nameof(CanEditCommands),nameof(StateText),nameof(ProcessText),nameof(TargetBuild),nameof(CandidateIdentity),nameof(InstalledDifficulty),nameof(InstallId),nameof(BackupPath),nameof(Feedback),nameof(PlanText),nameof(ConsoleCommands),nameof(DifficultyHint),nameof(ActionHint) }) OnPropertyChanged(name);
+        foreach (var name in new[] { nameof(RestoreSummary),nameof(TargetMode),nameof(CurrentMode),nameof(CanSelectMode),nameof(AvailabilityText),nameof(AvailabilitySummary),nameof(ActionSummary),nameof(HumanStatusText),nameof(SwitchButtonText),nameof(Difficulty),nameof(Aim),nameof(Nades),nameof(IsBusy),nameof(CanSelectDifficulty),nameof(CanEditCommands),nameof(StateText),nameof(ProcessText),nameof(TargetBuild),nameof(CandidateIdentity),nameof(InstalledDifficulty),nameof(InstallId),nameof(BackupPath),nameof(Feedback),nameof(PlanText),nameof(ConsoleCommands),nameof(DifficultyHint),nameof(ActionHint) }) OnPropertyChanged(name);
         foreach (var cmd in new[] { PreviewCommand,InstallCommand,DiagnosticsCommand,RestoreCommand,CopyCommandsCommand,PreviewModeCommand,SwitchModeCommand,PrepareMatchCommand,RefreshCommand }) cmd.RaiseCanExecuteChanged();
     }
 }

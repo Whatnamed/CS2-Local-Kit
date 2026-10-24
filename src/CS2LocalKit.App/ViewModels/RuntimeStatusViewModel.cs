@@ -43,7 +43,9 @@ public sealed class RuntimeStatusViewModel : ViewModelBase
     public string MetaModStatus => Status?.BotExperiment.BlocksHuman == true
         ? Status.HumanWriteSafe ? "联合事务身份已核验" : "联合事务身份无法确认"
         : Status?.MetaModNativeStatus ?? "missing";
-    public string CssStatus => Status?.CounterStrikeSharpNativeStatus ?? "missing";
+    public string CssStatus => Status?.BotExperiment.BlocksHuman == true
+        ? Status.HumanWriteSafe ? "联合事务身份已核验" : "联合事务身份无法确认"
+        : Status?.CounterStrikeSharpNativeStatus ?? "missing";
     public bool InventorySimulatorPluginPresent => Status?.InventorySimulatorPluginPresent ?? false;
     public string InventorySimulatorStatusText => _manager.HumanWritesBlocked ? Status?.BotExperiment.PreservesHuman == true ? "Human 文件需检查后才能修改" : "Bot 实验隔离 / 先恢复实验" : InventorySimulatorPluginPresent ? "已安装" : "未安装";
     public string PatchedDllMatch => Status?.PatchedDllMatch ?? "unknown";

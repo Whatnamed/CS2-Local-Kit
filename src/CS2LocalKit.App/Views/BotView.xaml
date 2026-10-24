@@ -12,7 +12,7 @@
                     <TextBlock Text="{Binding HumanStatusText}" Style="{StaticResource HintText}" Margin="0,8,0,0"/>
                 </StackPanel>
             </Border>
-            <TextBlock Text="目标模式" Style="{StaticResource SectionTitle}" Margin="0,24,0,6"/>
+            <TextBlock Text="准备与恢复" Style="{StaticResource SectionTitle}" Margin="0,24,0,6"/>
             <TextBlock Text="选择偏好不会安装文件。先检查预览，再确认写入范围。" Style="{StaticResource HintText}" Margin="0,0,0,16"/>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -51,7 +51,7 @@
             </Expander>
             <Expander Header="精确恢复与备份">
                 <StackPanel Margin="0,14,0,0">
-                    <TextBlock Text="恢复通过原事务执行；不会以覆盖未知文件来修复漂移。" Style="{StaticResource HintText}"/>
+                    <TextBlock Text="{Binding RestoreSummary}" Style="{StaticResource HintText}"/>
                     <TextBlock Text="{Binding InstallId, StringFormat='install ID：{0}'}" Style="{StaticResource MonoText}" Margin="0,12,0,8"/>
                     <TextBlock Text="{Binding BackupPath}" Style="{StaticResource MonoText}"/>
                     <WrapPanel Margin="0,12,0,0">
