@@ -1,0 +1,54 @@
+{
+  "state": "preview",
+  "mode": "preview-read-only",
+  "rawReadOnlyPreviewSha256": "c067d7068e437c12000278e74115d4af9518478181cdc7c77dd5cd8ed67a7ebf",
+  "rawEvidence": "task-local temp/integration/exact-entry-preview.json",
+  "entries": 684,
+  "actions": {
+    "retained": 680,
+    "overwritten": 1,
+    "created": 3
+  },
+  "changes": [
+    {
+      "target": "game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll",
+      "action": "overwritten",
+      "before": {
+        "kind": "file",
+        "sha256": "27b1bdcf3ab36b127f95df3a60dbe6d942ee57cc3eb53e06793e7b8b03784134"
+      },
+      "after": {
+        "kind": "file",
+        "sha256": "b31501f51da8fb017cac850d46a577086d694b87aa501d9433c5162bdf3b64fd"
+      }
+    },
+    {
+      "target": "game/csgo/addons/counterstrikesharp/plugins/LocalKitMatchSetup/CS2LocalKit.Core.dll",
+      "action": "created",
+      "before": null,
+      "after": {
+        "kind": "file",
+        "sha256": "6dae10d5d59d6465b93f34363cf9475124ec9ed9f1f86444e647d0b9860737f3"
+      }
+    },
+    {
+      "target": "game/csgo/addons/counterstrikesharp/plugins/LocalKitMatchSetup/LocalKitMatchSetup.deps.json",
+      "action": "created",
+      "before": null,
+      "after": {
+        "kind": "file",
+        "sha256": "9854346ef5bd774b1c762c61f58afc0f56ad10e3df1d0e3ad7397bc33149e8ac"
+      }
+    },
+    {
+      "target": "game/csgo/addons/counterstrikesharp/plugins/LocalKitMatchSetup/LocalKitMatchSetup.dll",
+      "action": "created",
+      "before": null,
+      "after": {
+        "kind": "file",
+        "sha256": "ac8e498db88e1d3148d497a18e2632419106093db899bf4d59ee059e5a4319a8"
+      }
+    }
+  ],
+  "actualInstallApplied": false
+}

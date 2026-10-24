@@ -1,0 +1,132 @@
+--- a/BotAimImprover.cs
++++ b/BotAimImprover.cs
+@@ -12,7 +12,7 @@
+ namespace BotAimImprover;
+ 
+ [MinimumApiVersion(305)]
+-public class BotAimImprover : BasePlugin
++public partial class BotAimImprover : BasePlugin
+ {
+     public override string ModuleName => "BotAimImprover";
+     public override string ModuleVersion => "2.1.7";
+@@ -126,7 +126,7 @@
+         sig: "55 48 89 E5 41 55 41 54 53 48 89 FB 48 83 EC 58 8B 8F ? ? 00 00 83 F9 FF");
+ 
+     private static readonly Offsets WindowsOffsets = new(
+-        ts: 0x5994, en: 0x5A00, vis: 0x5A04, pbot: 0x14F8,
++        ts: 0x5994, en: 0x5A00, vis: 0x5A04, pbot: 0x1500,
+         sig: "48 8B C4 55 57 48 8D 68 ? 48 81 EC ? ? ? ? 48 8B F9 0F 29 70 ? 8B 89 ? ? ? ? 83 F9 FF"
+     );
+ 
+@@ -205,6 +205,7 @@
+             return HookResult.Continue;
+         });
+ 
++        RegisterLocalKitDiagnostics();
+         AddCommand("bot_aim", "Set bot aim mode: head, body, mixed", (caller, info) =>
+         {
+             string arg = info.ArgCount > 1 ? info.GetArg(1).Trim().ToLowerInvariant() : "";
+@@ -227,6 +228,8 @@
+                     reply = $"[BotAimImprover] Current aim mode: {_aimMode}. Valid values: head, body, mixed";
+                     break;
+             }
++            if (arg is "head" or "body" or "mixed") SetLocalKitMode(arg);
++            info.ReplyToCommand(reply);
+             Server.PrintToConsole(reply);
+         });
+     }
+@@ -248,6 +251,7 @@
+     {
+         try
+         {
++            _hookCalls++;
+             IntPtr pCCSBot = hook.GetParam<IntPtr>(0);
+             if (pCCSBot == IntPtr.Zero)
+                 return HookResult.Continue;
+@@ -255,7 +259,7 @@
+             // 1) Gate: enemy must be generally visible before we
+             //    spend any raytraces. Otherwise the native used last-known position.
+             if (ReadByte(pCCSBot + _off.IsVisible) == 0)
+-                return HookResult.Continue;
++            { _visibilityMisses++; return HookResult.Continue; }
+ 
+             // 2) Resolve enemy pawn from m_enemy CHandle.
+             int enemyHandleRaw = ReadInt32(pCCSBot + _off.Enemy);
+@@ -273,7 +277,7 @@
+             // 3) Resolve the bot's controller (for weapon + eye position).
+             var botController = ResolveBotController(pCCSBot);
+             if (botController == null || !TryGetBotEyePosition(botController, out var botEye))
+-                return HookResult.Continue;
++            { _controllerMisses++; return HookResult.Continue; }
+ 
+             string? wpn = botController.PlayerPawn?.Value?.WeaponServices?.ActiveWeapon?.Value?.DesignerName;
+ 
+@@ -283,7 +287,7 @@
+             bool isBodyWeapon = wpn != null && _bodyFirstWeapons.Contains(wpn);
+             int[] order = _aimMode switch
+             {
+-                AimMode.HEAD => wpn == "weapon_awp" ? _priorityTrunk : _priorityHead,
++                AimMode.HEAD => _priorityHead,
+                 AimMode.BODY => _priorityBody,
+                 _ => isBodyWeapon ? _priorityTrunk : _priorityJaw, // MIXED
+             };
+@@ -312,6 +316,7 @@
+                 dst[0] = rx; dst[1] = ry; dst[2] = rz;
+             }
+ 
++            RecordLocalKitWrite(pCCSBot,chosenIdx,wpn,botController.Slot,botController.UserId,enemyIdx,rx,ry,rz);
+             // One-time confirmation that the override path actually runs end-to-end.
+             if (!_firstOverrideLogged)
+             {
+--- /dev/null
++++ b/LocalKitDiagnostics.cs
+@@ -0,0 +1,49 @@
++using System.Text.Json;
++using CounterStrikeSharp.API.Core;
++using CounterStrikeSharp.API.Core.Capabilities;
++using CounterStrikeSharp.API.Modules.Utils;
++using Microsoft.Extensions.Logging;
++namespace BotAimImprover;
++
++public partial class BotAimImprover
++{
++    private long _localKitCount, _localKitEpoch, _hookCalls, _controllerMisses, _visibilityMisses, _writeFailures;
++    private string _session = Guid.NewGuid().ToString("N");
++    private readonly Dictionary<string,long> _points = new();
++    private readonly Dictionary<int,long> _hitgroups = new();
++    private object? _lastWrite;
++    private void SetLocalKitMode(string mode)
++    {
++        _aimMode = mode switch { "head"=>AimMode.HEAD,"body"=>AimMode.BODY,"mixed"=>AimMode.MIXED,_=>throw new ArgumentException("Invalid aim mode") };
++        _localKitEpoch++;_localKitCount=0;_hookCalls=0;_controllerMisses=0;_visibilityMisses=0;_writeFailures=0;
++        _points.Clear();_hitgroups.Clear();_lastWrite=null;_firstOverrideLogged=false;
++        Logger.LogInformation("{AimEvidence}",LocalKitEvidence());
++    }
++    private string LocalKitEvidence()=>JsonSerializer.Serialize(new {
++        Kind="localkit-aim-v2",Session=_session,Epoch=_localKitEpoch,Mode=_aimMode.ToString().ToLowerInvariant(),
++        Count=_localKitCount,HookCalls=_hookCalls,ControllerMisses=_controllerMisses,VisibilityMisses=_visibilityMisses,
++        WriteFailures=_writeFailures,Points=_points,Hitgroups=_hitgroups,LastWrite=_lastWrite,
++        Scope="PostHook target memory readback and separate damage observations; gameplay comparison still required"
++    });
++    private void RegisterLocalKitDiagnostics()
++    {
++        Capabilities.RegisterPluginCapability(new PluginCapability<Tuple<Action<string>,Func<string>>>("localkit:aim:v1"),
++            ()=>Tuple.Create<Action<string>,Func<string>>(SetLocalKitMode,LocalKitEvidence));
++        RegisterListener<Listeners.OnMapStart>(_=>{_session=Guid.NewGuid().ToString("N");SetLocalKitMode(_aimMode.ToString().ToLowerInvariant());});
++        RegisterEventHandler<EventPlayerHurt>((ev,_)=>{
++            if(ev.Attacker is {IsValid:true,IsBot:true}) { _hitgroups.TryGetValue(ev.Hitgroup,out var n);_hitgroups[ev.Hitgroup]=n+1; }
++            return HookResult.Continue;
++        });
++        AddCommand("css_localkit_aim_status","Read Hook entries, actual target writes and observed damage",(_,info)=>{
++            info.ReplyToCommand(LocalKitEvidence());Logger.LogInformation("{AimEvidence}",LocalKitEvidence());
++        });
++    }
++    private unsafe void RecordLocalKitWrite(IntPtr bot,int point,string? weapon,int slot,int? userId,int enemy,float x,float y,float z)
++    {
++        float* result=(float*)(bot+_off.TargetSpot).ToPointer();
++        if(result[0]!=x||result[1]!=y||result[2]!=z){_writeFailures++;return;}
++        _localKitCount++;var name=_aimPoints[point].Name;_points.TryGetValue(name,out var n);_points[name]=n+1;
++        _lastWrite=new {Point=name,Weapon=weapon,Slot=slot,UserId=userId,Enemy=enemy,X=x,Y=y,Z=z,Readback=true};
++        if(n<3)Logger.LogInformation("[localkit-aim-write] {AimEvidence}",LocalKitEvidence());
++    }
++}

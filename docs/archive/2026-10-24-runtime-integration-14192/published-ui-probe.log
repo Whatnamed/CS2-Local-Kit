@@ -1,0 +1,64 @@
+PASS owned HWND remains hidden and non-activating
+PASS 40 built-in teams and thousands of persona identities
+PASS nonblank capture match-1280
+PASS both roster sides retained; human replacement is visible
+PASS nonblank capture match-1024
+PASS nonblank capture match-min-client
+PASS nonblank capture match-1440-125dpi
+PASS nonblank capture match-1280-150dpi
+PASS nonblank capture match-1600
+PASS UIA ValuePattern filters real persona library
+PASS enabled action 替换席位
+PASS UIA InvokePattern replaces the selected seat with explicit persona
+PASS nonblank capture players-search
+PASS empty search clears old persona and blocks replace
+PASS nonblank capture players-empty-1024
+PASS disabled persona is shown but never bindable
+PASS nonblank capture players-disabled
+PASS nonblank capture custom-roster
+PASS custom roster writes sandbox library
+PASS enabled action SwapLineups
+PASS swap changes both lineups without changing human side
+PASS enabled action UndoSwapLineups
+PASS swap undo restores both lineups
+PASS enabled action SaveMatchPreset
+PASS saving match plan never creates next-match request
+PASS difficulty has one desired value across match and Bot state
+PASS nonblank capture match-difficulty-1024
+PASS ordinary mode does not offer unsupported automatic lineup
+PASS enabled action PrepareMatch
+PASS missing runtime is reported without false prepared state
+PASS nonblank capture match-preparation-blocked
+PASS navigation Cosmetics has one active page
+PASS nonblank capture cosmetics-1280
+PASS nonblank capture cosmetics-1024
+PASS nonblank capture cosmetics-150dpi
+PASS UIA SelectionItemPattern switches CT/T
+PASS equipment category changes the browser
+PASS nonblank capture knives
+PASS nonblank capture gloves
+PASS nonblank capture music
+PASS UIA range editing changes draft wear
+PASS enabled action SaveHumanPreset
+PASS save Human draft persists only sandbox preset
+PASS enabled action ApplyHumanPreset
+PASS Human apply requires explicit confirmation and cancellation writes no game file
+PASS cosmetics plans are available in the task page
+PASS enabled action NavigateSettings
+PASS settings are secondary and return to cosmetics
+PASS nonblank capture settings-1280
+PASS nonblank capture settings-1024
+PASS nonblank capture compatibility
+PASS nonblank capture recovery
+PASS Bot restore remains blocked for synthetic game
+PASS nonblank capture data-management
+PASS nonblank capture diagnostics
+PASS return preserves cosmetics editing context
+PASS nonblank capture confirmation
+PASS nonblank capture unsaved-confirmation
+PASS all game-like writes remain inside synthetic game; no real install
+PASS nonblank capture loading
+PASS catalog-unavailable state preserves validation gate
+PASS nonblank capture catalog-unavailable
+PASS probe never made its HWND visible
+PASS: 63 checks; 28 real WPF captures; no visible window or injected input.

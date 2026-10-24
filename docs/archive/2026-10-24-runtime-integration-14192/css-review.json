@@ -1,0 +1,29 @@
+{
+  "base": "v1.0.376",
+  "head": "v1.0.378",
+  "officialHead": "d9efaf83b951c74b988ed0a358d03db79c0a4205",
+  "filesChanged": 49,
+  "selectedDiffs": [
+    {
+      "filename": ".gitmodules",
+      "patch": "@@ -1,6 +1,6 @@\n [submodule \"libraries/hl2sdk-cs2\"]\n \tpath = libraries/hl2sdk-cs2\n-\turl = https://github.com/alliedmodders/hl2sdk\n+\turl = https://github.com/alliedmodders/s2sdk\n \tbranch = cs2\n [submodule \"libraries/metamod-source\"]\n \tpath = libraries/metamod-source"
+    },
+    {
+      "filename": "configs/addons/counterstrikesharp/gamedata/gamedata.json",
+      "patch": "@@ -42,8 +42,8 @@\n   \"CCSPlayerPawnBase_PostThink\": {\n     \"signatures\": {\n       \"library\": \"server\",\n-      \"windows\": \"40 55 56 41 54 48 8B EC 48 83 EC ? 4C 89 AC 24 ? ? ? ? 48 8B F1 E8 ? ? ? ? 80 BE ? ? ? ? ?\",\n-      \"linux\": \"55 48 89 E5 41 56 41 55 41 54 53 48 89 FB 48 83 EC ? E8 ? ? ? ? 80 BB\"\n+      \"windows\": \"40 55 53 56 57 41 54 48 8B EC 48 83 EC ? 4C 89 AC 24 ? ? ? ? 48 8B F1 E8 ? ? ? ?\",\n+      \"linux\": \"55 48 89 E5 41 57 41 56 41 55 41 54 53 48 89 FB 48 83 EC ? E8 ? ? ? ? 80 BB ? ? ? ? ? 74 ? C6 83\"\n     }\n   },\n   \"CGameEventManager_Init\": {\n@@ -92,7 +92,7 @@\n     \"signatures\": {\n       \"library\": \"server\",\n       \"windows\": \"48 89 5C 24 ? 57 48 83 EC ? 33 FF 4C 8B CA 8B D9\",\n-      \"linux\": \"48 85 F6 0F 84 ? ? ? ? 55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 53 48 81 EC ? ? ? ? 80 3E ? 75 ? 31 C0 48 81 C4 ? ? ? ? 5B 41 5C 41 5D 41 5E 41 5F 5D C3 0F 1F 80 ? ? ? ? 4C 8D A5 ? ? ? ? 89 FB\"\n+      \"linux\": \"55 31 D2 48 89 E5 41 57 41 56 41 55 41 54 41 89 FC\"\n     }\n   },\n   \"CCSPlayer_ItemServices_GiveNamedItem\": {\n@@ -216,7 +216,7 @@\n     \"signatures\": {\n       \"library\": \"server\",\n       \"windows\": \"40 57 41 56 48 83 EC ? 48 8B 01\",\n-      \"linux\": \"55 48 89 E5 41 56 41 55 49 89 F5 41 54 49 89 FC 53 BB\"\n+      \"linux\": \"55 48 89 E5 41 56 41 55 49 89 FD 41 54 49 89 F4 53 BB\"\n     }\n   },\n   \"CBaseTrigger_EndTouch\": {\n@@ -297,4 +297,4 @@\n       \"linux\": \"48 8D 05 ? ? ? ? 48 83 38 ? 0F 95 C0 C3\"\n     }\n   }\n-}\n\\ No newline at end of file\n+}"
+    },
+    {
+      "filename": "libraries/hl2sdk-cs2",
+      "patch": "@@ -1 +1 @@\n-Subproject commit 625bfd4e39816ad0e1eae3b3144a3b5425c5c7a0\n+Subproject commit d4a8b46676ded25b9d956287ec40ef3c9e12c14c"
+    },
+    {
+      "filename": "src/core/managers/player_manager.cpp",
+      "patch": "@@ -33,9 +33,9 @@\n #include \"core/managers/con_command_manager.h\"\n #include \"core/managers/voice_manager.h\"\n \n-#include <public/eiface.h>\n+#include <engine2/ivengineserver2.h>\n #include <public/inetchannelinfo.h>\n-#include <public/iserver.h>\n+#include <engine2/inetworkgameserver.h>\n \n #include \"core/log.h\"\n #include \"core/timer_system.h\""
+    },
+    {
+      "filename": "src/mm_plugin.cpp",
+      "patch": "@@ -28,15 +28,15 @@\n #include \"core/timer_system.h\"\n #include \"core/utils.h\"\n #include \"entity2/entitysystem.h\"\n-#include \"igameeventsystem.h\"\n+#include \"engine2/igameeventsystem.h\"\n #include \"interfaces/cs2_interfaces.h\"\n-#include \"iserver.h\"\n+#include \"engine2/inetworkgameserver.h\"\n #include \"scripting/callback_manager.h\"\n #include \"scripting/dotnet_host.h\"\n #include \"scripting/script_engine.h\"\n #include \"tier0/vprof.h\"\n #include \"tier0/icommandline.h\"\n-#include \"tier1/utlstringtoken.h\"\n+#include \"tier0/utlstringtoken.h\"\n \n DLL_IMPORT ICommandLine* CommandLine();\n \n@@ -45,8 +45,6 @@ DLL_IMPORT ICommandLine* CommandLine();\n \n counterstrikesharp::GlobalClass* counterstrikesharp::GlobalClass::head = nullptr;\n \n-CGameEntitySystem* GameEntitySystem() { return counterstrikesharp::globals::entitySystem; }\n-\n // TODO: Workaround for windows, we __MUST__ have COUNTERSTRIKESHARP_API to handle it.\n // like on windows it should be `extern \"C\" __declspec(dllexport)`, on linux it should be anything else.\n DLL_EXPORT void InvokeNative(counterstrikesharp::fxNativeContext& context)\n@@ -230,7 +228,7 @@ KHook::Return<void> CounterStrikeSharpMMPlugin::Hook_StartupServer(INetworkServe\n                                                                    ISource2WorldSession*,\n                                                                    const char*)\n {\n-    globals::entitySystem = interfaces::pGameResourceServiceServer->GetGameEntitySystem();\n+    globals::entitySystem = GameEntitySystem();\n     globals::entitySystem->AddListenerEntity(&globals::entityManager.entityListener);\n \n     globals::timerSystem.OnStartupServer();"
+    }
+  ],
+  "decision": "Keep the real-game-verified v1.0.376 source-level compatibility build; Windows PostThink already matches the official fix; engine interface insertion already backported. Official release also migrates SDK, regenerates schemas and changes other native APIs. No used-path necessity for replacing the accepted native or managed API was found. Game effects still require integration acceptance."
+}

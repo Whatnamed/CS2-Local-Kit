@@ -157,6 +157,14 @@ Controller 的「对局配置」通过固定候选白名单和参数列表调用
 
 旧隔离实验仅用于精确恢复；联合事务保留 Human 插件、fixture 与预设。活动联合事务中，只有其余 postimage、Human 保留文件和 build 均核实后，Human fixture 才能通过独立 sidecar 更新；原 Bot manifest、install record 和备份保持不变。精确恢复前把 fixture 暂时放回记录的基线，恢复结束后验证并重放最新版，切换候选时将其移交新事务。Bot 文件操作与 Human 写入共用进程间排他 gate。活动事务期间仍阻止 MetaMod 启动修复。执行前及文件变更期间检查游戏关闭、Steam 安装状态稳定；漂移时保留事务与备份并拒绝覆盖。恢复只能使用原事务的精确 install ID，执行成功后还须复核磁盘及记录。这些路径的真实游戏效果与真实安装/恢复仍待实机验收。
 
+### 8.1 已验证安装基线上的整合事务
+
+当既有 Bot、兼容修复和 NadeSystem 已分别形成可追溯的活动事务时，整合候选可以把它们作为只读基线，而非先卸载这些已验证组件。`runtimeIntegration` 合约绑定三个父 install ID、marker、原 manifest、完整备份 inventory、当前游戏 build/五项 binary、共享组件与 Human 文件身份。独立整合 marker 和新 install ID 仅拥有本轮差异；文件相同的组件保持原位。不得修改或重新签署父记录来接纳漂移。
+
+三档切换先核实活动整合事务的精确恢复条件及目标基线，撤回当前整合层，再完整预检并安装目标。撤回整合层返回它记录的可玩基线，并不代表已卸载所有增强 Bot。Human fixture 的侧车更新可在切换中移交；最终撤回保留最新个人配置，后续准备只能从可核验的已恢复侧车取得这份配置。未经记录的 fixture 变化仍拒绝。
+
+Controller 的短期文件观察缓存只服务状态展示；显式刷新清空缓存，串行安装/恢复/准备不使用该缓存。包身份校验、真实事务预检和运行时请求合约仍完整执行。Steam 的 app/build/安装路径及下载/暂存状态属于安装身份；LastPlayed 等普通元数据可以在不同操作间变化，但写入期间仍固定原始 manifest 内容。
+
 ## 9. 数据与 catalog
 
 项目自己的 preset schema 与第三方 catalog 分离。

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "protectedCurrentFiles": 681,
+  "protectedRoots": [
+    "E:\\CS2MOD\\backups",
+    "E:\\CS2MOD\\presets",
+    "E:\\CS2MOD\\app-data"
+  ],
+  "unexpectedChanges": [],
+  "steamManifestUnchanged": true,
+  "moduleInventoryUnchanged": true,
+  "realIntegrationInstalled": false,
+  "note": "Full private inventories remain only in task-local temp; new release/diagnostic files are outside the pre-existing protected sets."
+}

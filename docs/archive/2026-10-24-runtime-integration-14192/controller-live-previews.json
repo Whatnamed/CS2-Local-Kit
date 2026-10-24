@@ -1,0 +1,59 @@
+[
+  {
+    "level": 1,
+    "assess": {
+      "Kind": 1,
+      "Reason": "\u5F53\u524D\u589E\u5F3A\u7EC4\u4EF6\u4E0E\u5BF9\u5C40\u914D\u7F6E\u4E0D\u5339\u914D\uFF1B\u5173\u95ED CS2 \u540E\u9884\u89C8\u5B89\u5168\u5207\u6362",
+      "InstalledDifficulty": 1,
+      "HasMatchSetup": false
+    },
+    "plan": {
+      "OldInstallId": "b613a8c709c7440998346cb802bb790f",
+      "TargetDifficulty": 1,
+      "TargetManifestSha256": "3542f17be9d9a7e04a3408d7816cf1a68124ffc7c0b2cadfa5b252cfa68341d1",
+      "AlreadyPrepared": false,
+      "Summary": "\u4FDD\u7559\u5F53\u524D\u5DF2\u9A8C\u8BC1\u7684\u4E09\u5C42\u5B89\u88C5\u4E0E\u5907\u4EFD\uFF0C\u5B89\u88C5\u53EF\u72EC\u7ACB\u64A4\u56DE\u7684\u6574\u5408\u7EC4\u4EF6\uFF1B\u6062\u590D\u65F6\u56DE\u5230\u5F53\u524D\u53EF\u73A9\u57FA\u7EBF",
+      "ProtectsExistingLayers": true,
+      "HumanHandoffInstallId": null
+    },
+    "milliseconds": 17744
+  },
+  {
+    "level": 0,
+    "assess": {
+      "Kind": 1,
+      "Reason": "\u5F53\u524D\u589E\u5F3A\u7EC4\u4EF6\u4E0E\u5BF9\u5C40\u914D\u7F6E\u4E0D\u5339\u914D\uFF1B\u5173\u95ED CS2 \u540E\u9884\u89C8\u5B89\u5168\u5207\u6362",
+      "InstalledDifficulty": 1,
+      "HasMatchSetup": false
+    },
+    "plan": {
+      "OldInstallId": "b613a8c709c7440998346cb802bb790f",
+      "TargetDifficulty": 0,
+      "TargetManifestSha256": "a0bd599514f551e03efb817052acb57b1f0021d21c9d7b78ab025dac32fe2865",
+      "AlreadyPrepared": false,
+      "Summary": "\u4FDD\u7559\u5F53\u524D\u5DF2\u9A8C\u8BC1\u7684\u4E09\u5C42\u5B89\u88C5\u4E0E\u5907\u4EFD\uFF0C\u5B89\u88C5\u53EF\u72EC\u7ACB\u64A4\u56DE\u7684\u6574\u5408\u7EC4\u4EF6\uFF1B\u6062\u590D\u65F6\u56DE\u5230\u5F53\u524D\u53EF\u73A9\u57FA\u7EBF",
+      "ProtectsExistingLayers": true,
+      "HumanHandoffInstallId": null
+    },
+    "milliseconds": 17849
+  },
+  {
+    "level": 2,
+    "assess": {
+      "Kind": 1,
+      "Reason": "\u5F53\u524D\u589E\u5F3A\u7EC4\u4EF6\u4E0E\u5BF9\u5C40\u914D\u7F6E\u4E0D\u5339\u914D\uFF1B\u5173\u95ED CS2 \u540E\u9884\u89C8\u5B89\u5168\u5207\u6362",
+      "InstalledDifficulty": 1,
+      "HasMatchSetup": false
+    },
+    "plan": {
+      "OldInstallId": "b613a8c709c7440998346cb802bb790f",
+      "TargetDifficulty": 2,
+      "TargetManifestSha256": "20967841f00e8625fd713ff99790660fdd0d7948df9b6224d969de17c8fca687",
+      "AlreadyPrepared": false,
+      "Summary": "\u4FDD\u7559\u5F53\u524D\u5DF2\u9A8C\u8BC1\u7684\u4E09\u5C42\u5B89\u88C5\u4E0E\u5907\u4EFD\uFF0C\u5B89\u88C5\u53EF\u72EC\u7ACB\u64A4\u56DE\u7684\u6574\u5408\u7EC4\u4EF6\uFF1B\u6062\u590D\u65F6\u56DE\u5230\u5F53\u524D\u53EF\u73A9\u57FA\u7EBF",
+      "ProtectsExistingLayers": true,
+      "HumanHandoffInstallId": null
+    },
+    "milliseconds": 17766
+  }
+]

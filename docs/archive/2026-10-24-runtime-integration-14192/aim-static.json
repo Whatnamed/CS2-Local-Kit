@@ -1,0 +1,24 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "2a229dd46c8af0b52c1f49a3e343b99d9ffe946c102c56102a45b00f6a52349c"
+    }
+  },
+  "results": [
+    {
+      "name": "PickNewAimSpot",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC ? ? ? ? 48 8B F9 0F 29 70 ? 8B 89 ? ? ? ? 83 F9 FF",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e5250",
+          "fileOffset": "0x2e4650"
+        }
+      ]
+    }
+  ]
+}

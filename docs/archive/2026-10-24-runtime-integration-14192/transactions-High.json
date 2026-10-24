@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "candidate": "E:\\CS2MOD\\releases\\bot-experiment\\bot-integrated-14192-high-1e1dc33",
+  "manifestSha256": "20967841f00e8625fd713ff99790660fdd0d7948df9b6224d969de17c8fca687",
+  "payloadFiles": 110,
+  "profile": "High",
+  "checks": [
+    "public preview zero writes",
+    "actual full payload installed",
+    "restore preview zero writes",
+    "exact diagnostics",
+    "noncritical Steam metadata drift accepted",
+    "exact playable baseline restored",
+    "three parent records/backups unchanged",
+    "reject game binary drift",
+    "reject unknown plugin",
+    "reject parent record drift",
+    "reject parent backup drift",
+    "reject Human drift",
+    "reject Steam build drift",
+    "reject Steam busy"
+  ],
+  "syntheticRoot": "E:\\Projects\\CS2-Local-Kit\\wt-runtime-integration-14192-20261024\\temp\\integration\\roundtrip-f1n21c1j\\temp\\steamapps\\common\\cs2",
+  "actualGameModified": false,
+  "gameplayAcceptance": "pending"
+}
