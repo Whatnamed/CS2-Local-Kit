@@ -27,8 +27,9 @@ def fixture(candidate,digest):
     write(root/'.bot-experiment-fake-root','synthetic-test-only')
     write(root/'game/csgo/addons/metamod/metaplugins.ini','; synthetic empty\n')
     write(root/'game/csgo/gameinfo.gi','SearchPaths\n{\n Game csgo/overrides/botprofile.vpk\n Game csgo/addons/metamod\n Game csgo\n}\n')
-    write(root/'game/csgo/steam.inf','PatchVersion=1.41.9.2\nClientVersion=2000935\n')
-    write(root.parent.parent/'appmanifest_730.acf','"appid" "730" "buildid" "26144732" "StateFlags" "4" "installdir" "cs2" "LastPlayed" "1"')
+    build=original['targetBuild']
+    write(root/'game/csgo/steam.inf',f"PatchVersion={build['PatchVersion']}\nClientVersion={build['ClientVersion']}\n")
+    write(root.parent.parent/'appmanifest_730.acf','"appid" "730" "buildid" "'+build['buildId']+'" "StateFlags" "4" "installdir" "cs2" "LastPlayed" "1"')
     m=copy.deepcopy(original);m['testFixture']=True;c=m['runtimeIntegration'];c['cs2Root']=str(root)
     for name,p in c['parents'].items():
         folder=(backups if name=='bot' else home/'backups'/name)/p['installId']
@@ -83,7 +84,7 @@ def run(candidate,digest,faults=False):
     reject('parent record drift',Path(m['runtimeIntegration']['parents']['compat']['backupDir'])/'recovery-record.json',b'{}')
     reject('parent backup drift',Path(m['runtimeIntegration']['parents']['nades']['backupDir'])/'preimages/sentinel',b'bad')
     reject('Human drift',root/tx.HUMAN_FIXTURE,b'unknown private edit')
-    reject('Steam build drift',acf,acf.read_text().replace('26144732','26144733'))
+    reject('Steam build drift',acf,acf.read_text().replace(m['targetBuild']['buildId'],'99999999'))
     reject('Steam busy',acf,acf.read_text().replace('"4"','"6"'))
     preview=tx.install(*args,fake=True,preserve_human=True)
     changing=[i+1 for i,e in enumerate(preview['entries']) if e['action']!='retained']

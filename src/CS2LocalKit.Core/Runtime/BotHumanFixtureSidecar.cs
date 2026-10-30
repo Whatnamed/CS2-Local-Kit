@@ -78,7 +78,7 @@ public sealed class BotHumanFixtureSidecar
         if (identity.InstallId != _installId || identity.State != "installed" || !identity.PreservesHuman || identity.RecoveryRequired)
             throw new InvalidDataException("活动 Bot 事务身份不允许 Human 更新");
         using var record = JsonDocument.Parse(File.ReadAllText(Safe(_backup, "install-record.json")));
-        using var manifest = JsonDocument.Parse(File.ReadAllText(Safe(_backup, "candidate-manifest.json")));
+        using var manifest = RuntimeIntegrationGuard.ReadManifest(_root,Safe(_backup, "candidate-manifest.json"));
         var r = record.RootElement; var m = manifest.RootElement;
         RuntimeIntegrationGuard.VerifyParents(_root,m);
         var manifestHash = Hash(Safe(_backup, "candidate-manifest.json"));
@@ -116,7 +116,7 @@ public sealed class BotHumanFixtureSidecar
             {
                 if (File.Exists(path) || Directory.Exists(path)) throw new InvalidDataException("隔离模块重新出现：" + rel);
             }
-            else if (after.GetProperty("kind").GetString() != "file" || Hash(path) != after.GetProperty("sha256").GetString())
+            else if (after.GetProperty("kind").GetString() != "file" || Hash(path) != RuntimeIntegrationGuard.ReviewedPostimage(m,item))
                 throw new InvalidDataException("活动事务文件漂移：" + rel);
         }
         foreach (var file in m.GetProperty("coexistence").GetProperty("humanFiles").EnumerateObject())
@@ -278,7 +278,7 @@ public sealed class BotHumanFixtureSidecar
     public void PrepareRestoredTransfer()
     {
         var value=Read()??throw new InvalidDataException("缺少已恢复的 Human 移交记录");
-        using var manifest=JsonDocument.Parse(File.ReadAllText(Safe(_backup,"candidate-manifest.json")));
+        using var manifest=RuntimeIntegrationGuard.ReadManifest(_root,Safe(_backup,"candidate-manifest.json"));
         if(RuntimeIntegrationGuard.RestoredHumanHandoff(_root,Path.GetDirectoryName(_backup)!,manifest.RootElement)!=_installId ||
             value.Stage!="completed" || Hash(_target)!=value.CurrentSha256)
             throw new InvalidDataException("Human 移交来源无法确认");

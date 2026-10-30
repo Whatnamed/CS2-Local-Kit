@@ -163,7 +163,7 @@ public sealed class BotExperimentService
             var recordPath = SafePath(backup, "install-record.json");
             var manifestPath = SafePath(backup, "candidate-manifest.json");
             using var record = JsonDocument.Parse(File.ReadAllText(recordPath));
-            using var manifest = JsonDocument.Parse(File.ReadAllText(manifestPath));
+            using var manifest = RuntimeIntegrationGuard.ReadManifest(Cs2Root,manifestPath);
             var r = record.RootElement;
             var m = manifest.RootElement;
             RuntimeIntegrationGuard.VerifyParents(Cs2Root,m);
@@ -194,7 +194,7 @@ public sealed class BotExperimentService
                     continue;
                 }
                 var expected = entry.GetProperty("target").GetString() == BotHumanFixtureSidecar.Target && humanUpdate is not null
-                    ? humanUpdate.CurrentSha256 : after.GetProperty("sha256").GetString();
+                    ? humanUpdate.CurrentSha256 : RuntimeIntegrationGuard.ReviewedPostimage(m,entry);
                 if (after.GetProperty("kind").GetString() != "file" || HashFile(path) != expected)
                     throw new InvalidDataException("活动事务文件漂移：" + entry.GetProperty("target").GetString());
             }
@@ -408,7 +408,10 @@ public sealed class BotExperimentService
             async Task<JsonElement> Invoke(string invokeAction, bool write)
             {
                 if (Cs2Running || !SteamState.Idle) throw new InvalidOperationException("CS2 运行或 Steam 更新状态变化，已停止操作");
-                var args = new List<string> { "-NoLogo", "-NoProfile", "-NonInteractive", "-File", SafePath(CandidatePath(candidate), "tools/Invoke-BotExperiment.ps1"), "-Action", invokeAction, "-BackupRoot", BackupRoot, "-PythonExe", "python" };
+                var tools = RuntimeIntegrationGuard.IsReviewed14193Source(candidate.ManifestSha256) && SteamState.PatchVersion=="1.41.9.3"
+                    ? _candidates.Last(c=>c.RuntimeIntegration) : candidate;
+                if(tools!=candidate) Validate(tools);
+                var args = new List<string> { "-NoLogo", "-NoProfile", "-NonInteractive", "-File", SafePath(CandidatePath(tools), "tools/Invoke-BotExperiment.ps1"), "-Action", invokeAction, "-BackupRoot", BackupRoot, "-PythonExe", "python" };
                 if (invokeAction is "Preview" or "Install") args.AddRange(["-ReleaseDir", CandidatePath(candidate), "-ManifestSha256", candidate.ManifestSha256, "-Cs2Root", Cs2Root, "-PreserveHumanCosmetics"]);
                 else args.AddRange(["-InstallId", installId!]);
                 if (write) args.Add("-Apply");
@@ -491,10 +494,10 @@ public sealed class BotExperimentService
 
         // The target's full live preflight is impossible while the old package owns overlapping paths.
         // Compare immutable restored preimages now; Install still performs a fresh full preflight after Restore.
-        using var old = JsonDocument.Parse(File.ReadAllText(SafePath(BackupRoot, current.InstallId + "/candidate-manifest.json")));
+        using var old = RuntimeIntegrationGuard.ReadManifest(Cs2Root,SafePath(BackupRoot, current.InstallId + "/candidate-manifest.json"));
         using var next = JsonDocument.Parse(File.ReadAllText(SafePath(CandidatePath(target), "experiment-manifest.json")));
         foreach (var key in new[] { "targetBuild", "baselineFiles", "gameBinaries", "moduleInventory" })
-            if (old.RootElement.GetProperty(key).GetRawText() != next.RootElement.GetProperty(key).GetRawText())
+            if (!JsonElement.DeepEquals(old.RootElement.GetProperty(key),next.RootElement.GetProperty(key)))
                 throw new InvalidDataException("旧事务恢复基线与目标候选不一致：" + key);
         if (old.RootElement.GetProperty("coexistence").GetProperty("humanFiles").GetRawText() !=
             next.RootElement.GetProperty("coexistence").GetProperty("humanFiles").GetRawText())

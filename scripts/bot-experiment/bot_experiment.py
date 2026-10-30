@@ -148,6 +148,38 @@ def steam_installation(root, build_id):
     return result
 
 
+def reviewed_manifest(path, root):
+    """Read the frozen record through the exact reviewed 14192 -> 14193 transition."""
+    m = read_json(path)
+    review_path = Path(__file__).with_name('review-14193.json')
+    if not review_path.exists(): review_path = REPO / 'scripts/compatibility/review-14193.json'
+    if not review_path.exists(): return m
+    review = read_json(review_path)
+    if sha(path) not in review['sourceManifests']: return m
+    inf = under(root, 'game/csgo/steam.inf').read_text()
+    if not re.search(r'(?m)^PatchVersion=1\.41\.9\.3\s*$', inf): return m
+    require(m['targetBuild'] == review['previousBuild'], 'Reviewed source build mismatch')
+    steam_installation(root, review['targetBuild']['buildId'])
+    for p,h in review['gameBinaries'].items():
+        require(sha(under(root,p)) == h, 'Reviewed game binary drift: '+p)
+    for p,v in review['retainedFiles'].items():
+        require(m['baselineFiles'][p] == v['before'], 'Reviewed preimage mismatch: '+p)
+        m['baselineFiles'][p] = v['after']
+    m['targetBuild'] = review['targetBuild']; m['gameBinaries'] = review['gameBinaries']
+    m['coexistence']['reviewedBuild'] = review['targetBuild']
+    m['reviewedRetainedFiles'] = review['retainedFiles']
+    return m
+
+
+def reviewed_image(m, entry, image):
+    value = entry[image]
+    update = m.get('reviewedRetainedFiles', {}).get(entry['target'])
+    if entry['action'] == 'retained' and update:
+        require(value == {'kind':'file','sha256':update['before']}, 'Reviewed retained image mismatch')
+        return {'kind':'file','sha256':update['after']}
+    return value
+
+
 def integration_context(m, root):
     """Protect the three immutable installed layers; no parent restore or adoption."""
     c = m['runtimeIntegration']
@@ -181,7 +213,7 @@ def restored_human_handoff(m, root, backups):
         if not folder.is_dir() or not side.exists(): continue
         value = read_json(side)
         if value.get('Stage') != 'completed' or value.get('CurrentSha256') != current or value.get('BaselineSha256') != baseline: continue
-        r = read_json(folder/'install-record.json'); old = read_json(folder/'candidate-manifest.json')
+        r = read_json(folder/'install-record.json'); old = reviewed_manifest(folder/'candidate-manifest.json',root)
         require(r['installId'] == folder.name == value['InstallId'] and r['state'] == 'restored' and r['cs2Root'] == str(root), 'Restored Human handoff record mismatch')
         require(sha(folder/'candidate-manifest.json') == r['manifestSha256'] == value['ManifestSha256'], 'Restored Human handoff manifest mismatch')
         require(old.get('runtimeIntegration') == m['runtimeIntegration'] and old['baselineFiles'] == m['baselineFiles'], 'Restored Human handoff substrate mismatch')
@@ -447,7 +479,7 @@ def preflight_restore(root, backup, record, partial=False):
     require(record['cs2Root']==str(root) and record['installId']==backup.name, 'Install ID / root mismatch')
     require(record['state'] in {'installed','installing','restoring','restore-failed'}, 'Transaction is not active')
     require(sha(under(backup,'candidate-manifest.json'))==record['manifestSha256'], 'Backup manifest corrupted')
-    candidate = read_json(under(backup,'candidate-manifest.json'))
+    candidate = reviewed_manifest(under(backup,'candidate-manifest.json'),root)
     integrated = 'runtimeIntegration' in candidate
     require((MARKER == INTEGRATION_MARKER) == integrated, 'Wrong recovery entry for candidate lane')
     if integrated: integration_context(candidate,root)
@@ -467,7 +499,8 @@ def preflight_restore(root, backup, record, partial=False):
                 if rows[key]['kind']=='directory' and folder+'/'+key in record['createdDirectories']:del rows[key]
         require(actual == expected,'Integrated module inventory drift')
     validate_coexistence(candidate)
-    require(record.get('humanPolicy','isolate') == candidate.get('humanPolicy','isolate') and record.get('coexistence') == candidate.get('coexistence'), 'Recorded Human policy/evidence mismatch')
+    original = read_json(under(backup,'candidate-manifest.json'))
+    require(record.get('humanPolicy','isolate') == original.get('humanPolicy','isolate') and record.get('coexistence') == original.get('coexistence'), 'Recorded Human policy/evidence mismatch')
     require(record.get('profile') == candidate.get('profile'), 'Recorded profile mismatch')
     if record.get('profile'):
         selected = [e for e in record['entries'] if e['target']=='game/csgo/overrides/botprofile.vpk']
@@ -481,7 +514,7 @@ def preflight_restore(root, backup, record, partial=False):
         require(rel==MARKER or rel in record['baselineFiles'] or payload_allowed(rel,e['surface']) or e['action']=='isolated' and rel.startswith(('game/csgo/addons/counterstrikesharp/plugins/','game/csgo/addons/metamod/')), f'Unsafe record target: {rel}')
         live=identity(under(root,rel))
         if e['action']=='retained':
-            require(live==e['before'], f'Retained protected file drift: {rel}')
+            require(live==reviewed_image(candidate,e,'before'), f'Retained protected file drift: {rel}')
             continue
         if e['before'] is not None:
             require(identity(under(backup,'preimages/'+rel))==e['before'], f'Backup missing/corrupt: {rel}')
@@ -514,7 +547,7 @@ def restore(backup, apply=False, fake=False, fault=None):
     record['state']='restoring';save_record(backup,record)
     try:
         steam_identity = steam_idle(root)
-        candidate=read_json(backup/'candidate-manifest.json')
+        candidate=reviewed_manifest(backup/'candidate-manifest.json',root)
         for index,e in enumerate(reversed(record['entries'])):
             if e['action']=='retained':continue
             ensure_closed()
@@ -543,7 +576,7 @@ def restore(backup, apply=False, fake=False, fault=None):
             if p.exists():
                 require(p.is_dir() and not list(p.iterdir()), f'Created directory not empty: {rel}')
                 p.rmdir()
-        require(all(identity(under(root,e['target']))==e['before'] for e in record['entries']), 'Post-restore identity mismatch')
+        require(all(identity(under(root,e['target']))==reviewed_image(candidate,e,'before') for e in record['entries']), 'Post-restore identity mismatch')
         record['state']='restored';save_record(backup,record)
         return record
     except Exception:

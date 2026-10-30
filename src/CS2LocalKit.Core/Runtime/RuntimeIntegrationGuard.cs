@@ -1,5 +1,6 @@
 using System.Security.Cryptography;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace CS2LocalKit.Core.Runtime;
 
@@ -7,6 +8,52 @@ namespace CS2LocalKit.Core.Runtime;
 public static class RuntimeIntegrationGuard
 {
     public const string Marker = "game/csgo/.cs2-local-kit-runtime-integration.json";
+    public static bool IsReviewed14193Source(string digest)
+    {
+        using var review = Review14193();
+        return review.RootElement.GetProperty("sourceManifests").EnumerateArray().Any(v=>v.GetString()==digest);
+    }
+    private static JsonDocument Review14193() => JsonDocument.Parse(typeof(RuntimeIntegrationGuard).Assembly.GetManifestResourceStream("CS2LocalKit.Review14193.json")!);
+    public static JsonDocument ReadManifest(string root, string path)
+    {
+        var raw = File.ReadAllText(path);
+        using var review = Review14193();
+        var steam = SteamInstallState.Inspect(root);
+        return Reviewed14193(raw, Hash(path), steam, review.RootElement, p=>Hash(Safe(root,p)));
+    }
+    internal static JsonDocument Reviewed14193(string raw, string digest, SteamInstallState steam, JsonElement review, Func<string,string> hash)
+    {
+        if (steam.PatchVersion!="1.41.9.3" || !review.GetProperty("sourceManifests").EnumerateArray().Any(v=>v.GetString()==digest)) return JsonDocument.Parse(raw);
+        var m = JsonNode.Parse(raw)!;
+        var target = review.GetProperty("targetBuild");
+        if (!steam.Idle || steam.BuildId!=target.GetProperty("buildId").GetString() || steam.ClientVersion!=target.GetProperty("ClientVersion").GetString() ||
+            !JsonNode.DeepEquals(m["targetBuild"],JsonNode.Parse(review.GetProperty("previousBuild").GetRawText())))
+            throw new InvalidDataException("已核查构建身份不匹配");
+        foreach (var p in review.GetProperty("gameBinaries").EnumerateObject())
+            if(hash(p.Name)!=p.Value.GetString())throw new InvalidDataException("已核查游戏二进制漂移："+p.Name);
+        foreach (var p in review.GetProperty("retainedFiles").EnumerateObject())
+        {
+            if(m["baselineFiles"]![p.Name]!.GetValue<string>()!=p.Value.GetProperty("before").GetString())throw new InvalidDataException("已核查旧基线不匹配");
+            m["baselineFiles"]![p.Name]=p.Value.GetProperty("after").GetString();
+        }
+        m["targetBuild"]=JsonNode.Parse(target.GetRawText());
+        m["gameBinaries"]=JsonNode.Parse(review.GetProperty("gameBinaries").GetRawText());
+        m["coexistence"]!["reviewedBuild"]=JsonNode.Parse(target.GetRawText());
+        m["reviewedRetainedFiles"]=JsonNode.Parse(review.GetProperty("retainedFiles").GetRawText());
+        return JsonDocument.Parse(m.ToJsonString());
+    }
+    public static string ReviewedPostimage(JsonElement manifest, JsonElement entry)
+    {
+        var expected=entry.GetProperty("after").GetProperty("sha256").GetString()!;
+        if(entry.GetProperty("action").GetString()=="retained" && manifest.TryGetProperty("reviewedRetainedFiles",out var files) &&
+            files.TryGetProperty(entry.GetProperty("target").GetString()!,out var update))
+        {
+            if(expected!=update.GetProperty("before").GetString() || entry.GetProperty("before").GetProperty("sha256").GetString()!=expected)
+                throw new InvalidDataException("已核查保留文件记录不匹配");
+            return update.GetProperty("after").GetString()!;
+        }
+        return expected;
+    }
     public static void VerifyParents(string root, JsonElement manifest)
     {
         if (!manifest.TryGetProperty("runtimeIntegration",out var c)) return;
@@ -62,7 +109,7 @@ public static class RuntimeIntegrationGuard
     public static bool IsRestoredSubstrate(string root,string backup,string id)
     {
         using var r=JsonDocument.Parse(File.ReadAllText(Path.Combine(backup,id,"install-record.json")));
-        using var m=JsonDocument.Parse(File.ReadAllText(Path.Combine(backup,id,"candidate-manifest.json")));
+        using var m=ReadManifest(root,Path.Combine(backup,id,"candidate-manifest.json"));
         if(r.RootElement.GetProperty("state").GetString()!="restored" || !m.RootElement.TryGetProperty("runtimeIntegration",out _))return false;
         VerifyParents(root,m.RootElement);
         foreach(var p in m.RootElement.GetProperty("baselineFiles").EnumerateObject())
@@ -81,7 +128,7 @@ public static class RuntimeIntegrationGuard
             var value=JsonSerializer.Deserialize<HumanFixtureUpdate>(File.ReadAllText(path))!;
             if(value.Stage!="completed"||value.CurrentSha256!=current||value.BaselineSha256!=baseline)continue;
             using var r=JsonDocument.Parse(File.ReadAllText(Path.Combine(dir,"install-record.json")));
-            using var m=JsonDocument.Parse(File.ReadAllText(Path.Combine(dir,"candidate-manifest.json")));
+            using var m=ReadManifest(root,Path.Combine(dir,"candidate-manifest.json"));
             if(value.InstallId!=Path.GetFileName(dir)||r.RootElement.GetProperty("state").GetString()!="restored"||
                 r.RootElement.GetProperty("cs2Root").GetString()!=Path.GetFullPath(root)||
                 Hash(Path.Combine(dir,"candidate-manifest.json"))!=value.ManifestSha256||r.RootElement.GetProperty("manifestSha256").GetString()!=value.ManifestSha256||
