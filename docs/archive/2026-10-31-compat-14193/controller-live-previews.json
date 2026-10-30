@@ -1,0 +1,47 @@
+{
+  "installed": {
+    "Valid": true,
+    "Reason": "\u6D3B\u52A8\u8054\u5408\u5B89\u88C5\u6587\u4EF6\u8EAB\u4EFD\u5339\u914D\uFF1B\u6E38\u620F\u5185\u884C\u4E3A\u5F85\u9A8C\u8BC1",
+    "Difficulty": 1,
+    "HasMatchSetup": true,
+    "RuntimeIntegration": true
+  },
+  "results": [
+    {
+      "level": 1,
+      "plan": {
+        "OldInstallId": "cf73e2b17dde4b98808bb42780ea59c6",
+        "TargetDifficulty": 1,
+        "TargetManifestSha256": "74e414d887e70685bfd10bde5154513bb8af622cff69d4191869b8e7e5b27f42",
+        "AlreadyPrepared": false,
+        "Summary": "\u539F\u4E8B\u52A1\u7CBE\u786E\u6062\u590D\u9884\u68C0\u901A\u8FC7\uFF1B\u76EE\u6807\u4E0E\u6062\u590D\u540E\u7684\u56FA\u5B9A\u57FA\u7EBF\u4E00\u81F4\u3002\u786E\u8BA4\u540E\u5148\u6062\u590D\uFF0C\u91CD\u65B0\u5B8C\u6574\u9884\u68C0\uFF0C\u518D\u5B89\u88C5\u76EE\u6807\u5019\u9009",
+        "ProtectsExistingLayers": false,
+        "HumanHandoffInstallId": null
+      }
+    },
+    {
+      "level": 0,
+      "plan": {
+        "OldInstallId": "cf73e2b17dde4b98808bb42780ea59c6",
+        "TargetDifficulty": 0,
+        "TargetManifestSha256": "c722e017dd6e7e39350d1397b2fa5b9140c68906757df7cdefee492608bc513d",
+        "AlreadyPrepared": false,
+        "Summary": "\u539F\u4E8B\u52A1\u7CBE\u786E\u6062\u590D\u9884\u68C0\u901A\u8FC7\uFF1B\u76EE\u6807\u4E0E\u6062\u590D\u540E\u7684\u56FA\u5B9A\u57FA\u7EBF\u4E00\u81F4\u3002\u786E\u8BA4\u540E\u5148\u6062\u590D\uFF0C\u91CD\u65B0\u5B8C\u6574\u9884\u68C0\uFF0C\u518D\u5B89\u88C5\u76EE\u6807\u5019\u9009",
+        "ProtectsExistingLayers": false,
+        "HumanHandoffInstallId": null
+      }
+    },
+    {
+      "level": 2,
+      "plan": {
+        "OldInstallId": "cf73e2b17dde4b98808bb42780ea59c6",
+        "TargetDifficulty": 2,
+        "TargetManifestSha256": "4521a828405e8fe9cb207caff2ea7333392c3f230c13b1f23bde1237378b4453",
+        "AlreadyPrepared": false,
+        "Summary": "\u539F\u4E8B\u52A1\u7CBE\u786E\u6062\u590D\u9884\u68C0\u901A\u8FC7\uFF1B\u76EE\u6807\u4E0E\u6062\u590D\u540E\u7684\u56FA\u5B9A\u57FA\u7EBF\u4E00\u81F4\u3002\u786E\u8BA4\u540E\u5148\u6062\u590D\uFF0C\u91CD\u65B0\u5B8C\u6574\u9884\u68C0\uFF0C\u518D\u5B89\u88C5\u76EE\u6807\u5019\u9009",
+        "ProtectsExistingLayers": false,
+        "HumanHandoffInstallId": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checks": [
+    "cross-build Restore preview writes nothing",
+    "reject unreviewed binary before writes",
+    "reject unreviewed gamedata before writes",
+    "reject Human drift before writes",
+    "reject parent backup drift before writes",
+    "reject changed integration DLL before writes",
+    "reject Steam busy before writes",
+    "unlisted manifest cannot inherit review",
+    "cross-build interrupted Restore resumes",
+    "restore preserves updated Valve/CSS files, original manifest, record images, Human and three parents"
+  ],
+  "syntheticRoot": "E:\\Projects\\CS2-Local-Kit\\wt-runtime-integration-14192-20261024\\temp\\integration\\roundtrip-8dm8poyo\\temp\\steamapps\\common\\cs2",
+  "actualGameModified": false
+}
+

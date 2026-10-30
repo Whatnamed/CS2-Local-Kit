@@ -1,0 +1,47 @@
+{
+  "controller": {
+    "directory": "E:\\CS2MOD\\releases\\controller\\controller-integrated-14193-20261031",
+    "sourceHead": "57cfaf6ba47fcf69ca0ca5b36d056f588562b801",
+    "releaseManifestSha256": "acbcde5f9df965f2e3c4ba83ed19c14412ec66a20036f0ae047a1654186a4939",
+    "files": 408,
+    "AppSha256": "9f3c037d85fab2c84d54d3550cbcf2f91c45b3d49205cf42d0c44f2261050331",
+    "CoreSha256": "a618f9ca859f56c7a353582987b0db229122aae6d939d58ae8fc3e0f71097357"
+  },
+  "candidates": [
+    {
+      "Difficulty": 0,
+      "Directory": "bot-integrated-14193-low-bd0d333",
+      "ManifestSha256": "c722e017dd6e7e39350d1397b2fa5b9140c68906757df7cdefee492608bc513d",
+      "PreservesHuman": true,
+      "MatchSetup": true,
+      "RuntimeIntegration": true
+    },
+    {
+      "Difficulty": 1,
+      "Directory": "bot-integrated-14193-medium-bd0d333",
+      "ManifestSha256": "74e414d887e70685bfd10bde5154513bb8af622cff69d4191869b8e7e5b27f42",
+      "PreservesHuman": true,
+      "MatchSetup": true,
+      "RuntimeIntegration": true
+    },
+    {
+      "Difficulty": 2,
+      "Directory": "bot-integrated-14193-high-bd0d333",
+      "ManifestSha256": "4521a828405e8fe9cb207caff2ea7333392c3f230c13b1f23bde1237378b4453",
+      "PreservesHuman": true,
+      "MatchSetup": true,
+      "RuntimeIntegration": true
+    }
+  ],
+  "candidateBuilderHead": "bd0d333",
+  "tests": {
+    "transactions-Medium.json": 29,
+    "transactions-Low.json": 14,
+    "transactions-High.json": 14
+  },
+  "realInstallPerformed": false,
+  "realRestorePerformed": false,
+  "gameStarted": false,
+  "gameplayAcceptance": "pending",
+  "cssGamedataMatchesOfficial5465e2a": true
+}
