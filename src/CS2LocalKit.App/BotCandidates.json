@@ -97,5 +97,29 @@
     "PreservesHuman": true,
     "MatchSetup": true,
     "RuntimeIntegration": true
+  },
+  {
+    "Difficulty": 0,
+    "Directory": "bot-integrated-14193-low-bd0d333",
+    "ManifestSha256": "c722e017dd6e7e39350d1397b2fa5b9140c68906757df7cdefee492608bc513d",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "bot-integrated-14193-medium-bd0d333",
+    "ManifestSha256": "74e414d887e70685bfd10bde5154513bb8af622cff69d4191869b8e7e5b27f42",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true
+  },
+  {
+    "Difficulty": 2,
+    "Directory": "bot-integrated-14193-high-bd0d333",
+    "ManifestSha256": "4521a828405e8fe9cb207caff2ea7333392c3f230c13b1f23bde1237378b4453",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true
   }
 ]

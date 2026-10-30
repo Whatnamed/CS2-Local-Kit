@@ -499,8 +499,8 @@ public sealed class BotExperimentService
         foreach (var key in new[] { "targetBuild", "baselineFiles", "gameBinaries", "moduleInventory" })
             if (!JsonElement.DeepEquals(old.RootElement.GetProperty(key),next.RootElement.GetProperty(key)))
                 throw new InvalidDataException("旧事务恢复基线与目标候选不一致：" + key);
-        if (old.RootElement.GetProperty("coexistence").GetProperty("humanFiles").GetRawText() !=
-            next.RootElement.GetProperty("coexistence").GetProperty("humanFiles").GetRawText())
+        if (!JsonElement.DeepEquals(old.RootElement.GetProperty("coexistence").GetProperty("humanFiles"),
+            next.RootElement.GetProperty("coexistence").GetProperty("humanFiles")))
             throw new InvalidDataException("旧事务与目标候选的 Human 文件身份不一致");
         return new(current.InstallId, difficulty, target.ManifestSha256, false,
             "原事务精确恢复预检通过；目标与恢复后的固定基线一致。确认后先恢复，重新完整预检，再安装目标候选");
