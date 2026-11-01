@@ -188,9 +188,9 @@ Controller 的短期文件观察缓存只服务状态展示；显式刷新清空
 
 ## 11. 有界开局配置
 
-`Core/MatchSetup` 拥有版本化阵容、选手身份、整局预设、人数/替代席位与 CT/T 映射。内置快照不可编辑，个人副本与 BotHider 原文件分离。`MatchSetupStore` 的 `daily-play.json` 是当前配置的唯一权威（revision、保存时间、阵容开关与完整快照）；`library.json` 是显式保存的可复用方案库。旧 `next-match.json` 不再参与日常路径，保留原文件但不领取、不覆盖、不重放。
+`Core/MatchSetup` 拥有版本化阵容、选手身份、整局预设、人数/替代席位与 CT/T 映射。内置快照不可编辑，个人副本与 BotHider 原文件分离。`MatchSetupStore` 的 `daily-play.json` 是当前配置的唯一权威（revision、保存时间、阵容开关与完整快照）；`library.json` 是显式保存的可复用方案库。阵容关闭时，同一日常快照保留未完成的阵容草稿，只校验独立偏好；草稿不进入运行时阵容执行。开启阵容时仍完整校验，非法内容不能保存为启用。旧 `next-match.json` 不再参与日常路径，保留原文件但不领取、不覆盖、不重放。
 
-`LocalKitMatchSetup` 是独立候选 CSS 适配层，与 Human cosmetics 无调用或 ownership 关系。每张新地图读取持久配置快照，异步校验活动事务、五项 binary、payload、CSS 与 Human 身份，并检查 `-insecure` listen server。Aim/Nades 通过各自 capability 独立写入和 mode/epoch 读回；一个模块缺失或阵容失败不阻断另一模块。无当前地图投掷线路时明确报告证据不足。
+`LocalKitMatchSetup` 是独立候选 CSS 适配层，与 Human cosmetics 无调用或 ownership 关系。每张新地图读取持久配置快照，异步校验活动事务、五项 binary、payload、CSS 与 Human 身份，并检查 `-insecure` listen server。Aim/Nades 通过各自 capability 独立写入和 mode/epoch 读回；capability 首次写入或读回失败可在同一最多八次的地图等待窗口继续尝试，成功即停止，耗尽明确失败；等待真人选边不重置该窗口。一个模块缺失或阵容失败不阻断另一模块。无当前地图投掷线路时明确报告证据不足。
 
 阵容默认随机：不清理 Bot、不改 quota/队名。显式启用时复用 `PreMatchSession` 与 BotHider，限定唯一真人、选边后、首回合/计分前窗口，一次性清理/添加、临时身份释放、persona 绑定和队名读回。同名、disabled、缺失和重复 persona 保留现有降级规则。初始化后只观察，重生、后续回合与换边不重建；失败停止本次阵容修改，不重启比赛或无界修复。
 

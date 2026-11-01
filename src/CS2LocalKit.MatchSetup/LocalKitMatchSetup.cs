@@ -28,7 +28,7 @@ public sealed class LocalKitMatchSetup : BasePlugin
     private MatchSetupStore _store = null!;
     private string _map = "", _sessionId = "", _root = "";
     private bool _mapActive, _liveRoundStarted, _checking, _verifiedEnvironment, _unloading;
-    private int _attempts;
+    private int _attempts, _behaviorAttempts;
     private MatchInstallation? _installation;
     private PreMatchSession? _session;
     private CounterStrikeSharp.API.Modules.Timers.Timer? _timer;
@@ -70,7 +70,7 @@ public sealed class LocalKitMatchSetup : BasePlugin
     {
         if (_mapActive && _map==name) return; // Duplicate notification cannot reset one-shot initialization.
         _timer?.Kill();_timer=null;_mapActive=true;_map=name;_sessionId=NewSessionId();_liveRoundStarted=false;
-        _attempts=0;_session=null;_bindings.Clear();_installation=null;_verifiedEnvironment=false;_daily=null;_behavior=null;_lineupState="随机人机：不接管阵容";
+        _attempts=0;_behaviorAttempts=0;_session=null;_bindings.Clear();_installation=null;_verifiedEnvironment=false;_daily=null;_behavior=null;_lineupState="随机人机：不接管阵容";
         try
         {
             _daily=_store.ReadDaily();
@@ -115,14 +115,15 @@ public sealed class LocalKitMatchSetup : BasePlugin
             try
             {
                 ++_attempts;
-                _behavior?.Aim.Apply(Capability(Aim),_attempts>=8);_behavior?.Nades.Apply(Capability(Nades),_attempts>=8);
+                ++_behaviorAttempts;
+                _behavior?.Aim.Apply(Capability(Aim),_behaviorAttempts>=8);_behavior?.Nades.Apply(Capability(Nades),_behaviorAttempts>=8);
                 if (_session is not null && _session.Phase is not (PreMatchPhase.Complete or PreMatchPhase.Failed))
                 {
                     if (_attempts>24) { Stop("开局阵容应用超时；不重复添加或踢 Bot");return; }
                     Advance();
                 }
                 else Status(MatchApplyState.Received,"日常配置按本地图快照接收；独立模块状态见读回");
-                if (_session?.Phase==PreMatchPhase.Waiting && Ready() && Players().Where(p=>!IsBot(p)).All(p=>p.TeamNum is not (2 or 3))) { _attempts=0;return; }
+                if (_session?.Phase==PreMatchPhase.Waiting && Ready() && Players().Where(p=>!IsBot(p)).All(p=>p.TeamNum is not (2 or 3))) { _attempts=0;if (_behavior?.Finished!=false) return; }
             }
             catch(Exception ex) { Stop(ex.Message); }
             Schedule();

@@ -50,10 +50,16 @@ public sealed class MatchSetupUiTests : IDisposable
         var last=Store.Load().Presets[0] with {Aim=AimSetting.Body};Store.Save(Store.Load() with {LastUsed=last,Recent=[last.Id]});
         vm.RefreshRuntime();vm.PresetFilter=2;Assert.Single(vm.Presets);vm.ReuseLastCommand.Execute(null);Assert.Equal(AimSetting.Body,vm.Aim);
     }
-    [Fact] public void InvalidDraftDoesNotQueueOrClaimSavedSuccess()
+    [Fact] public void DisabledInvalidRosterKeepsDraftAndSavesIndependentPreferencesWithoutEnablingIt()
     {
         var vm=Vm();vm.Enemy.Slots[0].Name="bad;bot_kick";
-        Assert.NotEqual("bad;bot_kick",Store.ReadDaily()!.Preset.Enemy.Slots[0].Name);Assert.Contains("未保存",vm.PreparationText);Assert.Contains("不可应用",vm.Preview);
+        vm.Profile=InstalledProfile.High;vm.Aim=AimSetting.Head;vm.Nades=NadeSetting.Max;
+        var saved=Store.ReadDaily()!;
+        Assert.False(saved.LineupEnabled);Assert.Equal("bad;bot_kick",saved.Preset.Enemy.Slots[0].Name);
+        Assert.Equal(InstalledProfile.High,saved.Preset.Profile);Assert.Equal(AimSetting.Head,saved.Preset.Aim);Assert.Equal(NadeSetting.Max,saved.Preset.Nades);
+        Assert.Contains("未启用",vm.Preview);Assert.Equal("bad;bot_kick",Vm().Enemy.Slots[0].Name);
+        vm.LineupEnabled=true;Assert.False(Store.ReadDaily()!.LineupEnabled);Assert.Equal(saved.Revision,Store.ReadDaily()!.Revision);Assert.Contains("未保存",vm.PreparationText);
+        vm.Enemy.Slots[0].Name="fixed player";Assert.True(Store.ReadDaily()!.LineupEnabled);
     }
     [Fact] public void OldOrWrongRequestStatusIsNeverCurrentAcceptance()
     {

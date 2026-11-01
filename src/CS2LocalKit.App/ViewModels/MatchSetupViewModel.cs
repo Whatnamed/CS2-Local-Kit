@@ -150,6 +150,7 @@ public sealed class MatchSetupViewModel : ViewModelBase
     private (MatchTeamSelection Friendly, MatchTeamSelection Enemy)? _lastSwap;
     private bool _lineupEnabled, _autoSave, _loading, _applying;
     private string? _lastApplyKey;
+    private int _applyAttemptsRemaining;
     private DailyPlaySettings? _daily;
     private string _fileStatus="配置尚未保存";
     public bool LineupEnabled { get=>_lineupEnabled;set { if(SetProperty(ref _lineupEnabled,value))RefreshPreview(); } }
@@ -167,7 +168,7 @@ public sealed class MatchSetupViewModel : ViewModelBase
         SwapLineupsCommand=new(()=> { var old=(Friendly:Friendly.Snapshot(),Enemy:Enemy.Snapshot());_lastSwap=old;Friendly.LoadSelection(old.Enemy);Enemy.LoadSelection(old.Friendly);RefreshPreview();UndoSwapCommand?.RaiseCanExecuteChanged(); });
         UndoSwapCommand=new(()=> { if(_lastSwap is not { } old)return;Friendly.LoadSelection(old.Friendly);Enemy.LoadSelection(old.Enemy);_lastSwap=null;RefreshPreview();UndoSwapCommand?.RaiseCanExecuteChanged(); },()=>_lastSwap is not null);
         DeleteCommand=new(()=>Run(Delete));ReuseLastCommand=new(()=> { if(_library.LastUsed is not null)Load(_library.LastUsed);else _feedback="没有收到过运行时成功读回的上局配置";Notify(); });
-        ImportCommand=new(()=>Run(Import));ExportCommand=new(()=>Run(Export));RefreshStatusCommand=new(RefreshRuntime);
+        ImportCommand=new(()=>Run(Import));ExportCommand=new(()=>Run(Export));RefreshStatusCommand=new(()=>_ = CheckStatusAsync(),()=>!_applying);
         try
         {
             _daily=store.ReadDaily();_lineupEnabled=_daily?.LineupEnabled??false;
@@ -245,7 +246,7 @@ public sealed class MatchSetupViewModel : ViewModelBase
             _preview=$"最终 CT {lineup.CtCount} 人 / T {lineup.TCount} 人 · 真人替代我方席位 {ReplacedSlot+1}\n"+string.Join("\n",new[]{MatchSide.CT,MatchSide.T}.Select(side=>$"{side}: "+string.Join(" · ",lineup.Bots.Where(b=>b.Side==side).Select(b=>b.Name))+(HumanSide==side?" · 我（真人）":"")));
             if(lineup.Warnings.Length>0)_preview+="\n"+string.Join("\n",lineup.Warnings.Distinct());
         }
-        catch(Exception ex) { _preview="配置不可应用："+ex.Message; }
+        catch(Exception ex) { _preview=(LineupEnabled?"阵容不可应用：":"阵容草稿未启用：")+ex.Message; }
         var friendlySeats=Enumerable.Range(0,5).Where(i=>i!=ReplacedSlot).Take(FriendlyBots).ToHashSet();
         foreach(var slot in Friendly.Slots) slot.Participation=slot.Index==ReplacedSlot ? "我 · 真人" : friendlySeats.Contains(slot.Index) ? "Bot" : "不出场";
         foreach(var slot in Enemy.Slots) slot.Participation=slot.Index<EnemyBots ? "Bot" : "不出场";
@@ -274,17 +275,29 @@ public sealed class MatchSetupViewModel : ViewModelBase
     {
         if (!_autoSave || _applying || _daily is null) return;
         var key=$"{_daily.Revision}|{_runtime.Identity.InstallId}|{_runtime.Cs2Running}|{_runtime.SteamState}";
-        if (key==_lastApplyKey) return;
+        if (key!=_lastApplyKey) { _lastApplyKey=key;_applyAttemptsRemaining=3; }
+        if (_applyAttemptsRemaining==0) return;
+        --_applyAttemptsRemaining;
         _applying=true;var revision=_daily.Revision;
         try
         {
-            _lastApplyKey=key;
             _fileStatus=await _runtime.ApplyDailyAsync(_daily);
-            if (_fileStatus.Contains("等待当前组件操作"))_lastApplyKey=null;
+            if (!_fileStatus.Contains("等待当前组件操作"))_applyAttemptsRemaining=0;
+            else if (_applyAttemptsRemaining==0)_fileStatus+="；自动尝试已用尽，请点击检查状态重试";
         }
-        catch(Exception ex) { _fileStatus="配置已保存；文件未应用："+ex.Message+"。请在系统设置检查组件"; }
+        catch(Exception ex)
+        {
+            if (ex is not IOException || ex is InvalidDataException or FileNotFoundException or DirectoryNotFoundException) _applyAttemptsRemaining=0;
+            _fileStatus="配置已保存；文件未应用："+ex.Message+(_applyAttemptsRemaining>0?"。将有限自动重试":"。自动尝试已停止；可点击检查状态重新核对，或在系统设置检查组件");
+        }
         finally { _applying=false;Notify(); }
         if (_daily.Revision!=revision) await PollDailyAsync();
+    }
+    public async Task CheckStatusAsync()
+    {
+        if (_applying) return;
+        _lastApplyKey=null;_runtime.InvalidateObservation();
+        await PollDailyAsync();RefreshRuntime();
     }
     private void Delete()
     {

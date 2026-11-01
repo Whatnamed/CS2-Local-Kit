@@ -1,5 +1,7 @@
 using System.Text.Json;
 using CS2LocalKit.App.Services;
+using CS2LocalKit.App.Common;
+using CS2LocalKit.App.ViewModels;
 using CS2LocalKit.Core.MatchSetup;
 using CS2LocalKit.Core.Runtime;
 using Xunit;
@@ -127,5 +129,53 @@ public sealed class DailyPlayTests : IDisposable
             behavior.Aim.Apply(capability,true);Assert.Equal(1,epoch);
             epoch++;behavior.Aim.Observe(capability);Assert.Contains("无法确认",behavior.Aim.State);Assert.Null(behavior.Aim.Readback);
         }
+    }
+    [Theory] [InlineData("write")] [InlineData("read")] [InlineData("mode")] [InlineData("epoch")]
+    public void FirstCapabilityFailureRetriesIndependentlyAndStopsOnSuccess(string failure)
+    {
+        int aimCalls=0,nadeCalls=0;bool first=true;
+        var aim=Tuple.Create<Action<string>,Func<string>>(_=> { aimCalls++;if(first&&failure=="write")throw new IOException("not ready"); },
+            ()=>first?failure switch { "read"=>throw new IOException("not ready"),"mode"=>"{\"Mode\":\"body\",\"Epoch\":1}","epoch"=>"{\"Mode\":\"head\",\"Epoch\":0}",_=>"{}" }:"{\"Mode\":\"head\",\"Epoch\":2}");
+        var nades=Tuple.Create<Action<string>,Func<string>>(_=>nadeCalls++,()=>"{\"Mode\":\"off\",\"Epoch\":1}");
+        var behavior=new DailyMapBehavior(AimSetting.Head,NadeSetting.Off);
+        behavior.Aim.Apply(aim,false);behavior.Nades.Apply(nades,false);
+        Assert.False(behavior.Aim.Finished);Assert.Null(behavior.Aim.Readback);Assert.Contains("等待重试",behavior.Aim.State);Assert.True(behavior.Nades.Finished);
+        first=false;behavior.Aim.Apply(aim,false);behavior.Nades.Apply(nades,false);
+        Assert.True(behavior.Finished);Assert.Contains("读回通过",behavior.Aim.State);
+        behavior.Aim.Apply(aim,true);Assert.Equal(2,aimCalls);Assert.Equal(1,nadeCalls);
+    }
+    [Fact] public void PersistentCapabilityFailureStopsAtTheEighthMapAttempt()
+    {
+        int calls=0,reads=0;
+        var capability=Tuple.Create<Action<string>,Func<string>>(_=>calls++,()=>{reads++;return "{\"Mode\":\"body\",\"Epoch\":1}";});
+        var setting=new DailyMapBehavior.Setting("head");
+        for(int i=1;i<=8;i++) { setting.Apply(capability,i==8);Assert.Equal(i==8,setting.Finished); }
+        Assert.Contains("窗口已用尽",setting.State);Assert.Null(setting.Readback);
+        setting.Apply(capability,true);setting.Observe(capability);Assert.Equal(8,calls);Assert.Equal(8,reads);
+    }
+    private MatchSetupViewModel ViewModel() => new(new MatchSetupStore(Path.Combine(Data,"app-data/match-setup"),RosterCatalog.LoadBuiltIn()),RosterCatalog.LoadBuiltIn(),new MockDialogService(),Service);
+    [Fact] public async Task PollRetriesTemporaryIoFailureAfterTheGateIsReleased()
+    {
+        var vm=ViewModel();vm.Profile=InstalledProfile.High;
+        using(BotHumanOperationGate.Acquire(Root)) { await vm.PollDailyAsync();Assert.Contains("有限自动重试",vm.PreparationText); }
+        await vm.PollDailyAsync();Assert.Contains("已写入",vm.PreparationText);Assert.Equal(InstalledProfile.High,MatchRuntimeContract.Validate(Root,Data).Profile);
+        using(BotHumanOperationGate.Acquire(Root)) { await vm.PollDailyAsync();Assert.Contains("已写入",vm.PreparationText); }
+    }
+    [Fact] public async Task PollStopsAfterThreeIoFailuresAndExplicitCheckStartsANewAttempt()
+    {
+        var vm=ViewModel();vm.Profile=InstalledProfile.High;
+        using(BotHumanOperationGate.Acquire(Root))
+        {
+            for(int i=0;i<3;i++)await vm.PollDailyAsync();Assert.Contains("已停止",vm.PreparationText);
+        }
+        for(int i=0;i<4;i++)await vm.PollDailyAsync();Assert.Equal(InstalledProfile.Medium,MatchRuntimeContract.Validate(Root,Data).Profile);
+        await vm.CheckStatusAsync();Assert.Contains("已写入",vm.PreparationText);Assert.Equal(InstalledProfile.High,MatchRuntimeContract.Validate(Root,Data).Profile);
+    }
+    [Fact] public async Task PollDoesNotAutomaticallyRepeatPermanentFailureButExplicitCheckRevalidates()
+    {
+        var vm=ViewModel();vm.Profile=InstalledProfile.High;var path=Path.Combine(Root,DailyPlayFiles.BotLoaders[0]);var original=File.ReadAllBytes(path);File.WriteAllText(path,"unknown bytes");
+        await vm.PollDailyAsync();Assert.Contains("已停止",vm.PreparationText);Assert.Contains("漂移",vm.PreparationText);
+        File.WriteAllBytes(path,original);await vm.PollDailyAsync();Assert.Equal(InstalledProfile.Medium,MatchRuntimeContract.Validate(Root,Data).Profile);
+        await vm.CheckStatusAsync();Assert.Equal(InstalledProfile.High,MatchRuntimeContract.Validate(Root,Data).Profile);
     }
 }

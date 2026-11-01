@@ -105,4 +105,16 @@ public sealed class MatchSetupDomainTests : IDisposable
         Assert.ThrowsAny<Exception>(()=>Store.Load());Assert.Equal("corrupt",File.ReadAllText(Store.LibraryPath));
         var p=Pro();Assert.Throws<InvalidDataException>(()=>Store.Save(new(1,[],[p,p],[])));
     }
+    [Fact] public void DisabledDailyRosterIsAnInertDraftWhilePreferencesAndEnabledRostersStayValidated()
+    {
+        var p=Pro();p=p with {Enemy=p.Enemy with {Name="",Slots=p.Enemy.Slots.SetItem(0,new("bad;name"))},Profile=InstalledProfile.High,Aim=AimSetting.Body};
+        var saved=Store.SaveDaily(p,false);var loaded=Store.ReadDaily()!;
+        Assert.Equal(saved.Revision,loaded.Revision);Assert.Equal("",loaded.Preset.Enemy.Name);Assert.Equal("bad;name",loaded.Preset.Enemy.Slots[0].Name);
+        Assert.Equal(InstalledProfile.High,loaded.Preset.Profile);Assert.Equal(AimSetting.Body,loaded.Preset.Aim);
+        var before=File.ReadAllBytes(Store.DailyPath);
+        Assert.Throws<InvalidDataException>(()=>Store.SaveDaily(p,true));Assert.Equal(before,File.ReadAllBytes(Store.DailyPath));
+        Assert.Throws<InvalidDataException>(()=>Store.SaveDaily(p with {Aim=(AimSetting)999},false));Assert.Equal(before,File.ReadAllBytes(Store.DailyPath));
+        File.WriteAllText(Store.DailyPath,MatchJson.Write(saved with {LineupEnabled=true}));
+        Assert.Throws<InvalidDataException>(()=>Store.ReadDaily());
+    }
 }

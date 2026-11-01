@@ -22,15 +22,20 @@ public sealed class MatchSetupStore(string root, RosterCatalog catalog)
         CheckPath(DailyPath); if (!File.Exists(DailyPath)) return null;
         var value = MatchJson.Read<DailyPlaySettings>(File.ReadAllText(DailyPath));
         if (value.SchemaVersion != 1) throw new InvalidDataException("不支持的日常配置版本；保留原文件");
-        MatchJson.Id(value.Revision); catalog.Resolve(value.Preset); return value;
+        MatchJson.Id(value.Revision); ValidateDaily(value.Preset,value.LineupEnabled); return value;
     }
     public DailyPlaySettings SaveDaily(MatchSetupPreset preset, bool lineupEnabled)
     {
-        catalog.Resolve(preset);
+        ValidateDaily(preset,lineupEnabled);
         var previous = ReadDaily();
         if (previous is not null && previous.LineupEnabled == lineupEnabled && Digest(previous.Preset) == Digest(preset)) return previous;
         var value = new DailyPlaySettings(1, Guid.NewGuid().ToString("N"), DateTimeOffset.UtcNow, lineupEnabled, preset);
         Write(DailyPath, MatchJson.Write(value), backup: false); return value;
+    }
+    private void ValidateDaily(MatchSetupPreset preset,bool lineupEnabled)
+    {
+        if (lineupEnabled) catalog.Resolve(preset);
+        else RosterCatalog.ValidatePreferences(preset);
     }
     public static string Digest(MatchSetupPreset preset) => Convert.ToHexStringLower(SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(MatchJson.Write(preset))));
     public MatchLibrary Load()

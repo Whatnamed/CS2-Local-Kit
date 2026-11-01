@@ -19,13 +19,19 @@ public sealed class DailyMapBehavior(AimSetting aim, NadeSetting nades)
             {
                 capability.Item1(desired);
                 using var result = JsonDocument.Parse(capability.Item2()); var value = result.RootElement;
-                _epoch = value.GetProperty("Epoch").GetInt64();
-                if (_epoch <= 0 || value.GetProperty("Mode").GetString() != desired) throw new InvalidDataException("mode/epoch 读回不符");
+                var epoch = value.GetProperty("Epoch").GetInt64();
+                if (epoch <= 0 || value.GetProperty("Mode").GetString() != desired) throw new InvalidDataException("mode/epoch 读回不符");
+                _epoch = epoch;
                 Readback = value.GetRawText(); State = "运行时已接收，mode/epoch 读回通过；实际行为待验收";
                 if (desired != "off" && value.TryGetProperty("MapCount", out var count) && count.GetInt32() == 0) State = "模式已读回；本地图无投掷线路，行为证据不足";
+                Finished = true;
             }
-            catch (Exception ex) { State = "未应用：" + ex.Message; }
-            Finished = true;
+            catch (Exception ex)
+            {
+                _epoch = null; Readback = null;
+                State = (lastAttempt ? "未应用（等待窗口已用尽）：" : "等待重试：") + ex.Message;
+                Finished = lastAttempt;
+            }
         }
         public void Observe(Tuple<Action<string>, Func<string>>? capability)
         {
