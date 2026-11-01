@@ -73,6 +73,14 @@ public sealed class DailyPlayTests : IDisposable
         Assert.Equal(before,File.ReadAllBytes(path));_running=false;
         Assert.Contains("已写入",await Service.ApplyDailyAsync(Settings(InstalledProfile.High,MatchPlayMode.NormalHuman)));
     }
+    [Theory] [InlineData("6","26334290")] [InlineData("4","99999999")]
+    public async Task SteamUpdateOrDifferentBuildBlocksDailyWrites(string flags,string build)
+    {
+        var path=Path.Combine(Root,DailyPlayFiles.ProfileTarget);var before=File.ReadAllBytes(path);
+        Write("../../appmanifest_730.acf",$"\"buildid\" \"{build}\" \"StateFlags\" \"{flags}\"");
+        await Assert.ThrowsAnyAsync<Exception>(()=>Service.ApplyDailyAsync(Settings(InstalledProfile.High,MatchPlayMode.NormalHuman)));
+        Assert.Equal(before,File.ReadAllBytes(path));
+    }
     [Theory] [InlineData("game/csgo/overrides/botprofile.vpk")] [InlineData("game/csgo/addons/counterstrikesharp/plugins/BotAI/BotAI.dll")] [InlineData("game/bin/win64/engine2.dll")] [InlineData("game/csgo/addons/counterstrikesharp/plugins/Alien.dll")]
     public async Task UnknownImagesNeverGetOverwritten(string relative)
     {
@@ -86,6 +94,13 @@ public sealed class DailyPlayTests : IDisposable
         Assert.Throws<InvalidDataException>(()=>MatchRuntimeContract.Validate(Root,Data));
         Assert.Contains("已写入",await Service.ApplyDailyAsync(Settings(InstalledProfile.Low,MatchPlayMode.NormalHuman)));
         Assert.Equal(MatchPlayMode.NormalHuman,MatchRuntimeContract.Validate(Root,Data).Mode);
+    }
+    [Fact] public async Task AmbiguousLoaderPositionsNeverOverwriteEitherImage()
+    {
+        var path=Path.Combine(Root,DailyPlayFiles.BotLoaders[0]);var before=File.ReadAllBytes(path);
+        File.Copy(path,path+DailyPlayFiles.DisabledSuffix);
+        await Assert.ThrowsAsync<InvalidDataException>(()=>Service.ApplyDailyAsync(Settings(InstalledProfile.High,MatchPlayMode.NormalHuman)));
+        Assert.Equal(before,File.ReadAllBytes(path));Assert.Equal(before,File.ReadAllBytes(path+DailyPlayFiles.DisabledSuffix));
     }
     [Fact] public async Task HumanSidecarRemainsValidAcrossBothModesAndProfileChanges()
     {

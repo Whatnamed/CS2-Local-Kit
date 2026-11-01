@@ -77,7 +77,7 @@ public sealed class BotIntegrationTests : IDisposable
     {
         var service=new BotExperimentService(_home,Root,()=>false,_runner);
         Assert.Equal(22,service.Candidates.Count);
-        Assert.Single(service.Candidates.Where(c=>c.DailyPlay));
+        Assert.Single(service.Candidates,c=>c.DailyPlay);
         Assert.Equal(3,service.Candidates.Select(c=>c.Difficulty).Distinct().Count());
         Assert.All(service.Candidates,c=>Assert.Matches("^[0-9a-f]{64}$",c.ManifestSha256));
         Assert.Equal(3,service.Candidates.Count(c=>!c.PreservesHuman));

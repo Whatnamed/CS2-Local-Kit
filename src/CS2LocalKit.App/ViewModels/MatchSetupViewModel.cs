@@ -256,7 +256,7 @@ public sealed class MatchSetupViewModel : ViewModelBase
         OnPropertyChanged(nameof(PreparationText));
         if (_autoSave && !_loading)
         {
-            try { _daily=_store.SaveDaily(Snapshot(),LineupEnabled);_fileStatus="配置已自动保存；等待核对文件";_ = PollDailyAsync(); }
+            try { _daily=_store.SaveDaily(Snapshot(),LineupEnabled);_fileStatus="配置已自动保存；等待核对文件"; }
             catch(Exception ex) { _fileStatus="当前编辑未保存："+ex.Message; }
             OnPropertyChanged(nameof(PreparationText));OnPropertyChanged(nameof(DraftState));
         }

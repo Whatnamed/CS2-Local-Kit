@@ -359,9 +359,11 @@ public sealed class BotExperimentService
             using var gameWrite=BotHumanOperationGate.Acquire(Cs2Root);
             return await Task.Run(() =>
             {
+                var expectedSteam=SteamState;
                 void Writable()
                 {
-                    if (Cs2Running || !SteamState.Idle) throw new InvalidOperationException("游戏运行或 Steam 更新中；待关闭游戏后应用");
+                    var steam=SteamState;
+                    if (Cs2Running || !steam.Idle || steam!=expectedSteam) throw new InvalidOperationException("游戏运行或 Steam/build 状态变化；待关闭游戏后应用");
                 }
                 Writable();
                 var installed=MatchRuntimeContract.Validate(Cs2Root,DataRoot,allowIncompleteMode:true);

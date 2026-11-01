@@ -79,7 +79,7 @@ def run(release, digest):
     rejected('unknown active profile', root / tx.DAILY_PROFILE, b'unknown profile')
     rejected('unknown profile source', root / m['dailyPlay']['profiles']['Low']['target'], b'unknown source')
     rejected('unknown module', root / 'game/csgo/addons/counterstrikesharp/plugins/Alien.dll', b'unknown module')
-    rejected('duplicate disabled loader', Path(str(path) + tx.DAILY_SUFFIX), b'unknown DLL')
+    rejected('unknown disabled loader', Path(str(path) + tx.DAILY_SUFFIX), b'unknown DLL')
     tx.restore(backup, apply=True, fake=True)
     tx.require(tx.inventory(root) == baseline, 'Daily exact restore paths/types/hashes mismatch')
     tx.require(tx.inventory(old_backup) == old_images, 'Old recovery chain changed')
