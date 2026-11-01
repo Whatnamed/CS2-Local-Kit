@@ -1,0 +1,86 @@
+{
+  "scope": "daily local play implementation; uninstalled delivery",
+  "branch": "codex/daily-play-20261101",
+  "baseline": "3453db5931a49445248180ae153a7b28989ab91e",
+  "candidate": {
+    "Difficulty": 1,
+    "Directory": "bot-daily-14194-7b4d8a4",
+    "ManifestSha256": "11560f1f83d806f8b5d295a2cb5f8c55ebdb805905a7ecdbcb648cf475f9c2d7",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true,
+    "DailyPlay": true
+  },
+  "candidateSourceHead": "7b4d8a4",
+  "controllerSourceHead": "63805a573708d81bd8e96f0cbff7e1cc0dc21de8",
+  "controllerDirectory": "E:/CS2MOD/releases/controller/controller-daily-20261101",
+  "controllerExeSha256": "cf940c354a90128a56eef31ade85d075d7c464287cb92fe166826abaa5f17d5f",
+  "controllerPayloadFiles": 408,
+  "currentInstallation": {
+    "installId": "177e9652205d4d75a4cda34d76934547",
+    "manifestSha256": "fc09b409160d071a60a3d013fbb89d108d704ff4b65731dff96626823f006012",
+    "parents": {
+      "bot": "b613a8c709c7440998346cb802bb790f",
+      "compat": "5808afffdc44440ab3f0de2159cdb436",
+      "nades": "9f9849ca97804c2dbd7b1307bba4580c"
+    },
+    "unchanged": true
+  },
+  "validation": {
+    "dotnetTests": 281,
+    "legacyTransactionTests": 40,
+    "dailyMigrationChecks": 18,
+    "publicTransactionAndFaultChecks": 50,
+    "wpfChecks": 63,
+    "wpfCaptures": 28,
+    "actualPayloadFiles": 113,
+    "actualGameModified": false,
+    "gameStarted": false,
+    "gameplayAcceptance": "pending"
+  },
+  "readOnlyMigration": {
+    "kind": "daily-play-migration-preview",
+    "readOnly": true,
+    "actualGameModified": false,
+    "currentInstallId": "177e9652205d4d75a4cda34d76934547",
+    "currentManifestSha256": "fc09b409160d071a60a3d013fbb89d108d704ff4b65731dff96626823f006012",
+    "currentRestorePreflight": "installed",
+    "candidate": {
+      "Difficulty": 1,
+      "Directory": "bot-daily-14194-7b4d8a4",
+      "ManifestSha256": "11560f1f83d806f8b5d295a2cb5f8c55ebdb805905a7ecdbcb648cf475f9c2d7",
+      "PreservesHuman": true,
+      "MatchSetup": true,
+      "RuntimeIntegration": true,
+      "DailyPlay": true
+    },
+    "targetBuild": {
+      "PatchVersion": "1.41.9.4",
+      "ClientVersion": "2000939",
+      "buildId": "26334290"
+    },
+    "postRestoreBaselineComparison": {
+      "targetBuild": true,
+      "baselineFiles": true,
+      "gameBinaries": true,
+      "moduleInventory": true,
+      "runtimeIntegration": true,
+      "humanFiles": true
+    },
+    "parentIds": {
+      "bot": "b613a8c709c7440998346cb802bb790f",
+      "compat": "5808afffdc44440ab3f0de2159cdb436",
+      "nades": "9f9849ca97804c2dbd7b1307bba4580c"
+    },
+    "steps": [
+      "Close CS2; open delivered Controller",
+      "System Settings: Check component preview; confirm Install/upgrade components",
+      "Exact restore current integration only; preserve three parents; fresh full preflight; install unified daily substrate",
+      "Choose difficulty, Aim/Nades; leave lineup off for first play; wait for file application",
+      "User starts -insecure CS2 and selects any local map; verify runtime and real behavior",
+      "Next map enable custom lineup; verify numbers, persona, TAB, side switch and Human CT/T cosmetics"
+    ],
+    "candidateInstalled": false,
+    "gameplayAcceptance": "pending"
+  }
+}
