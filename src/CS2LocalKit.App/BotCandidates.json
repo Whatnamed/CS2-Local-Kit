@@ -145,5 +145,14 @@
     "PreservesHuman": true,
     "MatchSetup": true,
     "RuntimeIntegration": true
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "bot-daily-14194-7b4d8a4",
+    "ManifestSha256": "11560f1f83d806f8b5d295a2cb5f8c55ebdb805905a7ecdbcb648cf475f9c2d7",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true,
+    "DailyPlay": true
   }
 ]

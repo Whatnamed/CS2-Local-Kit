@@ -15,6 +15,7 @@ integration = importlib.util.module_from_spec(spec); spec.loader.exec_module(int
 
 def run(release, digest):
     tx.MARKER = tx.INTEGRATION_MARKER
+    (tx.REPO / 'temp/integration').mkdir(parents=True, exist_ok=True)
     home, root, package, backups, m, expected = integration.fixture(release, digest)
     baseline = tx.inventory(root)
     parent_images = {p['backupDir']: tx.inventory(p['backupDir']) for p in m['runtimeIntegration']['parents'].values()}
