@@ -76,8 +76,8 @@ public sealed class BotIntegrationTests : IDisposable
     [Fact] public void ShippedCandidateCatalogHasAllThreeExactVariants()
     {
         var service=new BotExperimentService(_home,Root,()=>false,_runner);
-        Assert.Equal(22,service.Candidates.Count);
-        Assert.Single(service.Candidates,c=>c.DailyPlay);
+        Assert.Equal(23,service.Candidates.Count);
+        Assert.Equal(2,service.Candidates.Count(c=>c.DailyPlay));
         Assert.Equal(3,service.Candidates.Select(c=>c.Difficulty).Distinct().Count());
         Assert.All(service.Candidates,c=>Assert.Matches("^[0-9a-f]{64}$",c.ManifestSha256));
         Assert.Equal(3,service.Candidates.Count(c=>!c.PreservesHuman));
@@ -89,7 +89,7 @@ public sealed class BotIntegrationTests : IDisposable
             Assert.True(service.Candidate(level).MatchSetup);
             Assert.True(service.Candidate(level).RuntimeIntegration);
             Assert.True(service.Candidate(level).DailyPlay);
-            Assert.StartsWith("bot-daily-14194-",service.Candidate(level).Directory);
+            Assert.Equal("bot-daily-14194-b72e06b",service.Candidate(level).Directory);
         }
     }
     [Fact] public async Task MatchSetupCatalogFlagRequiresItsManifestContract()
