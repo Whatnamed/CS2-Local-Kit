@@ -12,7 +12,7 @@ spec=importlib.util.spec_from_file_location('integration_tests',tx.REPO/'scripts
 old=importlib.util.module_from_spec(spec);spec.loader.exec_module(old)
 
 
-def run():
+def run(review_name='review-14193.json'):
     source=Path('E:/CS2MOD/releases/bot-experiment/bot-integrated-14192-medium-eda1676')
     digest='3542f17be9d9a7e04a3408d7816cf1a68124ffc7c0b2cadfa5b252cfa68341d1'
     home,root,package,backups,m,expected=old.fixture(source,digest)
@@ -22,19 +22,19 @@ def run():
     original_record=tx.read_json(backup/'install-record.json')
     frozen=tx.sha(backup/'candidate-manifest.json')
     parent_images={p['backupDir']:tx.inventory(p['backupDir']) for p in m['runtimeIntegration']['parents'].values()}
-    review=copy.deepcopy(tx.read_json(tx.REPO/'scripts/compatibility/review-14193.json'))
+    review=copy.deepcopy(tx.read_json(tx.REPO/'scripts/compatibility'/review_name))
     review['sourceManifests']=[expected]
     before=tx.inventory(root)
     for p,v in review['retainedFiles'].items():
         v['before']=tx.sha(root/p)
-        old.write(root/p, ('updated binary '+p) if p!='game/csgo/steam.inf' else 'PatchVersion=1.41.9.3\nClientVersion=2000938\n')
+        old.write(root/p, ('updated binary '+p) if p!='game/csgo/steam.inf' else f"PatchVersion={review['targetBuild']['PatchVersion']}\nClientVersion={review['targetBuild']['ClientVersion']}\n")
         v['after']=tx.sha(root/p)
     acf=root.parent.parent/'appmanifest_730.acf'
-    acf.write_text(acf.read_text().replace('26144732','26281801'))
+    acf.write_text(acf.read_text().replace('26144732',review['targetBuild']['buildId']))
     review['gameBinaries']={p:tx.sha(root/p) for p in tx.GAME_BINARIES}
     read_json=tx.read_json
     def read(path):
-        return copy.deepcopy(review) if Path(path).name=='review-14193.json' else read_json(path)
+        return copy.deepcopy(review) if Path(path).name==review_name else read_json(path)
     checks=[]
     with patch.object(tx,'read_json',side_effect=read):
         tree=tx.inventory(home);tx.restore(backup,fake=True)
@@ -81,4 +81,4 @@ def run():
     print(tx.json_bytes({'status':'PASS','checks':checks,'syntheticRoot':str(root),'actualGameModified':False}).decode())
 
 
-if __name__=='__main__':run()
+if __name__=='__main__':run(sys.argv[1] if len(sys.argv)>1 else 'review-14193.json')

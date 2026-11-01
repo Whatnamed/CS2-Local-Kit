@@ -8,22 +8,26 @@ namespace CS2LocalKit.Core.Runtime;
 public static class RuntimeIntegrationGuard
 {
     public const string Marker = "game/csgo/.cs2-local-kit-runtime-integration.json";
-    public static bool IsReviewed14193Source(string digest)
+    public static bool IsReviewedSource(string digest, string patchVersion)
     {
-        using var review = Review14193();
-        return review.RootElement.GetProperty("sourceManifests").EnumerateArray().Any(v=>v.GetString()==digest);
+        using var review = Review(patchVersion);
+        return review is not null && review.RootElement.GetProperty("sourceManifests").EnumerateArray().Any(v=>v.GetString()==digest);
     }
-    private static JsonDocument Review14193() => JsonDocument.Parse(typeof(RuntimeIntegrationGuard).Assembly.GetManifestResourceStream("CS2LocalKit.Review14193.json")!);
+    private static JsonDocument? Review(string patchVersion)
+    {
+        var resource = patchVersion switch { "1.41.9.3" => "Review14193", "1.41.9.4" => "Review14194", _ => null };
+        return resource is null ? null : JsonDocument.Parse(typeof(RuntimeIntegrationGuard).Assembly.GetManifestResourceStream("CS2LocalKit."+resource+".json")!);
+    }
     public static JsonDocument ReadManifest(string root, string path)
     {
         var raw = File.ReadAllText(path);
-        using var review = Review14193();
         var steam = SteamInstallState.Inspect(root);
-        return Reviewed14193(raw, Hash(path), steam, review.RootElement, p=>Hash(Safe(root,p)));
+        using var review = Review(steam.PatchVersion);
+        return review is null ? JsonDocument.Parse(raw) : ReviewedBuild(raw, Hash(path), steam, review.RootElement, p=>Hash(Safe(root,p)));
     }
-    internal static JsonDocument Reviewed14193(string raw, string digest, SteamInstallState steam, JsonElement review, Func<string,string> hash)
+    internal static JsonDocument ReviewedBuild(string raw, string digest, SteamInstallState steam, JsonElement review, Func<string,string> hash)
     {
-        if (steam.PatchVersion!="1.41.9.3" || !review.GetProperty("sourceManifests").EnumerateArray().Any(v=>v.GetString()==digest)) return JsonDocument.Parse(raw);
+        if (steam.PatchVersion!=review.GetProperty("targetBuild").GetProperty("PatchVersion").GetString() || !review.GetProperty("sourceManifests").EnumerateArray().Any(v=>v.GetString()==digest)) return JsonDocument.Parse(raw);
         var m = JsonNode.Parse(raw)!;
         var target = review.GetProperty("targetBuild");
         if (!steam.Idle || steam.BuildId!=target.GetProperty("buildId").GetString() || steam.ClientVersion!=target.GetProperty("ClientVersion").GetString() ||

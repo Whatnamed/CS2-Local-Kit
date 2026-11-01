@@ -149,15 +149,20 @@ def steam_installation(root, build_id):
 
 
 def reviewed_manifest(path, root):
-    """Read the frozen record through the exact reviewed 14192 -> 14193 transition."""
+    """Read frozen records through an exact reviewed build transition."""
     m = read_json(path)
-    review_path = Path(__file__).with_name('review-14193.json')
-    if not review_path.exists(): review_path = REPO / 'scripts/compatibility/review-14193.json'
-    if not review_path.exists(): return m
-    review = read_json(review_path)
-    if sha(path) not in review['sourceManifests']: return m
     inf = under(root, 'game/csgo/steam.inf').read_text()
-    if not re.search(r'(?m)^PatchVersion=1\.41\.9\.3\s*$', inf): return m
+    review = None
+    for name in ['review-14193.json', 'review-14194.json']:
+        review_path = Path(__file__).with_name(name)
+        if not review_path.exists(): review_path = REPO / 'scripts/compatibility' / name
+        if not review_path.exists(): continue
+        candidate = read_json(review_path)
+        if re.search(rf'(?m)^PatchVersion={re.escape(candidate["targetBuild"]["PatchVersion"])}\s*$', inf):
+            review = candidate
+            break
+    if review is None: return m
+    if sha(path) not in review['sourceManifests']: return m
     require(m['targetBuild'] == review['previousBuild'], 'Reviewed source build mismatch')
     steam_installation(root, review['targetBuild']['buildId'])
     for p,h in review['gameBinaries'].items():

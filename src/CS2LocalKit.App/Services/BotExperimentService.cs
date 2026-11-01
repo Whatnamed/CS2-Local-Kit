@@ -408,7 +408,7 @@ public sealed class BotExperimentService
             async Task<JsonElement> Invoke(string invokeAction, bool write)
             {
                 if (Cs2Running || !SteamState.Idle) throw new InvalidOperationException("CS2 运行或 Steam 更新状态变化，已停止操作");
-                var tools = RuntimeIntegrationGuard.IsReviewed14193Source(candidate.ManifestSha256) && SteamState.PatchVersion=="1.41.9.3"
+                var tools = RuntimeIntegrationGuard.IsReviewedSource(candidate.ManifestSha256, SteamState.PatchVersion)
                     ? _candidates.Last(c=>c.RuntimeIntegration) : candidate;
                 if(tools!=candidate) Validate(tools);
                 var args = new List<string> { "-NoLogo", "-NoProfile", "-NonInteractive", "-File", SafePath(CandidatePath(tools), "tools/Invoke-BotExperiment.ps1"), "-Action", invokeAction, "-BackupRoot", BackupRoot, "-PythonExe", "python" };
