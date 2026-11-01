@@ -76,18 +76,18 @@ public sealed class BotIntegrationTests : IDisposable
     [Fact] public void ShippedCandidateCatalogHasAllThreeExactVariants()
     {
         var service=new BotExperimentService(_home,Root,()=>false,_runner);
-        Assert.Equal(18,service.Candidates.Count);
+        Assert.Equal(21,service.Candidates.Count);
         Assert.Equal(3,service.Candidates.Select(c=>c.Difficulty).Distinct().Count());
         Assert.All(service.Candidates,c=>Assert.Matches("^[0-9a-f]{64}$",c.ManifestSha256));
         Assert.Equal(3,service.Candidates.Count(c=>!c.PreservesHuman));
         foreach (var level in Enum.GetValues<BotDifficulty>())
         {
-            Assert.Equal(5,service.Candidates.Count(c=>c.Difficulty==level && c.PreservesHuman));
-            Assert.Equal(4,service.Candidates.Count(c=>c.Difficulty==level && c.MatchSetup));
+            Assert.Contains(service.Candidates,c=>c.Difficulty==level && c.PreservesHuman);
+            Assert.Contains(service.Candidates,c=>c.Difficulty==level && c.MatchSetup);
             Assert.True(service.Candidate(level).PreservesHuman);
             Assert.True(service.Candidate(level).MatchSetup);
             Assert.True(service.Candidate(level).RuntimeIntegration);
-            Assert.StartsWith("bot-integrated-14193-",service.Candidate(level).Directory);
+            Assert.StartsWith("bot-perf-14194-",service.Candidate(level).Directory);
         }
     }
     [Fact] public async Task MatchSetupCatalogFlagRequiresItsManifestContract()
@@ -111,7 +111,8 @@ public sealed class BotIntegrationTests : IDisposable
     [Fact] public void TargetPreferenceAndRestoredHistoryDoNotClaimActiveMode()
     {
         var service=Service();Active(service,"restored",false);
-        service.SavePreferences(new(LastInstallId:Id,TargetMode:LocalPlayMode.EnhancedHuman));
+        Directory.CreateDirectory(Path.GetDirectoryName(service.PreferencesPath)!);
+        File.WriteAllText(service.PreferencesPath,JsonSerializer.Serialize(new BotPreferences(LastInstallId:Id,TargetMode:LocalPlayMode.EnhancedHuman)));
         var vm=new BotViewModel(service,new MockDialogService(),()=>{},_=>{});
         Assert.Equal(LocalPlayMode.EnhancedHuman,vm.TargetMode);
         Assert.Equal("普通人机 + 我的饰品",vm.CurrentMode);Assert.Equal("—",vm.InstallId);

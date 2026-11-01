@@ -13,7 +13,8 @@ public enum InstalledProfile { Low, Medium, High }
 public enum MatchPlayMode { NormalHuman, EnhancedHuman }
 public enum MatchApplyState { Saved, Pending, Received, InsufficientEvidence, BehaviorObserved, Failed }
 public sealed record MatchRuntimeStatus(int SchemaVersion, string SessionId, string? RequestId, string? PresetSha256, string Map, DateTimeOffset UpdatedAt,
-    MatchApplyState State, string Reason, int CtCount = 0, int TCount = 0, string? AimReadback = null, string? NadesReadback = null, int ProcessId = 0, DateTimeOffset ProcessStartUtc = default);
+    MatchApplyState State, string Reason, int CtCount = 0, int TCount = 0, string? AimReadback = null, string? NadesReadback = null, int ProcessId = 0, DateTimeOffset ProcessStartUtc = default,
+    string? DailyRevision = null, string? LineupState = null, string? AimState = null, string? NadesState = null, string? InstallId = null, string? ActualProfile = null, string? ActualMode = null);
 public sealed record Team(string Id, string Name, string Logo, bool Recommended);
 // PersonaId is BotHider's account ID, not a uniquely inferred nickname or a real-user attribution.
 public sealed record PlayerIdentity(string PersonaId, string Name, ulong SteamId64, bool Enabled);

@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using CS2LocalKit.Core.Runtime;
+using CS2LocalKit.Core.MatchSetup;
 
 namespace CS2LocalKit.App.Services;
 
@@ -14,9 +15,9 @@ public sealed record BotPreferences(BotDifficulty Difficulty = BotDifficulty.Med
 {
     public string ConsoleCommands => $"bot_aim {Aim.ToString().ToLowerInvariant()}; bot_nades {Nades.ToString().ToLowerInvariant()}";
 }
-public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false, bool MatchSetup = false, bool RuntimeIntegration = false);
+public sealed record BotCandidate(BotDifficulty Difficulty, string Directory, string ManifestSha256, bool PreservesHuman = false, bool MatchSetup = false, bool RuntimeIntegration = false, bool DailyPlay = false);
 public sealed record BotModeReadiness(bool CanEnable, string Reason, string CurrentBuild, string CandidateBuild, string BotRef, bool HumanFilesValid);
-public sealed record BotInstalledSnapshot(bool Valid, string Reason, BotDifficulty? Difficulty = null, bool HasMatchSetup = false, bool RuntimeIntegration = false);
+public sealed record BotInstalledSnapshot(bool Valid, string Reason, BotDifficulty? Difficulty = null, bool HasMatchSetup = false, bool RuntimeIntegration = false, bool DailyPlay = false, MatchPlayMode? Mode = null);
 public enum LocalPlayReadinessKind { Ready, NeedsLocalPreparation, NeedsRepair, Unknown }
 public sealed record LocalPlayReadiness(LocalPlayReadinessKind Kind, string Reason, BotDifficulty? InstalledDifficulty = null, bool HasMatchSetup = false);
 public sealed record BotSwitchPlan(string? OldInstallId, BotDifficulty TargetDifficulty, string TargetManifestSha256, bool AlreadyPrepared, string Summary, bool ProtectsExistingLayers = false, string? HumanHandoffInstallId = null);
@@ -96,8 +97,9 @@ public sealed class BotExperimentService
 
     public BotPreferences LoadPreferences()
     {
-        if (!File.Exists(PreferencesPath)) return new();
-        var p = JsonSerializer.Deserialize<BotPreferences>(File.ReadAllText(PreferencesPath)) ?? throw new InvalidDataException("Bot 偏好无效");
+        var p = File.Exists(PreferencesPath) ? JsonSerializer.Deserialize<BotPreferences>(File.ReadAllText(PreferencesPath)) ?? throw new InvalidDataException("Bot 偏好无效") : new();
+        var daily=new MatchSetupStore(Path.Combine(DataRoot,"app-data/match-setup"),RosterCatalog.LoadBuiltIn()).ReadDaily();
+        if (daily is not null) p=p with {Difficulty=(BotDifficulty)(int)daily.Preset.Profile,Aim=(BotAim)(int)daily.Preset.Aim,Nades=(BotNades)(int)daily.Preset.Nades,TargetMode=(LocalPlayMode)(int)daily.Preset.Mode};
         if (!Enum.IsDefined(p.Difficulty) || !Enum.IsDefined(p.Aim) || !Enum.IsDefined(p.Nades) || !Enum.IsDefined(p.TargetMode) || p.LastInstallId is not null && !Regex.IsMatch(p.LastInstallId, "^[0-9a-f]{32}$")) throw new InvalidDataException("Bot 偏好值无效");
         return p;
     }
@@ -109,12 +111,12 @@ public sealed class BotExperimentService
         System.IO.Directory.CreateDirectory(Path.GetDirectoryName(PreferencesPath)!);
         var tmp = PreferencesPath + ".new";
         CheckNoLinks(tmp);
-        File.WriteAllText(tmp, JsonSerializer.Serialize(value));
+        File.WriteAllText(tmp, JsonSerializer.Serialize(new {value.LastInstallId}));
         File.Move(tmp, PreferencesPath, true);
     }
 
-    public BotCandidate Candidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty).OrderBy(c => c.PreservesHuman).ThenBy(c => c.MatchSetup).LastOrDefault() ?? throw new InvalidOperationException("该难度没有已固定候选，禁止安装");
-    private BotCandidate JointCandidate(BotDifficulty difficulty) => _candidates.Where(c => c.Difficulty == difficulty && c.PreservesHuman).OrderBy(c => c.MatchSetup).LastOrDefault()
+    public BotCandidate Candidate(BotDifficulty difficulty) => _candidates.Where(c => c.DailyPlay || c.Difficulty == difficulty).OrderBy(c => c.PreservesHuman).ThenBy(c => c.MatchSetup).LastOrDefault() ?? throw new InvalidOperationException("该难度没有已固定候选，禁止安装");
+    private BotCandidate JointCandidate(BotDifficulty difficulty) => _candidates.Where(c => (c.DailyPlay || c.Difficulty == difficulty) && c.PreservesHuman).OrderBy(c => c.MatchSetup).LastOrDefault()
         ?? throw new InvalidOperationException("暂无通过门禁的 Bot + Human 联合候选；旧隔离实验仅保留精确恢复入口");
 
     private (bool Valid, string Reason) HumanBaseline()
@@ -167,6 +169,7 @@ public sealed class BotExperimentService
             var r = record.RootElement;
             var m = manifest.RootElement;
             RuntimeIntegrationGuard.VerifyParents(Cs2Root,m);
+            DailyPlayFiles.ValidateContract(m);
             if (r.GetProperty("state").GetString() != "installed" ||
                 r.GetProperty("installId").GetString() != identity.InstallId ||
                 r.GetProperty("manifestSha256").GetString() != HashFile(manifestPath) ||
@@ -195,13 +198,19 @@ public sealed class BotExperimentService
                 }
                 var expected = entry.GetProperty("target").GetString() == BotHumanFixtureSidecar.Target && humanUpdate is not null
                     ? humanUpdate.CurrentSha256 : RuntimeIntegrationGuard.ReviewedPostimage(m,entry);
-                if (after.GetProperty("kind").GetString() != "file" || HashFile(path) != expected)
+                if (after.GetProperty("kind").GetString() != "file" || HashFile(DailyPlayFiles.ImagePath(Cs2Root,m,entry.GetProperty("target").GetString()!)) != DailyPlayFiles.ExpectedHash(Cs2Root,m,entry.GetProperty("target").GetString()!,expected))
                     throw new InvalidDataException("活动事务文件漂移：" + entry.GetProperty("target").GetString());
             }
             foreach (var file in m.GetProperty("coexistence").GetProperty("humanFiles").EnumerateObject())
                 if (HashFile(SafePath(Cs2Root, file.Name)) != (file.Name == BotHumanFixtureSidecar.Target && humanUpdate is not null ? humanUpdate.CurrentSha256 : file.Value.GetString()))
                     throw new InvalidDataException("Human 文件漂移：" + file.Name);
             var level = Enum.Parse<BotDifficulty>(r.GetProperty("profile").GetProperty("difficulty").GetString()!);
+            if (DailyPlayFiles.Supports(m))
+            {
+                DailyPlayFiles.VerifyModules(Cs2Root,m,r.GetProperty("moduleInventoryAfter"));
+                var daily=DailyPlayFiles.Read(Cs2Root,m);
+                return new(true,"日常底座文件身份匹配；游戏内行为待验证",(BotDifficulty)(int)daily.Profile,true,true,true,daily.Mode);
+            }
             return new(true, "活动联合安装文件身份匹配；游戏内行为待验证", level, m.TryGetProperty("matchSetup", out _),m.TryGetProperty("runtimeIntegration",out _));
         }
         catch (Exception ex) { return new(false, "无法确认活动安装：" + ex.Message); }
@@ -216,6 +225,8 @@ public sealed class BotExperimentService
                 return new(LocalPlayReadinessKind.Unknown, identity.Reason);
             var installed = InspectInstalled();
             if (!installed.Valid) return new(LocalPlayReadinessKind.NeedsRepair, installed.Reason);
+            if (installed.DailyPlay)
+                return new(LocalPlayReadinessKind.Ready,"日常底座完整；模式/难度由受管文件独立应用",installed.Difficulty,true);
             if (mode == LocalPlayMode.NormalHuman)
                 return new(LocalPlayReadinessKind.NeedsLocalPreparation, "关闭 CS2 后预览并精确恢复活动增强组件", installed.Difficulty, installed.HasMatchSetup);
             if (installed.Difficulty != desired || !installed.HasMatchSetup)
@@ -314,10 +325,12 @@ public sealed class BotExperimentService
         var manifest = SafePath(root, "experiment-manifest.json");
         if (!Regex.IsMatch(candidate.ManifestSha256, "^[0-9a-f]{64}$") || HashFile(manifest) != candidate.ManifestSha256) throw new InvalidDataException("固定候选 manifest hash 不匹配");
         using var doc = JsonDocument.Parse(File.ReadAllText(manifest)); var m = doc.RootElement;
-        if (m.GetProperty("schemaVersion").GetInt32() != 1 || m.GetProperty("lane").GetString() != "bot-experiment" || m.GetProperty("testFixture").GetBoolean() || m.GetProperty("botRef").GetString() != "e18c029a76b7515ea5cb15cb08c41f03de4c0a57" || m.GetProperty("metamod").GetProperty("build").GetInt32() != 1481 || m.GetProperty("cssVersion").GetString() != "1.0.376" || m.GetProperty("profile").GetProperty("difficulty").GetString() != candidate.Difficulty.ToString()) throw new InvalidDataException("候选身份/profile 不匹配");
+        if (m.GetProperty("schemaVersion").GetInt32() != 1 || m.GetProperty("lane").GetString() != "bot-experiment" || m.GetProperty("testFixture").GetBoolean() || m.GetProperty("botRef").GetString() != "e18c029a76b7515ea5cb15cb08c41f03de4c0a57" || m.GetProperty("metamod").GetProperty("build").GetInt32() != 1481 || m.GetProperty("cssVersion").GetString() != "1.0.376" || (!candidate.DailyPlay && m.GetProperty("profile").GetProperty("difficulty").GetString() != candidate.Difficulty.ToString())) throw new InvalidDataException("候选身份/profile 不匹配");
         if (candidate.PreservesHuman && (m.GetProperty("humanPolicy").GetString() != "preserve" || m.GetProperty("coexistence").GetProperty("status").GetString() != "ready-for-manual-test")) throw new InvalidDataException("联合候选身份不匹配");
         if (candidate.MatchSetup && (!m.TryGetProperty("matchSetup",out var setup) || setup.GetProperty("schemaVersion").GetInt32()!=1 || setup.GetProperty("adapter").GetString()!="LocalKitMatchSetup")) throw new InvalidDataException("候选缺少固定开局配置适配层");
         if (candidate.RuntimeIntegration != m.TryGetProperty("runtimeIntegration",out _)) throw new InvalidDataException("候选整合层身份不匹配");
+        DailyPlayFiles.ValidateContract(m);
+        if (candidate.DailyPlay != DailyPlayFiles.Supports(m)) throw new InvalidDataException("日常候选合约不匹配");
         var expected = m.GetProperty("bundleFiles").EnumerateObject().ToDictionary(x => x.Name, x => x.Value.GetString()!, StringComparer.OrdinalIgnoreCase);
         void Walk(string directory)
         {
@@ -335,6 +348,30 @@ public sealed class BotExperimentService
         Walk(root);
         if (expected.Count != 0) throw new InvalidDataException("候选 bundle 缺文件");
         SafePath(root, "tools/Invoke-BotExperiment.ps1"); SafePath(root, "tools/bot_experiment.py");
+    }
+
+    public async Task<string> ApplyDailyAsync(DailyPlaySettings settings)
+    {
+        if (Cs2Running) return "已保存；待关闭 CS2 后应用。若退出 Controller，请先关闭游戏并重新打开 Controller，再启动 CS2";
+        if (!await _operation.WaitAsync(0)) return "已保存；等待当前组件操作结束后应用";
+        try
+        {
+            using var gameWrite=BotHumanOperationGate.Acquire(Cs2Root);
+            return await Task.Run(() =>
+            {
+                void Writable()
+                {
+                    if (Cs2Running || !SteamState.Idle) throw new InvalidOperationException("游戏运行或 Steam 更新中；待关闭游戏后应用");
+                }
+                Writable();
+                var installed=MatchRuntimeContract.Validate(Cs2Root,DataRoot,allowIncompleteMode:true);
+                if (!installed.DailyPlay) return "已保存；请在系统设置中一次性检查/安装日常配置组件";
+                using var manifest=JsonDocument.Parse(File.ReadAllText(SafePath(BackupRoot,installed.InstallId+"/candidate-manifest.json")));
+                var active=DailyPlayFiles.Apply(Cs2Root,manifest.RootElement,settings.Preset.Profile,settings.Preset.Mode,Writable);
+                return $"已写入：{active.Mode} / {active.Profile}；启动 CS2 并选择任意本地地图即可。Aim/Nades 与可选阵容等待该地图运行时读回";
+            });
+        }
+        finally { InvalidateObservation(); _operation.Release(); }
     }
 
     public async Task<JsonElement> ExecuteAsync(string action, BotDifficulty difficulty, bool apply = false, string? installId = null)
@@ -488,7 +525,7 @@ public sealed class BotExperimentService
         if (!installed.Valid) throw new InvalidOperationException(installed.Reason);
         await ExecuteWithHumanUpdateAsync("Diagnostics", difficulty, false, current.InstallId);
         using var activeRecord = JsonDocument.Parse(File.ReadAllText(SafePath(BackupRoot, current.InstallId + "/install-record.json")));
-        if (installed.Difficulty == difficulty && installed.HasMatchSetup &&
+        if ((installed.DailyPlay || installed.Difficulty == difficulty) && installed.HasMatchSetup &&
             activeRecord.RootElement.GetProperty("manifestSha256").GetString() == target.ManifestSha256)
             return new(current.InstallId, difficulty, target.ManifestSha256, true, "当前增强安装与所选难度匹配；无需重复安装");
 
@@ -565,7 +602,7 @@ public sealed class BotExperimentService
                     handoff.TransferTo(new BotHumanFixtureSidecar(Cs2Root, BackupRoot, newId));
                 }
                 var snapshot = InspectInstalled();
-                if (!snapshot.Valid || !snapshot.HasMatchSetup || snapshot.Difficulty != fresh.TargetDifficulty || Identity.InstallId != newId)
+                if (!snapshot.Valid || !snapshot.HasMatchSetup || (!snapshot.DailyPlay && snapshot.Difficulty != fresh.TargetDifficulty) || Identity.InstallId != newId)
                     throw new InvalidDataException("新安装事务结束后身份仍无法确认；保留现场");
                 journal = journal with { Stage = "completed", NewInstallId = newId }; WritePrepareJournal(journal);
                 return journal;

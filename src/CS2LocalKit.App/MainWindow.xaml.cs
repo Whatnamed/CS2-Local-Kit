@@ -22,7 +22,8 @@ public partial class MainWindow : Window
         ShellHost.Visibility = Visibility.Visible;
 
         _processTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1.5) };
-        _processTimer.Tick += (_, _) => viewModel.Manager.PollProcessState();
+        _processTimer.Tick += async (_, _) => { viewModel.Manager.PollProcessState(); await viewModel.Bot.Setup.PollDailyAsync(); viewModel.Bot.Setup.RefreshRuntime(); };
+        _ = viewModel.Bot.Setup.PollDailyAsync();
         _processTimer.Start();
         Closed += (_, _) => _processTimer?.Stop();
     }

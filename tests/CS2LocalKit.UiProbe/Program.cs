@@ -109,9 +109,9 @@ internal static class Program
             Vm.Bot.Setup.Profile=InstalledProfile.High;
             Check("difficulty has one desired value across match and Bot state",Vm.Bot.Difficulty==BotDifficulty.High);
             Capture("match-difficulty-1024",1024,660,96);
-            Check("ordinary mode does not offer unsupported automatic lineup",!ById<Button>("PrepareMatch").IsEnabled);
+            Check("daily lineup defaults to random",!Vm.Bot.Setup.LineupEnabled);
             Vm.Bot.Setup.Mode=MatchPlayMode.EnhancedHuman;Layout(1280,840,96);
-            Invoke(ById<Button>("PrepareMatch"));Pump();
+            Invoke(ById<Button>("CheckDailyStatus"));Pump();
             Check("missing runtime is reported without false prepared state",!File.Exists(Path.Combine(Root,"app-data/match-setup/next-match.json")));
             Capture("match-preparation-blocked",1280,840,96);
             Navigate("Cosmetics");

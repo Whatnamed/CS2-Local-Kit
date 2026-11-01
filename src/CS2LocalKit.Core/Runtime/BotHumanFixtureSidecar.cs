@@ -98,6 +98,7 @@ public sealed class BotHumanFixtureSidecar
             entry.GetProperty("before").GetProperty("sha256").GetString() != baselineHash ||
             entry.GetProperty("after").GetProperty("sha256").GetString() != baselineHash)
             throw new InvalidDataException("Human fixture 不属于保留的用户文件");
+        if (MatchSetup.DailyPlayFiles.Supports(m)) MatchSetup.DailyPlayFiles.VerifyModules(_root,m,r.GetProperty("moduleInventoryAfter"));
         var update = Read();
         if (update is not null && (update.InstallId != _installId || update.ManifestSha256 != manifestHash || update.BaselineSha256 != baselineHash ||
             Hash(_baseline) != baselineHash || Hash(_current) != update.CurrentSha256 ||
@@ -116,7 +117,7 @@ public sealed class BotHumanFixtureSidecar
             {
                 if (File.Exists(path) || Directory.Exists(path)) throw new InvalidDataException("隔离模块重新出现：" + rel);
             }
-            else if (after.GetProperty("kind").GetString() != "file" || Hash(path) != RuntimeIntegrationGuard.ReviewedPostimage(m,item))
+            else if (after.GetProperty("kind").GetString() != "file" || Hash(MatchSetup.DailyPlayFiles.ImagePath(_root,m,rel)) != MatchSetup.DailyPlayFiles.ExpectedHash(_root,m,rel,RuntimeIntegrationGuard.ReviewedPostimage(m,item)))
                 throw new InvalidDataException("活动事务文件漂移：" + rel);
         }
         foreach (var file in m.GetProperty("coexistence").GetProperty("humanFiles").EnumerateObject())

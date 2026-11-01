@@ -20,7 +20,7 @@ public sealed class PreMatchSession(MatchSetupRequest request, MatchLineup lineu
         if (Phase == PreMatchPhase.Complete) return PreMatchStep.Observe;
         if (!o.EnvironmentValid) return Fail("游戏/build、安装身份或恢复事务漂移；开局配置停止");
         if (!o.SafeBeforeScore) return Fail("计分/首回合已经开始，禁止重建阵容；配置保留供下图使用");
-        if (!o.PluginsReady) { Reason = "等待 BotHider、Aim、NadeSystem 就绪"; return PreMatchStep.Wait; }
+        if (!o.PluginsReady) { Reason = "等待 BotHider 就绪"; return PreMatchStep.Wait; }
         if (o.HumanCount > 1) return Fail("仅支持一个本地真人，检测到其他真人，停止自动应用");
         if (o.HumanCount == 0 || o.HumanSide is null) { Reason = "等待唯一真人完成选边"; return PreMatchStep.Wait; }
         if (o.HumanSide != Request.Preset.HumanSide)
@@ -45,11 +45,11 @@ public sealed class PreMatchSession(MatchSetupRequest request, MatchLineup lineu
                 Phase = PreMatchPhase.Binding; Reason = "校验数量后绑定 Bot 身份"; return PreMatchStep.BindIdentities;
             case PreMatchPhase.Binding:
                 if (!o.IdentitiesMatch) return PreMatchStep.Wait;
-                Phase = PreMatchPhase.Behavior; Reason = "身份读回通过，应用 Aim/Nades 和队名"; return PreMatchStep.ApplyBehavior;
+                Phase = PreMatchPhase.Behavior; Reason = "身份读回通过，应用队名"; return PreMatchStep.ApplyBehavior;
             case PreMatchPhase.Behavior:
                 if (!o.IdentitiesMatch) return Fail("身份在确认期间漂移；不重新生成 Bot");
                 if (!o.ModesMatch) return PreMatchStep.Wait;
-                Phase = PreMatchPhase.Complete; Reason = "运行时已接收，人数/身份/模式已读回；玩法效果待实机验证"; return PreMatchStep.Observe;
+                Phase = PreMatchPhase.Complete; Reason = "运行时已接收，人数/身份/队名已读回；玩法效果待实机验证"; return PreMatchStep.Observe;
             default: return PreMatchStep.Wait;
         }
     }

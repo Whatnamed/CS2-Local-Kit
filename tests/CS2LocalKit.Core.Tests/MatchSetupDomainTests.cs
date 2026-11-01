@@ -76,8 +76,8 @@ public sealed class MatchSetupDomainTests : IDisposable
         var p=Pro() with { Favorite=true }; var custom=new CustomRoster("custom-1","自由组队",p.Friendly.Slots,p.Friendly.RosterId);
         Store.Save(new(1,[custom],[p],[p.Id],p));
         var loaded=Store.Load();Assert.Equal(p.Id,loaded.LastUsed!.Id);Assert.True(loaded.Presets[0].Favorite);Assert.Single(loaded.CustomRosters);
-        var q=Store.Queue(p);Assert.Equal(q,Store.ReadRequest()! with { Preset=q.Preset });
-        Assert.Equal(MatchSetupStore.Digest(p),q.PresetSha256);
+        var q=Store.SaveDaily(p,true);Assert.Equal(q.Revision,Store.ReadDaily()!.Revision);
+        Assert.Equal(MatchSetupStore.Digest(p),MatchSetupStore.Digest(Store.ReadDaily()!.Preset));
     }
     [Fact] public void ImportMergesIdenticalIdsAndRejectsConflictsWithoutChanges()
     {
@@ -96,8 +96,8 @@ public sealed class MatchSetupDomainTests : IDisposable
     {
         Store.Save(MatchLibrary.Empty); var first=Store.Export();Store.Save(new(1,[],[Pro()],[]));
         Assert.Equal(first,File.ReadAllText(Directory.GetFiles(_root,"library.json.backup-*").Single()));
-        Store.Queue(Pro()); File.WriteAllText(Store.RequestPath,File.ReadAllText(Store.RequestPath).Replace("\"friendlyBots\": 4","\"friendlyBots\": 3"));
-        Assert.Throws<InvalidDataException>(()=>Store.ReadRequest());
+        Store.SaveDaily(Pro(),false); File.WriteAllText(Store.DailyPath,File.ReadAllText(Store.DailyPath).Replace("\"schemaVersion\": 1","\"schemaVersion\": 99"));
+        Assert.Throws<InvalidDataException>(()=>Store.ReadDaily());
     }
     [Fact] public void CorruptDataAndDuplicateIdsArePreservedForRecovery()
     {

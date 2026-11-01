@@ -21,7 +21,7 @@ public sealed class MatchSetupUiTests : IDisposable
         Assert.Contains("最终 CT 5 人 / T 5 人",vm.Preview);Assert.Contains("席位 4",vm.Preview);
         vm.SaveCommand.Execute(null);var saved=Store.Load().Presets.Single();
         Assert.Equal(MatchSide.T,saved.HumanSide);Assert.Equal(3,saved.ReplacedSlot);Assert.Equal(AimSetting.Head,saved.Aim);Assert.Equal(NadeSetting.Max,saved.Nades);
-        vm.QueueCommand.Execute(null);Assert.Null(Store.ReadRequest());Assert.Contains("本机没有所选地图",vm.Feedback);
+        Assert.False(File.Exists(Path.Combine(Store.Root,"next-match.json")));Assert.Equal(AimSetting.Head,Store.ReadDaily()!.Preset.Aim);
     }
     [Fact] public void ExplicitPersonaSearchReplacesSelectedSeatAndTypingClearsBinding()
     {
@@ -52,21 +52,21 @@ public sealed class MatchSetupUiTests : IDisposable
     }
     [Fact] public void InvalidDraftDoesNotQueueOrClaimSavedSuccess()
     {
-        var vm=Vm();vm.Enemy.Slots[0].Name="bad;bot_kick";vm.QueueCommand.Execute(null);
-        Assert.False(File.Exists(Store.RequestPath));Assert.Contains("未完成",vm.Feedback);Assert.Contains("不可应用",vm.Preview);
+        var vm=Vm();vm.Enemy.Slots[0].Name="bad;bot_kick";
+        Assert.NotEqual("bad;bot_kick",Store.ReadDaily()!.Preset.Enemy.Slots[0].Name);Assert.Contains("未保存",vm.PreparationText);Assert.Contains("不可应用",vm.Preview);
     }
     [Fact] public void OldOrWrongRequestStatusIsNeverCurrentAcceptance()
     {
-        var vm=Vm();var request=Store.Queue(vm.Snapshot());
-        Store.WriteStatus(new(1,"old","different",request.PresetSha256,"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.BehaviorObserved,"old success",5,5));
+        var vm=Vm();var request=Store.ReadDaily()!;
+        Store.WriteStatus(new(1,"old","different",MatchSetupStore.Digest(request.Preset),"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.BehaviorObserved,"old success",5,5));
         vm.RefreshRuntime();Assert.DoesNotContain("old success",vm.ApplyStatus);
-        Store.WriteStatus(new(1,"old",request.RequestId,request.PresetSha256,"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.InsufficientEvidence,"received only",5,5));
-        vm.RefreshRuntime();Assert.Contains("上次会话",vm.ApplyStatus);Assert.Contains("行为验证不足",vm.ApplyStatus);
+        Store.WriteStatus(new(1,"old",request.Revision,MatchSetupStore.Digest(request.Preset),"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.InsufficientEvidence,"received only",5,5,DailyRevision:request.Revision));
+        vm.RefreshRuntime();Assert.Contains("上次地图报告",vm.ApplyStatus);Assert.Contains("received only",vm.ApplyStatus);
     }
     [Fact] public void CorruptLibraryDoesNotGetOverwrittenByQueueOrCustomSave()
     {
-        Directory.CreateDirectory(Store.Root);File.WriteAllText(Store.LibraryPath,"corrupt");var vm=Vm();vm.QueueCommand.Execute(null);vm.Friendly.NewCustomCommand.Execute(null);
-        Assert.Equal("corrupt",File.ReadAllText(Store.LibraryPath));Assert.False(File.Exists(Store.RequestPath));
+        Directory.CreateDirectory(Store.Root);File.WriteAllText(Store.LibraryPath,"corrupt");var vm=Vm();vm.Aim=AimSetting.Head;vm.Friendly.NewCustomCommand.Execute(null);
+        Assert.Equal("corrupt",File.ReadAllText(Store.LibraryPath));Assert.False(File.Exists(Store.DailyPath));
     }
     [Fact] public void OrdinaryModeCanRandomizeIndependentSides()
     {
@@ -74,12 +74,14 @@ public sealed class MatchSetupUiTests : IDisposable
         Assert.All(vm.Snapshot().Friendly.Slots,s=>Assert.NotNull(s.PersonaId));Assert.All(vm.Snapshot().Enemy.Slots,s=>Assert.NotNull(s.PersonaId));
         Assert.Equal(9,_catalog.Resolve(vm.Snapshot()).Bots.Length);
     }
-    [Fact] public void DraftChangesDoNotMutateQueuedSnapshot()
+    [Fact] public void DailyChangesPersistWithoutChangingSavedLibraryOrLegacyRequest()
     {
-        var vm=Vm();var request=Store.Queue(vm.Snapshot());vm.RefreshRuntime();
-        Assert.Contains("一致",vm.DraftState);vm.Aim=AimSetting.Body;
-        Assert.Contains("不同",vm.DraftState);Assert.Equal(request.RequestId,Store.ReadRequest()!.RequestId);Assert.Equal(request.PresetSha256,Store.ReadRequest()!.PresetSha256);
-        Store.Queue(vm.Snapshot());vm.RefreshRuntime();Assert.Equal(AimSetting.Body,Store.ReadRequest()!.Preset.Aim);Assert.Contains("一致",vm.DraftState);
+        var vm=Vm();vm.SaveCommand.Execute(null);var library=File.ReadAllBytes(Store.LibraryPath);
+        var legacy=Path.Combine(Store.Root,"next-match.json");File.WriteAllText(legacy,"old one shot request");
+        vm.Aim=AimSetting.Body;vm.LineupEnabled=true;
+        Assert.Equal(AimSetting.Body,Store.ReadDaily()!.Preset.Aim);Assert.True(Store.ReadDaily()!.LineupEnabled);
+        Assert.Equal(library,File.ReadAllBytes(Store.LibraryPath));Assert.Equal("old one shot request",File.ReadAllText(legacy));
+        Assert.Equal(AimSetting.Body,Vm().Aim);Assert.True(Vm().LineupEnabled);
     }
     [Fact] public void PersonalLibraryExportImportDeduplicatesThroughUi()
     {
@@ -88,17 +90,11 @@ public sealed class MatchSetupUiTests : IDisposable
         Assert.True(File.Exists(path));vm.ImportCommand.Execute(null);vm.ImportCommand.Execute(null);
         Assert.Single(Store.Load().Presets);Assert.Single(Store.Load().CustomRosters);Assert.Contains("导入完成",vm.Feedback);
     }
-    [Fact] public void QueuedRequestIsOneShotForItsExactMapAndExpires()
+    [Fact] public void DailySettingsSurviveMapChoiceAndTimeWithoutClaims()
     {
-        var store=Store;var request=store.Queue(MatchSetupPreset.Default());
-        Assert.Null(store.ClaimForMap("de_mirage","session-one"));
-        Assert.Equal(request.RequestId,store.ClaimForMap("de_dust2","session-one")!.RequestId);
-        Assert.Null(store.ClaimForMap("de_dust2","session-two"));
-        Assert.Null(store.ReadPendingRequest());
-        var next=store.Queue(MatchSetupPreset.Default());
-        Assert.NotEqual(request.RequestId,store.ReadPendingRequest()!.RequestId);
-        File.WriteAllText(store.RequestPath,MatchJson.Write(next with {SavedAt=DateTimeOffset.UtcNow.AddHours(-3)}));
-        Assert.Null(store.ReadPendingRequest());
+        var store=Store;var value=store.SaveDaily(MatchSetupPreset.Default(),false);
+        File.WriteAllText(store.DailyPath,MatchJson.Write(value with {SavedAt=DateTimeOffset.UtcNow.AddDays(-5)}));
+        Assert.Equal(value.Revision,store.ReadDaily()!.Revision);Assert.False(Directory.Exists(Path.Combine(store.Root,"claims")));
     }
     [Fact] public void MapNameCannotCarryConsoleCommands()
     {

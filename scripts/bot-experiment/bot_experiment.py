@@ -271,7 +271,7 @@ def payload_allowed(target, surface):
     if surface != 'bot':
         return False
     parts = rel.split('/')
-    if rel == 'overrides/botprofile.vpk':
+    if rel == 'overrides/botprofile.vpk' or rel in {f'overrides/localkit-profiles/{level}.vpk' for level in ['Low','Medium','High']}:
         return True
     if rel.startswith('cfg/'):
         return len(parts) == 2 and rel.endswith('.cfg') and 'rush' not in rel.lower()
@@ -311,6 +311,7 @@ def load_candidate(release, expected_sha, fake=False):
         relative(path)
     validate_profile(release, m)
     validate_coexistence(m)
+    validate_daily(release, m)
     return release, m
 
 
@@ -343,6 +344,88 @@ def validate_profile(release, m):
     require(struct.unpack_from('<IIII',data,12)==(len(expected),0,48,0) and tree[offset+18:]==b'\x00\x00\x00' and data[28+size:28+size+length]==expected and len(data)==28+size+length+48, 'Profile VPK does not embed exact DB')
     hashes=data[-48:]
     require(hashes[:16]==hashlib.md5(tree).digest() and hashes[16:32]==hashlib.md5(b'').digest() and hashes[32:]==hashlib.md5(data[:-16]).digest(), 'Profile VPK checksum mismatch')
+
+
+DAILY_PROFILE = 'game/csgo/overrides/botprofile.vpk'
+DAILY_SUFFIX = '.localkit-disabled'
+DAILY_LOADERS = {f'game/csgo/addons/counterstrikesharp/plugins/{n}/{n}.dll' for n in
+                 ['BotAI','BotAimImprover','BotBuy','BotControllerImpl','BotHiderImpl','BotRandomizer','BotState','NadeSystem']} | {
+                 f'game/csgo/addons/metamod/{n}.vdf' for n in ['BotController','BotHider','BotVision']} | {DAILY_PROFILE, 'game/csgo/cfg/my_bot_normal_config.cfg', 'game/csgo/cfg/my_bot_ffa_config.cfg'}
+
+
+def validate_daily(release, m):
+    if 'dailyPlay' not in m: return
+    c = m['dailyPlay']
+    require(c['schemaVersion'] == 1 and set(c['modeFiles']) == DAILY_LOADERS, 'Invalid daily ownership')
+    require(set(c['profiles']) == {'Low','Medium','High'}, 'Three daily profiles required')
+    files = {e['target']:e for e in m['files']}
+    require(DAILY_LOADERS <= set(files), 'Daily loader missing')
+    for level, p in c['profiles'].items():
+        target = f'game/csgo/overrides/localkit-profiles/{level}.vpk'
+        require(p['target'] == target and files[target]['sha256'] == p['sha256'], 'Daily profile identity mismatch')
+        variant = dict(m, defaultDifficulty=level, profile=p['profile'])
+        variant['files'] = [dict(e, source=files[target]['source'], sha256=p['sha256']) if e['target']==DAILY_PROFILE else e for e in m['files']]
+        validate_profile(release, variant)
+
+
+def daily_image_path(root, m, rel):
+    path = under(root, rel)
+    if 'dailyPlay' not in m or rel not in DAILY_LOADERS: return path
+    disabled = under(root, rel + DAILY_SUFFIX)
+    require(not path.is_dir() and not disabled.is_dir(), 'Daily image became directory: '+rel)
+    require(path.is_file() != disabled.is_file(), 'Daily image missing/ambiguous: '+rel)
+    return path if path.is_file() else disabled
+
+
+def daily_inventory(root, m):
+    actual = module_inventory(root)
+    if 'dailyPlay' in m:
+        for folder, rows in actual.items():
+            for key in list(rows):
+                rel = folder+'/'+key
+                if rel.endswith(DAILY_SUFFIX) and rel[:-len(DAILY_SUFFIX)] in DAILY_LOADERS:
+                    canonical = key[:-len(DAILY_SUFFIX)]
+                    require(canonical not in rows, 'Duplicate daily loader')
+                    rows[canonical] = rows.pop(key)
+    return actual
+
+
+def daily_identity(root, m, rel):
+    live = identity(daily_image_path(root, m, rel))
+    if 'dailyPlay' in m and rel == DAILY_PROFILE:
+        require(live is not None and live['sha256'] in {p['sha256'] for p in m['dailyPlay']['profiles'].values()}, 'Unknown daily profile')
+        return {'kind':'file','sha256':m['profile']['vpkSha256']}
+    return live
+
+
+def normalize_daily(root, candidate, record):
+    if 'dailyPlay' not in candidate: return
+    # Full read-only restore preflight has passed; return only finite owned images
+    # to the immutable install postimage before the existing exact restore.
+    steam = steam_idle(root)
+    for rel in sorted(DAILY_LOADERS):
+        ensure_closed(); require(steam_idle(root)==steam, 'Steam changed during daily restore')
+        entry=next(e for e in record['entries'] if e['target']==rel)
+        if identity(under(root,rel))==entry['before'] and not under(root,rel+DAILY_SUFFIX).exists(): continue
+        e=next(e for e in candidate['files'] if e['target']==rel)
+        require(daily_identity(root,candidate,rel)=={'kind':'file','sha256':e['sha256']}, 'Daily image drift during restore')
+        path = daily_image_path(root, candidate, rel)
+        if str(path).endswith(DAILY_SUFFIX): os.replace(path, under(root, rel))
+    p = candidate['dailyPlay']['profiles'][candidate['profile']['difficulty']]
+    target = under(root, DAILY_PROFILE)
+    entry=next(e for e in record['entries'] if e['target']==DAILY_PROFILE)
+    if identity(target)==entry['before']: return
+    if sha(target) != p['sha256']:
+        source = under(root, p['target'])
+        require(sha(source) == p['sha256'], 'Daily source drift during restore')
+        staged = target.with_name(target.name+'.restore-new')
+        require(not staged.exists(), 'Restore staging collision')
+        try:
+            shutil.copyfile(source, staged)
+            require(sha(staged) == p['sha256'], 'Daily restore staging mismatch')
+            ensure_closed(); steam_idle(root); os.replace(staged, target)
+        finally:
+            if staged.exists(): staged.unlink()
 
 
 def module_inventory(root):
@@ -489,7 +572,7 @@ def preflight_restore(root, backup, record, partial=False):
     require((MARKER == INTEGRATION_MARKER) == integrated, 'Wrong recovery entry for candidate lane')
     if integrated: integration_context(candidate,root)
     if integrated:
-        actual = module_inventory(root)
+        actual = daily_inventory(root, candidate)
         expected = json.loads(json.dumps(candidate['moduleInventory']))
         for e in record['entries']:
             for folder,rows in actual.items():
@@ -511,13 +594,14 @@ def preflight_restore(root, backup, record, partial=False):
         selected = [e for e in record['entries'] if e['target']=='game/csgo/overrides/botprofile.vpk']
         require(len(selected)==1 and selected[0]['after']['sha256']==record['profile']['vpkSha256'], 'Recorded VPK mismatch')
     if not partial:
-        require(module_inventory(root)==record['moduleInventoryAfter'], 'Installed plugin/module inventory drift')
+        require(daily_inventory(root,candidate)==record['moduleInventoryAfter'], 'Installed plugin/module inventory drift')
     targets=set()
     for e in record['entries']:
         rel=relative(e['target']);key=rel.casefold()
         require(key not in targets, 'Duplicate record target');targets.add(key)
         require(rel==MARKER or rel in record['baselineFiles'] or payload_allowed(rel,e['surface']) or e['action']=='isolated' and rel.startswith(('game/csgo/addons/counterstrikesharp/plugins/','game/csgo/addons/metamod/')), f'Unsafe record target: {rel}')
         live=identity(under(root,rel))
+        if not (partial and live==e['before'] and not under(root,rel+DAILY_SUFFIX).exists()): live=daily_identity(root,candidate,rel)
         if e['action']=='retained':
             require(live==reviewed_image(candidate,e,'before'), f'Retained protected file drift: {rel}')
             continue
@@ -536,7 +620,7 @@ def preflight_restore(root, backup, record, partial=False):
         for child, value in inventory(p).items():
             full=rel+'/'+child
             if value['kind']=='file':
-                require(full.casefold() in targets, f'Unknown file in created directory: {full}')
+                require((full[:-len(DAILY_SUFFIX)] if full.endswith(DAILY_SUFFIX) and full[:-len(DAILY_SUFFIX)] in DAILY_LOADERS and 'dailyPlay' in candidate else full).casefold() in targets, f'Unknown file in created directory: {full}')
 
 
 def restore(backup, apply=False, fake=False, fault=None):
@@ -553,6 +637,7 @@ def restore(backup, apply=False, fake=False, fault=None):
     try:
         steam_identity = steam_idle(root)
         candidate=reviewed_manifest(backup/'candidate-manifest.json',root)
+        normalize_daily(root,candidate,record)
         for index,e in enumerate(reversed(record['entries'])):
             if e['action']=='retained':continue
             ensure_closed()

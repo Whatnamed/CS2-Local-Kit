@@ -4,10 +4,10 @@ using CS2LocalKit.Core.Runtime;
 
 namespace CS2LocalKit.Core.MatchSetup;
 
-public sealed record MatchInstallation(string InstallId, string ManifestSha256, InstalledProfile Profile);
+public sealed record MatchInstallation(string InstallId, string ManifestSha256, InstalledProfile Profile, MatchPlayMode? Mode = MatchPlayMode.EnhancedHuman, bool DailyPlay = false);
 public static class MatchRuntimeContract
 {
-    public static MatchInstallation Validate(string cs2Root, string dataRoot)
+    public static MatchInstallation Validate(string cs2Root, string dataRoot, bool allowIncompleteMode = false)
     {
         static string Hash(string path) { MatchSetupStore.CheckPath(path); using var stream=File.OpenRead(path);return Convert.ToHexStringLower(SHA256.HashData(stream)); }
         string Safe(string root,string rel)
@@ -27,12 +27,13 @@ public static class MatchRuntimeContract
         using var manifest=JsonDocument.Parse(File.ReadAllText(manifestPath));var m=manifest.RootElement;
         RuntimeIntegrationGuard.VerifyParents(cs2Root,m);
         if (m.GetProperty("schemaVersion").GetInt32()!=1 || m.GetProperty("lane").GetString()!="bot-experiment" || m.GetProperty("humanPolicy").GetString()!="preserve" || m.GetProperty("testFixture").GetBoolean() || m.GetProperty("cssVersion").GetString()!="1.0.376" || m.GetProperty("metamod").GetProperty("build").GetInt32()!=1481) throw new InvalidDataException("运行时 manifest lane/framework/policy 无效");
+        DailyPlayFiles.ValidateContract(m);
         var binaries=m.GetProperty("gameBinaries").EnumerateObject().Select(p=>p.Name).ToHashSet(StringComparer.Ordinal);
         if (!binaries.SetEquals(new[]{"game/csgo/bin/win64/server.dll","game/bin/win64/engine2.dll","game/csgo/bin/win64/client.dll","game/bin/win64/schemasystem.dll","game/bin/win64/cs2.exe"})) throw new InvalidDataException("缺少五项游戏 binary 身份");
         if (!m.TryGetProperty("matchSetup",out var contract) || contract.GetProperty("schemaVersion").GetInt32()!=1 || m.GetProperty("botRef").GetString()!="e18c029a76b7515ea5cb15cb08c41f03de4c0a57") throw new InvalidDataException("当前安装缺少受控开局适配层，保存的配置不会自动应用");
         var steam=SteamInstallState.Inspect(cs2Root);var target=m.GetProperty("targetBuild");
         if (!steam.Idle || steam.BuildId!=target.GetProperty("buildId").GetString() || steam.ClientVersion!=target.GetProperty("ClientVersion").GetString() || steam.PatchVersion!=target.GetProperty("PatchVersion").GetString()) throw new InvalidDataException("Steam/游戏 build 漂移，禁止自动应用");
-        void Verify(string rel,string expected) { if (Hash(Safe(cs2Root,rel))!=expected) throw new InvalidDataException("运行时文件漂移："+rel); }
+        void Verify(string rel,string expected) { if (Hash(DailyPlayFiles.ImagePath(cs2Root,m,rel))!=DailyPlayFiles.ExpectedHash(cs2Root,m,rel,expected)) throw new InvalidDataException("运行时文件漂移："+rel); }
         foreach (var binary in m.GetProperty("gameBinaries").EnumerateObject()) Verify(binary.Name,binary.Value.GetString()!);
         foreach (var e in m.GetProperty("files").EnumerateArray()) Verify(e.GetProperty("target").GetString()!,e.GetProperty("sha256").GetString()!);
         var humanUpdate = BotHumanFixtureSidecar.Exists(backupRoot,id)
@@ -40,9 +41,11 @@ public static class MatchRuntimeContract
         foreach (var h in m.GetProperty("coexistence").GetProperty("humanFiles").EnumerateObject())
             Verify(h.Name,h.Name==BotHumanFixtureSidecar.Target && humanUpdate is not null?humanUpdate.CurrentSha256:h.Value.GetString()!);
         foreach (var p in m.GetProperty("baselineFiles").EnumerateObject().Where(p=>p.Name.Contains("/counterstrikesharp/api/") || p.Name.Contains("/counterstrikesharp/bin/") || p.Name.EndsWith("/counterstrikesharp.vdf"))) Verify(p.Name,p.Value.GetString()!);
+        if (DailyPlayFiles.Supports(m)) DailyPlayFiles.VerifyModules(cs2Root,m,r.GetProperty("moduleInventoryAfter"));
         using var fresh=JsonDocument.Parse(File.ReadAllText(recordPath));
         if (fresh.RootElement.GetProperty("state").GetString()!="installed" || Hash(manifestPath)!=sha || Hash(markerPath)!=markerHash || !SteamInstallState.Inspect(cs2Root).Equals(steam)) throw new InvalidDataException("校验期间安装或 Steam 状态变化");
         var profile=Enum.Parse<InstalledProfile>(m.GetProperty("profile").GetProperty("difficulty").GetString()!);
+        if (DailyPlayFiles.Supports(m)) { var active=DailyPlayFiles.Read(cs2Root,m); return new(id,sha,active.Profile,active.Mode is null && !allowIncompleteMode ? throw new InvalidDataException("Bot 模式切换尚未完整结束，请关闭游戏并打开 Controller") : active.Mode,true); }
         return new(id,sha,profile);
     }
 }

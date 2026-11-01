@@ -8,23 +8,23 @@
                         <TextBlock Text="实际安装" Style="{StaticResource Label}"/>
                     </DockPanel>
                     <TextBlock Text="{Binding CurrentMode}" Style="{StaticResource SectionTitle}" TextWrapping="Wrap" Margin="0,4,0,8" AutomationProperties.AutomationId="CurrentLocalMode"/>
-                    <TextBlock Text="{Binding InstalledDifficulty, StringFormat='已安装强度：{0}'}"/>
+                    <TextBlock Text="{Binding InstalledDifficulty, StringFormat='已日常难度：{0}'}"/>
                     <TextBlock Text="{Binding HumanStatusText}" Style="{StaticResource HintText}" Margin="0,8,0,0"/>
                 </StackPanel>
             </Border>
-            <TextBlock Text="准备与恢复" Style="{StaticResource SectionTitle}" Margin="0,24,0,6"/>
-            <TextBlock Text="选择偏好不会安装文件。先检查预览，再确认写入范围。" Style="{StaticResource HintText}" Margin="0,0,0,16"/>
+            <TextBlock Text="组件安装与恢复" Style="{StaticResource SectionTitle}" Margin="0,24,0,6"/>
+            <TextBlock Text="首次迁移、升级或修复使用此入口；日常设置在对局配置自动保存。" Style="{StaticResource HintText}" Margin="0,0,0,16"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Margin="0,0,16,0">
-                    <TextBlock Text="下一次切换到" Style="{StaticResource Label}"/>
+                    <TextBlock Text="日常模式" Style="{StaticResource Label}"/>
                     <ComboBox AutomationProperties.AutomationId="TargetLocalMode" ItemsSource="{Binding ModeChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding TargetMode}" IsEnabled="{Binding CanSelectMode}"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="安装强度" Style="{StaticResource Label}"/>
+                    <TextBlock Text="日常难度" Style="{StaticResource Label}"/>
                     <ComboBox AutomationProperties.AutomationId="BotDifficulty" ItemsSource="{Binding DifficultyChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Difficulty}" IsEnabled="{Binding CanSelectDifficulty}"/>
                 </StackPanel>
             </Grid>
@@ -38,7 +38,7 @@
             </Border>
             <WrapPanel>
                 <Button Content="刷新状态" Command="{Binding RefreshCommand}" Margin="0,0,8,8"/>
-                <Button Content="1 · 检查切换预览" Command="{Binding PreviewModeCommand}" Margin="0,0,8,8" AutomationProperties.AutomationId="PreviewLocalMode"/>
+                <Button Content="检查组件预览" Command="{Binding PreviewModeCommand}" Margin="0,0,8,8" AutomationProperties.AutomationId="PreviewLocalMode"/>
                 <Button Content="{Binding SwitchButtonText}" Command="{Binding SwitchModeCommand}" Style="{StaticResource PrimaryButton}" Margin="0,0,8,8" AutomationProperties.AutomationId="ApplyLocalMode"/>
             </WrapPanel>
             <ProgressBar IsIndeterminate="True" Height="3" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}" Margin="0,8,0,8"/>
@@ -66,7 +66,7 @@
                 <StackPanel Margin="0,14,0,0">
                     <TextBlock Text="{Binding TargetBuild}" Style="{StaticResource MonoText}"/>
                     <TextBlock Text="{Binding CandidateIdentity}" Style="{StaticResource MonoText}" Margin="0,12,0,12"/>
-                    <TextBlock Text="下列命令只作手动诊断回退；复制不代表游戏已接收或行为已验证。正常开局规则在「准备下一局」中编辑。" Style="{StaticResource HintText}"/>
+                    <TextBlock Text="下列命令只作手动诊断回退；复制不代表游戏已接收或行为已验证。日常设置在「对局配置」中编辑。" Style="{StaticResource HintText}"/>
                     <TextBox Text="{Binding ConsoleCommands, Mode=OneWay}" IsReadOnly="True" Margin="0,12,0,8" AutomationProperties.AutomationId="BotConsoleCommands"/>
                     <Button Content="复制诊断命令" Command="{Binding CopyCommandsCommand}" HorizontalAlignment="Left"/>
                 </StackPanel>

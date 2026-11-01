@@ -8,14 +8,30 @@ public sealed record MatchLibrary(int SchemaVersion, ImmutableArray<CustomRoster
     public static MatchLibrary Empty => new(1, [], [], []);
 }
 public sealed record MatchSetupRequest(int SchemaVersion, string RequestId, DateTimeOffset SavedAt, string PresetSha256, MatchSetupPreset Preset);
+public sealed record DailyPlaySettings(int SchemaVersion, string Revision, DateTimeOffset SavedAt, bool LineupEnabled, MatchSetupPreset Preset);
 
 /// <summary>Only owns app-data/match-setup. Never touches Human presets or game files.</summary>
 public sealed class MatchSetupStore(string root, RosterCatalog catalog)
 {
     public string Root { get; } = Path.GetFullPath(root);
     public string LibraryPath => Path.Combine(Root, "library.json");
-    public string RequestPath => Path.Combine(Root, "next-match.json");
     public string StatusPath => Path.Combine(Root, "runtime-status.json");
+    public string DailyPath => Path.Combine(Root, "daily-play.json");
+    public DailyPlaySettings? ReadDaily()
+    {
+        CheckPath(DailyPath); if (!File.Exists(DailyPath)) return null;
+        var value = MatchJson.Read<DailyPlaySettings>(File.ReadAllText(DailyPath));
+        if (value.SchemaVersion != 1) throw new InvalidDataException("不支持的日常配置版本；保留原文件");
+        MatchJson.Id(value.Revision); catalog.Resolve(value.Preset); return value;
+    }
+    public DailyPlaySettings SaveDaily(MatchSetupPreset preset, bool lineupEnabled)
+    {
+        catalog.Resolve(preset);
+        var previous = ReadDaily();
+        if (previous is not null && previous.LineupEnabled == lineupEnabled && Digest(previous.Preset) == Digest(preset)) return previous;
+        var value = new DailyPlaySettings(1, Guid.NewGuid().ToString("N"), DateTimeOffset.UtcNow, lineupEnabled, preset);
+        Write(DailyPath, MatchJson.Write(value), backup: false); return value;
+    }
     public static string Digest(MatchSetupPreset preset) => Convert.ToHexStringLower(SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(MatchJson.Write(preset))));
     public MatchLibrary Load()
     {
@@ -36,44 +52,6 @@ public sealed class MatchSetupStore(string root, RosterCatalog catalog)
         if (value.LastUsed is not null) catalog.Resolve(value.LastUsed);
     }
     public void Save(MatchLibrary value) { Validate(value); Write(LibraryPath, MatchJson.Write(value)); }
-    public MatchSetupRequest Queue(MatchSetupPreset preset)
-    {
-        catalog.Resolve(preset);
-        var request = new MatchSetupRequest(1, Guid.NewGuid().ToString("N"), DateTimeOffset.UtcNow, Digest(preset), preset);
-        Write(RequestPath, MatchJson.Write(request)); return request;
-    }
-    public MatchSetupRequest? ReadRequest()
-    {
-        CheckPath(RequestPath); if (!File.Exists(RequestPath)) return null;
-        var r = MatchJson.Read<MatchSetupRequest>(File.ReadAllText(RequestPath));
-        MatchJson.Id(r.RequestId);
-        if (r.SchemaVersion != 1 || Digest(r.Preset) != r.PresetSha256) throw new InvalidDataException("开局请求版本或校验和不匹配");
-        catalog.Resolve(r.Preset); return r;
-    }
-    public MatchSetupRequest? ReadPendingRequest()
-    {
-        var request = ReadRequest();
-        return request is not null && DateTimeOffset.UtcNow - request.SavedAt <= TimeSpan.FromHours(2)
-            && !File.Exists(ClaimPath(request.RequestId)) ? request : null;
-    }
-    private string ClaimPath(string id) { MatchJson.Id(id); return Path.Combine(Root, "claims", id + ".json"); }
-    /// <summary>A request belongs to one matching map session. A crash or failure leaves it consumed, never replayed later.</summary>
-    public MatchSetupRequest? ClaimForMap(string map, string sessionId)
-    {
-        MatchJson.Id(sessionId);
-        var request = ReadPendingRequest();
-        if (request is null || !string.Equals(request.Preset.Map, map, StringComparison.Ordinal)) return null;
-        var path = ClaimPath(request.RequestId);
-        CheckPath(path); Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-        try
-        {
-            using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None);
-            var bytes = System.Text.Encoding.UTF8.GetBytes(MatchJson.Write(new { request.RequestId, sessionId, map, claimedAt = DateTimeOffset.UtcNow }));
-            stream.Write(bytes); stream.Flush(true);
-            return request;
-        }
-        catch (IOException) when (File.Exists(path)) { return null; }
-    }
     public void Import(string json)
     {
         var incoming = MatchJson.Read<MatchLibrary>(json); Validate(incoming);

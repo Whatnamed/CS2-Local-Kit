@@ -32,7 +32,9 @@ public sealed class LocalKitMatchSetup : BasePlugin
     private MatchInstallation? _installation;
     private PreMatchSession? _session;
     private CounterStrikeSharp.API.Modules.Timers.Timer? _timer;
-    private long _aimEpoch, _nadeEpoch;
+    private DailyPlaySettings? _daily;
+    private DailyMapBehavior? _behavior;
+    private string _lineupState = "随机人机：不接管阵容";
     private readonly List<Binding> _bindings = [];
     private readonly int _pid = Environment.ProcessId;
     private readonly DateTimeOffset _processStart = Process.GetCurrentProcess().StartTime.ToUniversalTime();
@@ -47,13 +49,13 @@ public sealed class LocalKitMatchSetup : BasePlugin
         RegisterListener<Listeners.OnMapEnd>(()=> { _mapActive=false; _timer?.Kill(); _timer=null; _session=null; _bindings.Clear(); _verifiedEnvironment=false; });
         RegisterEventHandler<EventPlayerTeam>((_,_)=> { Schedule(); return HookResult.Continue; });
         RegisterEventHandler<EventPlayerConnectFull>((_,_)=> { Schedule(); return HookResult.Continue; });
-        RegisterEventHandler<EventRoundStart>((_,_)=> { if (_session?.Phase==PreMatchPhase.Complete) Observe(); else Schedule(); return HookResult.Continue; });
+        RegisterEventHandler<EventRoundStart>((_,_)=> { if (_session?.Phase==PreMatchPhase.Complete) Observe(); else { ObserveBehavior(); Schedule(); } return HookResult.Continue; });
         RegisterEventHandler<EventRoundFreezeEnd>((_,_)=> { if (Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").FirstOrDefault()?.GameRules?.WarmupPeriod!=false) return HookResult.Continue; _liveRoundStarted=true; if (_session is not null && _session.Phase!=PreMatchPhase.Complete) Stop("首回合已开始，未完成的配置停止；不会踢 Bot 或重开"); return HookResult.Continue; });
         AddCommand("css_localkit_status","Read the exact current map/request diagnostics",(caller,info)=>
         {
             if (caller is not null && IsBot(caller)) return;
-            if (_session?.Phase==PreMatchPhase.Complete) Observe();
-            info.ReplyToCommand(_session is null ? "[LocalKit] No queued request received on this map; save a setup and load a new local map." : $"[LocalKit] {_sessionId} | {_session.Request.RequestId} | {_session.Phase}: {_session.Reason}");
+            if (_session?.Phase==PreMatchPhase.Complete) Observe(); else ObserveBehavior();
+            info.ReplyToCommand(_session is null ? $"[LocalKit] {_map} | {_lineupState} | Aim: {_behavior?.Aim.State} | Nades: {_behavior?.Nades.State}" : $"[LocalKit] {_sessionId} | {_session.Request.RequestId} | {_session.Phase}: {_session.Reason}");
         });
         if (hotReload)
         {
@@ -68,11 +70,18 @@ public sealed class LocalKitMatchSetup : BasePlugin
     {
         if (_mapActive && _map==name) return; // Duplicate notification cannot reset one-shot initialization.
         _timer?.Kill();_timer=null;_mapActive=true;_map=name;_sessionId=NewSessionId();_liveRoundStarted=false;
-        _attempts=0;_session=null;_bindings.Clear();_installation=null;_verifiedEnvironment=false;
+        _attempts=0;_session=null;_bindings.Clear();_installation=null;_verifiedEnvironment=false;_daily=null;_behavior=null;_lineupState="随机人机：不接管阵容";
         try
         {
-            var request=_store.ClaimForMap(name,_sessionId); if (request is null) return; // No matching fresh one-shot request.
-            _session=new(request,_catalog.Resolve(request.Preset));
+            _daily=_store.ReadDaily();
+            if (_daily is null) { Status(MatchApplyState.Saved,"尚无日常配置；不读取旧的一次性请求，不干预默认人机"); return; }
+            _behavior=new(_daily.Preset.Aim,_daily.Preset.Nades);
+            if (_daily.LineupEnabled && _daily.Preset.Mode==MatchPlayMode.EnhancedHuman)
+            {
+                var request=new MatchSetupRequest(1,_daily.Revision,_daily.SavedAt,MatchSetupStore.Digest(_daily.Preset),_daily.Preset);
+                _session=new(request,_catalog.Resolve(request.Preset));_lineupState="等待真人选边后在开局窗口应用一次";
+            }
+            else if (_daily.LineupEnabled) _lineupState="普通模式未加载 BotHider，阵容未应用";
             Status(MatchApplyState.Pending,"地图已收到保存请求，正在校验当前 build/安装身份");
             if (_checking) { Stop("上次环境校验尚未结束，请重新载入地图"); return; }
             _checking=true;var token=_sessionId;
@@ -82,12 +91,14 @@ public sealed class LocalKitMatchSetup : BasePlugin
                 try { result=MatchRuntimeContract.Validate(_root,CorePaths.Cs2ModRoot); } catch(Exception ex) { error=ex.Message; }
                 Server.NextFrame(()=>
                 {
-                    _checking=false;if (_unloading || token!=_sessionId || _session is null) return;
+                    _checking=false;if (_unloading || token!=_sessionId || _daily is null) return;
                     var commandLine=Marshal.PtrToStringUni(GetCommandLineW())??"";
                     if (error is not null) { Stop(error);return; }
                     if (!Regex.IsMatch(commandLine,@"(?:^|\s)-insecure(?:\s|$)",RegexOptions.IgnoreCase) || Regex.IsMatch(commandLine,@"(?:^|\s)-dedicated(?:\s|$)",RegexOptions.IgnoreCase)) { Stop("仅支持以 -insecure 启动的本地 listen server");return; }
                     _installation=result;
-                    if (_installation!.Profile!=_session.Request.Preset.Profile) { Stop("预设强度与已安装 profile 不符，不能热切；先通过原事务恢复并安装对应 profile");return; }
+                    if (!_installation!.DailyPlay) { Stop("当前安装尚未迁移到日常底座；配置保留，未自动应用");return; }
+                    if (_installation.Mode!=MatchPlayMode.EnhancedHuman) { _lineupState="普通模式：保留默认 Bot 与 Human"; Status(MatchApplyState.Received,"Bot 增强模块未加载；Aim/Nades 未应用。下次使用增强模式前请关闭 CS2 并打开 Controller"); return; }
+                    if (_daily.Preset.Mode!=_installation.Mode) _lineupState="模式尚未写入；请关闭 CS2 并打开 Controller";
                     _verifiedEnvironment=true;Schedule();
                 });
             });
@@ -96,16 +107,22 @@ public sealed class LocalKitMatchSetup : BasePlugin
     }
     private void Schedule()
     {
-        if (!_mapActive || !_verifiedEnvironment || _timer is not null || _session is null || _session.Phase is PreMatchPhase.Complete or PreMatchPhase.Failed) return;
+        if (!_mapActive || !_verifiedEnvironment || _timer is not null || (_behavior?.Finished!=false && (_session is null || _session.Phase is PreMatchPhase.Complete or PreMatchPhase.Failed))) return;
         var token=_sessionId;
         _timer=AddTimer(1f,()=>
         {
-            _timer=null; if (_unloading || token!=_sessionId || _session is null) return;
+            _timer=null; if (_unloading || token!=_sessionId || _daily is null) return;
             try
             {
-                if (++_attempts>24) { Stop("开局应用超时；未达到目标人数/身份/插件就绪状态，不重复添加或踢 Bot");return; }
-                Advance();
-                if (_session.Phase==PreMatchPhase.Waiting && Ready() && Players().Where(p=>!IsBot(p)).All(p=>p.TeamNum is not (2 or 3))) { _attempts=0;return; }
+                ++_attempts;
+                _behavior?.Aim.Apply(Capability(Aim),_attempts>=8);_behavior?.Nades.Apply(Capability(Nades),_attempts>=8);
+                if (_session is not null && _session.Phase is not (PreMatchPhase.Complete or PreMatchPhase.Failed))
+                {
+                    if (_attempts>24) { Stop("开局阵容应用超时；不重复添加或踢 Bot");return; }
+                    Advance();
+                }
+                else Status(MatchApplyState.Received,"日常配置按本地图快照接收；独立模块状态见读回");
+                if (_session?.Phase==PreMatchPhase.Waiting && Ready() && Players().Where(p=>!IsBot(p)).All(p=>p.TeamNum is not (2 or 3))) { _attempts=0;return; }
             }
             catch(Exception ex) { Stop(ex.Message); }
             Schedule();
@@ -115,7 +132,7 @@ public sealed class LocalKitMatchSetup : BasePlugin
     private bool IsBot(CCSPlayerController p) => p.IsBot || (Api()?.IsManagedBot(p.Slot)??false);
     private bool Ready()
     {
-        try { var api=Hider.Get();return api is not null && api.GetSignatures().Length>0 && api.GetSignatures().All(p=>p.Addr!=0) && Aim.Get() is not null && Nades.Get() is not null; } catch { return false; }
+        try { var api=Hider.Get();return api is not null && api.GetSignatures().Length>0 && api.GetSignatures().All(p=>p.Addr!=0); } catch { return false; }
     }
     private List<CCSPlayerController> Players() => Utilities.GetPlayers().Where(p=>p.IsValid && !p.IsHLTV).ToList();
     private bool SafeBeforeScore()
@@ -135,15 +152,12 @@ public sealed class LocalKitMatchSetup : BasePlugin
                 && (allowSideSwitch || p.TeamNum==(int)b.Bot.Side) && api.GetBotSteamId(b.Slot)==(staging?ReservedSid(b.Slot):b.Sid) && api.GetPersonaName(b.Slot)==b.Bot.Name && p.PlayerName==b.Bot.Name;
         });
     }
-    private JsonElement ReadMode(bool aim) { using var document=JsonDocument.Parse((aim?Aim:Nades).Get()!.Item2());return document.RootElement.Clone(); }
-    private bool ModesMatch()
+    private static Tuple<Action<string>,Func<string>>? Capability(PluginCapability<Tuple<Action<string>,Func<string>>> capability)
+    { try { return capability.Get(); } catch { return null; } }
+    private void ObserveBehavior()
     {
-        if (_session is null || _aimEpoch==0 || _nadeEpoch==0) return false;
-        var a=ReadMode(true);var n=ReadMode(false);
-        return a.GetProperty("Epoch").GetInt64()==_aimEpoch && n.GetProperty("Epoch").GetInt64()==_nadeEpoch
-            && a.GetProperty("Mode").GetString()==_session.Request.Preset.Aim.ToString().ToLowerInvariant()
-            && n.GetProperty("Mode").GetString()==_session.Request.Preset.Nades.ToString().ToLowerInvariant()
-            && (_session.Request.Preset.Nades==NadeSetting.Off || n.GetProperty("DatabaseCount").GetInt32()>0);
+        _behavior?.Aim.Observe(Capability(Aim));_behavior?.Nades.Observe(Capability(Nades));
+        if (_daily is not null) Status(MatchApplyState.Received,"独立模块读回；实际玩法效果待实机验收");
     }
     private bool PresentationMatches()
     {
@@ -157,7 +171,7 @@ public sealed class LocalKitMatchSetup : BasePlugin
         var human=humans.Count==1?humans[0]:null;
         MatchSide? side=human?.TeamNum is 2 or 3?(MatchSide)human.TeamNum:null;
         var ready=Ready();
-        var step=s.Advance(new(_verifiedEnvironment,ready,humans.Count,side,bots.Count(b=>b.TeamNum==3),bots.Count(b=>b.TeamNum==2),SafeBeforeScore(),ready&&BoundIdentitiesMatch(),ready&&s.Phase==PreMatchPhase.Behavior&&ModesMatch()&&PresentationMatches(),ready&&BoundIdentitiesMatch(staging:true),bots.Count(b=>b.TeamNum is not (2 or 3))));
+        var step=s.Advance(new(_verifiedEnvironment,ready,humans.Count,side,bots.Count(b=>b.TeamNum==3),bots.Count(b=>b.TeamNum==2),SafeBeforeScore(),ready&&BoundIdentitiesMatch(),ready&&s.Phase==PreMatchPhase.Behavior&&PresentationMatches(),ready&&BoundIdentitiesMatch(staging:true),bots.Count(b=>b.TeamNum is not (2 or 3))));
         switch(step)
         {
             case PreMatchStep.SelectHumanSide: human!.ChangeTeam((CsTeam)(int)s.Request.Preset.HumanSide);break;
@@ -192,8 +206,7 @@ public sealed class LocalKitMatchSetup : BasePlugin
                     if (!hider.SetBotSteamId(binding.Slot,binding.Sid)||!hider.SetPersonaName(binding.Slot,binding.Bot.Name)) throw new InvalidOperationException("BotHider 拒绝目标身份，停止且不重复生成 Bot");
                 break;
             case PreMatchStep.ApplyBehavior:
-                var pset=s.Request.Preset;Aim.Get()!.Item1(pset.Aim.ToString().ToLowerInvariant());Nades.Get()!.Item1(pset.Nades.ToString().ToLowerInvariant());
-                _aimEpoch=ReadMode(true).GetProperty("Epoch").GetInt64();_nadeEpoch=ReadMode(false).GetProperty("Epoch").GetInt64();
+                var pset=s.Request.Preset;
                 var ct=pset.HumanSide==MatchSide.CT?pset.Friendly:pset.Enemy;var t=pset.HumanSide==MatchSide.T?pset.Friendly:pset.Enemy;
                 Server.ExecuteCommand($"mp_teamname_1 \"{ct.Name}\"; mp_teamname_2 \"{t.Name}\"; mp_teamlogo_1 \"{ct.Logo}\"; mp_teamlogo_2 \"{t.Logo}\"");
                 break;
@@ -209,20 +222,17 @@ public sealed class LocalKitMatchSetup : BasePlugin
         try
         {
             if (_session is null) return;
-            if (!Ready()||!ModesMatch()||!BoundIdentitiesMatch(allowSideSwitch:true)) { Stop("插件/身份/本局模式或 epoch 已改变；未自动重新应用");return; }
-            var a=ReadMode(true);var n=ReadMode(false);
-            var nadesEnabled=_session.Request.Preset.Nades!=NadeSetting.Off;
-            var observed=a.GetProperty("Count").GetInt64()>0 && nadesEnabled && n.GetProperty("MapCount").GetInt32()>0 && n.GetProperty("Count").GetInt64()>0;
-            var reason=observed?"内部 aim 写入与投掷已观察；玩法和 off/max 差异仍需实机验收":"运行时已接收且人数/身份/模式读回通过；行为证据不足，需实机对照";
-            if (n.GetProperty("MapCount").GetInt32()==0 && nadesEnabled) reason="运行时已接收，但当前地图无 Nade lineup；投掷效果验证不足";
-            if (!nadesEnabled) reason="Nades 关闭已读回；无投掷为预期，实际行为仍待实机对照";
-            Status(observed?MatchApplyState.BehaviorObserved:MatchApplyState.InsufficientEvidence,reason,a.GetRawText(),n.GetRawText());
+            if (!Ready()||!BoundIdentitiesMatch(allowSideSwitch:true)) { Stop("BotHider/身份已改变；未自动重新应用阵容");return; }
+            _lineupState="人数/persona/名称读回通过；换边后仅观察，不重建";
+            ObserveBehavior();
         }
         catch(Exception ex) { Stop(ex.Message); }
     }
     private void Stop(string reason)
     {
-        _session?.Fail(reason);_timer?.Kill();_timer=null;Status(MatchApplyState.Failed,reason);
+        _session?.Fail(reason);_lineupState="阵容未应用："+reason;
+        if (!_verifiedEnvironment) { _timer?.Kill();_timer=null; }
+        Status(MatchApplyState.Failed,reason);
         Server.PrintToChatAll("[LocalKit] 配置应用停止："+reason);
     }
     private void Status(MatchApplyState state,string reason,string? aim=null,string? nades=null)
@@ -231,7 +241,8 @@ public sealed class LocalKitMatchSetup : BasePlugin
         {
             var players=Players();
             var status=new MatchRuntimeStatus(1,_sessionId,_session?.Request.RequestId,_session?.Request.PresetSha256,_map,DateTimeOffset.UtcNow,state,reason,
-                players.Count(p=>p.TeamNum==3),players.Count(p=>p.TeamNum==2),aim,nades,_pid,_processStart);
+                players.Count(p=>p.TeamNum==3),players.Count(p=>p.TeamNum==2),_behavior?.Aim.Readback,_behavior?.Nades.Readback,_pid,_processStart,
+                _daily?.Revision,_lineupState,_behavior?.Aim.State,_behavior?.Nades.State,_installation?.InstallId,_installation?.Profile.ToString(),_installation?.Mode.ToString());
             _store.WriteStatus(status);
             using var process=Process.GetCurrentProcess();
             Logger.LogInformation("[LocalKit] {Status} | round-counts CT={CT} T={T} privateBytes={Private} workingSet={Working}",MatchJson.Write(status),status.CtCount,status.TCount,process.PrivateMemorySize64,process.WorkingSet64);

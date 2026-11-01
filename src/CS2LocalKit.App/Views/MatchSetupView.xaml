@@ -124,7 +124,7 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Content="保存方案" Command="{Binding SaveCommand}" Margin="0,0,8,0" AutomationProperties.AutomationId="SaveMatchPreset"/>
-                    <Button Content="{Binding PrepareActionText}" Command="{Binding DataContext.Bot.PrepareMatchCommand,RelativeSource={RelativeSource AncestorType=Window}}" IsEnabled="{Binding CanPrepareAction}" Style="{StaticResource PrimaryButton}" AutomationProperties.AutomationId="PrepareMatch"/>
+                    <Button Content="检查状态" Command="{Binding RefreshStatusCommand}" AutomationProperties.AutomationId="CheckDailyStatus"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -134,7 +134,7 @@
                     <StackPanel>
                         <TextBlock Text="基础设置" Style="{StaticResource SectionTitle}"/>
                         <UniformGrid Columns="3" Margin="0,14,0,0">
-                            <StackPanel Margin="0,0,12,12"><TextBlock Text="地图" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding MapChoices}" IsEditable="True" Text="{Binding Map,UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="MatchMap"/></StackPanel>
+                            <StackPanel Margin="0,0,12,12"><TextBlock Text="方案地图（开图时自由选择）" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding MapChoices}" IsEditable="True" Text="{Binding Map,UpdateSourceTrigger=PropertyChanged}" AutomationProperties.AutomationId="MatchMap"/></StackPanel>
                             <StackPanel Margin="0,0,12,12"><TextBlock Text="模式" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding ModeChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Mode}" AutomationProperties.AutomationId="MatchMode"/></StackPanel>
                             <StackPanel Margin="0,0,0,12"><TextBlock Text="难度" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding DifficultyChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Profile}" AutomationProperties.AutomationId="MatchProfile"/></StackPanel>
                             <StackPanel Margin="0,0,12,12"><TextBlock Text="瞄准" Style="{StaticResource Label}"/><ComboBox ItemsSource="{Binding AimLabels}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding Aim}" AutomationProperties.AutomationId="MatchAim"/></StackPanel>
@@ -155,6 +155,7 @@
                             </StackPanel>
                             <TextBlock Text="双方阵容" Style="{StaticResource SectionTitle}" VerticalAlignment="Center"/>
                         </DockPanel>
+                        <CheckBox Content="在普通本地地图启用已选阵容（增强模式）" IsChecked="{Binding LineupEnabled}" AutomationProperties.AutomationId="DailyLineupEnabled" Margin="0,12,0,0"/>
                         <WrapPanel Margin="0,16,0,0">
                             <StackPanel Width="370" Margin="0,0,14,14"><TextBlock Text="{Binding FriendlySummary}" FontWeight="SemiBold" Margin="0,0,0,8"/><ContentControl Content="{Binding Friendly}" ContentTemplate="{StaticResource RosterEditor}"/></StackPanel>
                             <StackPanel Width="370" Margin="0,0,0,14"><TextBlock Text="{Binding EnemySummary}" FontWeight="SemiBold" Margin="0,0,0,8"/><ContentControl Content="{Binding Enemy}" ContentTemplate="{StaticResource RosterEditor}"/></StackPanel>
@@ -179,11 +180,11 @@
                 </Border>
                 <Border Style="{StaticResource Panel}" Margin="0,0,0,14">
                     <StackPanel>
-                        <DockPanel><Button DockPanel.Dock="Right" Content="检查状态" Command="{Binding RefreshStatusCommand}"/><TextBlock Text="准备状态" Style="{StaticResource SectionTitle}"/></DockPanel>
+                        <DockPanel><Button DockPanel.Dock="Right" Content="检查状态" Command="{Binding RefreshStatusCommand}"/><TextBlock Text="配置状态" Style="{StaticResource SectionTitle}"/></DockPanel>
                         <TextBlock Text="{Binding PreparationText}" TextWrapping="Wrap" Margin="0,12,0,8" AutomationProperties.AutomationId="MatchPreparationStatus"/>
                         <TextBlock Text="{Binding ApplyStatus}" TextWrapping="Wrap" Style="{StaticResource HintText}" AutomationProperties.AutomationId="MatchApplyStatus"/>
                         <TextBlock Text="{Binding DataContext.Bot.Feedback,RelativeSource={RelativeSource AncestorType=Window}}" TextWrapping="Wrap" Foreground="{StaticResource BrushWarning}" Margin="0,8,0,0"/>
-                        <TextBlock Text="可靠的一键启动尚未实机证实。准备后由本人以 -insecure 启动离线 CS2 并加载所选地图；运行时读回后再确认本局状态。" Style="{StaticResource HintText}" TextWrapping="Wrap" Margin="0,12,0,0"/>
+                        <TextBlock Text="设置自动保存；文件写入完成后，以 -insecure 正常启动离线 CS2 并在游戏中任选本地地图。运行中切换难度或模式，须先关闭游戏并打开 Controller 完成应用。" Style="{StaticResource HintText}" TextWrapping="Wrap" Margin="0,12,0,0"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

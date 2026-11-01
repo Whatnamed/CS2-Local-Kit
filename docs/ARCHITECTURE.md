@@ -153,7 +153,7 @@ Panel 允许：
 
 Panel 不通过“隐藏模式切换”批量启停无关插件来制造产品状态。
 
-Controller 的「对局配置」通过固定候选白名单和参数列表调用包内版本明确的实验事务，不在 C# 复制安装器。普通与增强本地模式的目标偏好不代表真实安装状态。活动联合安装按自身 manifest、精确记录和磁盘 postimage 核实；无活动事务时才按纯 Human 基线核实。联合候选必须绑定当前 build、Human 完整文件身份、共享依赖及共存核查证据；缺失证据时禁用启用入口。难度由不可变 profile 变体决定，更换需先预检旧事务的精确恢复和目标恢复后基线，再恢复旧安装、重新完整预检并安装目标。组合操作保留阶段 journal，未知状态不盲目重试。对局请求通过独立 app-data 合约交给小型本地 CSS 适配层；瞄准/道具经插件就绪后应用和读回，复制命令仅作诊断回退。
+Controller 的「对局配置」通过固定候选白名单和参数列表调用包内版本明确的实验事务，不在 C# 复制安装器。普通与增强本地模式的目标偏好不代表真实安装状态。活动联合安装按自身 manifest、精确记录和磁盘 postimage 核实；无活动事务时才按纯 Human 基线核实。联合候选必须绑定当前 build、Human 完整文件身份、共享依赖及共存核查证据；缺失证据时禁用启用入口。统一日常底座的 `dailyPlay` 合约列出三档已核验 profile 来源和有限的 Bot 加载文件；安装记录、manifest 与父事务保持原样。难度只原子替换受管 VPK；普通/增强模式仅移动本项目 Bot DLL/VDF、profile 与两个增强 CFG 入口到明确禁用位置，不停用 Human 或共享框架。文件来源、允许映像、build、未知文件和路径保护保持严格；运行时变更先保存，Controller 在游戏关闭时使用 Human 操作互斥门安全应用。中断的有限映像可读回并收敛，未知映像拒绝覆盖。旧整合层首次迁移仍经只读预览、用户确认、精确 Restore 和统一底座 Install，保留 journal 与 Human sidecar 移交。
 
 旧隔离实验仅用于精确恢复；联合事务保留 Human 插件、fixture 与预设。活动联合事务中，只有其余 postimage、Human 保留文件和 build 均核实后，Human fixture 才能通过独立 sidecar 更新；原 Bot manifest、install record 和备份保持不变。精确恢复前把 fixture 暂时放回记录的基线，恢复结束后验证并重放最新版，切换候选时将其移交新事务。Bot 文件操作与 Human 写入共用进程间排他 gate。活动事务期间仍阻止 MetaMod 启动修复。执行前及文件变更期间检查游戏关闭、Steam 安装状态稳定；漂移时保留事务与备份并拒绝覆盖。恢复只能使用原事务的精确 install ID，执行成功后还须复核磁盘及记录。这些路径的真实游戏效果与真实安装/恢复仍待实机验收。
 
@@ -188,10 +188,10 @@ Controller 的短期文件观察缓存只服务状态展示；显式刷新清空
 
 ## 11. 有界开局配置
 
-`Core/MatchSetup` 拥有版本化阵容、选手身份、整局预设、人数/替代席位与 CT/T 映射。内置快照不可编辑，个人副本与上游 BotHider 原文件分离。`MatchSetupStore` 只拥有 `app-data/match-setup`，以 request ID / preset checksum 区分草稿、已保存、已排队和收到请求的会话；请求仅可由匹配的地图会话一次性 claim，过期或已 claim 的请求不重放。
+`Core/MatchSetup` 拥有版本化阵容、选手身份、整局预设、人数/替代席位与 CT/T 映射。内置快照不可编辑，个人副本与 BotHider 原文件分离。`MatchSetupStore` 的 `daily-play.json` 是当前配置的唯一权威（revision、保存时间、阵容开关与完整快照）；`library.json` 是显式保存的可复用方案库。旧 `next-match.json` 不再参与日常路径，保留原文件但不领取、不覆盖、不重放。
 
-`LocalKitMatchSetup` 是独立的候选 CSS 适配层，与 Human cosmetics 无调用或 ownership 关系。它在新地图读一次请求，异步校验活动事务、五项 binary、payload、CSS 与 Human 身份，再检查 `-insecure` listen server、唯一真人、已装 profile 及首回合/计分前窗口。保留既有 offline cfg 的基础 CVar 加载；没有请求时不改变默认阵容。只有实际插件就绪和真人选边后才发出一次性的默认 Bot 清理、目标 Bot 添加、persona 绑定、队名/logo 与行为设置。
+`LocalKitMatchSetup` 是独立候选 CSS 适配层，与 Human cosmetics 无调用或 ownership 关系。每张新地图读取持久配置快照，异步校验活动事务、五项 binary、payload、CSS 与 Human 身份，并检查 `-insecure` listen server。Aim/Nades 通过各自 capability 独立写入和 mode/epoch 读回；一个模块缺失或阵容失败不阻断另一模块。无当前地图投掷线路时明确报告证据不足。
 
-身份绑定先将所有新 Bot 转到独立临时 ID 并读回，避免默认 Bot 占用目标 persona；再绑定精确目标 ID/名称。数量、slot/controller/UserId、persona、可见名字、队名/logo CVar 和模式/epoch 分别读回，不能把 native 队列接收当实际应用。完成后只观察，允许 CS2 自己的换边和重生，不重建或重新分配。超时、额外真人、slot reuse、插件或更新漂移时停止，保留当前状态与原因，不做无界 retry、`mp_restartgame` 或比分写入。
+阵容默认随机：不清理 Bot、不改 quota/队名。显式启用时复用 `PreMatchSession` 与 BotHider，限定唯一真人、选边后、首回合/计分前窗口，一次性清理/添加、临时身份释放、persona 绑定和队名读回。同名、disabled、缺失和重复 persona 保留现有降级规则。初始化后只观察，重生、后续回合与换边不重建；失败停止本次阵容修改，不重启比赛或无界修复。
 
-适配层使用 map/team/round 事件和有上限的一次性 timer，不新增常驻 Tick/Frame 扫描。诊断记录进程/地图 session、request/checksum、当前人数、内部模式及按应用 epoch 重置的计数；aim 写入/nade announce 是内部行为证据，游戏效果和 off 档抑制仍须人工实机验证。这一机制在实机验收前保持 candidate，不成为完整 Match 系统。
+地图/team/round 事件与有上限的一次性 timer 驱动运行时，不新增 Tick/Frame 扫描。诊断绑定配置 revision、安装 ID、进程启动时间、地图 session、实际 profile/mode、人数、独立模块状态与 epoch。Controller 将不同 revision、旧进程或陈旧地图报告视为历史；文件写入、运行时读回与真实行为验收分开。该适配层不建设完整 Match 系统。
