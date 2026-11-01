@@ -1,0 +1,15 @@
+{
+  "installId": "cf73e2b17dde4b98808bb42780ea59c6",
+  "manifestSha256": "3542f17be9d9a7e04a3408d7816cf1a68124ffc7c0b2cadfa5b252cfa68341d1",
+  "state": "installed",
+  "mode": "preview-read-only",
+  "entryCount": 685,
+  "targetBuild": {
+    "PatchVersion": "1.41.9.4",
+    "ClientVersion": "2000939",
+    "buildId": "26334290"
+  },
+  "candidateDirectory": "bot-perf-14194-medium-6196707",
+  "apply": false,
+  "actualGameModified": false
+}

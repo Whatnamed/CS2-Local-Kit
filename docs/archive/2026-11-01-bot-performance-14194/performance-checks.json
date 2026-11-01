@@ -1,0 +1,18 @@
+{
+  "managedCacheChecks": "PASS",
+  "poolAllocationBytes": {
+    "iterations": 10000,
+    "cached": 1920000,
+    "original": 14240000
+  },
+  "measurementScope": "Synthetic selection loop only; not game FPS or frame pacing",
+  "status": "PASS",
+  "checks": [
+    "same flash discovery order; clean ticks do not enumerate; lifecycle/map clear rebuilds",
+    "Nade duplicate ID/type first-match semantics, missing records, negative grid and reload",
+    "same seeded weapon/knife draws and weights; immutable-list identity reuse",
+    "native idle update returns before lookup; live pawn serial and slot checks retained"
+  ],
+  "sourceMethodScope": "Extracted actual managed method bodies with fake native inputs; native path compiled and statically checked",
+  "gameStarted": false
+}

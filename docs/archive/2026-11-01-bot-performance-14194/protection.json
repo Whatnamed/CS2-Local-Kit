@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "protected": [
+    {
+      "path": "E:\\CS2MOD\\presets",
+      "entries": 2,
+      "beforeInventorySha256": "d10490af9460479d77894e123fb4a65d026d13fb8fb4ef5ca6dc480da637ce77",
+      "afterInventorySha256": "d10490af9460479d77894e123fb4a65d026d13fb8fb4ef5ca6dc480da637ce77",
+      "unchanged": true,
+      "changedPaths": []
+    },
+    {
+      "path": "E:\\CS2MOD\\app-data",
+      "entries": 1322,
+      "beforeInventorySha256": "01c806e339f2cfda0fe92214dd258277435d4878fa43654ac9c05c78e2a1139d",
+      "afterInventorySha256": "01c806e339f2cfda0fe92214dd258277435d4878fa43654ac9c05c78e2a1139d",
+      "unchanged": true,
+      "changedPaths": []
+    },
+    {
+      "path": "E:\\CS2MOD\\backups",
+      "entries": 492,
+      "beforeInventorySha256": "b02cd105f49737a3171d72813d7377880789123295fe2756373ba9f2d6a0dc50",
+      "afterInventorySha256": "b02cd105f49737a3171d72813d7377880789123295fe2756373ba9f2d6a0dc50",
+      "unchanged": true,
+      "changedPaths": []
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\addons",
+      "entries": 859,
+      "beforeInventorySha256": "4cb545783516cf6866847a9513b323166014dd04b07ac46056b1ffb116f15ad9",
+      "afterInventorySha256": "4cb545783516cf6866847a9513b323166014dd04b07ac46056b1ffb116f15ad9",
+      "unchanged": true,
+      "changedPaths": []
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\cfg",
+      "entries": 38,
+      "beforeInventorySha256": "6eb2b7d6bb15ef5d3518536e0ab02325cbd5f60327ac67882e705c1409ecba11",
+      "afterInventorySha256": "6eb2b7d6bb15ef5d3518536e0ab02325cbd5f60327ac67882e705c1409ecba11",
+      "unchanged": true,
+      "changedPaths": []
+    },
+    {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\overrides",
+      "entries": 4,
+      "beforeInventorySha256": "9844cf3070ed6e4519bd703d0607ccc9f224f8ddd4ddba986070af556403c399",
+      "afterInventorySha256": "9844cf3070ed6e4519bd703d0607ccc9f224f8ddd4ddba986070af556403c399",
+      "unchanged": true,
+      "changedPaths": []
+    },
+    {
+      "path": "files",
+      "entries": 7,
+      "beforeInventorySha256": "8c955c0c0e0a98e1093e10e1ab1a15c07f29d9d9082ded7a6a16c9ebf47ef51d",
+      "afterInventorySha256": "8c955c0c0e0a98e1093e10e1ab1a15c07f29d9d9082ded7a6a16c9ebf47ef51d",
+      "unchanged": true,
+      "changedPaths": []
+    }
+  ],
+  "actualInstallRestoreOrSwitch": false,
+  "gameStarted": false
+}

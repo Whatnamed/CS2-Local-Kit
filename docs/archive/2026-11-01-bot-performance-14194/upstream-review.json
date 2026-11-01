@@ -1,0 +1,616 @@
+{
+  "botImprover": {
+    "tag": "v1.4.7",
+    "ref": "91de1b49d429afad622776f8e0271ce61c56761c",
+    "url": "https://github.com/ed0ard/CS2-Bot-Improver/releases/tag/v1.4.7"
+  },
+  "reviewedRepositories": [
+    {
+      "name": "state",
+      "status": "ahead",
+      "url": "https://github.com/ed0ard/CS2-Smarter-Bot/compare/9e9f8f1b2fd2f04b216c7398bdcb4736327946b5...6b5781f85391816c08154a9c1d5b5dd6e898a2f5",
+      "commits": [
+        {
+          "sha": "8038f8a6d2ab0d354d5787841dc6fa25e92166b7",
+          "subject": "perf: rebuild flash entity discovery only after lifecycle changes"
+        },
+        {
+          "sha": "3fe6c6d322fd4f1c3f98f6e94eb62ec7732e804e",
+          "subject": "Merge pull request #10 from unicbm/fix/flash-projectile-discovery"
+        },
+        {
+          "sha": "b42b7ace52d019be6e98f3afed7edb1d4e75f005",
+          "subject": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "e8c74af3bd2465478d6d07742f25ce53f4302bc7",
+          "subject": "Updated version"
+        },
+        {
+          "sha": "415100323c3cda365b69330a7ddadd4cb2a14dd8",
+          "subject": "Updated version"
+        },
+        {
+          "sha": "6b5781f85391816c08154a9c1d5b5dd6e898a2f5",
+          "subject": "Fixed a logic bug"
+        }
+      ],
+      "files": [
+        "BotState.Flashbang.cs",
+        "BotState.Lifecycle.cs",
+        "BotState.Weapons.cs",
+        "BotState.cs",
+        "BotState.csproj"
+      ]
+    },
+    {
+      "name": "nade",
+      "status": "ahead",
+      "url": "https://github.com/ed0ard/CS2-Bot-NadeSystem/compare/009ce03005af68ba68dae62967bddc8e92ad172c...7605f272d0500a7bad5b6294555485c7721a40da",
+      "commits": [
+        {
+          "sha": "ca3b63875ae1b20bc59089cc1d2adbb61fa0416f",
+          "subject": "perf: index grenade records used by cooldown and zone checks"
+        },
+        {
+          "sha": "d089e2129a3cc5d9c2d344117ea793ece3b522fa",
+          "subject": "fix: update Windows smoke creation signature for CS2 1.41.9.2"
+        },
+        {
+          "sha": "d779b892da87c436bfd200990211ae7494758b40",
+          "subject": "fix: fix linux sig"
+        },
+        {
+          "sha": "4f8e2a59f132ac558af699f193d40d9c200c4ce9",
+          "subject": "Merge branch 'ed0ard:main' into main"
+        },
+        {
+          "sha": "9b95122d213c51926507f59089e9a77d62b5f860",
+          "subject": "Merge pull request #7 from unicbm/fix/index-grenade-record-lookups"
+        },
+        {
+          "sha": "acba98cfde36c10757c20af24ae420d29bf08d8a",
+          "subject": "Merge pull request #9 from unicbm/fix/cs2-1.41.9.2-windows"
+        },
+        {
+          "sha": "b7c09b812261c89fc8bb3e95f6652ca8816ac70a",
+          "subject": "Merge branch 'main' into main"
+        },
+        {
+          "sha": "673fdef18e8d3231b09289cd5fdc795cdf63a211",
+          "subject": "Merge pull request #10 from XBribo/main"
+        },
+        {
+          "sha": "717647b64fe471fe3fefa9a17e390a0bfefc312c",
+          "subject": "Fixed a sig on Linux"
+        },
+        {
+          "sha": "7ef85d75a4a242001b55ba94e65bbfc4ac56db90",
+          "subject": "Updated version and author"
+        },
+        {
+          "sha": "7605f272d0500a7bad5b6294555485c7721a40da",
+          "subject": "Updated CounterStrikeSharp.API package version"
+        }
+      ],
+      "files": [
+        "NadeSystem.cs",
+        "NadeSystem.csproj",
+        "NadeSystemPlugin.Data.cs",
+        "NadeSystemPlugin.Decision.cs",
+        "NadeSystemPlugin.ZoneDetection.cs"
+      ]
+    },
+    {
+      "name": "random",
+      "status": "ahead",
+      "url": "https://github.com/ed0ard/CS2-Bot-Randomizer/compare/1c7c3ebad4b984bf8c4c75511b71cc109ab820bd...cc96fafbf53c653b8c2cac170b052a46666335cf",
+      "commits": [
+        {
+          "sha": "34d4e09a52ae907c5864fa12e8f0ffa75a77e685",
+          "subject": "fix: destroy cached item views before freeing storage on Windows"
+        },
+        {
+          "sha": "1736e2d35c4f2f864e24191a11e6d70b95d1f762",
+          "subject": "fix: destroy cached item views with the Linux x64 ABI"
+        },
+        {
+          "sha": "ded53e4278af6def771fbf23ff46998428ea9b33",
+          "subject": "perf: reuse weapon and knife paint selection pools"
+        },
+        {
+          "sha": "ac5bd0bca6146e2deca89c626e8c702f354b8692",
+          "subject": "Merge pull request #11 from unicbm/fix/cache-paint-selection-pools"
+        },
+        {
+          "sha": "a2e97169010a1f86e6c00faf5e14984e4c3c90ee",
+          "subject": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "520ccaeba48b82153cb207e2a49b5af42a8ef43f",
+          "subject": "Updated version"
+        },
+        {
+          "sha": "cc96fafbf53c653b8c2cac170b052a46666335cf",
+          "subject": "Merge pull request #10 from unicbm/fix/item-view-lifetime"
+        }
+      ],
+      "files": [
+        "BotRandomizer.cs",
+        "BotRandomizer.csproj",
+        "Cosmetics/CosmeticRoller.cs",
+        "Cosmetics/WeaponItemViewStore.cs"
+      ]
+    },
+    {
+      "name": "controller",
+      "status": "ahead",
+      "url": "https://github.com/XBribo/CS2-Bot-Controller/compare/582e9132c10b9729e3cce8f0670a9273eb7a49bd...6a418f81ec96445068155b844c22f0e41935afb7",
+      "commits": [
+        {
+          "sha": "659af1d25ee74e7c239cd29b3f0e632b2cba9d03",
+          "subject": "build(deps): bump src/core/cs2_sdk from `b973e57` to `70f9cea`"
+        },
+        {
+          "sha": "d8fdeb9791f64ee948aa85530513c7f62938c529",
+          "subject": "Merge pull request #22 from XBribo/dependabot/submodules/src/core/cs2_sdk-70f9cea"
+        },
+        {
+          "sha": "293faea60541bfb25cfc15dc361427d4dac464f3",
+          "subject": "fix: Update sig"
+        },
+        {
+          "sha": "e53785147e1a7c8e7de1174539526f0ea1912a3c",
+          "subject": "chore: remove unused root libraries and fix license path"
+        },
+        {
+          "sha": "0c0209a5f08266571b3ea2a025b996a64272cd56",
+          "subject": "perf: skip idle bot updates"
+        },
+        {
+          "sha": "defd78f6f84034d874b07186f02e0e4506b0507a",
+          "subject": "refactor: remove replay polling"
+        },
+        {
+          "sha": "f62295d14746950a9c44f381b76e705e8338a671",
+          "subject": "refactor!: remove legacy replay APIs"
+        },
+        {
+          "sha": "81fbfa6daad4007bb3f481c9c75230beb756de74",
+          "subject": "fix: guard replay lifecycle"
+        },
+        {
+          "sha": "641551f900dbb62b95314b0fad4a95effe91938f",
+          "subject": "refactor: share motion storage"
+        },
+        {
+          "sha": "118cdfc2de4efad1ffbdfa264947ffdc09081329",
+          "subject": "refactor: remove legacy capture args"
+        },
+        {
+          "sha": "f82d8ffe232dc3d037455cba33966549cc4954d6",
+          "subject": "refactor: reuse signature helpers"
+        },
+        {
+          "sha": "bc6f687f316539664b852a6dee5a70e4358d66f3",
+          "subject": "refactor: simplify replay view"
+        },
+        {
+          "sha": "06673c7fc3498a6c483d161e46c81008eec40818",
+          "subject": "fix: validate replay targets"
+        },
+        {
+          "sha": "5064b5dd481869aba79ba31bd43c60ef2c376069",
+          "subject": "fix: unify pawn weapon access"
+        },
+        {
+          "sha": "106822641d5788219d7834ef460683408714872d",
+          "subject": "refactor: share provider API"
+        },
+        {
+          "sha": "4879196da419fb8e19cfa7950697cd5b138d2cd7",
+          "subject": "refactor: remove unused offsets"
+        },
+        {
+          "sha": "b07ed2d7b7672efaf79dd2f560d308de1421d8fc",
+          "subject": "fix: update sdk and use sdk's ComputePath"
+        },
+        {
+          "sha": "a28bbb7f2f0055b02f961e45ec4fcd429cda108e",
+          "subject": "fix: align replay commands and history"
+        },
+        {
+          "sha": "590b046b3ef3dd7db8b1c1ccaeaa3124a6d7d226",
+          "subject": "feat: expose optional input history"
+        },
+        {
+          "sha": "5ae4d90b51e35a124c1c72eeaaf19abeb3f4bab6",
+          "subject": "docs: clarify command replay"
+        },
+        {
+          "sha": "95104329d114f448e26b6413c6dba1359ec6ad50",
+          "subject": "fix: resolve command simulation clocks"
+        },
+        {
+          "sha": "814a1534da172a6bd4867e9c70fe220f4706cfb1",
+          "subject": "fix: rebase input history clocks"
+        },
+        {
+          "sha": "efbfeba76eb07c04c1f55a9c97c5a62ebeec26fa",
+          "subject": "style: shorten history comments"
+        },
+        {
+          "sha": "37e0960ea163ab788d3c1534038febd9efbdee70",
+          "subject": "style: shorten clock comments"
+        },
+        {
+          "sha": "11950a9a9de4e1986f651b2bbe2e72b6c87382c3",
+          "subject": "style: simplify comments"
+        },
+        {
+          "sha": "6a418f81ec96445068155b844c22f0e41935afb7",
+          "subject": "docs: streamline developer guide"
+        }
+      ],
+      "files": [
+        "CMakeLists.txt",
+        "LICENSE",
+        "TECH.md",
+        "build.ps1",
+        "configs/addons/BotController/gamedata.json",
+        "csharp/BotControllerApi/IBotControllerApi.cs",
+        "csharp/BotControllerApi/Types.cs",
+        "csharp/BotControllerImpl/BotController.NativeApi.cs",
+        "csharp/BotControllerImpl/BotControllerApiImpl.cs",
+        "csharp/BotControllerImpl/BotControllerCapability.cs",
+        "csharp/BotControllerImpl/BotControllerImplPlugin.cs",
+        "csharp/BotControllerImpl/MotionRecording.cs",
+        "csharp/BotControllerImpl/ReplayDriver.cs",
+        "csharp/BotControllerImplSW2/BotControllerImplSW2.csproj",
+        "csharp/BotControllerImplSW2/BotControllerImplSW2Plugin.cs",
+        "csharp/BotControllerImplSW2/MotionRecording.cs",
+        "csharp/BotControllerImplSW2/ReplayDriver.cs",
+        "csharp/Directory.Build.props",
+        "csharp/Directory.Build.targets",
+        "libraries/.clang-tidy",
+        "src/bridge/dispatch.cpp",
+        "src/bridge/dispatch.h",
+        "src/bridge/exports.cpp",
+        "src/core/commands.cpp",
+        "src/core/commands.h",
+        "src/core/cs2_sdk",
+        "src/core/entity/ccsbot_slot.cpp",
+        "src/core/entity/ccsbot_slot.h",
+        "src/core/entity/playercommand.h",
+        "src/core/gamedata.cpp",
+        "src/core/gamedata.h",
+        "src/core/interfaces.cpp",
+        "src/core/interfaces.h",
+        "src/core/offsets.cpp",
+        "src/core/offsets.h",
+        "src/features/buy/BuyController.cpp",
+        "src/features/buy/BuyController.h",
+        "src/features/buy/BuyControllerState.h",
+        "src/features/controller/BotController.cpp",
+        "src/features/controller/BotController.h",
+        "src/features/controller/BotControllerState.h",
+        "src/features/profile/BotProfile.cpp",
+        "src/features/profile/BotProfile.h",
+        "src/features/recorder/CommandHistory.cpp",
+        "src/features/recorder/CommandHistory.h",
+        "src/features/recorder/InputInjector.cpp",
+        "src/features/recorder/InputInjector.h",
+        "src/features/recorder/MotionRecorder.cpp",
+        "src/features/recorder/MotionRecorder.h",
+        "src/features/recorder/PawnBinding.cpp",
+        "src/features/recorder/PawnBinding.h",
+        "src/features/voice/VoiceSender.cpp",
+        "src/features/voice/VoiceSender.h",
+        "src/features/weapons/WeaponLocker.cpp",
+        "src/features/weapons/WeaponLocker.h",
+        "src/plugin.cpp",
+        "src/plugin.h"
+      ]
+    },
+    {
+      "name": "vision",
+      "status": "ahead",
+      "url": "https://github.com/XBribo/CS2-Bot-Vision/compare/9884848b340434c906ecd1b0f7a0d1d5e8ca140c...df8f0707c7590cd55d9ffb8f6824ec9f3c959f5f",
+      "commits": [
+        {
+          "sha": "c084d08c92d34c840493db569fb47eb7eb067ca7",
+          "subject": "chore(deps): bump src/core/cs2_sdk from `b973e57` to `70f9cea`"
+        },
+        {
+          "sha": "cd5c0f9cf8a87f7bf28e2f5f7df26667bac053bc",
+          "subject": "Merge pull request #8 from XBribo/dependabot/submodules/src/core/cs2_sdk-70f9cea"
+        },
+        {
+          "sha": "b88df9b901b9cda6967cda8a311f62831ec8241e",
+          "subject": "fix: fix a sig"
+        },
+        {
+          "sha": "e95116913a025a35d99573c9de59dd71b9cd299d",
+          "subject": "fix: Update sig"
+        },
+        {
+          "sha": "8465a48c297a60c35ef47797c02b1664551b2fa1",
+          "subject": "chore: remove unused root libraries and fix license path"
+        },
+        {
+          "sha": "c43cb82ff82742f4b6cccf54257f035ab7c0cf3f",
+          "subject": "fix: avoid double-counting overlapping smoke holes"
+        },
+        {
+          "sha": "13785e93fe50410b712eb57e7279b188e403d56e",
+          "subject": "refactor: remove legacy code and restore diagnostics"
+        },
+        {
+          "sha": "4a8b708b9d48c708d716865be32e768d9f45fde6",
+          "subject": "fix: validate and streamline command input"
+        },
+        {
+          "sha": "04f51fbe87a22edd8daf1d96c2fea379b92f9cbf",
+          "subject": "fix: roll back failed plugin loads"
+        },
+        {
+          "sha": "fc7bfe07c36277fffc313a23747ab0302c2925a6",
+          "subject": "refactor: streamline logging and command output"
+        },
+        {
+          "sha": "e083413a38bfbb5f38470cf71f8dc7a6b9ad0e75",
+          "subject": "refactor: reuse ResolveSig for AutoList"
+        },
+        {
+          "sha": "7960fcaf930ec4b979161160e12bd6f7baa6fb11",
+          "subject": "fix: avoid blocking zero-density sightlines"
+        },
+        {
+          "sha": "b41deb0f6af91f932e98ea4034618f128ba5cd09",
+          "subject": "fix: require IVEngineServer2"
+        },
+        {
+          "sha": "4c658ae07926a7a0fc3a87d83043cdac2ec91141",
+          "subject": "refactor: remove redundant pause overrides"
+        },
+        {
+          "sha": "4f810a1f45d77f958e7b0d7877c38ce956efdd58",
+          "subject": "fix: update sdk and use sdk's ComputePath"
+        },
+        {
+          "sha": "df8f0707c7590cd55d9ffb8f6824ec9f3c959f5f",
+          "subject": "fix: use game server globals for time"
+        }
+      ],
+      "files": [
+        "CMakeLists.txt",
+        "LICENSE",
+        "configs/addons/BotVision/gamedata.json",
+        "libraries/.clang-tidy",
+        "src/core/commands.cpp",
+        "src/core/commands.h",
+        "src/core/config.cpp",
+        "src/core/config.h",
+        "src/core/cs2_sdk",
+        "src/core/game_time.cpp",
+        "src/core/game_time.h",
+        "src/core/gamedata.cpp",
+        "src/core/gamedata.h",
+        "src/features/bullet/BulletVision.cpp",
+        "src/features/bullet/BulletVision.h",
+        "src/features/he/HeVision.cpp",
+        "src/features/he/HeVision.h",
+        "src/features/smoke/SmokeVision.cpp",
+        "src/features/smoke/SmokeVision.h",
+        "src/features/vision/BotVision.cpp",
+        "src/features/vision/BotVision.h",
+        "src/plugin.cpp",
+        "src/plugin.h",
+        "src/utils/memory.cpp"
+      ]
+    },
+    {
+      "name": "hider",
+      "status": "ahead",
+      "url": "https://github.com/XBribo/CS2-Bot-Hider/compare/9a77fbaf1ee106ec45a451f482e64f26127f2f21...7e10d328bffd76bc64fabd4822eb900d193fc661",
+      "commits": [
+        {
+          "sha": "cdbbf6d84a9ff7a540ded9468fe23ad188fd1833",
+          "subject": "build(deps): bump src/core/cs2_sdk from `b973e57` to `70f9cea`"
+        },
+        {
+          "sha": "78ffab09d56d75510f526267665050aba2dc0cf0",
+          "subject": "Merge pull request #44 from XBribo/dependabot/submodules/src/core/cs2_sdk-70f9cea"
+        },
+        {
+          "sha": "d437ee472f3e083cba9c717f4d10df78abb17b1d",
+          "subject": "fix: Fix some arguments"
+        },
+        {
+          "sha": "d55979869b34b07f690bf0018b3ddf9b6038f34c",
+          "subject": "chore: remove unused root libraries and fix license path"
+        },
+        {
+          "sha": "1e43e5d46a1d5ae7a62b13dd3de78126b5f4567e",
+          "subject": "fix: dispatch bot kicks safely"
+        },
+        {
+          "sha": "c33b9dfabd5094d13e8294bba3dfcd507950b2ba",
+          "subject": "fix: restore native script IsBot"
+        },
+        {
+          "sha": "e2c170a5de626623a044e4cdc0c3f7c2a7c56777",
+          "subject": "refactor: remove deprecated code"
+        },
+        {
+          "sha": "64ed547d595f527fcf77f4e7c312b8029a67197e",
+          "subject": "fix: unify bot writes and ownership"
+        },
+        {
+          "sha": "cacc2cba6289b8a3e10a0b334b09cdb1bd5b3a86",
+          "subject": "refactor: trim legacy state"
+        },
+        {
+          "sha": "3ecfced9034373a8d853625256e72eb4d7850c15",
+          "subject": "chore: shorten diagnostics"
+        },
+        {
+          "sha": "72833ed4d0afbe0029478541813d487736cf03a8",
+          "subject": "perf: refresh affected bot slots"
+        },
+        {
+          "sha": "480d70af4170c07616d7e02dec8cdf9605ed6df1",
+          "subject": "refactor: reuse signature resolver"
+        },
+        {
+          "sha": "8d17816cbcaae8fdef89fad9586c3faea316fa69",
+          "subject": "fix: display native bot steamids"
+        },
+        {
+          "sha": "98ff302234804312444c568b755a414026fbaae2",
+          "subject": "refactor: extract bridge command handlers"
+        },
+        {
+          "sha": "95b0dc0c82e1658b55e9b1e343d525ef8163873f",
+          "subject": "refactor: split managed command handlers"
+        },
+        {
+          "sha": "7e10d328bffd76bc64fabd4822eb900d193fc661",
+          "subject": "fix: update sdk and use sdk's ComputePath"
+        }
+      ],
+      "files": [
+        "LICENSE",
+        "configs/addons/BotHider/gamedata.json",
+        "csharp/BotHiderImpl/BotHiderImplPlugin.Commands.cs",
+        "csharp/BotHiderImpl/BotHiderImplPlugin.cs",
+        "csharp/BotHiderImpl/SharedMemoryClient.cs",
+        "libraries/.clang-tidy",
+        "src/bridge/slot_publisher.h",
+        "src/core/config.cpp",
+        "src/core/cs2_sdk",
+        "src/core/entity/entity_access.cpp",
+        "src/core/entity/serversideclient_ref.h",
+        "src/core/gamedata.cpp",
+        "src/core/gamedata.h",
+        "src/core/offsets.cpp",
+        "src/core/offsets.h",
+        "src/features/avatar/avatar_override.cpp",
+        "src/features/botinfo/bot_info.cpp",
+        "src/features/botinfo/bot_info.h",
+        "src/features/identity/client_hooks.cpp",
+        "src/features/identity/command_hooks.cpp",
+        "src/features/identity/fake_client_manager.cpp",
+        "src/features/identity/fake_client_manager.h",
+        "src/features/identity/identity_hooks.cpp",
+        "src/features/identity/identity_hooks.h",
+        "src/features/identity/identity_runtime.cpp",
+        "src/features/identity/identity_runtime.h",
+        "src/features/identity/identity_state.cpp",
+        "src/features/identity/identity_state.h",
+        "src/features/persona/personas.cpp",
+        "src/features/persona/personas.h",
+        "src/features/ping/ping_display.h",
+        "src/features/steamid/steamid_provider.cpp",
+        "src/features/steamid/steamid_provider.h",
+        "src/plugin.cpp",
+        "src/plugin.h"
+      ]
+    },
+    {
+      "name": "aim",
+      "status": "ahead",
+      "url": "https://github.com/ed0ard/CS2-Bullseye-Bot/compare/d796572b6d258b938a9d8db3c5d4c802a46049f7...c5a2e0f402f151336c820b7efc1b895aa087a953",
+      "commits": [
+        {
+          "sha": "a9bd87ec87e2fe129b1cdb0fa8f03d682a958c28",
+          "subject": "fix: update Windows pawn bot offset for CS2 1.41.9.2"
+        },
+        {
+          "sha": "cee00a5e3bf4d57c6459abc408d4aef1f9352b24",
+          "subject": "fix: fix offset on linux"
+        },
+        {
+          "sha": "146e7f806a430e5e71d6d18a66249b3fdfa88961",
+          "subject": "feat: use schema to find offset"
+        },
+        {
+          "sha": "16c20948dc8489dd1a5834fc72f40b81d69c69d9",
+          "subject": "Merge pull request #16 from unicbm/fix/cs2-1.41.9.2-windows"
+        },
+        {
+          "sha": "465711f76bc70b6b5c7c165636e4603423908ee6",
+          "subject": "Merge branch 'main' into main"
+        },
+        {
+          "sha": "fc0268704598ff7edafb6b1b0d7a4277763ca704",
+          "subject": "Updated version"
+        },
+        {
+          "sha": "b6185993038b611ea88fb696797bde9a3524544b",
+          "subject": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "c5a2e0f402f151336c820b7efc1b895aa087a953",
+          "subject": "Merge pull request #17 from XBribo/main"
+        }
+      ],
+      "files": [
+        "BotAimImprover.cs",
+        "BotAimImprover.csproj"
+      ]
+    },
+    {
+      "name": "ai",
+      "status": "ahead",
+      "url": "https://github.com/ed0ard/CS2-BotAI/compare/0c46c6757b03e74eb1b42219a9786101c93b954f...7d6997e11b952abb899d71abefa959c6e49cdfef",
+      "commits": [
+        {
+          "sha": "1b0c5116838c8dc81bf8fcf9ee3c3dfe8f69154a",
+          "subject": "fix: correct Windows bombsite-search patch for CS2 1.41.9.2"
+        },
+        {
+          "sha": "7b116390d5457750e77f0cc31e8bcb5f30c1cba0",
+          "subject": "fix: fix some sig"
+        },
+        {
+          "sha": "7b038d73ffef1731c130f7657f5185c63a838992",
+          "subject": "Merge pull request #14 from unicbm/fix/cs2-1.41.9.2-windows"
+        },
+        {
+          "sha": "4760870219bf9b11e03cf21b2d6e212ea366ab4c",
+          "subject": "Merge pull request #15 from XBribo/main"
+        },
+        {
+          "sha": "f85d74f277b7c6d60f3daa2478938f265c928162",
+          "subject": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "7d6997e11b952abb899d71abefa959c6e49cdfef",
+          "subject": "Updated version"
+        }
+      ],
+      "files": [
+        "BotAI.cs",
+        "BotAI.csproj",
+        "LinuxPatchDefinitions.cs",
+        "WindowsPatchDefinitions.cs"
+      ]
+    }
+  ],
+  "framework": {
+    "latestCssRef": "f58e383b0553be16c0f8c6dd68a8194de17691e9",
+    "latestCssRelease": "v1.0.379",
+    "decision": "Retain 1.0.376 + existing 14192 native backport: no new failed Windows signature/schema/interface evidence"
+  },
+  "additionalRandomizerHead": {
+    "sha": "f5c645c15583fad6dd07594fc540cd55d49f6ff8",
+    "url": "https://github.com/ed0ard/CS2-Bot-Randomizer/commit/f5c645c15583fad6dd07594fc540cd55d49f6ff8",
+    "actualChangedFiles": [
+      "cosmetic_catalog.json",
+      "tools/catalog/package-lock.json",
+      "tools/catalog/package.json"
+    ],
+    "decision": "Cosmetic data/tool dependencies only; outside this selective performance backport"
+  }
+}

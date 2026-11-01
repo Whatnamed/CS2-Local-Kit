@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "sequence": [
+    "Medium",
+    "Low",
+    "High",
+    "Medium"
+  ],
+  "exactInstallIds": [
+    "6bfa2676a0be4d5d8fc30bfcd3e0da4a",
+    "aec3532adc6244a191ad95b31512f315",
+    "a37cec5349a849989e903ebef1bba37a",
+    "af0d63d4acc34cc488496cc4e4605c3d"
+  ],
+  "fullSubstrateRestoredAfterEveryStep": true,
+  "actualGameModified": false,
+  "gameplay": "pending"
+}

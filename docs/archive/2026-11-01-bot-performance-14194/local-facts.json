@@ -1,0 +1,112 @@
+{
+  "root": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive",
+  "steamInf": "ClientVersion=2000939\nServerVersion=2000939\nPatchVersion=1.41.9.4\nProductName=cs2\nappID=730\nServerAppID=2347773\nSourceRevision=11191540\nVersionDate=Oct 30 2026\nVersionTime=13:55:25\n",
+  "manifestSha256": "3542f17be9d9a7e04a3408d7816cf1a68124ffc7c0b2cadfa5b252cfa68341d1",
+  "installId": "cf73e2b17dde4b98808bb42780ea59c6",
+  "state": "installed",
+  "gameBinaries": {
+    "game/bin/win64/engine2.dll": "42e0549c7314321e1b69c8d60046efe94e0356f54d7a2fb79dd6b993e6e3658b",
+    "game/bin/win64/cs2.exe": "8614097aaa2761b0a7157c0045861713e769fb1e8235f50fc68f411294dd60cf",
+    "game/csgo/bin/win64/client.dll": "d618bbf8e6afb36baa09b3a282035996a88300458c55d2aa5cb81f0495c0ec54",
+    "game/csgo/bin/win64/server.dll": "84a06ec3a3ef2ff9fe668aa7a77d0d6c0156e0b3bccdae22f628a9919ad082b6",
+    "game/bin/win64/schemasystem.dll": "6ea6c2e95360572d78352260f808e390bc24c9a4370184c067481f5b4d6e94c9"
+  },
+  "postimages": 685,
+  "postimageDrift": [
+    {
+      "target": "game/csgo/addons/counterstrikesharp/gamedata/gamedata.json",
+      "expected": {
+        "kind": "file",
+        "sha256": "da22c205abba36e7a2b45f2f7d1c3d0f04687dc5f132e9454b63b8162f61acf4"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "edad399385d8a441db282f2e6cf8eff1aa7af546a3bbc79f01750ac935ee9d73"
+      }
+    },
+    {
+      "target": "game/bin/win64/engine2.dll",
+      "expected": {
+        "kind": "file",
+        "sha256": "e8533af07adc3426eac95391cb70804a0a27f8391c03d36f1cfa06f50d901d29"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "42e0549c7314321e1b69c8d60046efe94e0356f54d7a2fb79dd6b993e6e3658b"
+      }
+    },
+    {
+      "target": "game/bin/win64/schemasystem.dll",
+      "expected": {
+        "kind": "file",
+        "sha256": "2d2d04c4aa2ed8aca1c9b57f3f0d82278907e898156c417a2dd38f48c63c44f0"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "6ea6c2e95360572d78352260f808e390bc24c9a4370184c067481f5b4d6e94c9"
+      }
+    },
+    {
+      "target": "game/csgo/addons/counterstrikesharp/gamedata/gamedata.etag",
+      "expected": {
+        "kind": "file",
+        "sha256": "cee3189fdef11b41b1b6e8e210cd1cd930322763a162607758edd91acb887702"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "6a5879b44af8c7cec6f47b22cfc8d6fd04948f46493547d9181f573bdabb36ae"
+      }
+    },
+    {
+      "target": "game/csgo/bin/win64/client.dll",
+      "expected": {
+        "kind": "file",
+        "sha256": "ccaf4e4926babc052994502b19ec61198a11008a39dce712921b93dd993be9f5"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "d618bbf8e6afb36baa09b3a282035996a88300458c55d2aa5cb81f0495c0ec54"
+      }
+    },
+    {
+      "target": "game/csgo/bin/win64/server.dll",
+      "expected": {
+        "kind": "file",
+        "sha256": "2a229dd46c8af0b52c1f49a3e343b99d9ffe946c102c56102a45b00f6a52349c"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "84a06ec3a3ef2ff9fe668aa7a77d0d6c0156e0b3bccdae22f628a9919ad082b6"
+      }
+    },
+    {
+      "target": "game/csgo/steam.inf",
+      "expected": {
+        "kind": "file",
+        "sha256": "67bb5f38cdcfb57331eea7dbcf2d337f46ea6ed998d3482e2637f830f7210a06"
+      },
+      "actual": {
+        "kind": "file",
+        "sha256": "919b953d73167570d43ee893ae16562a3756fc07b100f8cee0d43ea251a5970a"
+      }
+    }
+  ],
+  "parents": {
+    "bot": {
+      "installId": "b613a8c709c7440998346cb802bb790f",
+      "inventoryMatches": true,
+      "markerMatches": true
+    },
+    "compat": {
+      "installId": "5808afffdc44440ab3f0de2159cdb436",
+      "inventoryMatches": true,
+      "markerMatches": true
+    },
+    "nades": {
+      "installId": "9f9849ca97804c2dbd7b1307bba4580c",
+      "inventoryMatches": true,
+      "markerMatches": true
+    }
+  },
+  "moduleInventoryMatches": true
+}

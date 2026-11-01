@@ -1,0 +1,64 @@
+{
+  "targetBuild": {
+    "PatchVersion": "1.41.9.4",
+    "ClientVersion": "2000939",
+    "buildId": "26334290"
+  },
+  "candidateBuilderHead": "6196707acd3a6156f3e6fa35b957cd101d09e52f",
+  "controller": {
+    "directory": "E:\\CS2MOD\\releases\\controller\\controller-bot-perf-14194-20261101",
+    "sourceHead": "edc15b8757df444c3ec3574bf2afa4719c753a45",
+    "releaseManifestSha256": "f47f411671b853241c165fbc0873306ffc99f097e6ced842ab0dde5b3f800c21",
+    "files": 408,
+    "AppSha256": "b66f49cd6e6cd55d45d7814a1c5f6017d958e17fff494f51a5eaa776460606f2",
+    "CoreSha256": "66388ce47ad120152b2cbc6f0921889fee0791dacfa013604be7546a6d8121c9"
+  },
+  "candidates": [
+    {
+      "Difficulty": 0,
+      "Directory": "bot-perf-14194-low-6196707",
+      "ManifestSha256": "fc09b409160d071a60a3d013fbb89d108d704ff4b65731dff96626823f006012",
+      "PreservesHuman": true,
+      "MatchSetup": true,
+      "RuntimeIntegration": true
+    },
+    {
+      "Difficulty": 1,
+      "Directory": "bot-perf-14194-medium-6196707",
+      "ManifestSha256": "d9e4893ba16d17449ee3e4f9d54c33507857f253a553fdbe812df82dd2d2bc84",
+      "PreservesHuman": true,
+      "MatchSetup": true,
+      "RuntimeIntegration": true
+    },
+    {
+      "Difficulty": 2,
+      "Directory": "bot-perf-14194-high-6196707",
+      "ManifestSha256": "eed7d4e69e0ca89a5b7ddb9aef2c1d8b5a66cec5ec560eaef094921209f9e08a",
+      "PreservesHuman": true,
+      "MatchSetup": true,
+      "RuntimeIntegration": true
+    }
+  ],
+  "realInstallPerformed": false,
+  "realRestorePerformed": false,
+  "gameStarted": false,
+  "gameplayAcceptance": "pending",
+  "tests": {
+    "coreDotNet": 269,
+    "transactionRegression": 40,
+    "crossBuild14194": 10,
+    "retained14193Transition": 10,
+    "candidateTransactions": {
+      "Low": 14,
+      "Medium": 41,
+      "High": 14
+    },
+    "profileSwitchSequence": [
+      "Medium",
+      "Low",
+      "High",
+      "Medium"
+    ],
+    "publishedControllerReadOnlyPreviews": 3
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "BotState": {
+    "baseSourceArchive": "CS2-Smarter-Bot-9e9f8f1b2fd2.zip",
+    "baseSourceArchiveSha256": "9841f49c729d0267794eaf02b2ce53b646dc89fa61b63c2fde5599db00fa060d",
+    "upstreamCommit": "8038f8a6d2ab0d354d5787841dc6fa25e92166b7",
+    "patchSha256": "e53dd2ee2d414f9b9c446ba509fa105d86d99abe60a8ab5aed0c661fe6bcec80",
+    "dllSha256": "fefb628a5c282bcebe2d11c598595ea3a496625be7bdb9bd9421dde6293c6c3d"
+  },
+  "NadeSystem": {
+    "baseSourceArchive": "NadeSystem-patched-source.zip",
+    "baseSourceArchiveSha256": "4ee230552ebf3df82be43ee4c064cd19fed11fa4ea51a7e5641e5a8752eb8fa6",
+    "upstreamCommit": "ca3b63875ae1b20bc59089cc1d2adbb61fa0416f",
+    "patchSha256": "1fc4904525563e00b3ef15402a6ed9562238e7e9584a74f15c62a25d0a5d252c",
+    "dllSha256": "5838e6b89952de78b55e7196bdc4b17ff87c8025fb44a4912ee8c6a036380d01"
+  },
+  "BotRandomizer": {
+    "baseSourceArchive": "CS2-Bot-Randomizer-1c7c3ebad4b9.zip",
+    "baseSourceArchiveSha256": "93bcdb8fa72d23919e58b78c5aaba22e1a3afa90c7801cc84a31b5ae694fbf18",
+    "upstreamCommit": "ded53e4278af6def771fbf23ff46998428ea9b33",
+    "patchSha256": "73dd70d89a0ea19cf4dddefcb13fa7dbb4c2074b585555532ac8a26694ffe1ed",
+    "dllSha256": "2b7449b3b34b4ad67227b392fb1347d9788d6ec858371b5c80eb5be3c2dea8ab"
+  },
+  "BotController": {
+    "baseSourceArchive": "CS2-Bot-Controller-582e9132c10b.zip",
+    "baseSourceArchiveSha256": "dc52e9f522d5e949d3141260aca2ad8c8588cf1d98bb925066c8fdfe0f6c3f30",
+    "upstreamCommit": "0c0209a5f08266571b3ea2a025b996a64272cd56",
+    "patchSha256": "baa698eb8375ab283f871bf9633642378034fa4f3412b591706525b5601e7625",
+    "dllSha256": "1bf23de8766aeb28c3d781749bcdc1513cce18a612ce31dfeea5075d7832bde0"
+  },
+  "commands": [
+    [
+      "git",
+      "apply",
+      "--check",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/BotState",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\BotState.patch"
+    ],
+    [
+      "git",
+      "apply",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/BotState",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\BotState.patch"
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "restore",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\source\\BotState\\BotState.csproj",
+      "--source",
+      "C:\\Users\\hasee\\.nuget\\packages",
+      "-p:NuGetAudit=false",
+      "-p:RestoreFallbackFolders="
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "build",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\source\\BotState\\BotState.csproj",
+      "-c",
+      "Release",
+      "--no-restore",
+      "-p:NuGetAudit=false",
+      "-p:SourceRevisionId=localkit-perf14194+8038f8a6d2ab"
+    ],
+    [
+      "git",
+      "apply",
+      "--check",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/NadeSystem",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\NadeSystem.patch"
+    ],
+    [
+      "git",
+      "apply",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/NadeSystem",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\NadeSystem.patch"
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "restore",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\source\\NadeSystem\\NadeSystem.csproj",
+      "--source",
+      "C:\\Users\\hasee\\.nuget\\packages",
+      "-p:NuGetAudit=false",
+      "-p:RestoreFallbackFolders="
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "build",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\source\\NadeSystem\\NadeSystem.csproj",
+      "-c",
+      "Release",
+      "--no-restore",
+      "-p:NuGetAudit=false",
+      "-p:SourceRevisionId=localkit-perf14194+ca3b63875ae1"
+    ],
+    [
+      "git",
+      "apply",
+      "--check",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/BotRandomizer",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\BotRandomizer.patch"
+    ],
+    [
+      "git",
+      "apply",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/BotRandomizer",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\BotRandomizer.patch"
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "restore",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\source\\BotRandomizer\\BotRandomizer.csproj",
+      "--source",
+      "C:\\Users\\hasee\\.nuget\\packages",
+      "-p:NuGetAudit=false",
+      "-p:RestoreFallbackFolders="
+    ],
+    [
+      "E:\\Projects\\CS2-Local-Kit\\CS2-Local-Kit\\temp\\tooling\\dotnet\\dotnet.exe",
+      "build",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\source\\BotRandomizer\\BotRandomizer.csproj",
+      "-c",
+      "Release",
+      "--no-restore",
+      "-p:NuGetAudit=false",
+      "-p:SourceRevisionId=localkit-perf14194+ded53e4278af"
+    ],
+    [
+      "git",
+      "apply",
+      "--check",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/BotController",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\BotController.patch"
+    ],
+    [
+      "git",
+      "apply",
+      "--ignore-space-change",
+      "--directory=temp/perf-14194/build-final/source/BotController",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\experiments\\bot-experiment\\performance-14194\\BotController.patch"
+    ],
+    [
+      "E:\\Dev\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+      "-S",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\source\\BotController",
+      "-B",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\native-build",
+      "-G",
+      "Visual Studio 17 2022",
+      "-A",
+      "x64",
+      "-DCMAKE_DISABLE_FIND_PACKAGE_Git=ON",
+      "-DPLUGIN_VERSION=0.8.0-local.perf14194"
+    ],
+    [
+      "E:\\Dev\\BuildTools\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+      "--build",
+      "E:\\Projects\\CS2-Local-Kit\\wt-bot-perf-14194-20261101\\temp\\perf-14194\\build-final\\native-build",
+      "--config",
+      "Release",
+      "--parallel",
+      "4"
+    ]
+  ],
+  "sourceManifestSha256": "74e414d887e70685bfd10bde5154513bb8af622cff69d4191869b8e7e5b27f42",
+  "gameplayAcceptance": "pending"
+}

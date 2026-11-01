@@ -1,0 +1,1945 @@
+{
+  "scope": "Static hex patterns in executable PE sections only; no ABI, offsets, vtable, hook, gameplay or performance proof.",
+  "binaryHashes": {
+    "server": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\csgo\\bin\\win64\\server.dll",
+      "sha256": "84a06ec3a3ef2ff9fe668aa7a77d0d6c0156e0b3bccdae22f628a9919ad082b6"
+    },
+    "engine2": {
+      "path": "E:\\SteamLibrary\\steamapps\\common\\Counter-Strike Global Offensive\\game\\bin\\win64\\engine2.dll",
+      "sha256": "42e0549c7314321e1b69c8d60046efe94e0356f54d7a2fb79dd6b993e6e3658b"
+    }
+  },
+  "results": [
+    {
+      "name": "CSS/UTIL_ClientPrintAll",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 8B E9 49 8B D9",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xfefea0",
+          "fileOffset": "0xfef2a0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/ClientPrint",
+      "library": "server",
+      "pattern": "48 85 C9 0F 84 ? ? ? ? 48 89 5C 24 ? 55",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x98e730",
+          "fileOffset": "0x98db30"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CCSPlayerController_SwitchTeam",
+      "library": "server",
+      "pattern": "40 53 57 48 81 EC ? ? ? ? 48 8B D9 8B FA",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xaa2a20",
+          "fileOffset": "0xaa1e20"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBasePlayerController_SetPawn",
+      "library": "server",
+      "pattern": "44 88 4C 24 ? 53 57 41 54",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb7c6b0",
+          "fileOffset": "0xb7bab0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CCSPlayerPawnBase_PostThink",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 54 48 8B EC 48 83 EC ? 4C 89 AC 24 ? ? ? ? 48 8B F1 E8 ? ? ? ?",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x223540",
+          "fileOffset": "0x222940"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CGameEventManager_Init",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B 01 48 8B D9 FF 50 ? 48 8B 03",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc0af70",
+          "fileOffset": "0xc0a370"
+        }
+      ]
+    },
+    {
+      "name": "CSS/GiveNamedItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 44 89 44 24",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xabe7f0",
+          "fileOffset": "0xabdbf0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc36dc0",
+          "fileOffset": "0xc361c0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBaseModelEntity_SetModel",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 48 8B D9 4C 8B C2 48 8B 0D ? ? ? ? 48 8D 54 24 ? 48 8B 01 FF 50 ? 48 8B 54 24 ? 48 8B CB E8 ? ? ? ? 48 83 C4 ? 5B C3 CC CC CC CC CC CC CC CC CC CC CC CC CC CC CC 48 89 5C 24",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb7bfb0",
+          "fileOffset": "0xb7b3b0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CCSPlayer_WeaponServices_CanUse",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 54 41 56 41 57 48 83 EC ? 48 8B 01 48 8B FA",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb08850",
+          "fileOffset": "0xb07c50"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CCSPlayer_ItemServices_CanAcquire",
+      "library": "server",
+      "pattern": "44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8B EC",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xabf820",
+          "fileOffset": "0xabec20"
+        }
+      ]
+    },
+    {
+      "name": "CSS/GetCSWeaponDataFromKey",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 33 FF 4C 8B CA 8B D9",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x550630",
+          "fileOffset": "0x54fa30"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CCSGameRules_TerminateRound",
+      "library": "server",
+      "pattern": "48 8B C4 4C 89 48 ? 48 89 48 ? 55 41 54",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x96b660",
+          "fileOffset": "0x96aa60"
+        }
+      ]
+    },
+    {
+      "name": "CSS/UTIL_CreateEntityByName",
+      "library": "server",
+      "pattern": "48 83 EC ? C6 44 24 ? ? 4C 8B C1",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbf57e0",
+          "fileOffset": "0xbf4be0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBaseEntity_DispatchSpawn",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 48 85 C9 0F 84 ? ? ? ? 48 85 D2",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xcb07a0",
+          "fileOffset": "0xcafba0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBaseEntity_EmitSoundFilter",
+      "library": "server",
+      "pattern": "40 53 48 83 EC ? 4C 89 4C 24 ? 48 8B D9 45 8B C8",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xf6f930",
+          "fileOffset": "0xf6ed30"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CEntityInstance_AcceptInput",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 81 EC ? ? ? ? 4D 8B F0 48 8B F1",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13af0d0",
+          "fileOffset": "0x13ae4d0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CEntitySystem_AddEntityIOEvent",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 49 8B F1 48 8B F9",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1381660",
+          "fileOffset": "0x1380a60"
+        }
+      ]
+    },
+    {
+      "name": "CSS/LegacyGameEventListener",
+      "library": "server",
+      "pattern": "48 8B 15 ? ? ? ? 48 85 D2 74 ? 85 C9",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc08c40",
+          "fileOffset": "0xc08040"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBasePlayerPawn_RemovePlayerItem",
+      "library": "server",
+      "pattern": "48 85 D2 0F 84 ? ? ? ? 48 89 5C 24 ? 57 48 83 EC ? 48 8B DA 48 8B F9 E8",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb0abd0",
+          "fileOffset": "0xb09fd0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBaseEntity_TakeDamageOld",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 54 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4D 8B E0",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3f3a20",
+          "fileOffset": "0x3f2e20"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBaseTrigger_StartTouch",
+      "library": "server",
+      "pattern": "40 57 41 56 48 83 EC ? 48 8B 01",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3f36e0",
+          "fileOffset": "0x3f2ae0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CBaseTrigger_EndTouch",
+      "library": "server",
+      "pattern": "40 53 41 55 48 83 EC ? 83 BA",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x14b2130",
+          "fileOffset": "0x14b1530"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CEntityIOOutput_FireOutputInternal",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 48 ? 55",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1398640",
+          "fileOffset": "0x1397a40"
+        }
+      ]
+    },
+    {
+      "name": "CSS/IGameSystem_InitAllSystems_pFirst",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 85 DB 0F 84 ? ? ? ? BD",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x54c403",
+          "fileOffset": "0x54b803"
+        }
+      ]
+    },
+    {
+      "name": "CSS/NetworkStateChanged",
+      "library": "server",
+      "pattern": "4C 8B C2 48 8B D1 48 8B 09",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x13b25a0",
+          "fileOffset": "0x13b19a0"
+        }
+      ]
+    },
+    {
+      "name": "CSS/Host_Say",
+      "library": "server",
+      "pattern": "44 89 4C 24 ? 44 88 44 24",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xd00d40",
+          "fileOffset": "0xd00140"
+        }
+      ]
+    },
+    {
+      "name": "CSS/CCSNavArea_IsValidNavMesh",
+      "library": "server",
+      "pattern": "48 83 3D ? ? ? ? ? 0F 95 C0 C3 CC CC CC CC C2",
+      "source": "installed/counterstrikesharp/gamedata/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xddf3b0",
+          "fileOffset": "0xdde7b0"
+        }
+      ]
+    },
+    {
+      "name": "Human/CAttributeList::SetOrAddAttributeValueByName",
+      "library": "server",
+      "pattern": "48 89 4C 24 ? 53 41 55 41 56",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1075850",
+          "fileOffset": "0x1074c50"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerPawn::IsAbleToApplySpray",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 78 ? 55 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 4C 89 70",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xad80f0",
+          "fileOffset": "0xad74f0"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerController::ProcessUsercmds",
+      "library": "server",
+      "pattern": "48 8B C4 44 88 48 20 44 89 40 18 48 89 50 10 53",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb6e700",
+          "fileOffset": "0xb6db00"
+        }
+      ]
+    },
+    {
+      "name": "Human/CServerSideClientBase::ActivatePlayer",
+      "library": "engine2",
+      "pattern": "40 53 48 83 EC ? 48 89 6C 24 ? 48 8B D9 48 89 74 24 ? 48 89 7C 24",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xbe330",
+          "fileOffset": "0xbd730"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerInventory::GetItemInLoadout",
+      "library": "server",
+      "pattern": "48 8B C4 56 48 83 EC ? 49 63 F0",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa3aef0",
+          "fileOffset": "0xa3a2f0"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemView::CEconItemView",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 48 8B F9 48 8D 05",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1067190",
+          "fileOffset": "0x1066590"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemView::operator=",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 48 83 EC ? 48 8B F9 48 8B F2",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1068180",
+          "fileOffset": "0x1067580"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerInventory::SendInventoryUpdateEvent",
+      "library": "server",
+      "pattern": "83 79 ? ? 0F 10 49",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x105db00",
+          "fileOffset": "0x105cf00"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayer_ItemServices::SetWearables",
+      "library": "server",
+      "pattern": "40 55 56 48 83 EC ? 48 83 79",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xace0f0",
+          "fileOffset": "0xacd4f0"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerPawn::SetModelFromClass",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 56 57 41 56 48 83 EC ? 48 8B D9 48 81 C1",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x22b410",
+          "fileOffset": "0x22a810"
+        }
+      ]
+    },
+    {
+      "name": "Human/CCSPlayerPawn::SetModelFromLoadout",
+      "library": "server",
+      "pattern": "40 56 57 41 54 48 83 EC ? 48 8B F9 45 33 E4",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1fb6d0",
+          "fileOffset": "0x1faad0"
+        }
+      ]
+    },
+    {
+      "name": "Human/GetItemSchema",
+      "library": "server",
+      "pattern": "48 83 EC ? 48 8B 05 ? ? ? ? 48 85 C0 0F 85 ? ? ? ? 48 89 5C 24 ? B9 ? ? ? ? 48 89 7C 24 ? E8 ? ? ? ? 33 FF 48 8B D8 48 85 C0 74 ? 48 8D 05 ? ? ? ? 48 89 7B ? B9 ? ? ? ? 48 89 03 E8 ? ? ? ? 48 85 C0 74 ? 48 8B C8 E8 ? ? ? ? 48 8B F8 48 8D 05 ? ? ? ? 48 89 7B ? 48 89 03 48 8B C7 48 8B 7C 24 ? 48 89 1D ? ? ? ? 48 8B 5C 24 ? 48 83 C4 ? C3 48 8B 47 ? 48 8B 5C 24 ? 48 89 3D ? ? ? ? 48 8B 7C 24 ? 48 83 C4 ? C3 48 8B 40 ? 48 83 C4 ? C3 CC CC CC CC CC CC CC CC CC CC CC CC 48 8B 41",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1030dc0",
+          "fileOffset": "0x10301c0"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemSchema::GetItemDefinitionByName",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 56 80 B9",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x10305c0",
+          "fileOffset": "0x102f9c0"
+        }
+      ]
+    },
+    {
+      "name": "Human/CEconItemSchema::GetItemDefinition",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 57 48 83 EC ? 48 8B D9 89 54 24",
+      "source": "installed/counterstrikesharp/gamedata/inventory-simulator.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1030520",
+          "fileOffset": "0x102f920"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::EquipBestWeapon",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B D9 84 D2 75 ? 4C 8D 81 ? ? ? ? 48 8D 0D ? ? ? ? 48 8D 54 24 ? E8 ? ? ? ? 80 38 ? 75 ? 48 8D 54 24 ? 48 8D 8B ? ? ? ? E8 ? ? ? ? 48 8D 93 ? ? ? ? 48 8B C8 E8 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 87 ? ? ? ? 48 8B 43 ? 33 D2 41 B8",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2caa80",
+          "fileOffset": "0x2c9e80"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::EquipPistol",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B D9 84 D2 75 ? 4C 8D 81 ? ? ? ? 48 8D 0D ? ? ? ? 48 8D 54 24 ? E8 ? ? ? ? 80 38 ? 75 ? 48 8D 54 24 ? 48 8D 8B ? ? ? ? E8 ? ? ? ? 48 8D 93 ? ? ? ? 48 8B C8 E8 ? ? ? ? F3 0F 10 0D ? ? ? ? 0F 2F C8 0F 87 ? ? ? ? 48 8B 05 ? ? ? ? 80 78 ? ? 0F 84",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2caf80",
+          "fileOffset": "0x2ca380"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayer_WeaponServices::SelectItem",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 41 8B E8 48 8B DA 48 8B F9 E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 48 8B CF E8",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb29f30",
+          "fileOffset": "0xb29330"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC ? 45 33 E4 45 8B F0 44 8B FA 48 8B E9 41 8B FC 44 39 61",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc8c7d0",
+          "fileOffset": "0xc8bbd0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::Update",
+      "library": "server",
+      "pattern": "40 55 56 57 41 54 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? C6 81 ? ? ? ? ? 48 89 44 24 ? 4C 8D 45 ? 48 8D 05",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ef260",
+          "fileOffset": "0x2ee660"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::Upkeep",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 56 57 41 56 48 83 EC ? 4C 8B F1 33 ED 48 8B 49 ? 48 39 A9 ? ? ? ? 0F 85 ? ? ? ? 48 8B 49 ? 48 8B 01 FF 90",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ee700",
+          "fileOffset": "0x2edb00"
+        }
+      ]
+    },
+    {
+      "name": "BotController/BuyState::OnUpdate",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 48 89 4C 24 ? 55 53 41 55 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 4C 8B EA 48 8B D9 80 B8",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x338750",
+          "fileOffset": "0x337b50"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSBot::UpdateLookAngles",
+      "library": "server",
+      "pattern": "40 55 53 56 41 56 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? 4C 8D 45 ? 0F 10 45 ? 48 8D 05",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2f1110",
+          "fileOffset": "0x2f0510"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayerPawn::SetEyeAngles",
+      "library": "server",
+      "pattern": "48 89 7C 24 ? 55 48 8B EC 48 81 EC ? ? ? ? 48 8B F9 48 8D 4D ? E8 ? ? ? ? F2 0F 10 87 ? ? ? ? 48 8B CF 8B 87 ? ? ? ? F2 0F 11 87",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xd181a0",
+          "fileOffset": "0xd175a0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CCSPlayer_MovementServices::ProcessMovement",
+      "library": "server",
+      "pattern": "40 57 41 57 48 81 EC ? ? ? ? 48 83 79 ? ? 4C 8B FA 48 8B F9 75 ? E8 ? ? ? ? 4C 8B 4F ? 41 8B 91 ? ? ? ? 83 FA ? 0F 84",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xae59f0",
+          "fileOffset": "0xae4df0"
+        }
+      ]
+    },
+    {
+      "name": "BotController/CBasePlayerController::OnSimulateUserCommands",
+      "library": "server",
+      "pattern": "40 55 53 56 57 41 55 41 56 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 4C 8B F1 48 C7 44 24 ? ? ? ? ? 48 8D 1D ? ? ? ? 45 33 ED 48 89 5C 24",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb6ca20",
+          "fileOffset": "0xb6be20"
+        }
+      ]
+    },
+    {
+      "name": "BotController/DropReleasePose::OuterDrop",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 4C 89 4C 24 ? 44 89 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xb07d20",
+          "fileOffset": "0xb07120"
+        }
+      ]
+    },
+    {
+      "name": "BotController/DropReleasePose::BuildTransform",
+      "library": "server",
+      "pattern": "48 89 74 24 ? 55 57 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 4C 8B EA",
+      "source": "installed/BotController/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa2bd80",
+          "fileOffset": "0xa2b180"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/UTIL_Remove",
+      "library": "server",
+      "pattern": "48 85 C9 74 ? 48 8B D1 48 8B 0D ? ? ? ?",
+      "source": "installed/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc36dc0",
+          "fileOffset": "0xc361c0"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CCSBotManager::MaintainBotQuota",
+      "library": "server",
+      "pattern": "40 55 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 4C 8B F9 FF 15",
+      "source": "installed/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2dbf90",
+          "fileOffset": "0x2db390"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CBaseIssue::CountPotentialVoters",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC ? 48 8B 05 ? ? ? ? 45 33 F6",
+      "source": "installed/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x253db0",
+          "fileOffset": "0x2531b0"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CCSPlayerController::HandleCommand_JoinTeam",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 3D",
+      "source": "installed/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa838c0",
+          "fileOffset": "0xa82cc0"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/MpHumanTeam_ApplyRestriction",
+      "library": "server",
+      "pattern": "40 55 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 8D 0D",
+      "source": "installed/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x94a510",
+          "fileOffset": "0x949910"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CNetworkGameServer::PackEntities",
+      "library": "engine2",
+      "pattern": "4C 89 4C 24 ? 44 89 44 24 ? 48 89 54 24 ? 48 89 4C 24 ? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? B8 ? ? ? ? E8 ? ? ? ? 48 2B E0 4C 8B E9",
+      "source": "installed/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xe8ff0",
+          "fileOffset": "0xe83f0"
+        }
+      ]
+    },
+    {
+      "name": "BotHider/CCSGameRules::EndMatchState",
+      "library": "server",
+      "pattern": "48 8B C4 55 41 57 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 80 3D",
+      "source": "installed/BotHider/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x91b440",
+          "fileOffset": "0x91a840"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CBotManager::IsVisibleThroughSmoke",
+      "library": "server",
+      "pattern": "4C 8B DC 49 89 5B ? 49 89 6B ? 49 89 73 ? 49 89 7B ? 41 54 41 56 41 57 48 81 EC ? ? ? ? 49 C7 43 ? ? ? ? ? 48 8D 05 ? ? ? ? 49 89 43 ? 49 8B E8",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x330cf0",
+          "fileOffset": "0x3300f0"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/g_AutoList_SmokeProj_Head_Server",
+      "library": "server",
+      "pattern": "48 8B 1D ? ? ? ? 48 8B EA",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x353054",
+          "fileOffset": "0x352454"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/GetSmokeDensityInLine",
+      "library": "server",
+      "pattern": "40 55 53 56 41 55 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 0F 29 BC 24",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9c6130",
+          "fileOffset": "0x9c5530"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CHEGrenadeProjectile::Detonate",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC A8 00 00 00 48 89 58 ? 48 89 70",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3ab280",
+          "fileOffset": "0x3aa680"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/BulletPelletTrace",
+      "library": "server",
+      "pattern": "48 89 54 24 ? 55 56 41 57",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa7e210",
+          "fileOffset": "0xa7d610"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/BulletPelletTraceResult",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 81 EC ? ? ? ? 48 8B E9 0F 29 74 24",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xa7ab10",
+          "fileOffset": "0xa79f10"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CCSPlayer_WeaponServices::GetSlot",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 41 54 41 56 41 57 48 83 EC 20 45 33 E4 45 8B F0",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0xc8c7d0",
+          "fileOffset": "0xc8bbd0"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CCSBot::IsVisiblePos",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC A0 01 00 00 48 8D 05",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2da1f0",
+          "fileOffset": "0x2d95f0"
+        }
+      ]
+    },
+    {
+      "name": "BotVision/CCSBot::IsVisiblePlayer",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC 90 00 00 00",
+      "source": "installed/BotVision/gamedata.json",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2da4c0",
+          "fileOffset": "0x2d98c0"
+        }
+      ]
+    },
+    {
+      "name": "BotAimImprover/PickNewAimSpot",
+      "library": "server",
+      "pattern": "48 8B C4 55 57 48 8D 68 ? 48 81 EC ? ? ? ? 48 8B F9 0F 29 70 ? 8B 89 ? ? ? ? 83 F9 FF",
+      "source": "addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e5190",
+          "fileOffset": "0x2e4590"
+        }
+      ]
+    },
+    {
+      "name": "BotRandomizer/SetModel",
+      "library": "server",
+      "pattern": "48 89 4C 24 ? 53 41 55 41 56",
+      "source": "addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1075850",
+          "fileOffset": "0x1074c50"
+        }
+      ]
+    },
+    {
+      "name": "BotRandomizer/Constructor",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 54 41 55 41 56 41 57 48 83 EC ? 48 8B F9 48 8D 05",
+      "source": "addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x1067190",
+          "fileOffset": "0x1066590"
+        }
+      ]
+    },
+    {
+      "name": "NadeSystem/SmokeCreate",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 41 56 41 57 48 83 EC ? 48 8B B4 24 ? ? ? ? 4D 8B F8",
+      "source": "addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9bdb90",
+          "fileOffset": "0x9bcf90"
+        }
+      ]
+    },
+    {
+      "name": "NadeSystem/HECreate",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 6C 24 ? 48 89 74 24 ? 57 48 83 EC ? 48 8B AC 24 ? ? ? ? 49 8B F8",
+      "source": "addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3aab80",
+          "fileOffset": "0x3a9f80"
+        }
+      ]
+    },
+    {
+      "name": "NadeSystem/MolotovCreate",
+      "library": "server",
+      "pattern": "48 8B C4 48 89 58 ? 48 89 70 ? 48 89 78 ? 4C 89 40 ? 55 41 54 41 55 41 56 41 57 48 8D 6C 24",
+      "source": "addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x9bd2c0",
+          "fileOffset": "0x9bc6c0"
+        }
+      ]
+    },
+    {
+      "name": "BotState/WindowsPlayer",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 44 88 44 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? ? ? ? ? 0F 10 45 ? 48 8D 05 ? ? ? ? 4C 8B F2",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotFovSignatures.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2da4c0",
+          "fileOffset": "0x2d98c0"
+        }
+      ]
+    },
+    {
+      "name": "BotState/WindowsPosition",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 48 89 74 24 ? 48 89 7C 24 ? 55 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? ? ? ? ? 0F 10 45 ? 48 8D 05 ? ? ? ? 4C 8B E2",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotFovSignatures.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2da1f0",
+          "fileOffset": "0x2d95f0"
+        }
+      ]
+    },
+    {
+      "name": "BotState/DefuseBombWindowsSignature",
+      "library": "server",
+      "pattern": "48 8D 91 08 04 00 00 E9 ? ? ? ?",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.Bomb.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2c9be0",
+          "fileOffset": "0x2c8fe0"
+        }
+      ]
+    },
+    {
+      "name": "BotState/BotBlindWindowsSignature",
+      "library": "server",
+      "pattern": "40 53 48 81 EC ? ? ? ? 0F 29 B4 24 ? ? ? ? 48 8D 15",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.Flashbang.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2de0b0",
+          "fileOffset": "0x2dd4b0"
+        }
+      ]
+    },
+    {
+      "name": "BotState/IsVisiblePos_IgnoreFOV",
+      "library": "server",
+      "pattern": "48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? 45 0F B6 E8",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.FovPatches.cs",
+      "patchOffset": 19,
+      "expectedOriginal": "45 0F B6 E8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2da217",
+          "fileOffset": "0x2d9617",
+          "originalBytes": "45 0F B6 E8",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotState/IsVisiblePlayer_IgnoreFOV",
+      "library": "server",
+      "pattern": "48 8D 05 ? ? ? ? 48 C7 45 ? ? ? ? ? 48 89 45 ? 41 0F B6 D8",
+      "source": "addons/counterstrikesharp/plugins/BotState/BotState.FovPatches.cs",
+      "patchOffset": 19,
+      "expectedOriginal": "41 0F B6 D8",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2da4e1",
+          "fileOffset": "0x2d98e1",
+          "originalBytes": "41 0F B6 D8",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/HasVisitedEnemySpawn",
+      "library": "server",
+      "pattern": "4C 89 B7 ? ? 00 00 48 8D 8C 24 ? ? ? ? 44 88 B7 FD 05 00 00 E8 ? ? ? ? F3 0F 10 87 ? ? 00 00 48 8B F0",
+      "patch": "C6 87 FD 05 00 00 01",
+      "expectedOriginal": "44 88 B7 FD 05 00 00",
+      "patchOffset": 15,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e8229",
+          "fileOffset": "0x2e7629",
+          "originalBytes": "44 88 B7 FD 05 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/GameState_Reset",
+      "library": "server",
+      "pattern": "48 8D 4C 24 ? 45 33 F6 44 89 77 0C E8 ? ? ? ? F3 0F 10 47 18 48 8B F0 0F 2E 00",
+      "patch": "90 90 90 90",
+      "expectedOriginal": "44 89 77 0C",
+      "patchOffset": 8,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e763b",
+          "fileOffset": "0x2e6a3b",
+          "originalBytes": "44 89 77 0C",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Idle_IsSafeAlwaysFalse",
+      "library": "server",
+      "pattern": "74 28 33 D2 48 8B CE E8 ? ? ? ? 84 C0 75 1A",
+      "patch": "EB 28",
+      "expectedOriginal": "74 28",
+      "patchOffset": 0,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33bfcd",
+          "fileOffset": "0x33b3cd",
+          "originalBytes": "74 28",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "C6 83 ? ? 00 00 00 C6 83 ? ? 00 00 00 48 83 C4 20 5B E9",
+      "patch": "C3 90 90 90 90",
+      "expectedOriginal": "E9 ? ? ? ?",
+      "patchOffset": 19,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x336b6d",
+          "fileOffset": "0x335f6d",
+          "originalBytes": "E9 DB 42 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromBomb_OnUpdate_NoEquipKnife",
+      "library": "server",
+      "pattern": "75 0F 48 8B 5C 24 50 48 83 C4 40 5F E9 ? ? ? ? E8 ? ? ? ?",
+      "patch": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x339892",
+          "fileOffset": "0x338c92",
+          "originalBytes": "E8 B8 15 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/EscapeFromFlames_OnEnter_NoEquipKnife",
+      "library": "server",
+      "pattern": "48 8B CB 40 88 BB ? ? 00 00 40 88 BB ? ? 00 00 E8 ? ? ? ? F3 0F 10 0D",
+      "patch": "90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 17,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x336c55",
+          "fileOffset": "0x336055",
+          "originalBytes": "E8 F5 41 F9 FF",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/PlantBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 F3 0F 10 0D",
+      "patch": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3376dc",
+          "fileOffset": "0x336adc",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombLookAtPriorityLow",
+      "library": "server",
+      "pattern": "41 B9 02 00 00 00 C6 44 24 38 00 4C 8B C7",
+      "patch": "41 B9 00 00 00 00",
+      "expectedOriginal": "41 B9 02 00 00 00",
+      "patchOffset": 0,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x339706",
+          "fileOffset": "0x338b06",
+          "originalBytes": "41 B9 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBomb_SkipIsVisibleCheck",
+      "library": "server",
+      "pattern": "0F 2F C8 0F 86 ? ? ? ? 45 33 C9 45 33 C0 48 8B D3 48 8B CE E8 ? ? ? ? 84 C0 0F 84 ? ? ? ? 48 8B CE",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 84 D9 00 00 00",
+      "patchOffset": 28,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33e66f",
+          "fileOffset": "0x33da6f",
+          "originalBytes": "0F 84 D9 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipFireRateCheck",
+      "library": "server",
+      "pattern": "0F 2F 8B ? ? 00 00 0F 82",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 82 87 00 00 00",
+      "patchOffset": 7,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30d250",
+          "fileOffset": "0x30c650",
+          "originalBytes": "0F 82 87 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SprayAllDistances_ForceHoldTrigger",
+      "library": "server",
+      "pattern": "76 12 48 8B 05 ? ? ? ? 0F 2F 40 30 76 05 40 B5 01 EB 03 40 32 ED",
+      "patch": "40 32 ED",
+      "expectedOriginal": "40 B5 01",
+      "patchOffset": 15,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30bac3",
+          "fileOffset": "0x30aec3",
+          "originalBytes": "40 B5 01",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipSteadyFireShortcut",
+      "library": "server",
+      "pattern": "0F B6 F0 84 C0 74 3C 48 8B 4B 18 48 8B 11 FF 92 90 00 00 00",
+      "patch": "90 90",
+      "expectedOriginal": "74 3C",
+      "patchOffset": 5,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30ca80",
+          "fileOffset": "0x30be80",
+          "originalBytes": "74 3C",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipZoomFireShortcut",
+      "library": "server",
+      "pattern": "FF 90 ? ? 00 00 84 C0 74 15 48 8D 8B ? ? 00 00 48 89 AB",
+      "patch": "90 90",
+      "expectedOriginal": "74 15",
+      "patchOffset": 8,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30caa4",
+          "fileOffset": "0x30bea4",
+          "originalBytes": "74 15",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_SkipSniperSpreadCheck",
+      "library": "server",
+      "pattern": "84 C0 74 0A F3 0F 10 ? ? ? ? ? EB 08 F3 0F 10 ? ? ? ? ? ? 0F 2F ? 0F 87 ? ? ? ?",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 87 ? ? ? ?",
+      "patchOffset": 26,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ceb3d",
+          "fileOffset": "0x2cdf3d",
+          "originalBytes": "0F 87 34 02 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_DodgeDuringReload",
+      "library": "server",
+      "pattern": "E9 ? ? ? ? 0F 2F BB ? 00 00 00 76 74",
+      "patch": "EB 74",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30d2df",
+          "fileOffset": "0x30c6df",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SniperCrouchDodge_jb",
+      "library": "server",
+      "pattern": "0F 2F BB ? 00 00 00 0F 28 7C 24 30 76 74",
+      "patch": "90 90",
+      "expectedOriginal": "76 74",
+      "patchOffset": 12,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30d3cb",
+          "fileOffset": "0x30c7cb",
+          "originalBytes": "76 74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/LowSKill_JumpChance0",
+      "library": "server",
+      "pattern": "0F 57 C9 48 8B CF E8 ? ? ? ? BA 03 00 00 00 84 C0 74 05 BA 02 00 00 00 33 C9 FF 15 ? ? ? ? 80 7D 43 00",
+      "patch": "BA 02 00 00 00",
+      "expectedOriginal": "BA 03 00 00 00",
+      "patchOffset": 11,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x335742",
+          "fileOffset": "0x334b42",
+          "originalBytes": "BA 03 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_DodgeChance100_Always",
+      "library": "server",
+      "pattern": "0F 28 F0 F3 0F 59 35 ? ? ? ? 76 ?",
+      "patch": "EB 11",
+      "expectedOriginal": "76 ?",
+      "patchOffset": 11,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3366f0",
+          "fileOffset": "0x335af0",
+          "originalBytes": "76 14",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_RetreatOnSniper_Disable",
+      "library": "server",
+      "pattern": "74 ? 48 8B CE E8 ? ? ? ? 84 C0 74 ? 48 8B CE E8 ? ? ? ? 84 C0",
+      "patch": "EB",
+      "expectedOriginal": "74",
+      "patchOffset": 0,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x337e08",
+          "fileOffset": "0x337208",
+          "originalBytes": "74",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AllSkill_KeepMoving_WhenSeeSniper",
+      "library": "server",
+      "pattern": "0F 2F 05 ? ? ? ? 76 0D 80 BF ? ? 00 00 00 0F 85",
+      "patch": "90 90",
+      "expectedOriginal": "76 0D",
+      "patchOffset": 7,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2e633f",
+          "fileOffset": "0x2e573f",
+          "originalBytes": "76 0D",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/AttackState_CanStrafe_jne",
+      "library": "server",
+      "pattern": "0F 2F 8B ? ? 00 00 0F 82 ? ? ? ? 48 8B CB E8 ? ? ? ? 84 C0 74 7B",
+      "patch": "90 90",
+      "expectedOriginal": "74 7B",
+      "patchOffset": 23,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30d250",
+          "fileOffset": "0x30c650",
+          "originalBytes": "74 7B",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/SniperDodge_SkipIsSniper_DodgeA",
+      "library": "server",
+      "pattern": "84 F6 75 6A 48 8B 05",
+      "patch": "90 90",
+      "expectedOriginal": "75 6A",
+      "patchOffset": 2,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x30d35d",
+          "fileOffset": "0x30c75d",
+          "originalBytes": "75 6A",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_AlwaysWatchApproachPoints",
+      "library": "server",
+      "pattern": "80 BF ? ? 00 00 00 75 25 0F 2F",
+      "patch": "EB 25",
+      "expectedOriginal": "75 25",
+      "patchOffset": 7,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33567d",
+          "fileOffset": "0x334a7d",
+          "originalBytes": "75 25",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipSkillCheck",
+      "library": "server",
+      "pattern": "F3 0F 10 40 0C 0F 2F ? 76 ? 80 BF ? 5C 00 00 00 74 ?",
+      "patch": "90 90",
+      "expectedOriginal": "76 ?",
+      "patchOffset": 8,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3356cd",
+          "fileOffset": "0x334acd",
+          "originalBytes": "76 33",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_ApproachBody_SkipHidingSpotCheck",
+      "library": "server",
+      "pattern": "80 BF ? 5C 00 00 00 74 ?",
+      "patch": "90 90",
+      "expectedOriginal": "74 ?",
+      "patchOffset": 7,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3356d7",
+          "fileOffset": "0x334ad7",
+          "originalBytes": "74 2A",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_SkipIsMovingGate",
+      "library": "server",
+      "pattern": "0F 2F 35 ? ? ? ? 77 ? 49 8B ? 48 8B CF E8 ? ? ? ? 84 C0 75 ?",
+      "patch": "90 90",
+      "expectedOriginal": "77 ?",
+      "patchOffset": 7,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x335686",
+          "fileOffset": "0x334a86",
+          "originalBytes": "77 0F",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Vision_AlwaysEnterApproachBody",
+      "library": "server",
+      "pattern": "84 C0 75 ? ? C7 ? 08 00 00 00 00 E9 ? ? ? ?",
+      "patch": "EB",
+      "expectedOriginal": "75",
+      "patchOffset": 2,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33569a",
+          "fileOffset": "0x334a9a",
+          "originalBytes": "75",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/IsNoticable_AlwaysTrue",
+      "library": "server",
+      "pattern": "48 89 5C 24 ? 56 57 41 56 48 81 EC ? ? 00 00 0F 29 74 24 ? 4C 8B F1 0F 29 7C 24 ? 48 8B CA 44 0F 29 44 24 ? 41 0F B6 D8 44 0F 29 4C 24 ? 48 8B F2 E8",
+      "patch": "B0 01 C3",
+      "expectedOriginal": "48 89 5C",
+      "patchOffset": 0,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2d8e20",
+          "fileOffset": "0x2d8220",
+          "originalBytes": "48 89 5C",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Upkeep_BotCOS_ZeroDrift",
+      "library": "server",
+      "pattern": "F3 0F 10 35 ? ? ? ? 48 8B 05 ? ? ? ? F3 0F 10 40 30 F3 0F 59 05 ? ? ? ? E8 ? ? ? ? F3 0F 59 C6 F3 0F 58 87 ? ? 00 00 F3 0F 11 87 ? ? 00 00",
+      "patch": "0F 57 C0 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 28,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2f408f",
+          "fileOffset": "0x2f348f",
+          "originalBytes": "E8 50 84 03 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/Upkeep_BotSIN_ZeroDrift",
+      "library": "server",
+      "pattern": "F3 0F 11 87 ? ? 00 00 48 8B 05 ? ? ? ? F3 0F 10 40 30 F3 0F 59 05 ? ? ? ? E8 ? ? ? ? F3 0F 59 C6 F3 0F 58 87 ? ? 00 00 F3 0F 11 87 ? ? 00 00",
+      "patch": "0F 57 C0 90 90",
+      "expectedOriginal": "E8 ? ? ? ?",
+      "patchOffset": 28,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2f40bc",
+          "fileOffset": "0x2f34bc",
+          "originalBytes": "E8 63 84 03 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/InvestigateNoise_SkipSelfDefenseCheck",
+      "library": "server",
+      "pattern": "83 BB ? ? 00 00 02 74 1E",
+      "patch": "90 90",
+      "expectedOriginal": "74 1E",
+      "patchOffset": 7,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33536f",
+          "fileOffset": "0x33476f",
+          "originalBytes": "74 1E",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/TBot_BombsiteSearch_UseKnownPlantedSite",
+      "library": "server",
+      "pattern": "48 8B 8E ? ? 00 00 E8 ? ? ? ? 48 8B CB E8 ? ? ? ? 4C 8B 05 ? ? ? ? 85 C0",
+      "patch": "E8 30 57 F9 FF",
+      "expectedOriginal": "E8 40 51 F9 FF",
+      "patchOffset": 15,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33cfac",
+          "fileOffset": "0x33c3ac",
+          "originalBytes": "E8 30 51 F9 FF",
+          "expectedOriginalMatches": false
+        }
+      ]
+    },
+    {
+      "name": "BotAI/BombBeep_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "0F 2F ? 76 67 48 8B ? 18 80 B8 44 03 00 00 03",
+      "patch": "90 90",
+      "expectedOriginal": "76 67",
+      "patchOffset": 3,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2de647",
+          "fileOffset": "0x2dda47",
+          "originalBytes": "76 67",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/BombPickup_CT_GlobalHearRange",
+      "library": "server",
+      "pattern": "0F 2F ? 76 23 48 8B ? ? 5E 00 00 E8",
+      "patch": "90 90",
+      "expectedOriginal": "76 23",
+      "patchOffset": 3,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2df003",
+          "fileOffset": "0x2de403",
+          "originalBytes": "76 23",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/OnAudibleEvent_GlobalHearRange",
+      "library": "server",
+      "pattern": "F3 44 0F 51 CA EB 0C 0F 28 C2 E8 ? ? ? ? 44 0F 28 C8 45 0F 2F D1 0F 86 ? ? ? ?",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 86 ? ? ? ?",
+      "patchOffset": 23,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2ddcd3",
+          "fileOffset": "0x2dd0d3",
+          "originalBytes": "0F 86 65 03 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/OnBombPlanted_AllBotsLearnSite",
+      "library": "server",
+      "pattern": "80 BA ? ? 00 00 02 0F 85 ? ? ? ? 48 85 DB 0F 84 ? ? ? ?",
+      "patch": "90 90 90 90 90 90",
+      "expectedOriginal": "0F 85 ? ? ? ?",
+      "patchOffset": 7,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2df216",
+          "fileOffset": "0x2de616",
+          "originalBytes": "0F 85 8E 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/CT_Defuse_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "C7 86 ? ? 00 00 03 00 00 00 BA 02 00 00 00 48 8B CE",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 10,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x33d328",
+          "fileOffset": "0x33c728",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnUpdate_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 8D 8A ? ? 00 00 48 8B DA E8 ? ? ? ? BA 02 00 00 00 48 8B CB",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 15,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x3396aa",
+          "fileOffset": "0x338aaa",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/DefuseBombState_OnEnter_EngageAndInvestigate",
+      "library": "server",
+      "pattern": "48 89 5C 24 08 57 48 83 EC 20 48 8B DA BA 02 00 00 00 48 8B CB",
+      "patch": "BA 00 00 00 00",
+      "expectedOriginal": "BA 02 00 00 00",
+      "patchOffset": 13,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x336aa0",
+          "fileOffset": "0x335ea0",
+          "originalBytes": "BA 02 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    },
+    {
+      "name": "BotAI/FlashbangAvoidance_Disable",
+      "library": "server",
+      "pattern": "E8 ? ? ? ? 49 8B 06 C6 80 ? 5C 00 00 00 32 C0",
+      "patch": "90 90 90 90 90 90 90 90 90 90 90 90 90 90 90",
+      "expectedOriginal": "E8 ? ? ? ? 49 8B 06 C6 80 ? 5C 00 00 00",
+      "patchOffset": 0,
+      "source": "sources/CS2-BotAI-0c46c6757b03.zip/WindowsPatchDefinitions.cs",
+      "matchCount": 1,
+      "matches": [
+        {
+          "section": ".text",
+          "rva": "0x2c03e1",
+          "fileOffset": "0x2bf7e1",
+          "originalBytes": "E8 6A A4 02 00 49 8B 06 C6 80 74 5C 00 00 00",
+          "expectedOriginalMatches": true
+        }
+      ]
+    }
+  ]
+}

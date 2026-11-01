@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "candidates": [
+    {
+      "profile": "Low",
+      "directory": "bot-perf-14194-low-6196707",
+      "manifestSha256": "fc09b409160d071a60a3d013fbb89d108d704ff4b65731dff96626823f006012",
+      "files": 110,
+      "changedPayloadTargets": [
+        "game/csgo/addons/BotController/bin/win64/BotController.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/BotState/BotState.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.dll"
+      ],
+      "unchangedNadeFiles": 48,
+      "targetBuild": {
+        "PatchVersion": "1.41.9.4",
+        "ClientVersion": "2000939",
+        "buildId": "26334290"
+      }
+    },
+    {
+      "profile": "Medium",
+      "directory": "bot-perf-14194-medium-6196707",
+      "manifestSha256": "d9e4893ba16d17449ee3e4f9d54c33507857f253a553fdbe812df82dd2d2bc84",
+      "files": 110,
+      "changedPayloadTargets": [
+        "game/csgo/addons/BotController/bin/win64/BotController.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/BotState/BotState.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.dll"
+      ],
+      "unchangedNadeFiles": 48,
+      "targetBuild": {
+        "PatchVersion": "1.41.9.4",
+        "ClientVersion": "2000939",
+        "buildId": "26334290"
+      }
+    },
+    {
+      "profile": "High",
+      "directory": "bot-perf-14194-high-6196707",
+      "manifestSha256": "eed7d4e69e0ca89a5b7ddb9aef2c1d8b5a66cec5ec560eaef094921209f9e08a",
+      "files": 110,
+      "changedPayloadTargets": [
+        "game/csgo/addons/BotController/bin/win64/BotController.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/BotState/BotState.dll",
+        "game/csgo/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.dll"
+      ],
+      "unchangedNadeFiles": 48,
+      "targetBuild": {
+        "PatchVersion": "1.41.9.4",
+        "ClientVersion": "2000939",
+        "buildId": "26334290"
+      }
+    }
+  ],
+  "scope": "All other payload targets, profiles, MatchSetup/Aim/Human dependencies remain unchanged relative to sealed 14193 sources"
+}
