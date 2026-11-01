@@ -1,0 +1,106 @@
+diff --git a/NadeSystem.cs b/NadeSystem.cs
+--- a/NadeSystem.cs
++++ b/NadeSystem.cs
+@@ -32,6 +32,7 @@ public partial class NadeSystemPlugin : BasePlugin
+     private string DataDir => Path.Combine(ModuleDirectory, "grenades");
+     // precache all the nades on this map
+     private List<GrenadeData> _mapNades = new();
++    private readonly Dictionary<(string Id, string? Type), GrenadeData> _mapNadesById = new();
+     // Static trigger-zone index rebuilt whenever the active map data is loaded
+     private const float GrenadeZoneGridSize = 256f;
+     private Dictionary<(int X, int Y), List<GrenadeData>> _grenadeZoneGrid = new();
+diff --git a/NadeSystemPlugin.Data.cs b/NadeSystemPlugin.Data.cs
+--- a/NadeSystemPlugin.Data.cs
++++ b/NadeSystemPlugin.Data.cs
+@@ -68,17 +68,23 @@ private void LoadDb()
+         _mapNades = _db
+             .Where(g => string.Equals(g.MapName, Server.MapName, StringComparison.OrdinalIgnoreCase))
+             .ToList();
+-        BuildGrenadeZoneGrid();
++        BuildGrenadeIndexes();
+         Server.PrintToConsole($"[NadeSystem] Loaded {loaded} grenades from {DataDir}");
+         LogEvidence("database-loaded");
+     }
+ 
+-    // * Builds ordered grid buckets for every trigger zone overlapping each cell
+-    private void BuildGrenadeZoneGrid()
++    // * Rebuilds record lookups and ordered trigger-zone buckets for the active map
++    private void BuildGrenadeIndexes()
+     {
++        _mapNadesById.Clear();
+         _grenadeZoneGrid.Clear();
+         foreach (var grenade in _mapNades)
+         {
++            // Preserve FirstOrDefault order, including IDs shared by different types.
++            // GrenadeType has already been normalized by LoadDb.
++            _mapNadesById.TryAdd((grenade.Id, null), grenade);
++            _mapNadesById.TryAdd((grenade.Id, grenade.GrenadeType), grenade);
++
+             float radius = grenade.GrenadeType == "decoy" ? 200f : grenade.ZoneRadius;
+             var minCell = GetGrenadeZoneGridCell(grenade.ZoneX - radius, grenade.ZoneY - radius);
+             var maxCell = GetGrenadeZoneGridCell(grenade.ZoneX + radius, grenade.ZoneY + radius);
+@@ -98,6 +104,9 @@ private void BuildGrenadeZoneGrid()
+         }
+     }
+ 
++    private GrenadeData? FindMapGrenade(string id, string? type = null)
++        => _mapNadesById.GetValueOrDefault((id, type));
++
+     // * Converts world coordinates to a stable grid key including negative coordinates
+     private static (int X, int Y) GetGrenadeZoneGridCell(float x, float y)
+     {
+diff --git a/NadeSystemPlugin.Decision.cs b/NadeSystemPlugin.Decision.cs
+--- a/NadeSystemPlugin.Decision.cs
++++ b/NadeSystemPlugin.Decision.cs
+@@ -93,9 +93,7 @@ private bool PassesSituationalCheck(
+                 foreach (var cd in _cooldowns)
+                 {
+                     if (cd.ExpiresAt <= now) continue;
+-                    var smokeRecord = _mapNades.FirstOrDefault(d =>
+-                        d.Id == cd.GrenadeId &&
+-                        string.Equals(d.GrenadeType, "smoke", StringComparison.OrdinalIgnoreCase));
++                    var smokeRecord = FindMapGrenade(cd.GrenadeId, "smoke");
+                     if (smokeRecord == null) continue;
+                     float sx = smokeRecord.LandingPosition.X;
+                     float sy = smokeRecord.LandingPosition.Y;
+@@ -142,7 +140,7 @@ private bool PassesSituationalCheck(
+             //  Smoke Overlap Check < 250u
+             bool tooClose = _cooldowns
+                 .Where(c => c.ExpiresAt > Server.CurrentTime)
+-                .Select(c => _mapNades.FirstOrDefault(d => d.Id == c.GrenadeId))
++                .Select(c => FindMapGrenade(c.GrenadeId))
+                 .Any(d => d != null
+                        && string.Equals(d.GrenadeType, "smoke", StringComparison.OrdinalIgnoreCase)
+                        && Dist3D(lx, ly, lz, d.LandingPosition.X, d.LandingPosition.Y, d.LandingPosition.Z) < 250f);
+diff --git a/NadeSystemPlugin.ZoneDetection.cs b/NadeSystemPlugin.ZoneDetection.cs
+--- a/NadeSystemPlugin.ZoneDetection.cs
++++ b/NadeSystemPlugin.ZoneDetection.cs
+@@ -103,7 +103,7 @@ private void CheckBotZones()
+                     float lx = g.LandingPosition.X, ly = g.LandingPosition.Y, lz = g.LandingPosition.Z;
+                     bool tooClose = _cooldowns
+                         .Where(c => c.ExpiresAt > Server.CurrentTime)
+-                        .Select(c => _mapNades.FirstOrDefault(d => d.Id == c.GrenadeId))
++                        .Select(c => FindMapGrenade(c.GrenadeId))
+                         .Any(d => d != null
+                                && string.Equals(d.GrenadeType, "smoke", StringComparison.OrdinalIgnoreCase)
+                                && Dist3D(lx, ly, lz, d.LandingPosition.X, d.LandingPosition.Y, d.LandingPosition.Z) < 100f);
+@@ -148,8 +148,7 @@ private void CheckBotZones()
+                             bool intoSmoke = _cooldowns.Any(cd =>
+                             {
+                                 if (cd.ExpiresAt <= now) return false;
+-                                var s = _mapNades.FirstOrDefault(d => d.Id == cd.GrenadeId
+-                                    && string.Equals(d.GrenadeType, "smoke", StringComparison.OrdinalIgnoreCase));
++                                var s = FindMapGrenade(cd.GrenadeId, "smoke");
+                                 if (s == null) return false;
+                                 float ddx = lx - s.LandingPosition.X;
+                                 float ddy = ly - s.LandingPosition.Y;
+@@ -205,8 +204,7 @@ private void CheckBotZones()
+                 float viewOffsetZLeave = 64f;
+                 currentInZone.RemoveWhere(gid =>
+                 {
+-                    var rec = mapNades.FirstOrDefault(x => x.Id == gid
+-                        && string.Equals(x.GrenadeType, "flash", StringComparison.OrdinalIgnoreCase));
++                    var rec = FindMapGrenade(gid, "flash");
+                     if (rec == null) return true;
+                     float dx  = pos.X - rec.ZoneX;
+                     float dy  = pos.Y - rec.ZoneY;

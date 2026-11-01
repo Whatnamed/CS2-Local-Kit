@@ -1,0 +1,131 @@
+diff --git a/src/features/controller/BotController.cpp b/src/features/controller/BotController.cpp
+--- a/src/features/controller/BotController.cpp
++++ b/src/features/controller/BotController.cpp
+@@ -18,7 +18,6 @@
+ #include <cstdio>
+ #include <cmath>
+ #include <cstring>
+-#include <mutex>
+ #include <string>
+ 
+ namespace tg = cs2bc::offsets;
+@@ -37,10 +36,6 @@ void** g_entityIdentityChunks = nullptr;
+ bool g_installed = false;
+ std::string g_status = "not_attempted"; // NOLINT(bugprone-throwing-static-initialization)
+ 
+-// slot -> last CCSBot* seen in Update (for profile reads by slot)
+-void* g_slotToBot[64] = { nullptr };
+-std::mutex g_slotToBotMu;
+-
+ cs2_sdk::hooks::NativeHook<void, void*> g_hookUpdate;
+ cs2_sdk::hooks::NativeHook<void, void*> g_hookUpkeep;
+ cs2_sdk::hooks::NativeHook<void, void*> g_hookUpdateLookAngles;
+@@ -132,12 +127,8 @@ bool ApplyReplayEyeAnglesInternal(void* pawn, float pitch, float yaw)
+ // Skip the Bot tick under All lock OR while replaying
+ KHook::Return<void> HookedUpdate(void* bot) noexcept
+ {
++    if (!bot_controller_state::HasAnyLock() && !motion_recorder::HasAnyReplay()) return { KHook::Action::Ignore };
+     int slot = CCSBotToSlot(bot);
+-    if (slot >= 0 && slot < 64)
+-    {
+-        std::scoped_lock lk(g_slotToBotMu);
+-        g_slotToBot[slot] = bot;
+-    }
+     if (slot >= 0 && (bot_controller_state::GetAll(slot) || motion_recorder::IsReplaying(slot)))
+     {
+         const uint8_t ticked = 1;
+@@ -280,11 +271,6 @@ void Remove()
+     g_hookUpdate.Remove();
+     g_installed = false;
+     g_status = "not_attempted";
+-    {
+-        std::scoped_lock lk(g_slotToBotMu);
+-        for (auto& i : g_slotToBot)
+-            i = nullptr;
+-    }
+ }
+ 
+ const char* Status() { return g_status.c_str(); }
+@@ -294,13 +280,5 @@ void* UpdateLookAnglesAddress() { return g_addrUpdateLookAngles; }
+ 
+ // Publishes a replay angle without depending on the bot upkeep path.
+ bool ApplyReplayEyeAngles(void* pawn, float pitch, float yaw) { return ApplyReplayEyeAnglesInternal(pawn, pitch, yaw); }
+-
+-// Last CCSBot* seen in Update for this slot
+-void* BotForSlot(int slot)
+-{
+-    if (slot < 0 || slot >= 64) return nullptr;
+-    std::scoped_lock lk(g_slotToBotMu);
+-    return g_slotToBot[slot];
+-}
+ } // namespace bot_controller_hooks
+ } // namespace cs2bc
+diff --git a/src/features/controller/BotController.h b/src/features/controller/BotController.h
+--- a/src/features/controller/BotController.h
++++ b/src/features/controller/BotController.h
+@@ -23,9 +23,5 @@ void* UpdateLookAnglesAddress();
+ 
+ // Publishes replay-owned eye angles through the current engine path.
+ bool ApplyReplayEyeAngles(void* pawn, float pitch, float yaw);
+-
+-// Last CCSBot* seen in Update for this slot, or nullptr. Used to read
+-// the bot's BotProfile by slot.
+-void* BotForSlot(int slot);
+ } // namespace bot_controller_hooks
+ } // namespace cs2bc
+diff --git a/src/features/profile/BotProfile.cpp b/src/features/profile/BotProfile.cpp
+--- a/src/features/profile/BotProfile.cpp
++++ b/src/features/profile/BotProfile.cpp
+@@ -1,9 +1,14 @@
+ // Read a bot's BotProfile by slot. CCSBot* -> +kBot_Profile -> members.
+ 
+ #include "BotProfile.h"
+-#include "BotController.h"
+ #include "ccsbot_slot.h"
++#include "core/cs2_sdk/src/core/schema.h"
+ #include "offsets.h"
++#include "plugin.h"
++
++#include <engine2/isource2server.h>
++#include <game/entitynetworkable.h>
++#include <entityhandle.h>
+ 
+ #include <algorithm>
+ #include <cstring>
+@@ -12,13 +17,31 @@ namespace tg = cs2bc::offsets;
+ 
+ namespace cs2bc {
+ namespace bot_profile {
+-// Read profile members off a live bot for this slot
++// Resolves the current bot only when its profile is requested.
+ bool ReadProfile(int slot, BotProfileData& out)
+ {
+-    void* bot = bot_controller_hooks::BotForSlot(slot);
+-    if (!bot) return false;
+-    // Guard against a stale pointer: it must still resolve to this slot
+-    if (CCSBotToSlot(bot) != slot) return false;
++    if (slot < 0 || slot >= 64 || !g_SMAPI) return false;
++    auto* server = static_cast<ISource2Server*>(g_SMAPI->GetServerFactory()(INTERFACEVERSION_SERVERGAMEDLL, nullptr));
++    if (!server) return false;
++
++    Entity2Networkable_t controller{};
++    if (!server->GetEntity2Networkable(CEntityIndex(slot + 1), &controller) || !controller.m_pEntityInstance) return false;
++    uint32_t pawnHandle = 0;
++    const int controllerPawn = cs2_sdk::schema::GetFieldOffset("CBasePlayerController", "m_hPawn");
++    if (!GuardedRead(controller.m_pEntityInstance, controllerPawn, pawnHandle) || pawnHandle == 0 || pawnHandle == 0xFFFFFFFFU)
++        return false;
++
++    Entity2Networkable_t pawn{};
++    if (!server->GetEntity2Networkable(CEntityIndex(CEntityHandle(pawnHandle).GetEntryIndex()), &pawn) || !pawn.m_pEntity ||
++        !pawn.m_pEntityInstance || pawn.m_pEntity->GetRefEHandle().ToInt() != pawnHandle || !pawn.m_pszCPPClassname ||
++        std::strcmp(pawn.m_pszCPPClassname, "CCSPlayerPawn") != 0)
++        return false;
++
++    void* bot = nullptr;
++    const int pawnBot = cs2_sdk::schema::GetFieldOffset("CCSPlayerPawn", "m_pBot");
++    if (!GuardedRead(pawn.m_pEntityInstance, pawnBot, bot) || !bot) return false;
++    const auto resolved = ResolveSlot(bot);
++    if (resolved.slot != slot || resolved.pawn != pawn.m_pEntityInstance) return false;
+ 
+     void* prof = nullptr;
+     if (!GuardedRead(bot, tg::g_botProfile, prof)) return false;
