@@ -13,8 +13,11 @@ old=importlib.util.module_from_spec(spec);spec.loader.exec_module(old)
 
 
 def run(review_name='review-14193.json'):
-    source=Path('E:/CS2MOD/releases/bot-experiment/bot-integrated-14192-medium-eda1676')
-    digest='3542f17be9d9a7e04a3408d7816cf1a68124ffc7c0b2cadfa5b252cfa68341d1'
+    approved=tx.read_json(tx.REPO/'scripts/compatibility'/review_name)
+    catalog=tx.read_json(tx.REPO/'src/CS2LocalKit.App/BotCandidates.json')
+    candidate=next(c for c in catalog if c['ManifestSha256'] in approved['sourceManifests'])
+    source=Path('E:/CS2MOD/releases/bot-experiment')/candidate['Directory']
+    digest=candidate['ManifestSha256']
     home,root,package,backups,m,expected=old.fixture(source,digest)
     tx.MARKER=tx.INTEGRATION_MARKER
     installed=tx.install(package,expected,root,backups,apply=True,fake=True,preserve_human=True)
@@ -22,7 +25,7 @@ def run(review_name='review-14193.json'):
     original_record=tx.read_json(backup/'install-record.json')
     frozen=tx.sha(backup/'candidate-manifest.json')
     parent_images={p['backupDir']:tx.inventory(p['backupDir']) for p in m['runtimeIntegration']['parents'].values()}
-    review=copy.deepcopy(tx.read_json(tx.REPO/'scripts/compatibility'/review_name))
+    review=copy.deepcopy(approved)
     review['sourceManifests']=[expected]
     before=tx.inventory(root)
     for p,v in review['retainedFiles'].items():
@@ -30,7 +33,7 @@ def run(review_name='review-14193.json'):
         old.write(root/p, ('updated binary '+p) if p!='game/csgo/steam.inf' else f"PatchVersion={review['targetBuild']['PatchVersion']}\nClientVersion={review['targetBuild']['ClientVersion']}\n")
         v['after']=tx.sha(root/p)
     acf=root.parent.parent/'appmanifest_730.acf'
-    acf.write_text(acf.read_text().replace('26144732',review['targetBuild']['buildId']))
+    acf.write_text(acf.read_text().replace(m['targetBuild']['buildId'],review['targetBuild']['buildId']))
     review['gameBinaries']={p:tx.sha(root/p) for p in tx.GAME_BINARIES}
     read_json=tx.read_json
     def read(path):

@@ -1,0 +1,266 @@
+{
+  "checkedAt": "2026-11-03",
+  "sources": [
+    {
+      "url": "https://api.github.com/repos/roflmuffin/CounterStrikeSharp/commits?per_page=8",
+      "commits": [
+        {
+          "sha": "b517fb2b7dd0a3658aab211ab6eae44dba4f76b1",
+          "date": "2026-11-02T23:45:46Z",
+          "subject": "fix: key memory function caches by argument and return types (#1476)"
+        },
+        {
+          "sha": "f58e383b0553be16c0f8c6dd68a8194de17691e9",
+          "date": "2026-10-31T01:13:57Z",
+          "subject": "release: v1.0.379"
+        },
+        {
+          "sha": "5cbbd91347cee9f1aa009809a5b6fafbd92c4d22",
+          "date": "2026-10-30T12:49:23Z",
+          "subject": "chore: Update Schema Definitions to 1.41.9.3 (#1471)"
+        },
+        {
+          "sha": "57a2b06afafccffceb4a4828190b8bc7d7b89c85",
+          "date": "2026-10-30T04:00:50Z",
+          "subject": "fix: do not persist failed entity list lookup (#1475)"
+        },
+        {
+          "sha": "34c633f15887795d00de10ce1f6539e7367d5e56",
+          "date": "2026-10-28T01:07:24Z",
+          "subject": "chore: update game events after 1.41.9.2"
+        },
+        {
+          "sha": "d2b99dc16803494c641996bb11439b4fabe649d0",
+          "date": "2026-10-28T01:05:07Z",
+          "subject": "chore: fix line endings in schema generator"
+        },
+        {
+          "sha": "d8f6a3ecd172b88fae592a5021eea52091090755",
+          "date": "2026-10-28T01:03:40Z",
+          "subject": "fix: stale schema networked flags when accessed early (#1473)"
+        },
+        {
+          "sha": "cf237b32a061fdb47b5e792fda6d39dd872abd0f",
+          "date": "2026-10-25T05:20:44Z",
+          "subject": "docs: add real ConVar example doc"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/ed0ard/CS2-Bot-Improver/releases/latest",
+      "tag": "v1.4.7",
+      "body": "1. Updated signatures and offsets for Windows and Linux\r\n\r\n2. Improved performance (FPS) comprehensively\r\n\r\n3. Enhanced robustness\r\n\r\n4. Added version detection to the Panel\r\n\r\n5. Bug fixes\r\n\r\nThanks to @unicbm, @XBribo, @Newbie046 and @dependabot!"
+    },
+    {
+      "url": "https://api.github.com/repos/ed0ard/CS2-Bot-Improver/commits?per_page=5",
+      "commits": [
+        {
+          "sha": "825aa4d2a345098e37c195c099f7b2b9d6bdfcce",
+          "date": "2026-11-01T15:48:46Z",
+          "subject": "Added Signature Status section to README.zh-CN.md"
+        },
+        {
+          "sha": "82d22311083cabece706f7382798fd61f65dc6ff",
+          "date": "2026-11-01T15:46:44Z",
+          "subject": "Updated README.ru.md"
+        },
+        {
+          "sha": "c38a90690e4b6852d8e6c24ac4de73d2d03e1457",
+          "date": "2026-11-01T15:42:50Z",
+          "subject": "Updated README.md"
+        },
+        {
+          "sha": "71d83a4723765dde2f21dd16728b6297dd005237",
+          "date": "2026-10-29T05:05:57Z",
+          "subject": "docs: Update README.md"
+        },
+        {
+          "sha": "7418d54ad7ea9cae662295b8e2915b49531eac0b",
+          "date": "2026-10-29T04:48:12Z",
+          "subject": "docs: Update README.md"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/ianlucas/cs2-css-inventory-simulator/commits?per_page=5",
+      "commits": [
+        {
+          "sha": "d7b866f34bcd5ed44d18fe3f0270f847baf07384",
+          "date": "2026-10-23T19:44:42Z",
+          "subject": "Fix native return types for void functions (#165)"
+        },
+        {
+          "sha": "9f785fd28b5c048b8b047a1fb6c9117fa9d9ae8d",
+          "date": "2026-10-23T18:19:32Z",
+          "subject": "Replace ProcessUsercmds hook with button listener for spray on use (#164)"
+        },
+        {
+          "sha": "3e1929a49af46dcadc86fe7f0d7e5125b19bcb32",
+          "date": "2026-10-15T17:00:11Z",
+          "subject": "Use game items for disabled pets and loadout weapons without skins (#162)"
+        },
+        {
+          "sha": "62dd330a9867fef9c779d40e3c3da1d3d3e52709",
+          "date": "2026-10-12T21:28:07Z",
+          "subject": "Add loadouts (#161)"
+        },
+        {
+          "sha": "3c7eec5b923eba202543c425e1cf25555219546d",
+          "date": "2026-10-08T23:36:48Z",
+          "subject": "Update signatures (#155)"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/alliedmodders/metamod-source/commits?per_page=5",
+      "commits": [
+        {
+          "sha": "f50dfae6281bdd50473f470c41d9b2c8c0561466",
+          "date": "2026-11-01T16:34:52Z",
+          "subject": "Add outbreak build"
+        },
+        {
+          "sha": "6eca3cf05cfd4492e0ca274320e3d347f9c23258",
+          "date": "2026-11-01T16:29:58Z",
+          "subject": "Merge branch 'master' of https://github.com/alliedmodders/metamod-source"
+        },
+        {
+          "sha": "170058a2f0dbd58106b7c76bfe88a94672295356",
+          "date": "2026-10-18T20:21:35Z",
+          "subject": "Bump khook with the latest changes"
+        },
+        {
+          "sha": "10e6014a792acee6f48fa7282eaa6f24cc485652",
+          "date": "2026-10-18T19:30:18Z",
+          "subject": "Avoid closing null plugin library handles (#292)"
+        },
+        {
+          "sha": "a9bd24e8ef57bf2958bc690d71ac1dee026631e8",
+          "date": "2026-10-18T18:20:14Z",
+          "subject": "Update dll2lib script for VS 2026 tools"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/Ayrton09/AstraSkins/commits?per_page=3",
+      "commits": [
+        {
+          "sha": "2ded7844069f1d5764e1e56f77cabc298a20bc1f",
+          "date": "2026-10-29T18:17:08Z",
+          "subject": "Bump version to 1.2.4"
+        },
+        {
+          "sha": "ab96bfb81a966822da6ecb0534a58dd249b7bfa3",
+          "date": "2026-10-29T18:17:03Z",
+          "subject": "Update MySqlConnector to 2.6.2 and build against CounterStrikeSharp 1.0.378"
+        },
+        {
+          "sha": "b70caec7e83e8cb4873bbff86b517ce786006413",
+          "date": "2026-10-29T18:16:56Z",
+          "subject": "Show Doppler phases in skin names"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/ed0ard/CS2-Bot-NadeSystem/commits?per_page=3",
+      "commits": [
+        {
+          "sha": "7605f272d0500a7bad5b6294555485c7721a40da",
+          "date": "2026-10-24T07:56:41Z",
+          "subject": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "7ef85d75a4a242001b55ba94e65bbfc4ac56db90",
+          "date": "2026-10-24T07:56:07Z",
+          "subject": "Updated version and author"
+        },
+        {
+          "sha": "717647b64fe471fe3fefa9a17e390a0bfefc312c",
+          "date": "2026-10-24T07:38:33Z",
+          "subject": "Fixed a sig on Linux"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/Staaar0/WeaponSkins/commits?per_page=3",
+      "commits": [
+        {
+          "sha": "0e41961bf2e35a334ae726998b53d5dc01b1f0c3",
+          "date": "2026-11-01T23:25:16Z",
+          "subject": "⠀"
+        },
+        {
+          "sha": "1a056277e8d2ccc1c77987e2119433b3d382c5b8",
+          "date": "2026-11-01T03:32:36Z",
+          "subject": "⠀"
+        },
+        {
+          "sha": "552f277b061db5fb9e7f8ea4fdeb030b82cd0177",
+          "date": "2026-11-01T03:30:47Z",
+          "subject": "⠀"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/Nereziel/cs2-WeaponPaints/commits?per_page=3",
+      "commits": [
+        {
+          "sha": "3b2eb5f96db976ff2b1def91debbc2f399859867",
+          "date": "2026-11-02T11:53:40Z",
+          "subject": "chore: update dependencies and build actions"
+        },
+        {
+          "sha": "43e68b4bec764f3298800dfa76979bf7ec57ecb5",
+          "date": "2026-11-02T11:51:46Z",
+          "subject": "chore: add Dependabot configuration"
+        },
+        {
+          "sha": "c55a0fa5fc59ef3f2b363ece1a5417c0f401b153",
+          "date": "2026-10-23T06:20:23Z",
+          "subject": "Revise README for WeaponPaints plugin"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/XBribo/CS2-Bot-Controller/commits?per_page=3",
+      "commits": [
+        {
+          "sha": "7211791c31978ba3bb77f4b4739dcad10b0c571a",
+          "date": "2026-10-28T07:15:36Z",
+          "subject": "Merge pull request #26 from XBribo/dependabot/submodules/src/core/cs2_sdk-d524aa9"
+        },
+        {
+          "sha": "bd65ee0a50bffcf75eaa1898eadf0c0f67f05760",
+          "date": "2026-10-28T01:06:47Z",
+          "subject": "build(deps): bump src/core/cs2_sdk from `6250f6f` to `d524aa9`"
+        },
+        {
+          "sha": "c48bd0bcd053ed29e093c8a210a5a1b4aab55021",
+          "date": "2026-10-27T13:07:56Z",
+          "subject": "Merge pull request #25 from XBribo/dependabot/submodules/src/core/cs2_sdk-6250f6f"
+        }
+      ]
+    },
+    {
+      "url": "https://api.github.com/repos/ed0ard/CS2-Bullseye-Bot/commits?per_page=3",
+      "commits": [
+        {
+          "sha": "c5a2e0f402f151336c820b7efc1b895aa087a953",
+          "date": "2026-10-24T08:32:25Z",
+          "subject": "Merge pull request #17 from XBribo/main"
+        },
+        {
+          "sha": "b6185993038b611ea88fb696797bde9a3524544b",
+          "date": "2026-10-24T08:28:02Z",
+          "subject": "Updated CounterStrikeSharp.API package version"
+        },
+        {
+          "sha": "fc0268704598ff7edafb6b1b0d7a4277763ca704",
+          "date": "2026-10-24T08:27:21Z",
+          "subject": "Updated version"
+        }
+      ]
+    }
+  ],
+  "decision": "Retain all pinned runtime payloads. No new build-specific Windows signature or used Schema break was found. CSS 1.0.379 and main cache fix do not establish a required runtime upgrade for this build."
+}

@@ -1,0 +1,23 @@
+{
+  "method": "Static identifier presence only, no ABI/load proof",
+  "interfaces": {
+    "game/bin/win64/engine2.dll": {
+      "Source2EngineToServer001": true,
+      "GameResourceServiceServerV001": true,
+      "NetworkServerService_001": true
+    },
+    "game/csgo/bin/win64/server.dll": {
+      "Source2Server001": true,
+      "Source2GameEntities001": true
+    },
+    "game/bin/win64/schemasystem.dll": {
+      "SchemaSystem_001": true
+    }
+  },
+  "status": "PASS",
+  "aimInstructionShapeUnchanged": true,
+  "aimInstructionCount": 429,
+  "aimMethod": "Compare mnemonics and operands except relocated branch targets and RIP-relative references; not ABI proof",
+  "aimRva": "0x2e5190",
+  "previousAimRva": "2e51a0"
+}

@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "readOnly": true,
+  "actualGameModified": false,
+  "installId": "177e9652205d4d75a4cda34d76934547",
+  "state": "installed",
+  "entries": 685,
+  "postRestoreBaselineComparison": {
+    "targetBuild": true,
+    "baselineFiles": true,
+    "gameBinaries": true,
+    "moduleInventory": true,
+    "runtimeIntegration": true,
+    "humanFiles": true
+  },
+  "parents": {
+    "bot": "b613a8c709c7440998346cb802bb790f",
+    "compat": "5808afffdc44440ab3f0de2159cdb436",
+    "nades": "9f9849ca97804c2dbd7b1307bba4580c"
+  }
+}

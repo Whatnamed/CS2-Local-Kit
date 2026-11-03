@@ -11,6 +11,7 @@ public class BuildCompatibility14193Tests
     [Theory]
     [InlineData("Review14193")]
     [InlineData("Review14194")]
+    [InlineData("Review14195")]
     public void ReviewedViewKeepsFrozenSourceAndChecksExactBinaryIdentity(string reviewName)
     {
         using var review=Review(reviewName);var r=review.RootElement;
@@ -19,12 +20,12 @@ public class BuildCompatibility14193Tests
         var digest=r.GetProperty("sourceManifests")[1].GetString()!;
         var steam=new SteamInstallState(true,"idle",r.GetProperty("targetBuild").GetProperty("buildId").GetString()!,r.GetProperty("targetBuild").GetProperty("PatchVersion").GetString()!,r.GetProperty("targetBuild").GetProperty("ClientVersion").GetString()!);
         Assert.True(RuntimeIntegrationGuard.IsReviewedSource(digest,steam.PatchVersion));
-        Assert.False(RuntimeIntegrationGuard.IsReviewedSource(digest,"1.41.9.5"));
+        Assert.False(RuntimeIntegrationGuard.IsReviewedSource(digest,"1.41.9.6"));
         string Hash(string p)=>r.GetProperty("gameBinaries").GetProperty(p).GetString()!;
         using var m=RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam,r,Hash);
         Assert.Equal(steam.BuildId,m.RootElement.GetProperty("targetBuild").GetProperty("buildId").GetString());
         using var original=JsonDocument.Parse(raw);
-        Assert.Equal("26144732",original.RootElement.GetProperty("targetBuild").GetProperty("buildId").GetString());
+        Assert.True(JsonElement.DeepEquals(r.GetProperty("previousBuild"),original.RootElement.GetProperty("targetBuild")));
         foreach(var p in r.GetProperty("retainedFiles").EnumerateObject())
         {
             using var entry=JsonDocument.Parse(JsonSerializer.Serialize(new{target=p.Name,action="retained",before=new{kind="file",sha256=p.Value.GetProperty("before").GetString()},after=new{kind="file",sha256=p.Value.GetProperty("before").GetString()}}));
@@ -37,7 +38,7 @@ public class BuildCompatibility14193Tests
         Assert.Throws<InvalidDataException>(()=>RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam with{Idle=false},r,Hash));
         using var unknown=RuntimeIntegrationGuard.ReviewedBuild(raw,"unlisted",steam,r,Hash);
         Assert.False(unknown.RootElement.TryGetProperty("reviewedRetainedFiles",out _));
-        using var future=RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam with{PatchVersion="1.41.9.5"},r,Hash);
+        using var future=RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam with{PatchVersion="1.41.9.6"},r,Hash);
         Assert.False(future.RootElement.TryGetProperty("reviewedRetainedFiles",out _));
     }
 }

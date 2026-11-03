@@ -15,7 +15,7 @@ public static class RuntimeIntegrationGuard
     }
     private static JsonDocument? Review(string patchVersion)
     {
-        var resource = patchVersion switch { "1.41.9.3" => "Review14193", "1.41.9.4" => "Review14194", _ => null };
+        var resource = patchVersion switch { "1.41.9.3" => "Review14193", "1.41.9.4" => "Review14194", "1.41.9.5" => "Review14195", _ => null };
         return resource is null ? null : JsonDocument.Parse(typeof(RuntimeIntegrationGuard).Assembly.GetManifestResourceStream("CS2LocalKit."+resource+".json")!);
     }
     public static JsonDocument ReadManifest(string root, string path)

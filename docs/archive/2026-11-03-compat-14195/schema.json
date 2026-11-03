@@ -1,0 +1,1957 @@
+{
+  "serverSha256": "7e88b23196b0a746d99c7c622f947b96c25de61cc4d921d8dda79e515c4b48a8",
+  "method": "Read-only static schema registration, unique class-name reference with classSize at +24, fieldCount +28 and fieldTable VA +40; all 32-byte records parsed and every field offset checked within class bounds; selected raw records retained. Inheritance uses baseCount +33 and baseTable +48 with 16-byte base records. No DLL load or live SchemaSystem query; private native layouts remain unproven.",
+  "bindings": [
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSBot",
+      "fieldName": "m_bEyeAnglesUnderPathFinderControl"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBot",
+      "fieldName": "m_pPlayer"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CEntityInstance",
+      "fieldName": "m_pEntity"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_MoveType"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_nActualMoveType"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_fFlags"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_vecAbsVelocity"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_CBodyComponent"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBodyComponent",
+      "fieldName": "m_pSceneNode"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CGameSceneNode",
+      "fieldName": "m_vecAbsOrigin"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pWeaponServices"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pItemServices"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pMovementServices"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_hController"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayerPawnBase",
+      "fieldName": "m_hOriginalController"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "v_angle"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "v_anglePrevious"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_ServerViewAngleChanges"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayerPawn",
+      "fieldName": "m_angEyeAngles"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CPlayer_WeaponServices",
+      "fieldName": "m_hActiveWeapon"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_vecLadderNormal"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CPlayer_MovementServices",
+      "fieldName": "m_vecOldViewAngles"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_bDucked"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_flDuckAmount"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_flDuckSpeed"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_bDesiresDuck"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CCSPlayer_MovementServices",
+      "fieldName": "m_bDucking"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CGameSceneNode",
+      "fieldName": "m_angAbsRotation"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CEconEntity",
+      "fieldName": "m_AttributeManager"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CAttributeContainer",
+      "fieldName": "m_Item"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CEconItemView",
+      "fieldName": "m_iItemDefinitionIndex"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CPlayer_MovementServices",
+      "fieldName": "m_nButtons"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/core/offsets.cpp",
+      "className": "CInButtonState",
+      "fieldName": "m_pButtonStates"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/features/weapons/WeaponLocker.cpp",
+      "className": "CBasePlayerController",
+      "fieldName": "m_hPawn"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/features/weapons/WeaponLocker.cpp",
+      "className": "CCSPlayerPawn",
+      "fieldName": "m_pBot"
+    },
+    {
+      "component": "BotController",
+      "source": "addons/BotController/src/features/weapons/WeaponLocker.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_lifeState"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_fFlags"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_iTeamNum"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CBasePlayerController",
+      "fieldName": "m_hPawn"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/core/offsets.cpp",
+      "className": "CCSPlayerController",
+      "fieldName": "m_hPlayerPawn"
+    },
+    {
+      "component": "BotHider",
+      "source": "addons/BotHider/src/features/identity/identity_hooks.cpp",
+      "className": "CCSGameRules",
+      "fieldName": "m_bPickNewTeamsOnReset"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_pWeaponServices"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CPlayer_WeaponServices",
+      "fieldName": "m_hActiveWeapon"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CBasePlayerWeapon",
+      "fieldName": "m_AttributeManager"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CAttributeContainer",
+      "fieldName": "m_Item"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/bullet/BulletVision.cpp",
+      "className": "CEconItemView",
+      "fieldName": "m_iItemDefinitionIndex"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/he/HeVision.cpp",
+      "className": "CBaseEntity",
+      "fieldName": "m_CBodyComponent"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/he/HeVision.cpp",
+      "className": "CBodyComponent",
+      "fieldName": "m_pSceneNode"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/he/HeVision.cpp",
+      "className": "CGameSceneNode",
+      "fieldName": "m_vecAbsOrigin"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/smoke/SmokeVision.cpp",
+      "className": "CBasePlayerPawn",
+      "fieldName": "m_hController"
+    },
+    {
+      "component": "BotVision",
+      "source": "addons/BotVision/src/features/smoke/SmokeVision.cpp",
+      "className": "CBot",
+      "fieldName": "m_pPlayer"
+    }
+  ],
+  "classes": [
+    {
+      "name": "CCSPlayerPawn",
+      "classSize": "0x15d0",
+      "fieldCount": 106,
+      "classNameRefFileOffset": "0x1da5278",
+      "fieldTableVa": "0x181da5240",
+      "fields": [
+        {
+          "name": "m_pBot",
+          "offset": "0x1500",
+          "recordFileOffset": "0x1da4de0",
+          "rawRecord": "50 76 79 81 01 00 00 00 00 00 00 00 00 00 00 00 00 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_angEyeAngles",
+          "offset": "0x15b4",
+          "recordFileOffset": "0x1da5160",
+          "rawRecord": "f8 79 79 81 01 00 00 00 16 00 00 00 00 00 00 f0 b4 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSGameRules",
+      "classSize": "0x11450",
+      "fieldCount": 191,
+      "classNameRefFileOffset": "0x1e07738",
+      "fieldTableVa": "0x181e0b4e0",
+      "fields": [
+        {
+          "name": "m_bFreezePeriod",
+          "offset": "0xd8",
+          "recordFileOffset": "0x1e0a6e0",
+          "rawRecord": "70 a7 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 d8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bWarmupPeriod",
+          "offset": "0xd9",
+          "recordFileOffset": "0x1e0a700",
+          "rawRecord": "80 a7 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 d9 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_totalRoundsPlayed",
+          "offset": "0x120",
+          "recordFileOffset": "0x1e0a980",
+          "rawRecord": "50 aa 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 20 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bPickNewTeamsOnReset",
+          "offset": "0xdc6",
+          "recordFileOffset": "0x1e0b200",
+          "rawRecord": "30 b4 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 c6 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSBot",
+      "classSize": "0x5e38",
+      "fieldCount": 140,
+      "classNameRefFileOffset": "0x1da9a98",
+      "fieldTableVa": "0x181da9700",
+      "fields": [
+        {
+          "name": "m_bEyeAnglesUnderPathFinderControl",
+          "offset": "0x610",
+          "recordFileOffset": "0x1da8cc0",
+          "rawRecord": "38 30 7b 81 01 00 00 00 10 00 00 00 00 00 00 f0 10 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_targetSpot",
+          "offset": "0x5994",
+          "recordFileOffset": "0x1da9340",
+          "rawRecord": "e8 34 7b 81 01 00 00 00 00 00 00 00 00 00 00 00 94 59 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_enemy",
+          "offset": "0x5a00",
+          "recordFileOffset": "0x1da9480",
+          "rawRecord": "b8 35 7b 81 01 00 00 00 00 00 00 00 00 00 00 00 00 5a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_isEnemyVisible",
+          "offset": "0x5a04",
+          "recordFileOffset": "0x1da94a0",
+          "rawRecord": "c0 35 7b 81 01 00 00 00 10 00 00 00 00 00 00 f0 04 5a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBot",
+      "classSize": "0x100",
+      "fieldCount": 13,
+      "classNameRefFileOffset": "0x1daacd8",
+      "fieldTableVa": "0x181dab930",
+      "fields": [
+        {
+          "name": "m_pPlayer",
+          "offset": "0x18",
+          "recordFileOffset": "0x1daab50",
+          "rawRecord": "68 00 7c 81 01 00 00 00 00 00 00 00 00 00 00 00 18 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CEntityInstance",
+      "classSize": "0x30",
+      "fieldCount": 3,
+      "classNameRefFileOffset": "0x1e66da8",
+      "fieldTableVa": "0x181e67b40",
+      "fields": [
+        {
+          "name": "m_pEntity",
+          "offset": "0x10",
+          "recordFileOffset": "0x1e66d60",
+          "rawRecord": "08 90 93 81 01 00 00 00 00 00 00 00 00 00 00 00 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBaseEntity",
+      "classSize": "0x4a8",
+      "fieldCount": 85,
+      "classNameRefFileOffset": "0x1de3488",
+      "fieldTableVa": "0x181de33b0",
+      "fields": [
+        {
+          "name": "m_CBodyComponent",
+          "offset": "0x30",
+          "recordFileOffset": "0x1de25b0",
+          "rawRecord": "40 a7 81 81 01 00 00 00 00 00 00 00 00 00 00 00 30 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_lifeState",
+          "offset": "0x2d8",
+          "recordFileOffset": "0x1de27d0",
+          "rawRecord": "80 95 7c 81 01 00 00 00 07 00 00 00 00 00 00 f0 d8 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_MoveType",
+          "offset": "0x2f3",
+          "recordFileOffset": "0x1de2890",
+          "rawRecord": "c0 a8 81 81 01 00 00 00 00 00 00 00 00 00 00 00 f3 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nActualMoveType",
+          "offset": "0x2f5",
+          "recordFileOffset": "0x1de28d0",
+          "rawRecord": "f0 a8 81 81 01 00 00 00 00 00 00 00 00 00 00 00 f5 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iTeamNum",
+          "offset": "0x344",
+          "recordFileOffset": "0x1de2ab0",
+          "rawRecord": "28 42 7f 81 01 00 00 00 07 00 00 00 00 00 00 f0 44 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fFlags",
+          "offset": "0x388",
+          "recordFileOffset": "0x1de2bb0",
+          "rawRecord": "b0 fd 7a 81 01 00 00 00 0b 00 00 00 00 00 00 f0 88 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_vecAbsVelocity",
+          "offset": "0x38c",
+          "recordFileOffset": "0x1de2bd0",
+          "rawRecord": "68 aa 81 81 01 00 00 00 12 00 00 00 00 00 00 f0 8c 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBodyComponent",
+      "classSize": "0x78",
+      "fieldCount": 2,
+      "classNameRefFileOffset": "0x1da23f8",
+      "fieldTableVa": "0x181da31a0",
+      "fields": [
+        {
+          "name": "m_pSceneNode",
+          "offset": "0x8",
+          "recordFileOffset": "0x1da23a0",
+          "rawRecord": "00 6f 78 81 01 00 00 00 00 00 00 00 00 00 00 00 08 00 00 00 01 00 00 00 10 73 78 81 01 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CGameSceneNode",
+      "classSize": "0x110",
+      "fieldCount": 31,
+      "classNameRefFileOffset": "0x1def238",
+      "fieldTableVa": "0x181defc50",
+      "fields": [
+        {
+          "name": "m_vecAbsOrigin",
+          "offset": "0xc8",
+          "recordFileOffset": "0x1deef70",
+          "rawRecord": "20 71 83 81 01 00 00 00 00 00 00 00 00 00 00 00 c8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_angAbsRotation",
+          "offset": "0xd4",
+          "recordFileOffset": "0x1deef90",
+          "rawRecord": "30 71 83 81 01 00 00 00 16 00 00 00 00 00 00 f0 d4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBasePlayerPawn",
+      "classSize": "0xcd0",
+      "fieldCount": 25,
+      "classNameRefFileOffset": "0x1de39d8",
+      "fieldTableVa": "0x181de4410",
+      "fields": [
+        {
+          "name": "m_pWeaponServices",
+          "offset": "0xb10",
+          "recordFileOffset": "0x1de3610",
+          "rawRecord": "a8 c7 79 81 01 00 00 00 00 00 00 00 00 00 00 00 10 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_pItemServices",
+          "offset": "0xb18",
+          "recordFileOffset": "0x1de3630",
+          "rawRecord": "c0 c7 79 81 01 00 00 00 00 00 00 00 00 00 00 00 18 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_pMovementServices",
+          "offset": "0xb50",
+          "recordFileOffset": "0x1de3710",
+          "rawRecord": "50 5b 79 81 01 00 00 00 00 00 00 00 00 00 00 00 50 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_ServerViewAngleChanges",
+          "offset": "0xb60",
+          "recordFileOffset": "0x1de3730",
+          "rawRecord": "d0 aa 81 81 01 00 00 00 00 00 00 00 00 00 00 00 60 0b 00 00 01 00 00 00 c8 ae 81 81 01 00 00 00"
+        },
+        {
+          "name": "v_angle",
+          "offset": "0xbc8",
+          "recordFileOffset": "0x1de3750",
+          "rawRecord": "48 af 81 81 01 00 00 00 16 00 00 00 00 00 00 f0 c8 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "v_anglePrevious",
+          "offset": "0xbd4",
+          "recordFileOffset": "0x1de3770",
+          "rawRecord": "50 af 81 81 01 00 00 00 16 00 00 00 00 00 00 f0 d4 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_hController",
+          "offset": "0xc98",
+          "recordFileOffset": "0x1de3870",
+          "rawRecord": "c8 af 81 81 01 00 00 00 00 00 00 00 00 00 00 00 98 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSPlayerPawnBase",
+      "classSize": "0xe20",
+      "fieldCount": 15,
+      "classNameRefFileOffset": "0x1da51d8",
+      "fieldTableVa": "0x181da6110",
+      "fields": [
+        {
+          "name": "m_hOriginalController",
+          "offset": "0xe14",
+          "recordFileOffset": "0x1da54d0",
+          "rawRecord": "00 7c 79 81 01 00 00 00 00 00 00 00 00 00 00 00 14 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CPlayer_WeaponServices",
+      "classSize": "0xb0",
+      "fieldCount": 5,
+      "classNameRefFileOffset": "0x1e26018",
+      "fieldTableVa": "0x181e26d60",
+      "fields": [
+        {
+          "name": "m_hActiveWeapon",
+          "offset": "0x60",
+          "recordFileOffset": "0x1e25f80",
+          "rawRecord": "d0 a1 95 81 01 00 00 00 00 00 00 00 00 00 00 00 60 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSPlayer_MovementServices",
+      "classSize": "0xfe0",
+      "fieldCount": 50,
+      "classNameRefFileOffset": "0x1e19ea8",
+      "fieldTableVa": "0x181e1a650",
+      "fields": [
+        {
+          "name": "m_vecLadderNormal",
+          "offset": "0x3f8",
+          "recordFileOffset": "0x1e198b0",
+          "rawRecord": "70 73 92 81 01 00 00 00 12 00 00 00 00 00 00 f0 f8 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bDucked",
+          "offset": "0x408",
+          "recordFileOffset": "0x1e198f0",
+          "rawRecord": "a8 73 92 81 01 00 00 00 10 00 00 00 00 00 00 f0 08 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flDuckAmount",
+          "offset": "0x40c",
+          "recordFileOffset": "0x1e19910",
+          "rawRecord": "b8 73 92 81 01 00 00 00 0e 00 00 00 00 00 00 f0 0c 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flDuckSpeed",
+          "offset": "0x410",
+          "recordFileOffset": "0x1e19930",
+          "rawRecord": "c8 73 92 81 01 00 00 00 0e 00 00 00 00 00 00 f0 10 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bDesiresDuck",
+          "offset": "0x415",
+          "recordFileOffset": "0x1e19970",
+          "rawRecord": "e8 73 92 81 01 00 00 00 10 00 00 00 00 00 00 f0 15 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bDucking",
+          "offset": "0x416",
+          "recordFileOffset": "0x1e19990",
+          "rawRecord": "f8 73 92 81 01 00 00 00 10 00 00 00 00 00 00 f0 16 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CPlayer_MovementServices",
+      "classSize": "0x258",
+      "fieldCount": 18,
+      "classNameRefFileOffset": "0x1e25618",
+      "fieldTableVa": "0x181e261c0",
+      "fields": [
+        {
+          "name": "m_nButtons",
+          "offset": "0x50",
+          "recordFileOffset": "0x1e253e0",
+          "rawRecord": "c8 7e 95 81 01 00 00 00 00 00 00 00 00 00 00 00 50 00 00 00 01 00 00 00 88 7e 95 81 01 00 00 00"
+        },
+        {
+          "name": "m_vecOldViewAngles",
+          "offset": "0x240",
+          "recordFileOffset": "0x1e255e0",
+          "rawRecord": "38 80 95 81 01 00 00 00 16 00 00 00 00 00 00 f0 40 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CEconEntity",
+      "classSize": "0xeb0",
+      "fieldCount": 9,
+      "classNameRefFileOffset": "0x1e56e18",
+      "fieldTableVa": "0x181e57ad0",
+      "fields": [
+        {
+          "name": "m_AttributeManager",
+          "offset": "0xa58",
+          "recordFileOffset": "0x1e56cd0",
+          "rawRecord": "80 20 7c 81 01 00 00 00 00 00 00 00 00 00 00 00 58 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CAttributeContainer",
+      "classSize": "0x438",
+      "fieldCount": 1,
+      "classNameRefFileOffset": "0x1e56c58",
+      "fieldTableVa": "0x181e57a20",
+      "fields": [
+        {
+          "name": "m_Item",
+          "offset": "0x50",
+          "recordFileOffset": "0x1e56c20",
+          "rawRecord": "cc 08 a1 81 01 00 00 00 00 00 00 00 00 00 00 00 50 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CEconItemView",
+      "classSize": "0x3e8",
+      "fieldCount": 15,
+      "classNameRefFileOffset": "0x1e57508",
+      "fieldTableVa": "0x181e58110",
+      "fields": [
+        {
+          "name": "m_iItemDefinitionIndex",
+          "offset": "0x38",
+          "recordFileOffset": "0x1e57310",
+          "rawRecord": "b0 85 a1 81 01 00 00 00 00 00 00 00 00 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CInButtonState",
+      "classSize": "0x20",
+      "fieldCount": 1,
+      "classNameRefFileOffset": "0x1dee018",
+      "fieldTableVa": "0x181deede8",
+      "fields": [
+        {
+          "name": "m_pButtonStates",
+          "offset": "0x8",
+          "recordFileOffset": "0x1dedfe8",
+          "rawRecord": "88 60 83 81 01 00 00 00 00 00 00 00 00 00 00 00 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBasePlayerController",
+      "classSize": "0x7d8",
+      "fieldCount": 25,
+      "classNameRefFileOffset": "0x1e1d628",
+      "fieldTableVa": "0x181e1e0f0",
+      "fields": [
+        {
+          "name": "m_hPawn",
+          "offset": "0x4e0",
+          "recordFileOffset": "0x1e1d330",
+          "rawRecord": "20 55 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 e0 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CCSPlayerController",
+      "classSize": "0xab8",
+      "fieldCount": 93,
+      "classNameRefFileOffset": "0x1e19628",
+      "fieldTableVa": "0x181e19850",
+      "fields": [
+        {
+          "name": "m_hPlayerPawn",
+          "offset": "0x8ec",
+          "recordFileOffset": "0x1e190f0",
+          "rawRecord": "98 46 92 81 01 00 00 00 00 00 00 00 00 00 00 00 ec 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    },
+    {
+      "name": "CBasePlayerWeapon",
+      "classSize": "0xef0",
+      "fieldCount": 8,
+      "classNameRefFileOffset": "0x1e1d128",
+      "fieldTableVa": "0x181e1ddf0",
+      "fields": []
+    }
+  ],
+  "missing": [
+    {
+      "name": "CCSBot",
+      "field": "m_gameState",
+      "status": "not directly registered; no invented offset"
+    }
+  ],
+  "inheritedFields": [
+    {
+      "offset": "0xa58",
+      "classChain": [
+        "CBasePlayerWeapon",
+        "CEconEntity"
+      ],
+      "recordFileOffset": "0x1e56cd0",
+      "rawRecord": "80 20 7c 81 01 00 00 00 00 00 00 00 00 00 00 00 58 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00",
+      "baseRecordFileOffset": "0x1e1d110",
+      "baseRawRecord": "00 00 00 00 00 00 00 00 10 7c e5 81 01 00 00 00",
+      "name": "CBasePlayerWeapon",
+      "field": "m_AttributeManager"
+    }
+  ],
+  "previousSelectedOffsetsCompared": 43,
+  "previousSelectedOffsetsUnchanged": true,
+  "gameRulesChange": {
+    "added": "m_bQueuedMatchmakingReportedRoundStatsPendingSend",
+    "source": "https://github.com/SteamDatabase/GameTracking-CS2/commit/1a3016b053eb006daaf741396f0d0416388519ca",
+    "consumers": {
+      "BotHider": [
+        "m_bPickNewTeamsOnReset"
+      ],
+      "LocalKitMatchSetup": [
+        "m_bWarmupPeriod",
+        "m_bFreezePeriod",
+        "m_totalRoundsPlayed"
+      ]
+    },
+    "access": "Runtime Schema name lookup, not generated fixed offsets",
+    "class": {
+      "name": "CCSGameRules",
+      "classSize": "0x11450",
+      "fieldCount": 191,
+      "classNameRefFileOffset": "0x1e07738",
+      "fieldTableVa": "0x181e0b4e0",
+      "fields": [
+        {
+          "name": "m_bFreezePeriod",
+          "offset": "0xd8",
+          "recordFileOffset": "0x1e0a6e0",
+          "rawRecord": "70 a7 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 d8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bWarmupPeriod",
+          "offset": "0xd9",
+          "recordFileOffset": "0x1e0a700",
+          "rawRecord": "80 a7 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 d9 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fWarmupPeriodEnd",
+          "offset": "0xdc",
+          "recordFileOffset": "0x1e0a720",
+          "rawRecord": "a8 a7 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 dc 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fWarmupPeriodStart",
+          "offset": "0xe0",
+          "recordFileOffset": "0x1e0a740",
+          "rawRecord": "c0 a7 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 e0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bTerroristTimeOutActive",
+          "offset": "0xe4",
+          "recordFileOffset": "0x1e0a760",
+          "rawRecord": "d8 a7 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 e4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bCTTimeOutActive",
+          "offset": "0xe5",
+          "recordFileOffset": "0x1e0a780",
+          "rawRecord": "f8 a7 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 e5 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flTerroristTimeOutRemaining",
+          "offset": "0xe8",
+          "recordFileOffset": "0x1e0a7a0",
+          "rawRecord": "10 a8 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 e8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flCTTimeOutRemaining",
+          "offset": "0xec",
+          "recordFileOffset": "0x1e0a7c0",
+          "rawRecord": "30 a8 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 ec 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nTerroristTimeOuts",
+          "offset": "0xf0",
+          "recordFileOffset": "0x1e0a7e0",
+          "rawRecord": "48 a8 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 f0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nCTTimeOuts",
+          "offset": "0xf4",
+          "recordFileOffset": "0x1e0a800",
+          "rawRecord": "a8 a8 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 f4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bTechnicalTimeOut",
+          "offset": "0xf8",
+          "recordFileOffset": "0x1e0a820",
+          "rawRecord": "e0 a8 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 f8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bMatchWaitingForResume",
+          "offset": "0xf9",
+          "recordFileOffset": "0x1e0a840",
+          "rawRecord": "f8 a8 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 f9 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iFreezeTime",
+          "offset": "0xfc",
+          "recordFileOffset": "0x1e0a860",
+          "rawRecord": "18 a9 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 fc 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundTime",
+          "offset": "0x100",
+          "recordFileOffset": "0x1e0a880",
+          "rawRecord": "28 a9 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fMatchStartTime",
+          "offset": "0x104",
+          "recordFileOffset": "0x1e0a8a0",
+          "rawRecord": "38 a9 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 04 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fRoundStartTime",
+          "offset": "0x108",
+          "recordFileOffset": "0x1e0a8c0",
+          "rawRecord": "50 a9 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 08 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flRestartRoundTime",
+          "offset": "0x10c",
+          "recordFileOffset": "0x1e0a8e0",
+          "rawRecord": "68 a9 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 0c 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bGameRestart",
+          "offset": "0x110",
+          "recordFileOffset": "0x1e0a900",
+          "rawRecord": "80 a9 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 10 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flGameStartTime",
+          "offset": "0x114",
+          "recordFileOffset": "0x1e0a920",
+          "rawRecord": "90 a9 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 14 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_timeUntilNextPhaseStarts",
+          "offset": "0x118",
+          "recordFileOffset": "0x1e0a940",
+          "rawRecord": "f8 a9 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 18 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_gamePhase",
+          "offset": "0x11c",
+          "recordFileOffset": "0x1e0a960",
+          "rawRecord": "40 aa 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 1c 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_totalRoundsPlayed",
+          "offset": "0x120",
+          "recordFileOffset": "0x1e0a980",
+          "rawRecord": "50 aa 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 20 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nRoundsPlayedThisPhase",
+          "offset": "0x124",
+          "recordFileOffset": "0x1e0a9a0",
+          "rawRecord": "68 aa 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 24 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nOvertimePlaying",
+          "offset": "0x128",
+          "recordFileOffset": "0x1e0a9c0",
+          "rawRecord": "88 aa 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 28 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iHostagesRemaining",
+          "offset": "0x12c",
+          "recordFileOffset": "0x1e0a9e0",
+          "rawRecord": "a0 aa 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 2c 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bAnyHostageReached",
+          "offset": "0x130",
+          "recordFileOffset": "0x1e0aa00",
+          "rawRecord": "b8 aa 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 30 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bMapHasBombTarget",
+          "offset": "0x131",
+          "recordFileOffset": "0x1e0aa20",
+          "rawRecord": "d0 aa 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 31 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bMapHasRescueZone",
+          "offset": "0x132",
+          "recordFileOffset": "0x1e0aa40",
+          "rawRecord": "e8 aa 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 32 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bMapHasBuyZone",
+          "offset": "0x133",
+          "recordFileOffset": "0x1e0aa60",
+          "rawRecord": "00 ab 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 33 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bIsQueuedMatchmaking",
+          "offset": "0x134",
+          "recordFileOffset": "0x1e0aa80",
+          "rawRecord": "68 ab 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 34 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nQueuedMatchmakingMode",
+          "offset": "0x138",
+          "recordFileOffset": "0x1e0aaa0",
+          "rawRecord": "b0 ab 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 38 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bIsValveDS",
+          "offset": "0x13c",
+          "recordFileOffset": "0x1e0aac0",
+          "rawRecord": "d0 ab 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 3c 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bLogoMap",
+          "offset": "0x13d",
+          "recordFileOffset": "0x1e0aae0",
+          "rawRecord": "e0 ab 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 3d 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bPlayAllStepSoundsOnServer",
+          "offset": "0x13e",
+          "recordFileOffset": "0x1e0ab00",
+          "rawRecord": "f0 ab 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 3e 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iSpectatorSlotCount",
+          "offset": "0x140",
+          "recordFileOffset": "0x1e0ab20",
+          "rawRecord": "10 ac 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 40 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_MatchDevice",
+          "offset": "0x144",
+          "recordFileOffset": "0x1e0ab40",
+          "rawRecord": "28 ac 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 44 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bHasMatchStarted",
+          "offset": "0x148",
+          "recordFileOffset": "0x1e0ab60",
+          "rawRecord": "38 ac 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 48 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nNextMapInMapgroup",
+          "offset": "0x14c",
+          "recordFileOffset": "0x1e0ab80",
+          "rawRecord": "50 ac 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 4c 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_szTournamentEventName",
+          "offset": "0x150",
+          "recordFileOffset": "0x1e0aba0",
+          "rawRecord": "68 ac 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 50 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_szTournamentEventStage",
+          "offset": "0x350",
+          "recordFileOffset": "0x1e0abc0",
+          "rawRecord": "c8 ac 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 50 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_szMatchStatTxt",
+          "offset": "0x550",
+          "recordFileOffset": "0x1e0abe0",
+          "rawRecord": "10 ad 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 50 05 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_szTournamentPredictionsTxt",
+          "offset": "0x750",
+          "recordFileOffset": "0x1e0ac00",
+          "rawRecord": "28 ad 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 50 07 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nTournamentPredictionsPct",
+          "offset": "0x950",
+          "recordFileOffset": "0x1e0ac20",
+          "rawRecord": "48 ad 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 50 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flCMMItemDropRevealStartTime",
+          "offset": "0x954",
+          "recordFileOffset": "0x1e0ac40",
+          "rawRecord": "68 ad 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 54 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flCMMItemDropRevealEndTime",
+          "offset": "0x958",
+          "recordFileOffset": "0x1e0ac60",
+          "rawRecord": "88 ad 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 58 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bIsDroppingItems",
+          "offset": "0x95c",
+          "recordFileOffset": "0x1e0ac80",
+          "rawRecord": "a8 ad 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 5c 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bIsQuestEligible",
+          "offset": "0x95d",
+          "recordFileOffset": "0x1e0aca0",
+          "rawRecord": "c0 ad 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 5d 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bIsHltvActive",
+          "offset": "0x95e",
+          "recordFileOffset": "0x1e0acc0",
+          "rawRecord": "d8 ad 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 5e 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bBombPlanted",
+          "offset": "0x95f",
+          "recordFileOffset": "0x1e0ace0",
+          "rawRecord": "e8 ad 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 5f 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_arrProhibitedItemIndices",
+          "offset": "0x960",
+          "recordFileOffset": "0x1e0ad00",
+          "rawRecord": "60 ae 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 60 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_arrTournamentActiveCasterAccounts",
+          "offset": "0xa28",
+          "recordFileOffset": "0x1e0ad20",
+          "rawRecord": "a0 ae 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 28 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_numBestOfMaps",
+          "offset": "0xa38",
+          "recordFileOffset": "0x1e0ad40",
+          "rawRecord": "c8 ae 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 38 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nHalloweenMaskListSeed",
+          "offset": "0xa3c",
+          "recordFileOffset": "0x1e0ad60",
+          "rawRecord": "d8 ae 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 3c 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bBombDropped",
+          "offset": "0xa40",
+          "recordFileOffset": "0x1e0ad80",
+          "rawRecord": "f8 ae 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 40 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundWinStatus",
+          "offset": "0xa44",
+          "recordFileOffset": "0x1e0ada0",
+          "rawRecord": "08 af 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 44 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_eRoundWinReason",
+          "offset": "0xa48",
+          "recordFileOffset": "0x1e0adc0",
+          "rawRecord": "20 af 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 48 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bTCantBuy",
+          "offset": "0xa4c",
+          "recordFileOffset": "0x1e0ade0",
+          "rawRecord": "38 af 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 4c 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bCTCantBuy",
+          "offset": "0xa4d",
+          "recordFileOffset": "0x1e0ae00",
+          "rawRecord": "48 af 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 4d 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iMatchStats_RoundResults",
+          "offset": "0xa50",
+          "recordFileOffset": "0x1e0ae20",
+          "rawRecord": "58 af 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 50 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iMatchStats_PlayersAlive_CT",
+          "offset": "0xac8",
+          "recordFileOffset": "0x1e0ae40",
+          "rawRecord": "d0 af 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 c8 0a 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iMatchStats_PlayersAlive_T",
+          "offset": "0xb40",
+          "recordFileOffset": "0x1e0ae60",
+          "rawRecord": "10 b0 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 40 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_TeamRespawnWaveTimes",
+          "offset": "0xbb8",
+          "recordFileOffset": "0x1e0ae80",
+          "rawRecord": "30 b0 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 b8 0b 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nActiveMutators",
+          "offset": "0xc38",
+          "recordFileOffset": "0x1e0aea0",
+          "rawRecord": "48 b0 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 38 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flNextRespawnWave",
+          "offset": "0xc3c",
+          "recordFileOffset": "0x1e0aec0",
+          "rawRecord": "60 b0 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 3c 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_vMinimapMins",
+          "offset": "0xcbc",
+          "recordFileOffset": "0x1e0aee0",
+          "rawRecord": "78 b0 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 bc 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_vMinimapMaxs",
+          "offset": "0xcc8",
+          "recordFileOffset": "0x1e0af00",
+          "rawRecord": "88 b0 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 c8 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_MinimapVerticalSectionHeights",
+          "offset": "0xcd4",
+          "recordFileOffset": "0x1e0af20",
+          "rawRecord": "98 b0 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 d4 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_ullLocalMatchID",
+          "offset": "0xcf8",
+          "recordFileOffset": "0x1e0af40",
+          "rawRecord": "b8 b0 8b 81 01 00 00 00 0d 00 00 00 00 00 00 f0 f8 0c 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nEndMatchMapGroupVoteTypes",
+          "offset": "0xd00",
+          "recordFileOffset": "0x1e0af60",
+          "rawRecord": "d0 b0 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 00 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nEndMatchMapGroupVoteOptions",
+          "offset": "0xd28",
+          "recordFileOffset": "0x1e0af80",
+          "rawRecord": "28 b1 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 28 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nEndMatchMapVoteWinner",
+          "offset": "0xd50",
+          "recordFileOffset": "0x1e0afa0",
+          "rawRecord": "60 b1 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 50 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNumConsecutiveCTLoses",
+          "offset": "0xd54",
+          "recordFileOffset": "0x1e0afc0",
+          "rawRecord": "80 b1 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 54 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNumConsecutiveTerroristLoses",
+          "offset": "0xd58",
+          "recordFileOffset": "0x1e0afe0",
+          "rawRecord": "a0 b1 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 58 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bHasHostageBeenTouched",
+          "offset": "0xd78",
+          "recordFileOffset": "0x1e0b000",
+          "rawRecord": "c0 b1 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 78 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flIntermissionStartTime",
+          "offset": "0xd7c",
+          "recordFileOffset": "0x1e0b020",
+          "rawRecord": "e0 b1 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 7c 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flIntermissionEndTime",
+          "offset": "0xd80",
+          "recordFileOffset": "0x1e0b040",
+          "rawRecord": "00 b2 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 80 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bLevelInitialized",
+          "offset": "0xd84",
+          "recordFileOffset": "0x1e0b060",
+          "rawRecord": "18 b2 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 84 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iTotalRoundsPlayed",
+          "offset": "0xd88",
+          "recordFileOffset": "0x1e0b080",
+          "rawRecord": "30 b2 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 88 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iUnBalancedRounds",
+          "offset": "0xd8c",
+          "recordFileOffset": "0x1e0b0a0",
+          "rawRecord": "48 b2 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 8c 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_endMatchOnRoundReset",
+          "offset": "0xd90",
+          "recordFileOffset": "0x1e0b0c0",
+          "rawRecord": "a8 b2 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 90 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_endMatchOnThink",
+          "offset": "0xd91",
+          "recordFileOffset": "0x1e0b0e0",
+          "rawRecord": "d8 b2 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 91 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNumTerrorist",
+          "offset": "0xd94",
+          "recordFileOffset": "0x1e0b100",
+          "rawRecord": "f0 b2 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 94 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNumCT",
+          "offset": "0xd98",
+          "recordFileOffset": "0x1e0b120",
+          "rawRecord": "00 b3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 98 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNumSpawnableTerrorist",
+          "offset": "0xd9c",
+          "recordFileOffset": "0x1e0b140",
+          "rawRecord": "10 b3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 9c 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNumSpawnableCT",
+          "offset": "0xda0",
+          "recordFileOffset": "0x1e0b160",
+          "rawRecord": "30 b3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 a0 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_arrSelectedHostageSpawnIndices",
+          "offset": "0xda8",
+          "recordFileOffset": "0x1e0b180",
+          "rawRecord": "48 b3 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 a8 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nSpawnPointsRandomSeed",
+          "offset": "0xdc0",
+          "recordFileOffset": "0x1e0b1a0",
+          "rawRecord": "70 b3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 c0 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bFirstConnected",
+          "offset": "0xdc4",
+          "recordFileOffset": "0x1e0b1c0",
+          "rawRecord": "90 b3 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 c4 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bCompleteReset",
+          "offset": "0xdc5",
+          "recordFileOffset": "0x1e0b1e0",
+          "rawRecord": "a8 b3 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 c5 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bPickNewTeamsOnReset",
+          "offset": "0xdc6",
+          "recordFileOffset": "0x1e0b200",
+          "rawRecord": "30 b4 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 c6 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bScrambleTeamsOnRestart",
+          "offset": "0xdc7",
+          "recordFileOffset": "0x1e0b220",
+          "rawRecord": "68 b4 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 c7 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bSwapTeamsOnRestart",
+          "offset": "0xdc8",
+          "recordFileOffset": "0x1e0b240",
+          "rawRecord": "88 b4 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 c8 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nEndMatchTiedVotes",
+          "offset": "0xdd0",
+          "recordFileOffset": "0x1e0b260",
+          "rawRecord": "a0 b4 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 d0 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bNeedToAskPlayersForContinueVote",
+          "offset": "0xdec",
+          "recordFileOffset": "0x1e0b280",
+          "rawRecord": "b8 b4 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 ec 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_numQueuedMatchmakingAccounts",
+          "offset": "0xdf0",
+          "recordFileOffset": "0x1e0b2a0",
+          "rawRecord": "e0 b4 8b 81 01 00 00 00 0b 00 00 00 00 00 00 f0 f0 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fAvgPlayerRank",
+          "offset": "0xdf4",
+          "recordFileOffset": "0x1e0b2c0",
+          "rawRecord": "00 b5 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 f4 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_pQueuedMatchmakingReservationString",
+          "offset": "0xdf8",
+          "recordFileOffset": "0x1e0b2e0",
+          "rawRecord": "18 b5 8b 81 01 00 00 00 02 00 00 00 00 00 00 f0 f8 0d 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_numTotalTournamentDrops",
+          "offset": "0xe00",
+          "recordFileOffset": "0x1e0b300",
+          "rawRecord": "40 b5 8b 81 01 00 00 00 0b 00 00 00 00 00 00 f0 00 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_numSpectatorsCountMax",
+          "offset": "0xe04",
+          "recordFileOffset": "0x1e0b320",
+          "rawRecord": "60 b5 8b 81 01 00 00 00 0b 00 00 00 00 00 00 f0 04 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_numSpectatorsCountMaxTV",
+          "offset": "0xe08",
+          "recordFileOffset": "0x1e0b340",
+          "rawRecord": "b0 b5 8b 81 01 00 00 00 0b 00 00 00 00 00 00 f0 08 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_numSpectatorsCountMaxLnk",
+          "offset": "0xe0c",
+          "recordFileOffset": "0x1e0b360",
+          "rawRecord": "e0 b5 8b 81 01 00 00 00 0b 00 00 00 00 00 00 f0 0c 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bQueuedMatchmakingReportedRoundStatsPendingSend",
+          "offset": "0xe18",
+          "recordFileOffset": "0x1e0b380",
+          "rawRecord": "00 b6 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 18 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nCTsAliveAtFreezetimeEnd",
+          "offset": "0xe1c",
+          "recordFileOffset": "0x1e0b3a0",
+          "rawRecord": "38 b6 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 1c 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nTerroristsAliveAtFreezetimeEnd",
+          "offset": "0xe20",
+          "recordFileOffset": "0x1e0b3c0",
+          "rawRecord": "58 b6 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 20 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bForceTeamChangeSilent",
+          "offset": "0xe24",
+          "recordFileOffset": "0x1e0b3e0",
+          "rawRecord": "80 b6 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 24 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bLoadingRoundBackupData",
+          "offset": "0xe25",
+          "recordFileOffset": "0x1e0b400",
+          "rawRecord": "a0 b6 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 25 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nMatchInfoShowType",
+          "offset": "0xe58",
+          "recordFileOffset": "0x1e0b420",
+          "rawRecord": "c0 b6 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 58 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flMatchInfoDecidedTime",
+          "offset": "0xe5c",
+          "recordFileOffset": "0x1e0b440",
+          "rawRecord": "d8 b6 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 5c 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "mTeamDMLastWinningTeamNumber",
+          "offset": "0xe78",
+          "recordFileOffset": "0x1e0b460",
+          "rawRecord": "f8 b6 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 78 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "mTeamDMLastThinkTime",
+          "offset": "0xe7c",
+          "recordFileOffset": "0x1e0b480",
+          "rawRecord": "68 b7 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 7c 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flTeamDMLastAnnouncementTime",
+          "offset": "0xe80",
+          "recordFileOffset": "0x1e0b4a0",
+          "rawRecord": "90 b7 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 80 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iAccountTerrorist",
+          "offset": "0xe84",
+          "recordFileOffset": "0x1e0b4c0",
+          "rawRecord": "b0 b7 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 84 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iAccountCT",
+          "offset": "0xe88",
+          "recordFileOffset": "0x1e0b4e0",
+          "rawRecord": "c8 b7 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 88 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iSpawnPointCount_Terrorist",
+          "offset": "0xe8c",
+          "recordFileOffset": "0x1e0b500",
+          "rawRecord": "d8 b7 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 8c 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iSpawnPointCount_CT",
+          "offset": "0xe90",
+          "recordFileOffset": "0x1e0b520",
+          "rawRecord": "f8 b7 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 90 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iMaxNumTerrorists",
+          "offset": "0xe94",
+          "recordFileOffset": "0x1e0b540",
+          "rawRecord": "10 b8 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 94 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iMaxNumCTs",
+          "offset": "0xe98",
+          "recordFileOffset": "0x1e0b560",
+          "rawRecord": "28 b8 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 98 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iLoserBonusMostRecentTeam",
+          "offset": "0xe9c",
+          "recordFileOffset": "0x1e0b580",
+          "rawRecord": "38 b8 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 9c 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_tmNextPeriodicThink",
+          "offset": "0xea0",
+          "recordFileOffset": "0x1e0b5a0",
+          "rawRecord": "58 b8 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 a0 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bVoiceWonMatchBragFired",
+          "offset": "0xea4",
+          "recordFileOffset": "0x1e0b5c0",
+          "rawRecord": "b8 b8 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 a4 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fWarmupNextChatNoticeTime",
+          "offset": "0xea8",
+          "recordFileOffset": "0x1e0b5e0",
+          "rawRecord": "00 b9 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 a8 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iHostagesRescued",
+          "offset": "0xeb0",
+          "recordFileOffset": "0x1e0b600",
+          "rawRecord": "28 b9 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 b0 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iHostagesTouched",
+          "offset": "0xeb4",
+          "recordFileOffset": "0x1e0b620",
+          "rawRecord": "40 b9 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 b4 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flNextHostageAnnouncement",
+          "offset": "0xeb8",
+          "recordFileOffset": "0x1e0b640",
+          "rawRecord": "58 b9 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 b8 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bNoTerroristsKilled",
+          "offset": "0xebc",
+          "recordFileOffset": "0x1e0b660",
+          "rawRecord": "88 b9 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 bc 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bNoCTsKilled",
+          "offset": "0xebd",
+          "recordFileOffset": "0x1e0b680",
+          "rawRecord": "a0 b9 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 bd 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bNoEnemiesKilled",
+          "offset": "0xebe",
+          "recordFileOffset": "0x1e0b6a0",
+          "rawRecord": "c8 b9 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 be 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bCanDonateWeapons",
+          "offset": "0xebf",
+          "recordFileOffset": "0x1e0b6c0",
+          "rawRecord": "e0 b9 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 bf 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_firstKillTime",
+          "offset": "0xec4",
+          "recordFileOffset": "0x1e0b6e0",
+          "rawRecord": "f8 b9 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 c4 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_firstBloodTime",
+          "offset": "0xecc",
+          "recordFileOffset": "0x1e0b700",
+          "rawRecord": "68 ba 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 cc 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_hostageWasInjured",
+          "offset": "0xee8",
+          "recordFileOffset": "0x1e0b720",
+          "rawRecord": "b0 ba 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 e8 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_hostageWasKilled",
+          "offset": "0xee9",
+          "recordFileOffset": "0x1e0b740",
+          "rawRecord": "c8 ba 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 e9 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bVoteCalled",
+          "offset": "0xef8",
+          "recordFileOffset": "0x1e0b760",
+          "rawRecord": "f0 ba 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 f8 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bServerVoteOnReset",
+          "offset": "0xef9",
+          "recordFileOffset": "0x1e0b780",
+          "rawRecord": "00 bb 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 f9 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flVoteCheckThrottle",
+          "offset": "0xefc",
+          "recordFileOffset": "0x1e0b7a0",
+          "rawRecord": "18 bb 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 fc 0e 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bBuyTimeEnded",
+          "offset": "0xf00",
+          "recordFileOffset": "0x1e0b7c0",
+          "rawRecord": "30 bb 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 00 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nLastFreezeEndBeep",
+          "offset": "0xf04",
+          "recordFileOffset": "0x1e0b7e0",
+          "rawRecord": "40 bb 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 04 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bTargetBombed",
+          "offset": "0xf08",
+          "recordFileOffset": "0x1e0b800",
+          "rawRecord": "58 bb 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 08 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bBombDefused",
+          "offset": "0xf09",
+          "recordFileOffset": "0x1e0b820",
+          "rawRecord": "78 bb 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 09 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bMapHasBombZone",
+          "offset": "0xf0a",
+          "recordFileOffset": "0x1e0b840",
+          "rawRecord": "00 bc 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 0a 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_vecMainCTSpawnPos",
+          "offset": "0xf58",
+          "recordFileOffset": "0x1e0b860",
+          "rawRecord": "40 bc 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 58 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_CTSpawnPointsMasterList",
+          "offset": "0xf68",
+          "recordFileOffset": "0x1e0b880",
+          "rawRecord": "68 bc 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 68 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_TerroristSpawnPointsMasterList",
+          "offset": "0xf80",
+          "recordFileOffset": "0x1e0b8a0",
+          "rawRecord": "98 bc 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 80 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bRespawningAllRespawnablePlayers",
+          "offset": "0xf98",
+          "recordFileOffset": "0x1e0b8c0",
+          "rawRecord": "c0 bc 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 98 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNextCTSpawnPoint",
+          "offset": "0xf9c",
+          "recordFileOffset": "0x1e0b8e0",
+          "rawRecord": "f8 bc 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 9c 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flCTSpawnPointUsedTime",
+          "offset": "0xfa0",
+          "recordFileOffset": "0x1e0b900",
+          "rawRecord": "10 bd 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 a0 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iNextTerroristSpawnPoint",
+          "offset": "0xfa4",
+          "recordFileOffset": "0x1e0b920",
+          "rawRecord": "30 bd 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 a4 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flTerroristSpawnPointUsedTime",
+          "offset": "0xfa8",
+          "recordFileOffset": "0x1e0b940",
+          "rawRecord": "68 bd 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 a8 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_CTSpawnPoints",
+          "offset": "0xfb0",
+          "recordFileOffset": "0x1e0b960",
+          "rawRecord": "98 bd 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 b0 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_TerroristSpawnPoints",
+          "offset": "0xfc8",
+          "recordFileOffset": "0x1e0b980",
+          "rawRecord": "30 be 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 c8 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bIsUnreservedGameServer",
+          "offset": "0xfe0",
+          "recordFileOffset": "0x1e0b9a0",
+          "rawRecord": "90 be 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 e0 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fAutobalanceDisplayTime",
+          "offset": "0xfe4",
+          "recordFileOffset": "0x1e0b9c0",
+          "rawRecord": "b0 be 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 e4 0f 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bAllowWeaponSwitch",
+          "offset": "0x1020",
+          "recordFileOffset": "0x1e0b9e0",
+          "rawRecord": "e0 be 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 20 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bRoundTimeWarningTriggered",
+          "offset": "0x1021",
+          "recordFileOffset": "0x1e0ba00",
+          "rawRecord": "10 bf 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 21 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_phaseChangeAnnouncementTime",
+          "offset": "0x1024",
+          "recordFileOffset": "0x1e0ba20",
+          "rawRecord": "50 bf 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 24 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fNextUpdateTeamClanNamesTime",
+          "offset": "0x1028",
+          "recordFileOffset": "0x1e0ba40",
+          "rawRecord": "80 bf 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 28 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flLastThinkTime",
+          "offset": "0x102c",
+          "recordFileOffset": "0x1e0ba60",
+          "rawRecord": "a0 bf 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 2c 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fAccumulatedRoundOffDamage",
+          "offset": "0x1030",
+          "recordFileOffset": "0x1e0ba80",
+          "rawRecord": "d0 bf 8b 81 01 00 00 00 0e 00 00 00 00 00 00 f0 30 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nShorthandedBonusLastEvalRound",
+          "offset": "0x1034",
+          "recordFileOffset": "0x1e0baa0",
+          "rawRecord": "10 c0 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 34 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nMatchAbortedEarlyReason",
+          "offset": "0x1080",
+          "recordFileOffset": "0x1e0bac0",
+          "rawRecord": "d8 c0 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 80 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bHasTriggeredRoundStartMusic",
+          "offset": "0x1084",
+          "recordFileOffset": "0x1e0bae0",
+          "rawRecord": "28 c1 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 84 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bSwitchingTeamsAtRoundReset",
+          "offset": "0x1085",
+          "recordFileOffset": "0x1e0bb00",
+          "rawRecord": "70 c1 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 85 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_pGameModeRules",
+          "offset": "0x10a0",
+          "recordFileOffset": "0x1e0bb20",
+          "rawRecord": "b8 c1 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 a0 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_BtGlobalBlackboard",
+          "offset": "0x10a8",
+          "recordFileOffset": "0x1e0bb40",
+          "rawRecord": "f8 c1 8b 81 01 00 00 00 45 00 00 00 00 00 00 f0 a8 10 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_hPlayerResource",
+          "offset": "0x1140",
+          "recordFileOffset": "0x1e0bb60",
+          "rawRecord": "28 c2 8b 81 01 00 00 00 35 00 00 00 00 00 00 f0 40 11 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_RetakeRules",
+          "offset": "0x1148",
+          "recordFileOffset": "0x1e0bb80",
+          "rawRecord": "58 c2 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 48 11 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_arrTeamUniqueKillWeaponsMatch",
+          "offset": "0x1338",
+          "recordFileOffset": "0x1e0bba0",
+          "rawRecord": "68 c2 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 38 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bTeamLastKillUsedUniqueWeaponMatch",
+          "offset": "0x1398",
+          "recordFileOffset": "0x1e0bbc0",
+          "rawRecord": "d0 c2 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 98 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nMatchEndCount",
+          "offset": "0x13c0",
+          "recordFileOffset": "0x1e0bbe0",
+          "rawRecord": "08 c3 8b 81 01 00 00 00 07 00 00 00 00 00 00 f0 c0 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nTTeamIntroVariant",
+          "offset": "0x13c4",
+          "recordFileOffset": "0x1e0bc00",
+          "rawRecord": "20 c3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 c4 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nCTTeamIntroVariant",
+          "offset": "0x13c8",
+          "recordFileOffset": "0x1e0bc20",
+          "rawRecord": "58 c3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 c8 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bTeamIntroPeriod",
+          "offset": "0x13cc",
+          "recordFileOffset": "0x1e0bc40",
+          "rawRecord": "70 c3 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 cc 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_fTeamIntroPeriodEnd",
+          "offset": "0x13d0",
+          "recordFileOffset": "0x1e0bc60",
+          "rawRecord": "88 c3 8b 81 01 00 00 00 00 00 00 00 00 00 00 00 d0 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bPlayedTeamIntroVO",
+          "offset": "0x13d4",
+          "recordFileOffset": "0x1e0bc80",
+          "rawRecord": "a0 c3 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 d4 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndWinnerTeam",
+          "offset": "0x13d8",
+          "recordFileOffset": "0x1e0bca0",
+          "rawRecord": "b8 c3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 d8 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_eRoundEndReason",
+          "offset": "0x13dc",
+          "recordFileOffset": "0x1e0bcc0",
+          "rawRecord": "d0 c3 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 dc 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bRoundEndShowTimerDefend",
+          "offset": "0x13e0",
+          "recordFileOffset": "0x1e0bce0",
+          "rawRecord": "e8 c3 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 e0 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndTimerTime",
+          "offset": "0x13e4",
+          "recordFileOffset": "0x1e0bd00",
+          "rawRecord": "08 c4 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 e4 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_sRoundEndFunFactToken",
+          "offset": "0x13e8",
+          "recordFileOffset": "0x1e0bd20",
+          "rawRecord": "20 c4 8b 81 01 00 00 00 23 00 00 00 00 00 00 f0 e8 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndFunFactPlayerSlot",
+          "offset": "0x13f0",
+          "recordFileOffset": "0x1e0bd40",
+          "rawRecord": "48 c4 8b 81 01 00 00 00 2b 00 00 00 00 00 00 f0 f0 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndFunFactData1",
+          "offset": "0x13f4",
+          "recordFileOffset": "0x1e0bd60",
+          "rawRecord": "78 c4 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 f4 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndFunFactData2",
+          "offset": "0x13f8",
+          "recordFileOffset": "0x1e0bd80",
+          "rawRecord": "90 c4 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 f8 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndFunFactData3",
+          "offset": "0x13fc",
+          "recordFileOffset": "0x1e0bda0",
+          "rawRecord": "a8 c4 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 fc 13 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_sRoundEndMessage",
+          "offset": "0x1400",
+          "recordFileOffset": "0x1e0bdc0",
+          "rawRecord": "c0 c4 8b 81 01 00 00 00 23 00 00 00 00 00 00 f0 00 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndPlayerCount",
+          "offset": "0x1408",
+          "recordFileOffset": "0x1e0bde0",
+          "rawRecord": "d8 c4 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 08 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_bRoundEndNoMusic",
+          "offset": "0x140c",
+          "recordFileOffset": "0x1e0be00",
+          "rawRecord": "f0 c4 8b 81 01 00 00 00 10 00 00 00 00 00 00 f0 0c 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundEndLegacy",
+          "offset": "0x1410",
+          "recordFileOffset": "0x1e0be20",
+          "rawRecord": "08 c5 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 10 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nRoundEndCount",
+          "offset": "0x1414",
+          "recordFileOffset": "0x1e0be40",
+          "rawRecord": "58 c5 8b 81 01 00 00 00 07 00 00 00 00 00 00 f0 14 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_iRoundStartRoundNumber",
+          "offset": "0x1418",
+          "recordFileOffset": "0x1e0be60",
+          "rawRecord": "88 c5 8b 81 01 00 00 00 0a 00 00 00 00 00 00 f0 18 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_nRoundStartCount",
+          "offset": "0x141c",
+          "recordFileOffset": "0x1e0be80",
+          "rawRecord": "a8 c5 8b 81 01 00 00 00 07 00 00 00 00 00 00 f0 1c 14 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        },
+        {
+          "name": "m_flLastPerfSampleTime",
+          "offset": "0x5428",
+          "recordFileOffset": "0x1e0bea0",
+          "rawRecord": "c0 c5 8b 81 01 00 00 00 0f 00 00 00 00 00 00 f0 28 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00"
+        }
+      ]
+    }
+  }
+}
