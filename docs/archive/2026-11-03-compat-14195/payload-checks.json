@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "runtimePayloadFiles": 113,
+  "runtimePayloadUnchanged": true,
+  "dailyPlayContractUnchanged": true,
+  "threeParentContractUnchanged": true,
+  "humanFilesUnchanged": true,
+  "originalAdapterCoreReused": true,
+  "freshReviewIncluded": true,
+  "candidate": {
+    "Difficulty": 1,
+    "Directory": "bot-daily-14195-557eea6",
+    "ManifestSha256": "58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true,
+    "DailyPlay": true
+  },
+  "targetBuild": {
+    "PatchVersion": "1.41.9.5",
+    "ClientVersion": "2000940",
+    "buildId": "26393695"
+  },
+  "sourceHead": "557eea6e2e46f33fd7f12b35dada1b489fa695ea"
+}

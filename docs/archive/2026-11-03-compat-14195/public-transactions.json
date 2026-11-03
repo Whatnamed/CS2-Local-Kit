@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "candidate": "E:/CS2MOD/releases/bot-experiment/bot-daily-14195-557eea6",
+  "manifestSha256": "58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4",
+  "payloadFiles": 113,
+  "profile": "Medium",
+  "checks": [
+    "public preview zero writes",
+    "actual full payload installed",
+    "restore preview zero writes",
+    "exact diagnostics",
+    "noncritical Steam metadata drift accepted",
+    "exact playable baseline restored",
+    "three parent records/backups unchanged",
+    "reject game binary drift",
+    "reject unknown plugin",
+    "reject parent record drift",
+    "reject parent backup drift",
+    "reject Human drift",
+    "reject Steam build drift",
+    "reject Steam busy"
+  ],
+  "syntheticRoot": "E:\\Projects\\CS2-Local-Kit\\wt-compat-14195-20261103\\temp\\integration\\roundtrip-zxp36ucc\\temp\\steamapps\\common\\cs2",
+  "actualGameModified": false,
+  "gameplayAcceptance": "pending"
+}

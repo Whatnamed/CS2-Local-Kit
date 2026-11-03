@@ -35,6 +35,12 @@
 
 ## 迁移与验收
 
+交付候选：`E:\CS2MOD\releases\bot-experiment\bot-daily-14195-557eea6`，manifest SHA256 `58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4`。匹配 Controller：`E:\CS2MOD\releases\controller\controller-compat-14195-20261103\payload\CS2LocalKit.App.exe`，source HEAD `2ac64d69e7edee98013d78eca47dedef0b897e62`。
+
+验证通过：49 项相关 .NET 测试；注册候选后的白名单检查；新 14195 与原 14193 各 10 项跨构建恢复检查；18 项日常迁移/profile/普通增强切换检查；14 项实际交付包公开 PowerShell 入口检查。跨构建检查覆盖恢复中断续作、未知 binary/gamedata/Human/父备份漂移拒写；日常检查覆盖有限中断映像、三档和模式切换后的精确恢复。
+
+用发布后的 App/Core DLL 对真实旧 Low 安装完成三档只读迁移预览，全部指向同一个新日常底座；probe 的 runner 明确拒绝 `-Apply`。408-file self-contained Controller 发布及私人数据边界检查通过。[payload-checks.json](payload-checks.json) 确认 113 份 runtime payload 与全部日常/三层父事务/Human 合约相同。[protection.json](protection.json) 确认实际游戏文件、旧候选、活动备份、三个父备份、个人 presets/app-data/Human 备份和 Steam manifest 均未被本次工作修改。未修改 UI，不追加 WPF 视觉或性能套件。
+
 [exact-restore-preview.json](exact-restore-preview.json) 记录了实际 Low 层的只读恢复预检：撤回后的 targetBuild、baselineFiles、gameBinaries、moduleInventory、runtimeIntegration 和 Human 身份与新日常候选一致。新包安装仍必须在撤回后重新完整实时预检。
 
 候选、Controller 精确身份及最终验证结果见 [delivery.json](delivery.json)。最短真实操作：

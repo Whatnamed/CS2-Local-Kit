@@ -1,0 +1,84 @@
+{
+  "kind": "cs2-local-kit/compatibility-candidate",
+  "date": "2026-11-03",
+  "baseline": "4280e29d2e0419b7a36fc5735fd26573fb3a40fb",
+  "branch": "codex/compat-14195-20261103",
+  "worktree": "E:\\Projects\\CS2-Local-Kit\\wt-compat-14195-20261103",
+  "candidate": {
+    "Difficulty": 1,
+    "Directory": "bot-daily-14195-557eea6",
+    "ManifestSha256": "58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true,
+    "DailyPlay": true,
+    "path": "E:\\CS2MOD\\releases\\bot-experiment\\bot-daily-14195-557eea6",
+    "builderHead": "557eea6e2e46f33fd7f12b35dada1b489fa695ea"
+  },
+  "targetBuild": {
+    "PatchVersion": "1.41.9.5",
+    "ClientVersion": "2000940",
+    "buildId": "26393695"
+  },
+  "controller": {
+    "path": "E:\\CS2MOD\\releases\\controller\\controller-compat-14195-20261103",
+    "exe": "E:\\CS2MOD\\releases\\controller\\controller-compat-14195-20261103\\payload\\CS2LocalKit.App.exe",
+    "sourceHead": "2ac64d69e7edee98013d78eca47dedef0b897e62",
+    "releaseManifestSha256": "5187d506412aab77c777a47736fa58fc91cc06658533cdff47e14406670b7f47",
+    "appSha256": "10cde42e48d66fe824269fc59a0791fa2ae269b82a97fc5d12ac1ac0a9b20759",
+    "coreSha256": "cee4c150932cca1a92c8662a41134304a2d64cad57d3658b4a324677762b03a7",
+    "files": 408
+  },
+  "changes": {
+    "runtimePayloadFiles": 113,
+    "runtimePayloadChanged": 0,
+    "reviewedBuildAndRecoveryTools": true,
+    "controllerRebuilt": true,
+    "acceptedPinsChanged": false
+  },
+  "validation": {
+    "focusedDotnetTests": 49,
+    "finalCatalogCheck": "PASS",
+    "newBuildTransitionChecks": 10,
+    "prior14193TransitionChecks": 10,
+    "dailyMigrationAndModeChecks": 18,
+    "publicTransactionChecks": 14,
+    "publishedControllerReadOnlyPreviews": 3,
+    "signaturesUnique": 123,
+    "botAIExpectedOriginalPass": 39,
+    "botAIExpectedOriginalTotal": 40,
+    "unchangedSchemaOffsets": 43,
+    "gameRulesNewField": "m_bQueuedMatchmakingReportedRoundStatsPendingSend",
+    "protection": {
+      "status": "PASS",
+      "actualGameModified": false,
+      "oldCandidateUnchanged": true,
+      "activeTransactionAndParentsUnchanged": true,
+      "personalDataUnchanged": true
+    },
+    "actualInstallRestoreExecuted": false,
+    "gameStarted": false,
+    "gameplayAcceptance": "pending"
+  },
+  "migration": {
+    "status": "PASS",
+    "readOnly": true,
+    "actualGameModified": false,
+    "installId": "177e9652205d4d75a4cda34d76934547",
+    "state": "installed",
+    "entries": 685,
+    "postRestoreBaselineComparison": {
+      "targetBuild": true,
+      "baselineFiles": true,
+      "gameBinaries": true,
+      "moduleInventory": true,
+      "runtimeIntegration": true,
+      "humanFiles": true
+    },
+    "parents": {
+      "bot": "b613a8c709c7440998346cb802bb790f",
+      "compat": "5808afffdc44440ab3f0de2159cdb436",
+      "nades": "9f9849ca97804c2dbd7b1307bba4580c"
+    }
+  }
+}

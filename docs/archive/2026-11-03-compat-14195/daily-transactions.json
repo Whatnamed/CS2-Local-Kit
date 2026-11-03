@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "candidate": "E:/CS2MOD/releases/bot-experiment/bot-daily-14195-557eea6",
+  "manifestSha256": "58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4",
+  "checks": [
+    "old Low integration exact restore to same substrate",
+    "one new daily substrate installation",
+    "exact read-only diagnostics Low / enhanced",
+    "exact read-only diagnostics High / enhanced",
+    "exact read-only diagnostics Medium / enhanced",
+    "exact read-only diagnostics Low / normal",
+    "exact read-only diagnostics High / normal",
+    "exact read-only diagnostics Medium / normal",
+    "exact read-only diagnostics Low / enhanced",
+    "exact read-only diagnostics High / enhanced",
+    "exact read-only diagnostics Medium / enhanced",
+    "interrupted mode exact recovery preview",
+    "reject unknown active profile",
+    "reject unknown profile source",
+    "reject unknown module",
+    "reject unknown disabled loader",
+    "exact baseline restored after mutable state",
+    "old recovery plus three parent transactions unchanged"
+  ],
+  "syntheticRoot": "E:\\Projects\\CS2-Local-Kit\\wt-compat-14195-20261103\\temp\\integration\\roundtrip-uplh_kah\\temp\\steamapps\\common\\cs2",
+  "actualGameModified": false,
+  "installed": false,
+  "gameplayAcceptance": "pending"
+}

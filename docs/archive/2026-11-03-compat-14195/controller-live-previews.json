@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "installed": {
+    "Valid": true,
+    "Reason": "\u6D3B\u52A8\u8054\u5408\u5B89\u88C5\u6587\u4EF6\u8EAB\u4EFD\u5339\u914D\uFF1B\u6E38\u620F\u5185\u884C\u4E3A\u5F85\u9A8C\u8BC1",
+    "Difficulty": 0,
+    "HasMatchSetup": true,
+    "RuntimeIntegration": true,
+    "DailyPlay": false,
+    "Mode": null
+  },
+  "results": [
+    {
+      "level": 0,
+      "plan": {
+        "OldInstallId": "177e9652205d4d75a4cda34d76934547",
+        "TargetDifficulty": 0,
+        "TargetManifestSha256": "58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4",
+        "AlreadyPrepared": false,
+        "Summary": "\u539F\u4E8B\u52A1\u7CBE\u786E\u6062\u590D\u9884\u68C0\u901A\u8FC7\uFF1B\u76EE\u6807\u4E0E\u6062\u590D\u540E\u7684\u56FA\u5B9A\u57FA\u7EBF\u4E00\u81F4\u3002\u786E\u8BA4\u540E\u5148\u6062\u590D\uFF0C\u91CD\u65B0\u5B8C\u6574\u9884\u68C0\uFF0C\u518D\u5B89\u88C5\u76EE\u6807\u5019\u9009",
+        "ProtectsExistingLayers": false,
+        "HumanHandoffInstallId": null
+      }
+    },
+    {
+      "level": 1,
+      "plan": {
+        "OldInstallId": "177e9652205d4d75a4cda34d76934547",
+        "TargetDifficulty": 1,
+        "TargetManifestSha256": "58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4",
+        "AlreadyPrepared": false,
+        "Summary": "\u539F\u4E8B\u52A1\u7CBE\u786E\u6062\u590D\u9884\u68C0\u901A\u8FC7\uFF1B\u76EE\u6807\u4E0E\u6062\u590D\u540E\u7684\u56FA\u5B9A\u57FA\u7EBF\u4E00\u81F4\u3002\u786E\u8BA4\u540E\u5148\u6062\u590D\uFF0C\u91CD\u65B0\u5B8C\u6574\u9884\u68C0\uFF0C\u518D\u5B89\u88C5\u76EE\u6807\u5019\u9009",
+        "ProtectsExistingLayers": false,
+        "HumanHandoffInstallId": null
+      }
+    },
+    {
+      "level": 2,
+      "plan": {
+        "OldInstallId": "177e9652205d4d75a4cda34d76934547",
+        "TargetDifficulty": 2,
+        "TargetManifestSha256": "58b58f7aa793f59f5d167b9876a205d4ae62e84dccaa29c9f40de39f6e5b2db4",
+        "AlreadyPrepared": false,
+        "Summary": "\u539F\u4E8B\u52A1\u7CBE\u786E\u6062\u590D\u9884\u68C0\u901A\u8FC7\uFF1B\u76EE\u6807\u4E0E\u6062\u590D\u540E\u7684\u56FA\u5B9A\u57FA\u7EBF\u4E00\u81F4\u3002\u786E\u8BA4\u540E\u5148\u6062\u590D\uFF0C\u91CD\u65B0\u5B8C\u6574\u9884\u68C0\uFF0C\u518D\u5B89\u88C5\u76EE\u6807\u5019\u9009",
+        "ProtectsExistingLayers": false,
+        "HumanHandoffInstallId": null
+      }
+    }
+  ],
+  "actualGameModified": false,
+  "usedPublishedAssemblies": true
+}
