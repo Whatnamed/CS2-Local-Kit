@@ -24,8 +24,10 @@ def run(release, digest):
     source, original = tx.load_candidate(Path(release).parent / old['Directory'], old['ManifestSha256'])
     old_package = home / 'old-package'; shutil.copytree(source, old_package)
     previous = copy.deepcopy(original); previous['testFixture'] = True
-    for key in ['baselineFiles', 'gameBinaries', 'moduleInventory', 'runtimeIntegration']:
+    # Cross-build withdrawal has its own transition test; start from its reviewed substrate here.
+    for key in ['targetBuild', 'baselineFiles', 'gameBinaries', 'moduleInventory', 'runtimeIntegration']:
         previous[key] = copy.deepcopy(m[key])
+    previous['coexistence']['reviewedBuild'] = m['targetBuild']
     previous['coexistence']['humanFiles'] = m['coexistence']['humanFiles']
     (old_package / 'experiment-manifest.json').write_bytes(tx.json_bytes(previous))
     old_digest = tx.sha(old_package / 'experiment-manifest.json')
