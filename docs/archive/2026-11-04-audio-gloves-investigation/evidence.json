@@ -1,0 +1,334 @@
+{
+  "kind": "cs2-local-kit/audio-gloves-investigation",
+  "collectedAt": "2026-11-04T23:12:29+08:00",
+  "timezone": "Asia/Shanghai",
+  "baseCommit": "50cf838f5ce54a3737763df680aeb4c1a9f3900f",
+  "actualGame": {
+    "patchVersion": "1.41.9.5",
+    "clientVersion": "2000940",
+    "buildId": "26393695",
+    "steamStateFlags": 4,
+    "launchArguments": "-steam -insecure -novid +exec cosmeticslab_c1",
+    "scenario": "local listen server / Dust2"
+  },
+  "installation": {
+    "activeInstallId": "177e9652205d4d75a4cda34d76934547",
+    "state": "installed",
+    "manifestSha256": "fc09b409160d071a60a3d013fbb89d108d704ff4b65731dff96626823f006012",
+    "profile": "Low performance 14194",
+    "daily14195Installed": false,
+    "parentMarkers": {
+      "bot": "b613a8c709c7440998346cb802bb790f",
+      "compat": "5808afffdc44440ab3f0de2159cdb436",
+      "nades": "9f9849ca97804c2dbd7b1307bba4580c"
+    },
+    "postimagesChecked": 685,
+    "unchangedPostimages": 680,
+    "changedRetainedFiles": [
+      {
+        "target": "game/bin/win64/engine2.dll",
+        "action": "retained",
+        "actual": "a1b682acb5cedf11bed4784b0191a5452e93ee8f3023f95fa11ab3c3676b0fbc",
+        "expected": "42e0549c7314321e1b69c8d60046efe94e0356f54d7a2fb79dd6b993e6e3658b"
+      },
+      {
+        "target": "game/bin/win64/schemasystem.dll",
+        "action": "retained",
+        "actual": "d94cc30d01521e0a7cfdfda6d5ba305029ff7093e6ce53452c8cf3a9b97895b3",
+        "expected": "6ea6c2e95360572d78352260f808e390bc24c9a4370184c067481f5b4d6e94c9"
+      },
+      {
+        "target": "game/csgo/bin/win64/client.dll",
+        "action": "retained",
+        "actual": "57ee728e15c50881070d847d7516d632d70456e0648d486a53f2528ec53f6ee0",
+        "expected": "d618bbf8e6afb36baa09b3a282035996a88300458c55d2aa5cb81f0495c0ec54"
+      },
+      {
+        "target": "game/csgo/bin/win64/server.dll",
+        "action": "retained",
+        "actual": "7e88b23196b0a746d99c7c622f947b96c25de61cc4d921d8dda79e515c4b48a8",
+        "expected": "84a06ec3a3ef2ff9fe668aa7a77d0d6c0156e0b3bccdae22f628a9919ad082b6"
+      },
+      {
+        "target": "game/csgo/steam.inf",
+        "action": "retained",
+        "actual": "221437bd0d9d4768e5cdeef8f4cb4af9e6ba4596a3ce644b4add7ee4b2098dfc",
+        "expected": "919b953d73167570d43ee893ae16562a3756fc07b100f8cee0d43ea251a5970a"
+      }
+    ],
+    "allDriftsMatchReviewed14195": true,
+    "modules": [
+      {
+        "path": "game/csgo/addons/BotController/bin/win64/BotController.dll",
+        "sha256": "1bf23de8766aeb28c3d781749bcdc1513cce18a612ce31dfeea5075d7832bde0"
+      },
+      {
+        "path": "game/csgo/addons/BotHider/bin/win64/BotHider.dll",
+        "sha256": "505a93b30b261b7504743f03218852d322a8925e10c17818d0ce4406b90f594d"
+      },
+      {
+        "path": "game/csgo/addons/BotVision/bin/win64/BotVision.dll",
+        "sha256": "a9f2925b3b717d644c5a3c9805e64e7fe56b34a0c3a32ce243dc9ecc14124461"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll",
+        "sha256": "7f799ae466d4e58ff8bba3fdf810c1505358c5e5dcb51dc5d73f7eb098e5d4a2"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/BotAI/BotAI.dll",
+        "sha256": "8e5c41245e15a8ab5c48da76f2cef6328126a8addc9910a5622e7b6b22f7a640"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/BotAimImprover/BotAimImprover.dll",
+        "sha256": "b31501f51da8fb017cac850d46a577086d694b87aa501d9433c5162bdf3b64fd"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/BotBuy/BotBuy.dll",
+        "sha256": "7553b657227161391fc1c297c2693135ab19a864dcca2f0e732060a0077441bb"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/BotControllerImpl/BotControllerImpl.dll",
+        "sha256": "c9d6ff648e9cd7f563a05ca28b36f63cbdc380e3f45ab035ca26f9088860e908"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/BotHiderImpl/BotHiderImpl.dll",
+        "sha256": "5d566318799e661ba397c98b81e0e7be9f2aaa0f8d85775b27f30c2ba4f70924"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/BotRandomizer/BotRandomizer.dll",
+        "sha256": "2b7449b3b34b4ad67227b392fb1347d9788d6ec858371b5c80eb5be3c2dea8ab"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/BotState/BotState.dll",
+        "sha256": "fefb628a5c282bcebe2d11c598595ea3a496625be7bdb9bd9421dde6293c6c3d"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll",
+        "sha256": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/LocalKitMatchSetup/LocalKitMatchSetup.dll",
+        "sha256": "ac8e498db88e1d3148d497a18e2632419106093db899bf4d59ee059e5a4319a8"
+      },
+      {
+        "path": "game/csgo/addons/counterstrikesharp/plugins/NadeSystem/NadeSystem.dll",
+        "sha256": "5838e6b89952de78b55e7196bdc4b17ff87c8025fb44a4912ee8c6a036380d01"
+      },
+      {
+        "path": "game/csgo/addons/metamod/bin/win64/metamod.2.cs2.dll",
+        "sha256": "0c78ee2571d19cbbc070ba360c3c0b7665d572ad8791df531a755d7c8c226c6c"
+      }
+    ]
+  },
+  "sessions": [
+    {
+      "start": "2026-11-04T21:50:57+08:00",
+      "end": "2026-11-04T21:58:21+08:00",
+      "pid": 25716,
+      "steamExitCode": 1,
+      "userReportedAudioFailure": true,
+      "userReportedOtherGameplayNormal": true,
+      "matchingCrashOrHangFound": false
+    },
+    {
+      "start": "2026-11-04T21:58:34+08:00",
+      "end": "2026-11-04T22:24:25+08:00",
+      "pid": 25628,
+      "steamExitCode": -1073740791,
+      "userReportedAudioFailure": false,
+      "nativeUnloadTime": "2026-11-04T22:24:12+08:00",
+      "crashTime": "2026-11-04T22:24:13+08:00"
+    }
+  ],
+  "historicalHang": {
+    "date": "2026-11-01T19:32:59+08:00",
+    "pid": 27320,
+    "eventId": 1002,
+    "werType": "AppHangB1",
+    "signature": "d2c1",
+    "hangType": 134217728,
+    "threadDumpFound": false,
+    "associationWithOlderAudioIncident": "unconfirmed"
+  },
+  "audioObservations": {
+    "physicalListeningDevice": "wired headset (user confirmed)",
+    "unplugAndSettingsChanges": "user explicitly says these occurred after noise began and did not restore it",
+    "deviceStateEvents": {
+      "time": "2026-11-04T21:57:42+08:00",
+      "channel": "Microsoft-Windows-Audio/Operational",
+      "eventId": 65,
+      "count": 6,
+      "endpoints": "three NVIDIA High Definition Audio render endpoints",
+      "stateSequencePerEndpoint": [
+        8,
+        4
+      ],
+      "causalTriggerEstablished": false
+    },
+    "currentDefaults": {
+      "console": "Realtek(R) Audio",
+      "multimedia": "Realtek(R) Audio",
+      "communications": "FxSound Speakers",
+      "captureAllRoles": "Realtek microphone",
+      "incidentDefaultsKnown": false
+    },
+    "currentFormats": [
+      {
+        "endpoint": "Realtek",
+        "channels": 2,
+        "sampleRate": 48000,
+        "containerBits": 32,
+        "validBits": 24
+      },
+      {
+        "endpoint": "FxSound",
+        "channels": 2,
+        "sampleRate": 48000,
+        "containerBits": 24,
+        "validBits": 24
+      },
+      {
+        "endpoint": "NetEase virtual audio",
+        "channels": 2,
+        "sampleRate": 48000,
+        "containerBits": 16,
+        "validBits": 16
+      }
+    ],
+    "realtekDisableSysFx": 1,
+    "incidentSpatialAndExclusiveStateKnown": false,
+    "fxSound": {
+      "appVersion": "1.2.13.0",
+      "settingsMtime": "2026-11-04T21:57:18+08:00",
+      "savedPower": 0,
+      "runningAtInspection": false,
+      "routeBeforeTroubleshootingKnown": false
+    },
+    "audioGlitchDetectionEnabled": false,
+    "latestSessionNearbyAudiodgCrashOrGpuTdrFound": false,
+    "nadesRoundEndCounts": [
+      {
+        "time": "21:53:16",
+        "count": 5
+      },
+      {
+        "time": "21:54:26",
+        "count": 16
+      },
+      {
+        "time": "21:55:17",
+        "count": 27
+      },
+      {
+        "time": "21:57:07",
+        "count": 36
+      }
+    ],
+    "nadesMapEndCount": 44,
+    "incidentClientConsoleLogFound": false
+  },
+  "crashDumps": [
+    {
+      "name": "cs2.exe.8780.dmp",
+      "sizeBytes": 68162630,
+      "sha256": "96a9adabfcebeb92e0010ef2d699fdd299a06e05954938e4bf29b5f5386b4456",
+      "debugSessionTime": "Sun Nov  1 21:57:50.000 2026 (UTC + 8:00)",
+      "exceptionCode": "0xc0000409",
+      "subcode": "0x5 FAST_FAIL_INVALID_ARG",
+      "faultModule": "counterstrikesharp.dll",
+      "faultRva": "0x238afc",
+      "shutdownFramePresent": true,
+      "matchesLatestNoiseSession": false,
+      "matchingNativePdbAvailable": false
+    },
+    {
+      "name": "cs2.exe.26320.dmp",
+      "sizeBytes": 66875941,
+      "sha256": "351d4454e54cdfd41844ac048d4b831c797420c734612d9ea0bbc93f0788dd04",
+      "debugSessionTime": "Tue Nov  3 22:33:12.000 2026 (UTC + 8:00)",
+      "exceptionCode": "0xc0000409",
+      "subcode": "0x5 FAST_FAIL_INVALID_ARG",
+      "faultModule": "counterstrikesharp.dll",
+      "faultRva": "0x238afc",
+      "shutdownFramePresent": true,
+      "matchesLatestNoiseSession": false,
+      "matchingNativePdbAvailable": false
+    },
+    {
+      "name": "cs2.exe.22992.dmp",
+      "sizeBytes": 66630977,
+      "sha256": "12c7ecaca97019cd1b9cace02094373c242c4defb6b7eb09f1e996595a364e42",
+      "debugSessionTime": "Wed Nov  4 00:19:01.000 2026 (UTC + 8:00)",
+      "exceptionCode": "0xc0000409",
+      "subcode": "0x5 FAST_FAIL_INVALID_ARG",
+      "faultModule": "counterstrikesharp.dll",
+      "faultRva": "0x238afc",
+      "shutdownFramePresent": true,
+      "matchesLatestNoiseSession": false,
+      "matchingNativePdbAvailable": false
+    },
+    {
+      "name": "cs2.exe.25628.dmp",
+      "sizeBytes": 66608661,
+      "sha256": "41cc1669991adab59365a7d1a3ace7fe2521ccb8a30e393c3c5afc908ef32cce",
+      "debugSessionTime": "Wed Nov  4 22:24:21.000 2026 (UTC + 8:00)",
+      "exceptionCode": "0xc0000409",
+      "subcode": "0x5 FAST_FAIL_INVALID_ARG",
+      "faultModule": "counterstrikesharp.dll",
+      "faultRva": "0x238afc",
+      "shutdownFramePresent": true,
+      "matchesLatestNoiseSession": false,
+      "matchingNativePdbAvailable": false
+    }
+  ],
+  "gloves": {
+    "userObservedAffectedActor": "human only",
+    "frequentPhase": "opening third-person team intro",
+    "rareInPlayFailuresAlsoReported": true,
+    "bothTeamFixtureEntriesPresent": true,
+    "fixtureContentsPublished": false,
+    "humanAgentConfigured": false,
+    "minmodels": 1,
+    "fallbackTeam": false,
+    "wsEnabled": false,
+    "requireInventory": false,
+    "upstream": "ianlucas/cs2-css-inventory-simulator@fade4449aaa6d5153261c855d0cc12d7dacfefdd",
+    "glove322FixCommitIncluded": "6525d02f081b2130a03da3e9fd777796eb91f8c6",
+    "queuedWorldUpdatesFromSpawnToWearables": 2,
+    "presentationOrderingMeasured": false,
+    "conclusion": "wearable/model/client presentation boundary; exact cause unconfirmed"
+  },
+  "sourceArtifacts": [
+    {
+      "name": "performance-corresponding-source.zip",
+      "sha256": "c1780b63f5e11fa2cc4e9cbe20e0701985ff6511c0b92914b1ab1ceeb594cd8c"
+    },
+    {
+      "name": "CS2-BotAI-0c46c6757b03.zip",
+      "sha256": "42980104715a35fbd77ae48eda3a0a5805c9db8380b4e6db4fb9204ef45f9fc4"
+    },
+    {
+      "name": "css-corresponding-source.zip",
+      "sha256": "e2494f3da96cf786b68bf5eec10b6d68a76e407356f953a8ece8a031a14adb77"
+    },
+    {
+      "name": "CS2-Bot-Hider-9a77fbaf1ee1.zip",
+      "sha256": "b95d77daa459896c916f4d9a949521a5eeb7442853595019c3dd6fdd1c34dc00"
+    }
+  ],
+  "actions": {
+    "installRestore": false,
+    "gameLaunched": false,
+    "runtimeCodeChanged": false,
+    "systemSettingsChanged": false,
+    "privateConfigChanged": false,
+    "newResidentMonitoring": false,
+    "rawDumpsUploaded": false
+  },
+  "validation": {
+    "postimageReviewAssertionsPassed": true,
+    "fourDumpShutdownAssertionsPassed": true,
+    "coreAudioEndpointIdentitySelfCheckPassed": true,
+    "realGameplayTest": "not performed"
+  }
+}
