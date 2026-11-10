@@ -43,12 +43,12 @@ public sealed class MatchSetupUiTests : IDisposable
         vm.Friendly.CustomName="copy";vm.Friendly.CopyCustomCommand.Execute(null);Assert.Equal(2,Store.Load().CustomRosters.Length);
         vm.Friendly.DeleteCustomCommand.Execute(null);Assert.Single(Store.Load().CustomRosters);Assert.Equal(before,_catalog.Rosters.First(r=>r.TeamId=="team-13").Slots);
     }
-    [Fact] public void FavoritesPresetCopyRecentAndLastReuseAreRealLibraryState()
+    [Fact] public async Task FavoritesPresetCopyRecentAndLastReuseAreRealLibraryState()
     {
         var vm=Vm();vm.Favorite=true;vm.SaveCommand.Execute(null);vm.PresetFilter=1;Assert.Single(vm.Presets);
         vm.DuplicateCommand.Execute(null);vm.SaveCommand.Execute(null);Assert.Equal(2,Store.Load().Presets.Length);
         var last=Store.Load().Presets[0] with {Aim=AimSetting.Body};Store.Save(Store.Load() with {LastUsed=last,Recent=[last.Id]});
-        vm.RefreshRuntime();vm.PresetFilter=2;Assert.Single(vm.Presets);vm.ReuseLastCommand.Execute(null);Assert.Equal(AimSetting.Body,vm.Aim);
+        await vm.RefreshRuntimeAsync();vm.PresetFilter=2;Assert.Single(vm.Presets);vm.ReuseLastCommand.Execute(null);Assert.Equal(AimSetting.Body,vm.Aim);
     }
     [Fact] public void DisabledInvalidRosterKeepsDraftAndSavesIndependentPreferencesWithoutEnablingIt()
     {
@@ -61,13 +61,19 @@ public sealed class MatchSetupUiTests : IDisposable
         vm.LineupEnabled=true;Assert.False(Store.ReadDaily()!.LineupEnabled);Assert.Equal(saved.Revision,Store.ReadDaily()!.Revision);Assert.Contains("未保存",vm.PreparationText);
         vm.Enemy.Slots[0].Name="fixed player";Assert.True(Store.ReadDaily()!.LineupEnabled);
     }
-    [Fact] public void OldOrWrongRequestStatusIsNeverCurrentAcceptance()
+    [Fact] public async Task OldOrWrongRequestStatusIsNeverCurrentAcceptance()
     {
         var vm=Vm();var request=Store.ReadDaily()!;
         Store.WriteStatus(new(1,"old","different",MatchSetupStore.Digest(request.Preset),"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.BehaviorObserved,"old success",5,5));
-        vm.RefreshRuntime();Assert.DoesNotContain("old success",vm.ApplyStatus);
+        await vm.RefreshRuntimeAsync();Assert.DoesNotContain("old success",vm.ApplyStatus);
         Store.WriteStatus(new(1,"old",request.Revision,MatchSetupStore.Digest(request.Preset),"de_mirage",DateTimeOffset.UtcNow,MatchApplyState.InsufficientEvidence,"received only",5,5,DailyRevision:request.Revision));
-        vm.RefreshRuntime();Assert.Contains("上次地图报告",vm.ApplyStatus);Assert.Contains("received only",vm.ApplyStatus);
+        var notifications = new List<string?>();
+        vm.PropertyChanged += (_, e) => notifications.Add(e.PropertyName);
+        await vm.RefreshRuntimeAsync();Assert.Contains("上次地图报告",vm.ApplyStatus);Assert.Contains("received only",vm.ApplyStatus);
+        Assert.Equal([nameof(vm.ApplyStatus)], notifications);
+        notifications.Clear();
+        await vm.RefreshRuntimeAsync();
+        Assert.Empty(notifications);
     }
     [Fact] public void CorruptLibraryDoesNotGetOverwrittenByQueueOrCustomSave()
     {

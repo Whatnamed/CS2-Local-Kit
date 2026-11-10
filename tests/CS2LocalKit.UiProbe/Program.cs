@@ -117,6 +117,7 @@ internal static class Program
             Navigate("Cosmetics");
             Vm.Cosmetics.SelectedItem=Vm.Cosmetics.Items.FirstOrDefault(i=>i.DefIndex==7)??Vm.Cosmetics.Items.FirstOrDefault();
             Layout(1280,840,96);WaitForImages();
+            CheckGalleryRows(Vm.Cosmetics.SkinRows);
             if(Vm.Cosmetics.Skins.Count>0)Vm.Cosmetics.SelectSkinCommand.Execute(Vm.Cosmetics.Skins.First());
             WaitForImages();Capture("cosmetics-1280",1280,840,96);Capture("cosmetics-1024",1024,660,96);Capture("cosmetics-150dpi",1280,840,144);
             var cosmetics=Desc<CosmeticsView>(Window).Single();
@@ -127,6 +128,7 @@ internal static class Program
             Capture("knives",1280,840,96);
             Vm.Cosmetics.Section=CosmeticsSection.Gloves;Vm.Cosmetics.GlovesEnabled=true;Capture("gloves",1280,840,96);
             Vm.Cosmetics.Section=CosmeticsSection.MusicKit;Capture("music",1280,840,96);
+            CheckGalleryRows(Vm.Cosmetics.MusicKitRows);
             Vm.Cosmetics.Section=CosmeticsSection.Weapons;Vm.Cosmetics.IsCt=true;
             Vm.Cosmetics.SelectedItem=Vm.Cosmetics.Items.FirstOrDefault(i=>i.DefIndex==7)??Vm.Cosmetics.Items.First();
             if(Vm.Cosmetics.Skins.Count>0)Vm.Cosmetics.SelectSkinCommand.Execute(Vm.Cosmetics.Skins.First());
@@ -197,6 +199,24 @@ internal static class Program
     }
     static void Pump(){var f=new DispatcherFrame();Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle,new Action(()=>f.Continue=false));Dispatcher.PushFrame(f);}
     static void WaitForImages(){var f=new DispatcherFrame();var timer=new DispatcherTimer(DispatcherPriority.ApplicationIdle){Interval=TimeSpan.FromMilliseconds(600)};timer.Tick+=(_,_)=>{timer.Stop();f.Continue=false;};timer.Start();Dispatcher.PushFrame(f);}
+    static void CheckGalleryRows(System.Collections.IEnumerable rows)
+    {
+        var list = Desc<ListBox>(Window).Single(l => ReferenceEquals(l.ItemsSource, rows));
+        if (list.Items.Count < 10) return;
+        int Realized() => Desc<ListBoxItem>(list).Count();
+        var before = Realized();
+        var scroller = Desc<ScrollViewer>(list).First();
+        var last = list.Items.Count - 1;
+        Check($"gallery virtualizes initial rows ({before}/{list.Items.Count})",
+            before > 0 && before < list.Items.Count && list.ItemContainerGenerator.ContainerFromIndex(last) is null);
+        scroller.ScrollToBottom();
+        Pump();
+        var after = Realized();
+        Check($"gallery realizes the last row on scroll ({after}/{list.Items.Count})",
+            after > 0 && after < list.Items.Count && list.ItemContainerGenerator.ContainerFromIndex(last) is not null);
+        scroller.ScrollToTop();
+        Pump();
+    }
     static void Layout(int width,int height,int dpi)=>Arrange(Window,width,height,dpi);
     static FrameworkElement Arrange(System.Windows.Window window,int width,int height,int dpi)
     {

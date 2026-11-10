@@ -36,7 +36,7 @@ public sealed class MainViewModel : ViewModelBase
 
         Navigation = new NavigationViewModel();
         Bot = new BotViewModel(services.BotExperiment, dialogService, Manager.RefreshRuntimeStatus);
-        Manager.StatusRefreshed += (_, _) => Bot.Observe();
+        Manager.StatusRefreshed += (_, _) => _ = Bot.ObserveAsync();
 
         SyncCatalogCommand = new RelayCommand(() => _ = SyncCatalogAsync(), () => !IsSyncingCatalog);
     }

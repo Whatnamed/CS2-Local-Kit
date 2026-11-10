@@ -21,7 +21,9 @@ public sealed class BotViewModel : ViewModelBase
     private BotExperimentIdentity _identity = new(false, "");
     private BotModeReadiness _readiness = new(false, "尚未检查", "未读取", "未提供", "未提供", false);
     private BotSwitchPlan? _switchPlan;
-    private bool _integrated;
+    private bool _integrated, _steamIdle;
+    private BotInstalledSnapshot? _installed;
+    private int _observationRevision;
     public string RestoreSummary => _integrated ? "撤回整合组件后，返回已验证可玩的中等人机、个人饰品与道具基线。个人饰品修改保留。" : "按当前安装的精确记录恢复；未知文件或备份变化会阻止操作。";
     public MatchSetupViewModel Setup { get; }
     public BotViewModel(BotExperimentService service, IDialogService dialogs, Action refreshHuman, Action<string>? clipboard = null)
@@ -29,14 +31,14 @@ public sealed class BotViewModel : ViewModelBase
         _service = service; _dialogs = dialogs; _refreshHuman = refreshHuman; _clipboard = clipboard ?? Clipboard.SetText;
         PreviewCommand = new(() => _ = PreviewAsync(), () => !IsBusy && !_active && !_running && _readiness.CanEnable);
         InstallCommand = new(() => _ = InstallAsync(), () => !IsBusy && !_active && !_running && _previewReady);
-        DiagnosticsCommand = new(() => _ = DiagnosticsAsync(), () => !IsBusy && _active && _installId is not null && !_running && _service.SteamState.Idle);
+        DiagnosticsCommand = new(() => _ = DiagnosticsAsync(), () => !IsBusy && _active && _installId is not null && !_running && _steamIdle);
         RestoreCommand = new(() => _ = RestoreAsync(), () => !IsBusy && _active && !_running && _restoreReady);
         CopyCommandsCommand = new(CopyCommands, () => !IsBusy);
         OpenLogsCommand = new(() => OpenFolder(_service.LogsRoot));
         OpenBackupCommand = new(() => OpenFolder(BackupPath));
-        PreviewModeCommand = new(() => _ = PreviewModeAsync(), () => !IsBusy && !_running && _service.SteamState.Idle && _service.Candidates.Any(c=>(c.DailyPlay || c.Difficulty==Difficulty) && c.PreservesHuman && c.MatchSetup));
+        PreviewModeCommand = new(() => _ = PreviewModeAsync(), () => !IsBusy && !_running && _steamIdle && _service.Candidates.Any(c=>(c.DailyPlay || c.Difficulty==Difficulty) && c.PreservesHuman && c.MatchSetup));
         SwitchModeCommand = new(() => _ = SwitchModeAsync(), () => !IsBusy && !_running && _switchPlan is { AlreadyPrepared: false });
-        RefreshCommand = new(()=>{_service.InvalidateObservation();Observe();}, () => !IsBusy);
+        RefreshCommand = new(()=>{_service.InvalidateObservation();_ = ObserveAsync();}, () => !IsBusy);
         try { _preferences = service.LoadPreferences(); } catch (Exception ex) { _feedback = "偏好读取失败（保留原文件）：" + ex.Message; }
         var catalog = RosterCatalog.LoadBuiltIn();
         Setup = new(new MatchSetupStore(Path.Combine(service.DataRoot,"app-data/match-setup"),catalog),catalog,dialogs,service);
@@ -47,20 +49,21 @@ public sealed class BotViewModel : ViewModelBase
             {
                 OnPropertyChanged(nameof(Aim));OnPropertyChanged(nameof(Nades));OnPropertyChanged(nameof(ConsoleCommands));
             }
-            if (e.PropertyName == nameof(Setup.Profile))
+            if (e.PropertyName == nameof(Setup.Profile) && _preferences.Difficulty != Difficulty)
             {
                 _previewReady = false; _switchPlan = null;
                 _preferences = _preferences with { Difficulty = (BotDifficulty)(int)Setup.Profile };
-                Observe();
+                _ = ObserveAsync();
             }
-            if (e.PropertyName == nameof(Setup.Mode))
+            if (e.PropertyName == nameof(Setup.Mode) && _preferences.TargetMode != TargetMode)
             {
                 _previewReady = false; _switchPlan = null;
                 _preferences = _preferences with { TargetMode = Setup.Mode == MatchPlayMode.EnhancedHuman ? LocalPlayMode.EnhancedHuman : LocalPlayMode.NormalHuman };
-                Observe();
+                _ = ObserveAsync();
             }
         };
-        Observe();
+        Setup.RuntimeEnvironmentChanged += (_, _) => _ = ObserveAsync();
+        Observe(ReadObservation(Difficulty));
     }
     public IReadOnlyList<BotChoice<BotDifficulty>> DifficultyChoices { get; } = [new(BotDifficulty.Low,"低 · Low"),new(BotDifficulty.Medium,"中 · Medium"),new(BotDifficulty.High,"高 · High")];
     public IReadOnlyList<BotChoice<LocalPlayMode>> ModeChoices { get; } = [new(LocalPlayMode.NormalHuman,"普通人机 + 我的饰品"),new(LocalPlayMode.EnhancedHuman,"增强人机 + 我的饰品")];
@@ -75,7 +78,7 @@ public sealed class BotViewModel : ViewModelBase
     public bool CanSelectMode => !_busy;
     public bool CanEditCommands => !_busy;
     public string StateText => _running ? "游戏运行不可切换" : _busy ? "检查 / 切换中…" : _state;
-    public string CurrentMode => _service.InspectInstalled() is {Valid:true,DailyPlay:true} daily ? daily.Mode is null ? "模式文件切换未完成" : daily.Mode==MatchPlayMode.NormalHuman ? "普通人机 + 我的饰品（文件态）" : "增强人机 + 我的饰品（文件态）" : _active ? _identity.RecoveryRequired ? "需恢复 · 事务未完整结束" : _identity.PreservesHuman ? "增强人机 + 我的饰品（文件安装态）" : "旧隔离实验 · Human 暂时隔离" : _readiness.HumanFilesValid ? "普通人机 + 我的饰品" : "环境身份尚未确认";
+    public string CurrentMode => _installed is {Valid:true,DailyPlay:true} daily ? daily.Mode is null ? "模式文件切换未完成" : daily.Mode==MatchPlayMode.NormalHuman ? "普通人机 + 我的饰品（文件态）" : "增强人机 + 我的饰品（文件态）" : _active ? _identity.RecoveryRequired ? "需恢复 · 事务未完整结束" : _identity.PreservesHuman ? "增强人机 + 我的饰品（文件安装态）" : "旧隔离实验 · Human 暂时隔离" : _readiness.HumanFilesValid ? "普通人机 + 我的饰品" : "环境身份尚未确认";
     public string AvailabilityText => _readiness.Reason;
     public string AvailabilitySummary => _readiness.CanEnable ? "候选与环境条件已通过预检；仍须检查本次切换预览。"
         : _running ? "CS2 正在运行，文件操作已阻断。"
@@ -83,7 +86,7 @@ public sealed class BotViewModel : ViewModelBase
         : "候选或安装条件未通过检查。展开阻断详情核对版本与文件身份。";
     public string ActionSummary => !_readiness.CanEnable && !_active && !_running && TargetMode == LocalPlayMode.EnhancedHuman
         ? "预览通过后才允许切换；当前不会写入游戏文件。" : ActionHint;
-    public string HumanStatusText => _active ? _identity.PreservesHuman ? _service.InspectInstalled().Valid ? "Human 文件身份匹配；关闭 CS2 后可安全更新饰品配置。" : "Human 文件身份无法确认；请先检查组件。" : "旧实验隔离了 Human，请通过原事务恢复。" : _readiness.HumanFilesValid ? "Human 文件身份匹配；当前 build 的实机呈现尚未重新验收。" : "Human 文件身份未通过检查，请查看运行状态。";
+    public string HumanStatusText => _active ? _identity.PreservesHuman ? _installed is { Valid: true } ? "Human 文件身份匹配；关闭 CS2 后可安全更新饰品配置。" : "Human 文件身份无法确认；请先检查组件。" : "旧实验隔离了 Human，请通过原事务恢复。" : _readiness.HumanFilesValid ? "Human 文件身份匹配；当前 build 的实机呈现尚未重新验收。" : "Human 文件身份未通过检查，请查看运行状态。";
     public string ProcessText => _running ? "CS2 正在运行" : "CS2 已关闭";
     public string CandidateIdentity
     {
@@ -117,13 +120,30 @@ public sealed class BotViewModel : ViewModelBase
     public RelayCommand RefreshCommand { get; }
 
     private void Persist() { try { _service.SavePreferences(_preferences); } catch (Exception ex) { _feedback = "偏好未保存：" + ex.Message; } }
-    public void Observe()
+    private (bool Running, bool SteamIdle, BotExperimentIdentity Identity, BotModeReadiness Readiness, BotInstalledSnapshot? Installed) ReadObservation(BotDifficulty difficulty)
     {
-        _running = _service.Cs2Running;
-        _integrated=false;
         var identity = _service.Identity;
+        return (_service.Cs2Running, _service.SteamState.Idle, identity, _service.Readiness(difficulty),
+            identity.InstallId is null ? null : _service.InspectInstalled());
+    }
+
+    public async Task ObserveAsync()
+    {
+        var revision = ++_observationRevision;
+        var difficulty = Difficulty;
+        var observation = await Task.Run(() => ReadObservation(difficulty));
+        if (revision == _observationRevision) Observe(observation);
+    }
+
+    private void Observe((bool Running, bool SteamIdle, BotExperimentIdentity Identity, BotModeReadiness Readiness, BotInstalledSnapshot? Installed) observation)
+    {
+        var (running, steamIdle, identity, readiness, installed) = observation;
+        _running = running;
+        _steamIdle = steamIdle;
         _identity = identity;
-        _readiness = _service.Readiness(Difficulty);
+        _readiness = readiness;
+        _installed = installed;
+        _integrated = installed is { Valid: true, RuntimeIntegration: true };
         if (!_readiness.CanEnable) _previewReady = false;
         if (_switchPlan is not null && (_switchPlan.TargetDifficulty != Difficulty || _switchPlan.OldInstallId != identity.InstallId)) _switchPlan = null;
         var wasActive = _active;
@@ -133,18 +153,12 @@ public sealed class BotViewModel : ViewModelBase
         if (_active)
         {
             _state = identity.Reason;
-            if (identity.InstallId is not null)
+            if (installed is not null)
             {
-                try
-                {
-                    var installed = _service.InspectInstalled();
-                    _integrated=installed.Valid && installed.RuntimeIntegration;
-                    _installedDifficulty = installed.Valid ? installed.Difficulty!.Value.ToString() : "无法确认";
-                    _state = identity.RecoveryRequired ? "安装/恢复中断 · 保留备份并检查恢复条件"
-                        : installed.Valid ? installed.HasMatchSetup ? "增强组件已安装；开局适配层就绪，游戏内效果待验证" : "旧增强组件已安装；开局配置尚不能应用"
-                        : installed.Reason;
-                }
-                catch (Exception ex) { _state = "文件/记录漂移阻断：" + ex.Message; }
+                _installedDifficulty = installed.Valid ? installed.Difficulty!.Value.ToString() : "无法确认";
+                _state = identity.RecoveryRequired ? "安装/恢复中断 · 保留备份并检查恢复条件"
+                    : installed.Valid ? installed.HasMatchSetup ? "增强组件已安装；开局适配层就绪，游戏内效果待验证" : "旧增强组件已安装；开局配置尚不能应用"
+                    : installed.Reason;
             }
         }
         else if (wasActive) { _state = "已恢复 · Human 实机呈现仍需检查"; _installedDifficulty = "—"; }
@@ -203,9 +217,9 @@ public sealed class BotViewModel : ViewModelBase
     {
         if (_busy) return;
         _busy = true; Notify();
-        try { _blocked = false; Observe(); if (_running && !allowRunning) throw new InvalidOperationException("CS2 正在运行，禁止文件操作"); await action(); }
+        try { _blocked = false; await ObserveAsync(); if (_running && !allowRunning) throw new InvalidOperationException("CS2 正在运行，禁止文件操作"); await action(); }
         catch (Exception ex) { _blocked = true; _previewReady = _restoreReady = false; _state = "文件漂移 / 条件阻断"; _feedback = ex.Message; }
-        finally { _busy = false; Observe(); _refreshHuman(); Notify(); }
+        finally { await ObserveAsync(); _refreshHuman(); _busy = false; Notify(); }
     }
     private static string Describe(JsonElement result)
     {

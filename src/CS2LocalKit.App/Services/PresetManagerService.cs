@@ -425,9 +425,10 @@ public class PresetManagerService : ViewModelBase
         RefreshRuntimeStatus();
     }
 
-    public void RefreshRuntimeStatus()
+    public void RefreshRuntimeStatus() => ApplyRuntimeStatus(_services.RuntimeStatusService.GetStatus());
+
+    private void ApplyRuntimeStatus(RuntimeStatus status)
     {
-        var status = _services.RuntimeStatusService.GetStatus();
         LastStatus = status;
         OnPropertyChanged(nameof(HumanWritesBlocked));
 
@@ -460,14 +461,15 @@ public class PresetManagerService : ViewModelBase
     /// Lightweight process state check. Queries cs2.exe status and only triggers a full
     /// runtime status refresh when running state changes.
     /// </summary>
-    public bool PollProcessState()
+    public async Task<bool> PollProcessStateAsync()
     {
-        bool isRunning = _services.RuntimeStatusService.CheckCs2Running();
-        if (isRunning != Cs2Running)
-        {
-            RefreshRuntimeStatus();
-            return true;
-        }
-        return false;
+        var previous = LastStatus;
+        var running = Cs2Running;
+        var status = await Task.Run(() => _services.RuntimeStatusService.CheckCs2Running() == running
+            ? null
+            : _services.RuntimeStatusService.GetStatus());
+        if (status is null || !ReferenceEquals(previous, LastStatus)) return false;
+        ApplyRuntimeStatus(status);
+        return true;
     }
 }

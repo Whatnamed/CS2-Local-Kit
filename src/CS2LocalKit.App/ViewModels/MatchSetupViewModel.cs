@@ -5,6 +5,7 @@ using System.Text.Json;
 using CS2LocalKit.App.Common;
 using CS2LocalKit.App.Services;
 using CS2LocalKit.Core.MatchSetup;
+using CS2LocalKit.Core.Runtime;
 
 namespace CS2LocalKit.App.ViewModels;
 
@@ -149,7 +150,10 @@ public sealed class MatchSetupViewModel : ViewModelBase
     private MatchLibrary _library=MatchLibrary.Empty;private MatchSetupPreset _basis=MatchSetupPreset.Default();private string _name="我 + 4 vs 5",_feedback="",_status="等待日常配置",_preview="";private bool _loaded;
     private (MatchTeamSelection Friendly, MatchTeamSelection Enemy)? _lastSwap;
     private bool _lineupEnabled, _autoSave, _loading, _applying;
-    private string? _lastApplyKey;
+    private (BotExperimentIdentity Identity, bool Running, SteamInstallState Steam)? _environment;
+    private string? _lastAppliedRevision;
+    private DateTime _libraryModified;
+    public event EventHandler? RuntimeEnvironmentChanged;
     private int _applyAttemptsRemaining;
     private DailyPlaySettings? _daily;
     private string _fileStatus="配置尚未保存";
@@ -160,14 +164,14 @@ public sealed class MatchSetupViewModel : ViewModelBase
     public MatchSetupViewModel(MatchSetupStore store,RosterCatalog catalog,IDialogService dialogs,BotExperimentService runtime)
     {
         _store=store;_catalog=catalog;_dialogs=dialogs;_runtime=runtime;
-        try { _library=store.Load();_loaded=true; } catch(Exception ex) { _feedback="配置读取失败，保留原文件："+ex.Message; }
+        try { _libraryModified=File.GetLastWriteTimeUtc(store.LibraryPath);_library=store.Load();_loaded=true; } catch(Exception ex) { _feedback="配置读取失败，保留原文件："+ex.Message; }
         Friendly=new(catalog,()=>_library,SaveLibrary,dialogs,RefreshPreview,"我方");Enemy=new(catalog,()=>_library,SaveLibrary,dialogs,RefreshPreview,"对手");
         SaveCommand=new(()=>Run(Save));NewCommand=new(()=>SwitchTo(MatchSetupPreset.Default()));
         DuplicateCommand=new(()=> { _basis=_basis with {Id=Guid.NewGuid().ToString("N")};Name+=" 副本"; });
         LoadCommand=new(()=> { if(SelectedPreset is not null)SwitchTo(SelectedPreset.Preset); });
         SwapLineupsCommand=new(()=> { var old=(Friendly:Friendly.Snapshot(),Enemy:Enemy.Snapshot());_lastSwap=old;Friendly.LoadSelection(old.Enemy);Enemy.LoadSelection(old.Friendly);RefreshPreview();UndoSwapCommand?.RaiseCanExecuteChanged(); });
         UndoSwapCommand=new(()=> { if(_lastSwap is not { } old)return;Friendly.LoadSelection(old.Friendly);Enemy.LoadSelection(old.Enemy);_lastSwap=null;RefreshPreview();UndoSwapCommand?.RaiseCanExecuteChanged(); },()=>_lastSwap is not null);
-        DeleteCommand=new(()=>Run(Delete));ReuseLastCommand=new(()=> { if(_library.LastUsed is not null)Load(_library.LastUsed);else _feedback="没有收到过运行时成功读回的上局配置";Notify(); });
+        DeleteCommand=new(()=>Run(Delete));ReuseLastCommand=new(()=>Run(() => { if(_library.LastUsed is not null)Load(_library.LastUsed);else _feedback="没有收到过运行时成功读回的上局配置"; }));
         ImportCommand=new(()=>Run(Import));ExportCommand=new(()=>Run(Export));RefreshStatusCommand=new(()=>_ = CheckStatusAsync(),()=>!_applying);
         try
         {
@@ -181,7 +185,6 @@ public sealed class MatchSetupViewModel : ViewModelBase
             if (_daily is not null) _fileStatus="配置已保存；正在核对日常配置文件";
         }
         catch(Exception ex) { _feedback="日常配置读取失败，保留原文件："+ex.Message; }
-        RefreshRuntime();
     }
     public MatchSide[] SideChoices { get; }=[MatchSide.CT,MatchSide.T];
     public BotChoice<MatchPlayMode>[] ModeChoices { get; }=[new(MatchPlayMode.NormalHuman,"普通人机"),new(MatchPlayMode.EnhancedHuman,"增强人机")];
@@ -273,63 +276,130 @@ public sealed class MatchSetupViewModel : ViewModelBase
     }
     public async Task PollDailyAsync()
     {
-        if (!_autoSave || _applying || _daily is null) return;
-        var key=$"{_daily.Revision}|{_runtime.Identity.InstallId}|{_runtime.Cs2Running}|{_runtime.SteamState}";
-        if (key!=_lastApplyKey) { _lastApplyKey=key;_applyAttemptsRemaining=3; }
-        if (_applyAttemptsRemaining==0) return;
-        --_applyAttemptsRemaining;
-        _applying=true;var revision=_daily.Revision;
+        if (_applying) return;
+        _applying = true;
         try
         {
-            _fileStatus=await _runtime.ApplyDailyAsync(_daily);
-            if (!_fileStatus.Contains("等待当前组件操作"))_applyAttemptsRemaining=0;
-            else if (_applyAttemptsRemaining==0)_fileStatus+="；自动尝试已用尽，请点击检查状态重试";
+            var environment = await Task.Run(() => (_runtime.Identity, _runtime.Cs2Running, _runtime.SteamState));
+            var environmentChanged = _environment != environment;
+            _environment = environment;
+            var daily = _daily;
+            if (!_autoSave || daily is null)
+            {
+                if (environmentChanged) RuntimeEnvironmentChanged?.Invoke(this, EventArgs.Empty);
+                return;
+            }
+
+            if (environmentChanged || _lastAppliedRevision != daily.Revision)
+            {
+                _lastAppliedRevision = daily.Revision;
+                _applyAttemptsRemaining = 3;
+            }
+
+            var applied = false;
+            if (_applyAttemptsRemaining > 0)
+            {
+                --_applyAttemptsRemaining;
+                string status;
+                try
+                {
+                    status = await Task.Run(() => _runtime.ApplyDailyAsync(daily));
+                    applied = status.StartsWith("已写入", StringComparison.Ordinal);
+                    if (!status.Contains("等待当前组件操作")) _applyAttemptsRemaining = 0;
+                    else if (_applyAttemptsRemaining == 0) status += "；自动尝试已用尽，请点击检查状态重试";
+                }
+                catch (Exception ex)
+                {
+                    if (ex is not IOException || ex is InvalidDataException or FileNotFoundException or DirectoryNotFoundException)
+                        _applyAttemptsRemaining = 0;
+                    status = "配置已保存；文件未应用：" + ex.Message + (_applyAttemptsRemaining > 0 ? "。将有限自动重试" : "。自动尝试已停止；可点击检查状态重新核对，或在系统设置检查组件");
+                }
+                if (ReferenceEquals(_daily, daily) && SetProperty(ref _fileStatus, status, nameof(PreparationText)))
+                    OnPropertyChanged(nameof(DraftState));
+            }
+
+            if (environmentChanged || applied) RuntimeEnvironmentChanged?.Invoke(this, EventArgs.Empty);
         }
-        catch(Exception ex)
-        {
-            if (ex is not IOException || ex is InvalidDataException or FileNotFoundException or DirectoryNotFoundException) _applyAttemptsRemaining=0;
-            _fileStatus="配置已保存；文件未应用："+ex.Message+(_applyAttemptsRemaining>0?"。将有限自动重试":"。自动尝试已停止；可点击检查状态重新核对，或在系统设置检查组件");
-        }
-        finally { _applying=false;Notify(); }
-        if (_daily.Revision!=revision) await PollDailyAsync();
+        finally { _applying = false; }
     }
+
     public async Task CheckStatusAsync()
     {
         if (_applying) return;
-        _lastApplyKey=null;_runtime.InvalidateObservation();
-        await PollDailyAsync();RefreshRuntime();
+        _environment = null;
+        _runtime.InvalidateObservation();
+        await PollDailyAsync();
+        await RefreshRuntimeAsync();
     }
+
     private void Delete()
     {
         if(SelectedPreset is null)return;var id=SelectedPreset.Preset.Id;
         if(!_dialogs.Confirm("删除对局预设","只删除此个人预设；当前日常配置保持独立。"))return;
         SaveLibrary(_library with {Presets=_library.Presets.Where(p=>p.Id!=id).ToImmutableArray(),Recent=_library.Recent.Where(r=>r!=id).ToImmutableArray()});SelectedPreset=null;_feedback="预设已删除，旧文件备份保留。";
     }
-    private void Import() { var p=_dialogs.ShowOpenFileDialog("Match setup (*.json)|*.json");if(p is null)return;MatchSetupStore.CheckPath(p);if(!_loaded)throw new InvalidDataException("现有 library 损坏，禁止覆盖");_store.Import(File.ReadAllText(p));_library=_store.Load();Friendly.RefreshLibrary();Enemy.RefreshLibrary();_feedback="导入完成；相同条目去重，内置阵容与 Human 预设不变。"; }
+    private void Import() { var p=_dialogs.ShowOpenFileDialog("Match setup (*.json)|*.json");if(p is null)return;MatchSetupStore.CheckPath(p);if(!_loaded)throw new InvalidDataException("现有 library 损坏，禁止覆盖");_store.Import(File.ReadAllText(p));_library=_store.Load();Friendly.RefreshLibrary();Enemy.RefreshLibrary();_feedback="导入完成；相同条目去重，内置阵容与 Human 预设不变。";OnPropertyChanged(nameof(Presets)); }
     private void Export() { var p=_dialogs.ShowSaveFileDialog("match-library.json","Match setup (*.json)|*.json");if(p is null)return;MatchSetupStore.CheckPath(p);File.WriteAllText(p,_store.Export());_feedback="个人阵容和整局预设已导出。"; }
-    public void RefreshRuntime()
+    public async Task RefreshRuntimeAsync()
     {
+        var daily = _daily;
+        var library = _library;
+        var lastModified = _libraryModified;
+        var result = await Task.Run(() =>
+        {
+            MatchLibrary? updatedLibrary = null;
+            var modified = lastModified;
+            try
+            {
+                modified = File.GetLastWriteTimeUtc(_store.LibraryPath);
+                if (modified != lastModified) updatedLibrary = _store.Load();
+                return (updatedLibrary, modified, Status: ReadRuntimeStatus(daily));
+            }
+            catch (Exception ex)
+            {
+                return (updatedLibrary, modified, Status: "无法确认运行时状态（原文件保留）：" + ex.Message);
+            }
+        });
+        if (result.updatedLibrary is not null && ReferenceEquals(library, _library))
+        {
+            _library = result.updatedLibrary;
+            _libraryModified = result.modified;
+            Friendly.RefreshLibrary();
+            Enemy.RefreshLibrary();
+            OnPropertyChanged(nameof(Presets));
+        }
+        if (ReferenceEquals(daily, _daily)) SetProperty(ref _status, result.Status, nameof(ApplyStatus));
+    }
+
+    private string ReadRuntimeStatus(DailyPlaySettings? daily)
+    {
+        const string pending = "新地图将读取已保存日常配置；实际接收等待本图读回";
+        if (daily is null || !File.Exists(_store.StatusPath)) return pending;
+        MatchSetupStore.CheckPath(_store.StatusPath);
+        var status = MatchJson.Read<MatchRuntimeStatus>(File.ReadAllText(_store.StatusPath));
+        if (status.SchemaVersion != 1 || status.DailyRevision != daily.Revision || status.UpdatedAt < daily.SavedAt)
+            return pending;
+
+        var processes = Process.GetProcessesByName("cs2");
+        bool current;
         try
         {
-            _library=_store.Load();
-            _status="新地图将读取已保存日常配置；实际接收等待本图读回";
-            if(_daily is not null && File.Exists(_store.StatusPath))
-            {
-                MatchSetupStore.CheckPath(_store.StatusPath);var s=MatchJson.Read<MatchRuntimeStatus>(File.ReadAllText(_store.StatusPath));
-                if(s.SchemaVersion==1 && s.DailyRevision==_daily.Revision && s.UpdatedAt>=_daily.SavedAt)
-                {
-                    var processes=Process.GetProcessesByName("cs2");bool current=false;
-                    try { current=processes.Any(p=>p.Id==s.ProcessId&&new DateTimeOffset(p.StartTime.ToUniversalTime())==s.ProcessStartUtc) && DateTimeOffset.UtcNow-s.UpdatedAt<TimeSpan.FromSeconds(10); } finally { foreach(var p in processes)p.Dispose(); }
-                    _status=$"{(current?"当前地图报告":"上次地图报告（不能确认当前地图）")} · {s.Map} · {s.UpdatedAt.ToLocalTime():HH:mm:ss}\n{s.Reason}\n阵容：{s.LineupState}\nAim：{s.AimState}\nNades：{s.NadesState}\n实际加载：{s.ActualMode} / {s.ActualProfile} · CT {s.CtCount} / T {s.TCount}";
-                    if(s.AimReadback is not null)_status+="\nAim "+s.AimReadback;
-                    if(s.NadesReadback is not null)_status+="\nNades "+s.NadesReadback;
-                }
-            }
+            current = DateTimeOffset.UtcNow - status.UpdatedAt < TimeSpan.FromSeconds(10) &&
+                processes.Any(p => p.Id == status.ProcessId && new DateTimeOffset(p.StartTime.ToUniversalTime()) == status.ProcessStartUtc);
         }
-        catch(Exception ex) { _status="无法确认运行时状态（原文件保留）："+ex.Message; }
-        Notify();
+        finally { foreach (var process in processes) process.Dispose(); }
+        var text = $"{(current ? "当前地图报告" : "上次地图报告（不能确认当前地图）")} · {status.Map} · {status.UpdatedAt.ToLocalTime():HH:mm:ss}\n{status.Reason}\n阵容：{status.LineupState}\nAim：{status.AimState}\nNades：{status.NadesState}\n实际加载：{status.ActualMode} / {status.ActualProfile} · CT {status.CtCount} / T {status.TCount}";
+        if (status.AimReadback is not null) text += "\nAim " + status.AimReadback;
+        if (status.NadesReadback is not null) text += "\nNades " + status.NadesReadback;
+        return text;
     }
-    private void Run(Action action) { try { action(); } catch(Exception ex) { _feedback="未完成："+ex.Message; }Notify(); }
+
+    private void Run(Action action)
+    {
+        try { action(); } catch (Exception ex) { _feedback = "未完成：" + ex.Message; }
+        OnPropertyChanged(nameof(Feedback));
+    }
+
     private void Notify()
     {
         foreach(var p in new[]{nameof(LineupEnabled),nameof(Name),nameof(HumanSide),nameof(FriendlyBots),nameof(EnemyBots),nameof(ReplacedSlot),nameof(Favorite),nameof(Profile),nameof(Mode),nameof(Map),nameof(Aim),nameof(Nades),nameof(Presets),nameof(Feedback),nameof(ApplyStatus),nameof(DraftState),nameof(PreparationText)})OnPropertyChanged(p);

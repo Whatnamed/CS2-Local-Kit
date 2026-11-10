@@ -528,7 +528,7 @@ public sealed class UiIntegrationTests : IDisposable
 
     // 15. Process state monitor transition updates runtime status and command CanExecute
     [Fact]
-    public void ProcessStateMonitor_TransitionUpdatesRuntimeStatusAndCommandCanExecute()
+    public async Task ProcessStateMonitor_TransitionUpdatesRuntimeStatusAndCommandCanExecute()
     {
         bool probeRunning = false;
         var services = CreateTestServices(cs2RunningProbe: () => probeRunning);
@@ -544,7 +544,7 @@ public sealed class UiIntegrationTests : IDisposable
 
         // Process starts
         probeRunning = true;
-        bool changedToRunning = manager.PollProcessState();
+        bool changedToRunning = await manager.PollProcessStateAsync();
         Assert.True(changedToRunning);
         Assert.True(manager.Cs2Running);
         Assert.True(header.Cs2Running);
@@ -553,11 +553,11 @@ public sealed class UiIntegrationTests : IDisposable
         Assert.False(header.ApplyCommand.CanExecute(null));
 
         // Calling again with no state change returns false
-        Assert.False(manager.PollProcessState());
+        Assert.False(await manager.PollProcessStateAsync());
 
         // Process stops
         probeRunning = false;
-        bool changedToStopped = manager.PollProcessState();
+        bool changedToStopped = await manager.PollProcessStateAsync();
         Assert.True(changedToStopped);
         Assert.False(manager.Cs2Running);
         Assert.False(header.Cs2Running);

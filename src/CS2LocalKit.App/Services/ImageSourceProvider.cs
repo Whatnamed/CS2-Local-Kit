@@ -28,38 +28,25 @@ public sealed class ImageSourceProvider
         var key = requestUrl + "@" + decodePixelWidth;
         if (_decoded.TryGetValue(key, out var cached) && cached is not null) return cached;
 
-        ImageCacheEntry? entry;
-        try
+        return await Task.Run(async () =>
         {
-            entry = await _cache.GetAsync(requestUrl, ct);
-        }
-        catch (OperationCanceledException)
-        {
-            return null;
-        }
-        if (entry is null || ct.IsCancellationRequested) return null;
+            if (ct.IsCancellationRequested) return null;
+            ImageCacheEntry? entry;
+            try { entry = await _cache.GetAsync(requestUrl, ct).ConfigureAwait(false); }
+            catch (OperationCanceledException) { return null; }
+            if (entry is null || ct.IsCancellationRequested) return null;
 
-        ImageSource? source;
-        try
-        {
-            source = await Task.Run(() => Decode(entry.LocalPath, decodePixelWidth), CancellationToken.None);
-        }
-        catch (Exception)
-        {
-            source = null;
-        }
-
-        if (source is null)
-        {
-            // A file that will not decode is not a usable cache entry. Evict exactly this URL so the
-            // next request re-fetches instead of hitting the same broken bytes on every scroll.
-            _cache.Invalidate(entry.SourceUrl);
-            return null;
-        }
-
-        if (_decoded.Count >= DecodedCacheLimit) _decoded.Clear();
-        _decoded[key] = source;
-        return source;
+            var source = Decode(entry.LocalPath, decodePixelWidth);
+            if (source is null)
+            {
+                // Evict exactly this URL so the next request can fetch usable bytes.
+                _cache.Invalidate(entry.SourceUrl);
+                return null;
+            }
+            if (_decoded.Count >= DecodedCacheLimit) _decoded.Clear();
+            _decoded[key] = source;
+            return source;
+        }).ConfigureAwait(false);
     }
 
     /// <summary>

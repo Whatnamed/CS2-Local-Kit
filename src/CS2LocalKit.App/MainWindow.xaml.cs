@@ -6,8 +6,6 @@ namespace CS2LocalKit.App;
 
 public partial class MainWindow : Window
 {
-    private DispatcherTimer? _processTimer;
-
     public MainWindow()
     {
         InitializeComponent();
@@ -21,11 +19,26 @@ public partial class MainWindow : Window
         LoadingHost.Visibility = Visibility.Collapsed;
         ShellHost.Visibility = Visibility.Visible;
 
-        _processTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1.5) };
-        _processTimer.Tick += async (_, _) => { viewModel.Manager.PollProcessState(); await viewModel.Bot.Setup.PollDailyAsync(); viewModel.Bot.Setup.RefreshRuntime(); };
-        _ = viewModel.Bot.Setup.PollDailyAsync();
-        _processTimer.Start();
-        Closed += (_, _) => _processTimer?.Stop();
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1.5) };
+        var closed = false;
+        timer.Tick += async (_, _) => await PollRuntimeAsync();
+        Closed += (_, _) => { closed = true; timer.Stop(); };
+        _ = PollRuntimeAsync();
+
+        async Task PollRuntimeAsync()
+        {
+            timer.Stop();
+            try
+            {
+                await viewModel.Manager.PollProcessStateAsync();
+                await viewModel.Bot.Setup.PollDailyAsync();
+                await viewModel.Bot.Setup.RefreshRuntimeAsync();
+            }
+            finally
+            {
+                if (!closed) timer.Start();
+            }
+        }
     }
 
     public void ReportStartupFailure(Exception error)
