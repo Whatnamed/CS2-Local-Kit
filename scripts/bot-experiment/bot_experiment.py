@@ -153,7 +153,7 @@ def reviewed_manifest(path, root):
     m = read_json(path)
     inf = under(root, 'game/csgo/steam.inf').read_text()
     review = None
-    for name in ['review-14193.json', 'review-14194.json', 'review-14195.json']:
+    for name in ['review-14193.json', 'review-14194.json', 'review-14195.json', 'review-14196.json']:
         review_path = Path(__file__).with_name(name)
         if not review_path.exists(): review_path = REPO / 'scripts/compatibility' / name
         if not review_path.exists(): continue

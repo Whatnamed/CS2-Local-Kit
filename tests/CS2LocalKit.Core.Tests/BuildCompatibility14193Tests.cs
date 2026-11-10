@@ -12,6 +12,7 @@ public class BuildCompatibility14193Tests
     [InlineData("Review14193")]
     [InlineData("Review14194")]
     [InlineData("Review14195")]
+    [InlineData("Review14196")]
     public void ReviewedViewKeepsFrozenSourceAndChecksExactBinaryIdentity(string reviewName)
     {
         using var review=Review(reviewName);var r=review.RootElement;
@@ -20,7 +21,7 @@ public class BuildCompatibility14193Tests
         var digest=r.GetProperty("sourceManifests")[1].GetString()!;
         var steam=new SteamInstallState(true,"idle",r.GetProperty("targetBuild").GetProperty("buildId").GetString()!,r.GetProperty("targetBuild").GetProperty("PatchVersion").GetString()!,r.GetProperty("targetBuild").GetProperty("ClientVersion").GetString()!);
         Assert.True(RuntimeIntegrationGuard.IsReviewedSource(digest,steam.PatchVersion));
-        Assert.False(RuntimeIntegrationGuard.IsReviewedSource(digest,"1.41.9.6"));
+        Assert.False(RuntimeIntegrationGuard.IsReviewedSource(digest,"1.41.9.99"));
         string Hash(string p)=>r.GetProperty("gameBinaries").GetProperty(p).GetString()!;
         using var m=RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam,r,Hash);
         Assert.Equal(steam.BuildId,m.RootElement.GetProperty("targetBuild").GetProperty("buildId").GetString());
@@ -38,7 +39,7 @@ public class BuildCompatibility14193Tests
         Assert.Throws<InvalidDataException>(()=>RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam with{Idle=false},r,Hash));
         using var unknown=RuntimeIntegrationGuard.ReviewedBuild(raw,"unlisted",steam,r,Hash);
         Assert.False(unknown.RootElement.TryGetProperty("reviewedRetainedFiles",out _));
-        using var future=RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam with{PatchVersion="1.41.9.6"},r,Hash);
+        using var future=RuntimeIntegrationGuard.ReviewedBuild(raw,digest,steam with{PatchVersion="1.41.9.99"},r,Hash);
         Assert.False(future.RootElement.TryGetProperty("reviewedRetainedFiles",out _));
     }
 }

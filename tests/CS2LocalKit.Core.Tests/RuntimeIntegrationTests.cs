@@ -1,6 +1,8 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using CS2LocalKit.Core.Runtime;
+using CS2LocalKit.Core.Application;
+using CS2LocalKit.Core.Catalog;
 using CS2LocalKit.App.Services;
 using Xunit;
 
@@ -72,13 +74,28 @@ public sealed class RuntimeIntegrationTests : IDisposable
     [Fact]public void HumanUpdateRestoresToPlayableSubstrateAndCanPrepareAgain()
     {
         var fixture=Path.Combine(Root,BotHumanFixtureSidecar.Target);var sidecar=new BotHumanFixtureSidecar(Root,Backups,_id);
-        sidecar.Begin("edited private fixture"u8.ToArray());File.WriteAllText(fixture,"edited private fixture");sidecar.Complete();
+        Put(Path.Combine(Root,"game/csgo/steam.inf"),"PatchVersion=1.41.9.6\nClientVersion=2000942\n");
+        Put(Path.Combine(_home,"steamapps/appmanifest_730.acf"),"\"StateFlags\" \"4\" \"buildid\" \"26445667\"");
+        var applier = new FixtureApplier(new()
+        {
+            CsgoDir = Path.Combine(Root, "game/csgo"), BotExperimentBackupRoot = Backups,
+            BackupsRoot = Path.Combine(_home, "fixture-backups"), Cs2RunningProbe = () => false,
+            Catalog = CatalogIndex.Load(TestFixtures.CatalogDir)
+        });
+        var preset = TestFixtures.ExamplePreset();
+        var error = Assert.Throws<ApplyException>(() => applier.Apply(preset, TestFixtures.FakeSteamId64));
+        Assert.Contains("build 与联合候选不匹配", error.Message);
+        Assert.Equal("original private fixture", File.ReadAllText(fixture));
+        _manifest["targetBuild"] = JsonSerializer.SerializeToNode(new { PatchVersion = "1.41.9.6", ClientVersion = "2000942", buildId = "26445667" });
+        SaveActive();
+        var applied = applier.Apply(preset, TestFixtures.FakeSteamId64);
+        Assert.Equal(applied.NewSha256, sidecar.Inspect()!.CurrentSha256);
         sidecar.SuspendForExactRestore();
         var record=Path.Combine(Backup,"install-record.json");Put(record,File.ReadAllText(record).Replace("\"installed\"","\"restored\""));File.Delete(Path.Combine(Root,RuntimeIntegrationGuard.Marker));
-        sidecar.FinishExactRestore();Assert.Equal("edited private fixture",File.ReadAllText(fixture));
+        sidecar.FinishExactRestore();Assert.Equal(applied.NewSha256,Hash(fixture));
         Assert.Equal(_id,RuntimeIntegrationGuard.RestoredHumanHandoff(Root,Backups,Manifest));
         sidecar.PrepareRestoredTransfer();Assert.Equal("original private fixture",File.ReadAllText(fixture));
-        sidecar.ReplayAfterFailedSwitch();Assert.Equal("edited private fixture",File.ReadAllText(fixture));
+        sidecar.ReplayAfterFailedSwitch();Assert.Equal(applied.NewSha256,Hash(fixture));
     }
     [Fact]public async Task UnifiedPrepareNeverRestoresProtectedParents()
     {

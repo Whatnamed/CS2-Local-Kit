@@ -1,0 +1,54 @@
+{
+  "targetBuild": {
+    "PatchVersion": "1.41.9.6",
+    "ClientVersion": "2000942",
+    "buildId": "26445667"
+  },
+  "sourceManifests": [
+    "fc09b409160d071a60a3d013fbb89d108d704ff4b65731dff96626823f006012",
+    "d9e4893ba16d17449ee3e4f9d54c33507857f253a553fdbe812df82dd2d2bc84",
+    "eed7d4e69e0ca89a5b7ddb9aef2c1d8b5a66cec5ec560eaef094921209f9e08a",
+    "11560f1f83d806f8b5d295a2cb5f8c55ebdb805905a7ecdbcb648cf475f9c2d7",
+    "39971e16cfeec0516bea797520631ec10b7ce497104a2028eb3b280269cceebb"
+  ],
+  "previousBuild": {
+    "PatchVersion": "1.41.9.4",
+    "ClientVersion": "2000939",
+    "buildId": "26334290"
+  },
+  "retainedFiles": {
+    "game/csgo/cfg/gamemode_retakecasual.cfg": {
+      "before": "c293c444121db9d532a7f82813adc2b593d860cddd369e15d5ac1d36958685dc",
+      "after": "83aa96259090ad499b034cf452cfe585100ce469a95b2ad7a5473637a20b0ed6"
+    },
+    "game/bin/win64/engine2.dll": {
+      "before": "42e0549c7314321e1b69c8d60046efe94e0356f54d7a2fb79dd6b993e6e3658b",
+      "after": "a1b682acb5cedf11bed4784b0191a5452e93ee8f3023f95fa11ab3c3676b0fbc"
+    },
+    "game/bin/win64/schemasystem.dll": {
+      "before": "6ea6c2e95360572d78352260f808e390bc24c9a4370184c067481f5b4d6e94c9",
+      "after": "d94cc30d01521e0a7cfdfda6d5ba305029ff7093e6ce53452c8cf3a9b97895b3"
+    },
+    "game/csgo/bin/win64/client.dll": {
+      "before": "d618bbf8e6afb36baa09b3a282035996a88300458c55d2aa5cb81f0495c0ec54",
+      "after": "9279421852772522121be2f13409dd37436e8c809ff48898c8c3d41b09e77844"
+    },
+    "game/csgo/bin/win64/server.dll": {
+      "before": "84a06ec3a3ef2ff9fe668aa7a77d0d6c0156e0b3bccdae22f628a9919ad082b6",
+      "after": "70c66e850b2ce72c8c7ca026de6989ef4de7f12dad64ec503645fbd2a7f06d9f"
+    },
+    "game/csgo/steam.inf": {
+      "before": "919b953d73167570d43ee893ae16562a3756fc07b100f8cee0d43ea251a5970a",
+      "after": "1b5256bbc6c3188503cbe8a1474c41a286bf3e5a0e56e42f7a2868d0bb0acd2f"
+    }
+  },
+  "gameBinaries": {
+    "game/bin/win64/cs2.exe": "8614097aaa2761b0a7157c0045861713e769fb1e8235f50fc68f411294dd60cf",
+    "game/bin/win64/engine2.dll": "a1b682acb5cedf11bed4784b0191a5452e93ee8f3023f95fa11ab3c3676b0fbc",
+    "game/bin/win64/schemasystem.dll": "d94cc30d01521e0a7cfdfda6d5ba305029ff7093e6ce53452c8cf3a9b97895b3",
+    "game/csgo/bin/win64/client.dll": "9279421852772522121be2f13409dd37436e8c809ff48898c8c3d41b09e77844",
+    "game/csgo/bin/win64/server.dll": "70c66e850b2ce72c8c7ca026de6989ef4de7f12dad64ec503645fbd2a7f06d9f"
+  },
+  "evidence": "docs/archive/2026-11-10-compat-14196/README.md",
+  "realGameAccepted": false
+}

@@ -52,6 +52,9 @@ def run(review_name='review-14193.json'):
             finally:path.write_bytes(original)
             checks.append('reject '+label+' before writes')
         reject('unreviewed binary',root/'game/csgo/bin/win64/server.dll',b'unknown binary')
+        retake = 'game/csgo/cfg/gamemode_retakecasual.cfg'
+        if retake in review['retainedFiles']:
+            reject('unreviewed Valve Retake config',root/retake,b'unknown config')
         reject('unreviewed gamedata',root/'game/csgo/addons/counterstrikesharp/gamedata/gamedata.json',b'{}')
         reject('Human drift',root/tx.HUMAN_FIXTURE,b'private external edit')
         reject('parent backup drift',Path(m['runtimeIntegration']['parents']['compat']['backupDir'])/'preimages/sentinel',b'bad')
