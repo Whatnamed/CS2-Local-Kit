@@ -1,0 +1,185 @@
+{
+  "date": "2026-11-10",
+  "base": "50cf838f5ce54a3737763df680aeb4c1a9f3900f",
+  "targetBuild": {
+    "PatchVersion": "1.41.9.6",
+    "ClientVersion": "2000942",
+    "buildId": "26445667"
+  },
+  "steam": {
+    "branch": "public",
+    "stateFlags": 4
+  },
+  "active": {
+    "installId": "177e9652205d4d75a4cda34d76934547",
+    "manifestSha256": "fc09b409160d071a60a3d013fbb89d108d704ff4b65731dff96626823f006012",
+    "state": "installed",
+    "transactionEntries": 685,
+    "retainedDrift": [
+      "game/csgo/cfg/gamemode_retakecasual.cfg",
+      "game/bin/win64/engine2.dll",
+      "game/bin/win64/schemasystem.dll",
+      "game/csgo/bin/win64/client.dll",
+      "game/csgo/bin/win64/server.dll",
+      "game/csgo/steam.inf"
+    ],
+    "parents": {
+      "bot": {
+        "installId": "b613a8c709c7440998346cb802bb790f",
+        "inventoryMatches": true,
+        "markerMatches": true
+      },
+      "compat": {
+        "installId": "5808afffdc44440ab3f0de2159cdb436",
+        "inventoryMatches": true,
+        "markerMatches": true
+      },
+      "nades": {
+        "installId": "9f9849ca97804c2dbd7b1307bba4580c",
+        "inventoryMatches": true,
+        "markerMatches": true
+      }
+    },
+    "moduleInventoryMatches": true,
+    "startupEntryPresent": true,
+    "moduleSha256": {
+      "game/csgo/addons/metamod/bin/win64/metamod.2.cs2.dll": "0c78ee2571d19cbbc070ba360c3c0b7665d572ad8791df531a755d7c8c226c6c",
+      "game/csgo/addons/BotController/bin/win64/BotController.dll": "1bf23de8766aeb28c3d781749bcdc1513cce18a612ce31dfeea5075d7832bde0",
+      "game/csgo/addons/BotHider/bin/win64/BotHider.dll": "505a93b30b261b7504743f03218852d322a8925e10c17818d0ce4406b90f594d",
+      "game/csgo/addons/counterstrikesharp/plugins/LocalKitMatchSetup/LocalKitMatchSetup.dll": "ac8e498db88e1d3148d497a18e2632419106093db899bf4d59ee059e5a4319a8",
+      "game/csgo/addons/counterstrikesharp/bin/win64/counterstrikesharp.dll": "7f799ae466d4e58ff8bba3fdf810c1505358c5e5dcb51dc5d73f7eb098e5d4a2",
+      "game/csgo/addons/counterstrikesharp/api/CounterStrikeSharp.API.dll": "e81f05d960c37ee623d552733fc919e206c8c1d16157886342d06a2f4d0dab17",
+      "game/csgo/addons/counterstrikesharp/plugins/InventorySimulator/InventorySimulator.dll": "3a807316195b5c0d31d7aee5490128c36a994eb8764528717097d2ad636d8489"
+    },
+    "botRef": "e18c029a76b7515ea5cb15cb08c41f03de4c0a57",
+    "cssVersion": "1.0.376",
+    "metamodBuild": 1481
+  },
+  "priorController": {
+    "path": "E:\\CS2MOD\\releases\\controller\\controller-compat-14195-20261103",
+    "sourceHead": "2ac64d69e7edee98013d78eca47dedef0b897e62",
+    "releaseManifestSha256": "5187d506412aab77c777a47736fa58fc91cc06658533cdff47e14406670b7f47",
+    "files": 408,
+    "payloadSha256": {
+      "CS2LocalKit.App.exe": "36ca91dae5e95d50c070443124f9e8db414c9d7247de3f34f4e3befa8bf03c9d",
+      "CS2LocalKit.App.dll": "10cde42e48d66fe824269fc59a0791fa2ae269b82a97fc5d12ac1ac0a9b20759",
+      "CS2LocalKit.Core.dll": "cee4c150932cca1a92c8662a41134304a2d64cad57d3658b4a324677762b03a7"
+    },
+    "lastShellLaunchLocal": "2026-11-10T22:04:27",
+    "humanPreflight": "Steam/CS2 build 与联合候选不匹配，保留 Human 数据"
+  },
+  "candidate": {
+    "Difficulty": 1,
+    "Directory": "bot-daily-14196-dc94191",
+    "ManifestSha256": "fc58bb0bf376469b43c203e5dcda648f12d0d9d0e445b3e06d6cf88a322452a2",
+    "PreservesHuman": true,
+    "MatchSetup": true,
+    "RuntimeIntegration": true,
+    "DailyPlay": true,
+    "path": "E:\\CS2MOD\\releases\\bot-experiment\\bot-daily-14196-dc94191",
+    "sourceHead": "dc94191d2bac906c1b28ebb25660d72c51a47c0d",
+    "payloadFiles": 112
+  },
+  "controller": {
+    "path": "E:\\CS2MOD\\releases\\controller\\controller-compat-14196-20261110",
+    "sourceHead": "ee47dcbacf88d2057f2113723f2c323024d11b88",
+    "releaseManifestSha256": "3c11c3efe73fc94710cbd76eb7d92a53a383ade1bded03de3a8d9a0066d6ab34",
+    "files": 408,
+    "payloadSha256": {
+      "CS2LocalKit.App.exe": "16a16aa0317700b26515d0d2092e67e3002f6f2d8e58cd310fb1f39a422e0fec",
+      "CS2LocalKit.App.dll": "4ea8e4e3e933e73774d5bbe3c2e9996e681b799bf432ffea137808fe1b3b7dfe",
+      "CS2LocalKit.Core.dll": "1ab479975a452ef4d546cc69b1f489f77c7e042b7e17e1ac8deeaeef2f017de7"
+    }
+  },
+  "staticChecks": {
+    "windowsUniqueSignatures": 123,
+    "botAIOriginalByteChecks": {
+      "passCount": 39,
+      "total": 40
+    },
+    "unchangedResolvedSchemaOffsets": 46,
+    "unchangedAimInstructionShape": 429,
+    "startChangeLevel": {
+      "vtableRva": "0x5dcef8",
+      "slot": 40,
+      "functionRva": "0xb51f0",
+      "engine2Sha256": "a1b682acb5cedf11bed4784b0191a5452e93ee8f3023f95fa11ab3c3676b0fbc"
+    }
+  },
+  "verification": {
+    "focusedDotnetTests": 70,
+    "reviewedRecovery": [
+      "cross-build Restore preview writes nothing",
+      "reject unreviewed binary before writes",
+      "reject unreviewed Valve Retake config before writes",
+      "reject unreviewed gamedata before writes",
+      "reject Human drift before writes",
+      "reject parent backup drift before writes",
+      "reject changed integration DLL before writes",
+      "reject Steam busy before writes",
+      "unlisted manifest cannot inherit review",
+      "cross-build interrupted Restore resumes",
+      "restore preserves updated Valve/CSS files, original manifest, record images, Human and three parents"
+    ],
+    "packagedPublicEntry": [
+      "public preview zero writes",
+      "actual full payload installed",
+      "restore preview zero writes",
+      "exact diagnostics",
+      "noncritical Steam metadata drift accepted",
+      "exact playable baseline restored",
+      "three parent records/backups unchanged",
+      "reject game binary drift",
+      "reject unknown plugin",
+      "reject parent record drift",
+      "reject parent backup drift",
+      "reject Human drift",
+      "reject Steam build drift",
+      "reject Steam busy"
+    ],
+    "dailyMigrationAndSwitch": [
+      "old Low integration exact restore to same substrate",
+      "one new daily substrate installation",
+      "exact read-only diagnostics Low / enhanced",
+      "exact read-only diagnostics High / enhanced",
+      "exact read-only diagnostics Medium / enhanced",
+      "exact read-only diagnostics Low / normal",
+      "exact read-only diagnostics High / normal",
+      "exact read-only diagnostics Medium / normal",
+      "exact read-only diagnostics Low / enhanced",
+      "exact read-only diagnostics High / enhanced",
+      "exact read-only diagnostics Medium / enhanced",
+      "interrupted mode exact recovery preview",
+      "reject unknown active profile",
+      "reject unknown profile source",
+      "reject unknown module",
+      "reject unknown disabled loader",
+      "exact baseline restored after mutable state",
+      "old recovery plus three parent transactions unchanged"
+    ],
+    "restoredSubstrateMatchesCandidate": {
+      "targetBuild": true,
+      "baselineFiles": true,
+      "gameBinaries": true,
+      "moduleInventory": true,
+      "runtimeIntegration": true,
+      "humanFiles": true
+    },
+    "publishedControllerHumanPreflight": "PASS",
+    "publishedControllerReadOnlyPreviews": [
+      "Low",
+      "Medium",
+      "High"
+    ],
+    "protection": {
+      "status": "PASS",
+      "actualGameModified": false,
+      "oldCandidateUnchanged": true,
+      "activeTransactionAndParentsUnchanged": true,
+      "personalDataUnchanged": true
+    },
+    "realInstallRestoreExecuted": false,
+    "gameStarted": false,
+    "gameplayAcceptance": "pending"
+  }
+}
