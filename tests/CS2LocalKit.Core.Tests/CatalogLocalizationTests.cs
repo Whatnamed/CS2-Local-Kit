@@ -108,6 +108,26 @@ public sealed class CatalogLocalizationTests : IDisposable
     }
 
     [Fact]
+    public void Load_DistinguishesLegacyKnifeWithTheSameLocalizedName()
+    {
+        var root = CreateLocaleCache();
+        const string skins = """
+            [
+              {"name":"Karambit | Blue Steel","weapon":{"weapon_id":507},"category":{"id":"sfui_invpanel_filter_melee"},"paint_index":"42","legacy_model":true},
+              {"name":"Karambit | Blue Steel","weapon":{"weapon_id":507},"category":{"id":"sfui_invpanel_filter_melee"},"paint_index":"1480","legacy_model":false}
+            ]
+            """;
+        File.WriteAllText(CatalogSnapshot.CachePath(root, CatalogSnapshot.IdentityLocale, "skins.json"), skins);
+        File.WriteAllText(CatalogSnapshot.CachePath(root, CatalogSnapshot.ChineseLocale, "skins.json"),
+            skins.Replace("Karambit | Blue Steel", "爪子刀 | 蓝钢"));
+        var knife = Assert.Single(CatalogIndex.Load(root).GetKnives());
+
+        Assert.Equal("蓝钢（旧版）", CatalogDisplay.FinishPrimary(knife.Paints[42]));
+        Assert.Equal("Blue Steel (Legacy)", CatalogDisplay.FinishSecondary(knife.Paints[42]));
+        Assert.Equal("蓝钢", CatalogDisplay.FinishPrimary(knife.Paints[1480]));
+    }
+
+    [Fact]
     public void Load_IdentityKeysSurviveLocalization()
     {
         var enOnly = CatalogIndex.Load(CreateLocaleCache(withChinese: false));

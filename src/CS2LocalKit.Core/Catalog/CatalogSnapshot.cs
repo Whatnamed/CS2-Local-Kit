@@ -15,7 +15,7 @@ namespace CS2LocalKit.Core.Catalog;
 /// </summary>
 public static class CatalogSnapshot
 {
-    public const string PinnedCommit = "8a71e35c0489ac3093661af713525f2f0ebe1ad7";
+    public const string PinnedCommit = "cd3054f67f3a314a6ebb91eae5c6d7c9f368fecb";
 
     /// <summary>Locale that defines catalog identity (which defIndex/paintIndex exist).</summary>
     public const string IdentityLocale = "en";

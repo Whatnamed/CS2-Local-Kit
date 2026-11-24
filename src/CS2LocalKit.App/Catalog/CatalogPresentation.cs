@@ -34,9 +34,10 @@ public static class CatalogDisplay
     {
         var pattern = paint.PatternChineseName;
         var full = StripPrefix(paint.ChineseName) ?? StripPrefix(paint.Name);
-        return !string.IsNullOrWhiteSpace(pattern) ? pattern
+        var name = !string.IsNullOrWhiteSpace(pattern) ? pattern
             : !string.IsNullOrWhiteSpace(full) ? full
             : paint.Name;
+        return paint.IsLegacyKnife ? name + (string.IsNullOrWhiteSpace(paint.ChineseName) ? " (Legacy)" : "（旧版）") : name;
     }
 
     public static string FinishSecondary(CatalogPaint paint)
@@ -45,6 +46,7 @@ public static class CatalogDisplay
         var full = StripPrefix(paint.Name);
         var primary = FinishPrimary(paint);
         var english = !string.IsNullOrWhiteSpace(pattern) ? pattern : full ?? paint.Name;
+        if (paint.IsLegacyKnife) english += " (Legacy)";
         return string.Equals(english, primary, StringComparison.Ordinal) ? "" : english;
     }
 

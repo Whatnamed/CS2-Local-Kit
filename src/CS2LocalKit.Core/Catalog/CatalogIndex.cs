@@ -95,7 +95,8 @@ public sealed class CatalogIndex
                 RarityName: GetNestedRaw(s, "rarity", "name"),
                 RarityColor: GetNestedRaw(s, "rarity", "color"),
                 MinFloat: GetDouble(s, "min_float"),
-                MaxFloat: GetDouble(s, "max_float"));
+                MaxFloat: GetDouble(s, "max_float"),
+                IsLegacyKnife: def.IsKnife && s.TryGetProperty("legacy_model", out var legacy) && legacy.ValueKind == JsonValueKind.True);
         }
         return byWeapon;
     }
@@ -386,7 +387,8 @@ public sealed record CatalogPaint(
     string? RarityChineseName = null,
     string? RarityColor = null,
     double? MinFloat = null,
-    double? MaxFloat = null);
+    double? MaxFloat = null,
+    bool IsLegacyKnife = false);
 
 /// <summary>Music kit metadata keyed by the numeric def_index used by HumanPreset.</summary>
 public sealed record CatalogMusicKit(
