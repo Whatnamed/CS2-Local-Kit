@@ -77,7 +77,7 @@ public sealed class BotIntegrationTests : IDisposable
     {
         var service=new BotExperimentService(_home,Root,()=>false,_runner);
         Assert.Equal(25,service.Candidates.Count(c => !c.HumanOnly));
-        var fallback = Assert.Single(service.Candidates.Where(c => c.HumanOnly));
+        var fallback = Assert.Single(service.Candidates, c => c.HumanOnly);
         Assert.True(fallback.PreservesHuman && fallback.RuntimeIntegration);
         Assert.False(fallback.MatchSetup || fallback.DailyPlay);
         Assert.Equal(4,service.Candidates.Count(c=>c.DailyPlay));
