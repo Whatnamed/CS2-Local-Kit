@@ -98,7 +98,8 @@ public sealed class BotHumanFixtureSidecar
             entry.GetProperty("before").GetProperty("sha256").GetString() != baselineHash ||
             entry.GetProperty("after").GetProperty("sha256").GetString() != baselineHash)
             throw new InvalidDataException("Human fixture 不属于保留的用户文件");
-        if (MatchSetup.DailyPlayFiles.Supports(m)) MatchSetup.DailyPlayFiles.VerifyModules(_root,m,r.GetProperty("moduleInventoryAfter"));
+        if (MatchSetup.DailyPlayFiles.Supports(m) || identity.HumanOnly)
+            MatchSetup.DailyPlayFiles.VerifyModules(_root, m, r.GetProperty("moduleInventoryAfter"));
         var update = Read();
         if (update is not null && (update.InstallId != _installId || update.ManifestSha256 != manifestHash || update.BaselineSha256 != baselineHash ||
             Hash(_baseline) != baselineHash || Hash(_current) != update.CurrentSha256 ||

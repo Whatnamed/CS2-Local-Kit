@@ -62,7 +62,8 @@ public static class DailyPlayFiles
     }
     public static void VerifyModules(string root, JsonElement manifest, JsonElement expected)
     {
-        if (!Supports(manifest)) return;
+        var daily = Supports(manifest);
+        if (!daily && !(manifest.TryGetProperty("humanOnly", out var humanOnly) && humanOnly.GetBoolean())) return;
         foreach (var group in expected.EnumerateObject())
         {
             var actual=new Dictionary<string,(string Kind,string? Hash)>(StringComparer.Ordinal);
@@ -74,7 +75,7 @@ public static class DailyPlayFiles
                 {
                     MatchSetupStore.CheckPath(path);
                     var relative=Path.GetRelativePath(folder,path).Replace('\\','/');
-                    if (relative.EndsWith(DisabledSuffix) && BotLoaders.Contains(group.Name+"/"+relative[..^DisabledSuffix.Length])) relative=relative[..^DisabledSuffix.Length];
+                    if (daily && relative.EndsWith(DisabledSuffix) && BotLoaders.Contains(group.Name+"/"+relative[..^DisabledSuffix.Length])) relative=relative[..^DisabledSuffix.Length];
                     if (!actual.TryAdd(relative,Directory.Exists(path)?("directory",null):("file",RuntimeIntegrationGuard.Hash(path)))) throw new InvalidDataException("重复 Bot 加载文件");
                 }
             }

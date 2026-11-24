@@ -153,7 +153,7 @@ def reviewed_manifest(path, root):
     m = read_json(path)
     inf = under(root, 'game/csgo/steam.inf').read_text()
     review = None
-    for name in ['review-14193.json', 'review-14194.json', 'review-14195.json', 'review-14196.json']:
+    for name in ['review-14193.json', 'review-14194.json', 'review-14195.json', 'review-14196.json', 'review-14201.json']:
         review_path = Path(__file__).with_name(name)
         if not review_path.exists(): review_path = REPO / 'scripts/compatibility' / name
         if not review_path.exists(): continue
@@ -268,6 +268,10 @@ def payload_allowed(target, surface):
         return rel in {'addons/counterstrikesharp/bin/win64/counterstrikesharp.dll', 'addons/counterstrikesharp/gamedata/gamedata.json'}
     if surface == 'framework':
         return rel in MM_FILES
+    if surface == 'human-framework':
+        css = 'addons/counterstrikesharp/'
+        return rel.startswith(css + 'api/') or rel in {css + path for path in (
+            'bin/win64/counterstrikesharp.dll', 'gamedata/gamedata.json', 'configs/core.json')}
     if surface != 'bot':
         return False
     parts = rel.split('/')
@@ -292,7 +296,14 @@ def load_candidate(release, expected_sha, fake=False):
     require(re.fullmatch('[0-9a-f]{64}', expected_sha or '') and sha(manifest_path) == expected_sha, 'Explicit manifest SHA256 mismatch')
     m = read_json(manifest_path)
     require(m['schemaVersion'] == 1 and m['lane'] == 'bot-experiment' and m['status'] == 'candidate', 'Unsupported experiment manifest')
-    require(m['botRef'] == BOT_REF and m['metamod']['build'] == 1481 and m['cssVersion'] == '1.0.376', 'Experiment source/framework drift')
+    human_only = m.get('humanOnly') is True
+    if human_only:
+        require('runtimeIntegration' in m and m.get('humanPolicy') == 'preserve' and
+                not {'dailyPlay', 'matchSetup', 'profile'} & m.keys() and
+                m['metamod']['build'] == 1491 and m['cssVersion'] == '1.0.380-local.14201',
+                'Invalid Human-only framework candidate')
+    else:
+        require(m['botRef'] == BOT_REF and m['metamod']['build'] == 1481 and m['cssVersion'] == '1.0.376', 'Experiment source/framework drift')
     require(bool(m.get('testFixture', False)) == bool(fake), 'Synthetic and production manifests cannot be interchanged')
     require(set(m['gameBinaries']) == GAME_BINARIES and GAME_BINARIES <= set(m['baselineFiles']), 'Five exact game binary identities are required')
     # A release is an exact file set, including scripts, licenses and corresponding sources.
@@ -304,6 +315,8 @@ def load_candidate(release, expected_sha, fake=False):
         require(key not in seen, f'Duplicate/case-colliding target: {key}')
         seen.add(key)
         require(payload_allowed(e['target'], e['surface']), f'Out-of-lane target: {key}')
+        require(e['surface'] in {'framework', 'human-framework'} if human_only else e['surface'] != 'human-framework',
+                'Human-only framework payload crossed a candidate boundary')
         require(e['surface'] != 'compatibility' or 'runtimeIntegration' in m, 'Compatibility payload requires reviewed integration chain')
         require(sha(under(release, e['source'])) == e['sha256'], f'Payload hash mismatch: {key}')
     require({e['target'][len('game/csgo/'):] for e in m['files'] if e['surface']=='framework'} == MM_FILES, 'Incomplete framework overlay')
@@ -456,6 +469,15 @@ def gameinfo_bytes(root):
     return raw, (b'\xef\xbb\xbf' if raw.startswith(b'\xef\xbb\xbf') else b'') + updated.encode('utf-8')
 
 
+def human_startup(root):
+    raw = under(root, 'game/csgo/gameinfo.gi').read_bytes()
+    require(not re.search(rb'(?im)^\s*Game\s+[^\r\n]*(?:addons/|overrides)', raw), 'Existing addon or override startup entry')
+    anchor = list(re.finditer(rb'(?m)^[ \t]*SearchPaths[ \t]*\r?\n[ \t]*\{[ \t]*(\r?\n)', raw))
+    require(len(anchor) == 1, 'Ambiguous SearchPaths insertion point')
+    end = anchor[0].end()
+    return raw, raw[:end] + b'\t\t\tGame\tcsgo/addons/metamod' + anchor[0][1] + raw[end:]
+
+
 def active_history(root, backup_root, protected_ids=()):
     if backup_root.exists():
         no_links(backup_root)
@@ -499,7 +521,10 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
     steam_manifest = no_links(root.parent.parent / 'appmanifest_730.acf')
     require(re.search(r'"buildid"\s+"'+re.escape(m['targetBuild']['buildId'])+'"', steam_manifest.read_text()), 'Steam buildId mismatch')
     require(module_inventory(root) == m['moduleInventory'], 'Plugin/module inventory drift')
-    if integrated:
+    human_only = m.get('humanOnly') is True
+    if human_only:
+        original_gi, new_gi = human_startup(root)
+    elif integrated:
         original_gi = new_gi = under(root,'game/csgo/gameinfo.gi').read_bytes()
         require(original_gi.decode('utf-8-sig').count('csgo/overrides/botprofile.vpk') == 1, 'Integrated profile startup entry mismatch')
     else:
@@ -507,6 +532,12 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
     entries = []
     isolated = []
     plugin_dir = under(root, 'game/csgo/addons/counterstrikesharp/plugins')
+    if human_only:
+        # CSS auto-loads a managed plugin from the DLL matching its directory name.
+        isolated.extend(p.relative_to(root).as_posix() for p in sorted(plugin_dir.rglob('*.dll'))
+                        if p.stem.casefold() == p.parent.name.casefold()
+                        and p.relative_to(plugin_dir).parts[0] not in {'disabled', 'InventorySimulator'})
+        isolated.extend(f'game/csgo/addons/metamod/{name}.vdf' for name in ('BotController', 'BotHider', 'BotVision'))
     if plugin_dir.exists() and not integrated:
         for p in sorted(plugin_dir.iterdir()):
             no_links(p)
@@ -544,7 +575,7 @@ def make_plan(release, manifest_sha, root, backup_root, fake=False, isolate_huma
         after = {'kind':'file','sha256':e['sha256']}
         action = 'retained' if before == after else 'overwritten' if before else 'created'
         entries.append({**e,'action':action,'before':before,'after':after})
-    entries.append({'target':'game/csgo/gameinfo.gi','action':'retained' if integrated else 'modified','surface':'gameinfo','before':{'kind':'file','sha256':digest(original_gi)},'after':{'kind':'file','sha256':digest(new_gi)}})
+    entries.append({'target':'game/csgo/gameinfo.gi','action':'retained' if original_gi == new_gi else 'modified','surface':'gameinfo','before':{'kind':'file','sha256':digest(original_gi)},'after':{'kind':'file','sha256':digest(new_gi)}})
     targets = {e['target'] for e in entries}
     for rel, value in m['baselineFiles'].items():
         if rel in targets or any(rel.startswith(p+'/') for p in isolated):
@@ -693,6 +724,7 @@ def install(release, manifest_sha, root, backup_root, apply=False, fake=False, i
     if 'profile' in m: record['profile']=m['profile']
     if 'humanPolicy' in m: record['humanPolicy']=m['humanPolicy']
     if 'coexistence' in m: record['coexistence']=m['coexistence']
+    if m.get('humanOnly'): record['humanOnly'] = True
     # Copy and verify every preimage before the first mutation of the target.
     for e in entries:
         if e['before'] is not None and e['action']!='retained':

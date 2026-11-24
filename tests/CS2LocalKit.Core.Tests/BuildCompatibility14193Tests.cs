@@ -13,12 +13,13 @@ public class BuildCompatibility14193Tests
     [InlineData("Review14194")]
     [InlineData("Review14195")]
     [InlineData("Review14196")]
+    [InlineData("Review14201")]
     public void ReviewedViewKeepsFrozenSourceAndChecksExactBinaryIdentity(string reviewName)
     {
         using var review=Review(reviewName);var r=review.RootElement;
         var files=r.GetProperty("retainedFiles").EnumerateObject().ToDictionary(p=>p.Name,p=>p.Value.GetProperty("before").GetString());
         var raw=JsonSerializer.Serialize(new{targetBuild=r.GetProperty("previousBuild"),baselineFiles=files,coexistence=new{reviewedBuild=r.GetProperty("previousBuild")}});
-        var digest=r.GetProperty("sourceManifests")[1].GetString()!;
+        var digest=r.GetProperty("sourceManifests")[0].GetString()!;
         var steam=new SteamInstallState(true,"idle",r.GetProperty("targetBuild").GetProperty("buildId").GetString()!,r.GetProperty("targetBuild").GetProperty("PatchVersion").GetString()!,r.GetProperty("targetBuild").GetProperty("ClientVersion").GetString()!);
         Assert.True(RuntimeIntegrationGuard.IsReviewedSource(digest,steam.PatchVersion));
         Assert.False(RuntimeIntegrationGuard.IsReviewedSource(digest,"1.41.9.99"));

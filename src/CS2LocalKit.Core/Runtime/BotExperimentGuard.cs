@@ -5,7 +5,7 @@ namespace CS2LocalKit.Core.Runtime;
 
 /// <summary>Observation only. Installation/restoration remain owned by the experimental transaction.</summary>
 public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, string? InstallId = null, string? BackupRoot = null,
-    bool PreservesHuman = false, string? State = null, bool RecoveryRequired = false)
+    bool PreservesHuman = false, string? State = null, bool RecoveryRequired = false, bool HumanOnly = false)
 {
     public static BotExperimentIdentity Inspect(string cs2Root, string? backupRoot = null)
     {
@@ -25,9 +25,11 @@ public sealed record BotExperimentIdentity(bool BlocksHuman, string Reason, stri
                     || (m.TryGetProperty("humanPolicy", out var p) && p.GetString() == "preserve") != preserve))
                     throw new InvalidDataException("marker 与事务身份不一致");
                 var recovery = missingMarker || state != "installed";
-                return new(true, recovery ? "事务未完整结束；请按精确 ID 检查恢复条件" : preserve
+                var humanOnly = r.TryGetProperty("humanOnly", out var mode) && mode.GetBoolean();
+                return new(true, recovery ? "事务未完整结束；请按精确 ID 检查恢复条件" : humanOnly
+                    ? "普通人机 + 我的饰品；Human 修改须经活动事务与侧车校验" : preserve
                     ? "增强人机 + 我的饰品；Human 修改须经活动事务与侧车校验"
-                    : "旧 Bot 实验隔离 Human；请先按精确 ID 恢复", id, backupRoot, preserve, state, recovery);
+                    : "旧 Bot 实验隔离 Human；请先按精确 ID 恢复", id, backupRoot, preserve, state, recovery, humanOnly);
             }
             var integratedMarker = Path.Combine(cs2Root, "game", "csgo", ".cs2-local-kit-runtime-integration.json");
             var marker = File.Exists(integratedMarker) ? integratedMarker : Path.Combine(cs2Root, "game", "csgo", ".cs2-local-kit-bot-experiment.json");

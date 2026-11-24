@@ -1,0 +1,23 @@
+diff --git a/public/engine2/isource2server.h b/public/engine2/isource2server.h
+index ed2a6b5..67bc297 100644
+--- a/public/engine2/isource2server.h
++++ b/public/engine2/isource2server.h
+@@ -143,0 +144,3 @@ public:
++	// AMNOTE: Forwards to the game's network string table container, clearing its tables
++	virtual void			unk_101( void ) = 0;
++
+@@ -246 +249 @@ public:
+-	virtual void			unk_101( void *, void * ) = 0;
++	virtual void			unk_201( void *, void * ) = 0;
+@@ -252 +255 @@ public:
+-	virtual void			unk_201( void * ) = 0;
++	virtual void			unk_301( void * ) = 0;
+@@ -284,4 +287,4 @@ public:
+-	virtual void			unk_301( void ) = 0;
+-	virtual void			unk_302( void ) = 0;
+-	virtual void			unk_303( void ) = 0;
+-	virtual void			unk_304( void ) = 0;
++	virtual void			unk_401( void ) = 0;
++	virtual void			unk_402( void ) = 0;
++	virtual void			unk_403( void ) = 0;
++	virtual void			unk_404( void ) = 0;

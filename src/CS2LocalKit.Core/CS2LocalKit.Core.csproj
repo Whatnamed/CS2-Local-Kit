@@ -16,6 +16,7 @@
     <EmbeddedResource Include="..\..\scripts\compatibility\review-14194.json" LogicalName="CS2LocalKit.Review14194.json" />
     <EmbeddedResource Include="..\..\scripts\compatibility\review-14195.json" LogicalName="CS2LocalKit.Review14195.json" />
     <EmbeddedResource Include="..\..\scripts\compatibility\review-14196.json" LogicalName="CS2LocalKit.Review14196.json" />
+    <EmbeddedResource Include="..\..\scripts\compatibility\review-14201.json" LogicalName="CS2LocalKit.Review14201.json" />
   </ItemGroup>
 
 </Project>
