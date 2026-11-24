@@ -168,5 +168,31 @@
       "installedSha256": "f3d9facb4089fa1876438b247942f48da6f56e669e5a9c551df1c1ed6623c27a",
       "startupRepairEvidence": "docs/archive/2026-10-09-compatibility/target-startup-repair.json"
     }
+  },
+  "compatibilityCandidate": {
+    "status": "candidate",
+    "targetCs2Build": {
+      "patchVersion": "1.42.0.1",
+      "clientVersion": "2000950",
+      "buildId": "26879581"
+    },
+    "framework": {
+      "metamod": {
+        "version": "2.0.0-git1491",
+        "installedFiles": {
+          "addons/metamod/bin/win64/metamod.2.cs2.dll": "73e5edda9b63894e5a288afd59c39e7de4dd4a4a3565ed2cf7b525c576ebdcdc",
+          "addons/metamod/bin/win64/server.dll": "bbfe971cb1f6e7cefaa5d588b0a0f7a21bc30ad8dc4c0b10f6b2e51d3081171e"
+        }
+      },
+      "counterstrikesharp": {
+        "version": "1.0.380-local.14201",
+        "installedFiles": {
+          "addons/counterstrikesharp/api/CounterStrikeSharp.API.dll": "d6aac4e7f1ed9adb1b1e00f2de5a1895b4cb3f686977fe417cc182c028689bdf",
+          "addons/counterstrikesharp/bin/win64/counterstrikesharp.dll": "90b77cb359557d2ec36243face3de5a3e67a632895f39f9e5a82a37597447519",
+          "addons/counterstrikesharp/gamedata/gamedata.json": "dd33e0f78ccc22b0c3b6f1886160d00383b15b4dff93a4ddeb3d59b8160c8cc9"
+        }
+      }
+    },
+    "evidence": "docs/archive/2026-11-24-compat-14201/README.md"
   }
 }

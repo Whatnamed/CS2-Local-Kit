@@ -76,7 +76,10 @@ public sealed class BotIntegrationTests : IDisposable
     [Fact] public void ShippedCandidateCatalogHasAllThreeExactVariants()
     {
         var service=new BotExperimentService(_home,Root,()=>false,_runner);
-        Assert.Equal(25,service.Candidates.Count);
+        Assert.Equal(25,service.Candidates.Count(c => !c.HumanOnly));
+        var fallback = Assert.Single(service.Candidates.Where(c => c.HumanOnly));
+        Assert.True(fallback.PreservesHuman && fallback.RuntimeIntegration);
+        Assert.False(fallback.MatchSetup || fallback.DailyPlay);
         Assert.Equal(4,service.Candidates.Count(c=>c.DailyPlay));
         Assert.Equal(3,service.Candidates.Select(c=>c.Difficulty).Distinct().Count());
         Assert.All(service.Candidates,c=>Assert.Matches("^[0-9a-f]{64}$",c.ManifestSha256));

@@ -26,7 +26,8 @@ def fixture(candidate,digest):
             if value['kind']=='directory':(root/folder/path).mkdir(parents=True,exist_ok=True)
     write(root/'.bot-experiment-fake-root','synthetic-test-only')
     write(root/'game/csgo/addons/metamod/metaplugins.ini','; synthetic empty\n')
-    write(root/'game/csgo/gameinfo.gi','SearchPaths\n{\n Game csgo/overrides/botprofile.vpk\n Game csgo/addons/metamod\n Game csgo\n}\n')
+    search_path = '' if original.get('humanOnly') else ' Game csgo/overrides/botprofile.vpk\n Game csgo/addons/metamod\n'
+    write(root/'game/csgo/gameinfo.gi',f'SearchPaths\n{{\n{search_path} Game csgo\n}}\n')
     build=original['targetBuild']
     write(root/'game/csgo/steam.inf',f"PatchVersion={build['PatchVersion']}\nClientVersion={build['ClientVersion']}\n")
     write(root.parent.parent/'appmanifest_730.acf','"appid" "730" "buildid" "'+build['buildId']+'" "StateFlags" "4" "installdir" "cs2" "LastPlayed" "1"')
@@ -42,6 +43,8 @@ def fixture(candidate,digest):
     m['baselineFiles']={p:tx.sha(root/p) for p in m['baselineFiles']}
     m['gameBinaries']={p:m['baselineFiles'][p] for p in tx.GAME_BINARIES}
     m['moduleInventory']=tx.module_inventory(root);m['coexistence']['humanFiles']={p:h for p,h in m['baselineFiles'].items() if tx.human_path(p)}
+    if m.get('humanOnly'):
+        m['coexistence']['isolatedModules'] = {p: tx.identity(root/p) for p in m['coexistence']['isolatedModules']}
     m['bundleFiles']={p:v['sha256'] for p,v in tx.inventory(package).items() if v['kind']=='file'}
     write(package/'experiment-manifest.json',tx.json_bytes(m));expected=tx.sha(package/'experiment-manifest.json')
     return home,root,package,backups,m,expected
@@ -61,6 +64,11 @@ def run(candidate,digest,faults=False):
     tree=tx.inventory(home);public('Preview');tx.require(tx.inventory(home)==tree,'Preview wrote files');checks.append('public preview zero writes')
     installed=public('Install',True);id=installed['installId'];backup=backups/id
     tx.require(all(tx.sha(root/e['target'])==e['sha256'] for e in m['files']),'Payload identity failed');checks.append('actual full payload installed')
+    if m.get('humanOnly'):
+        assert all(not (root/p).exists() for p in m['coexistence']['isolatedModules'])
+        assert (root/'game/csgo/gameinfo.gi').read_text().count('csgo/addons/metamod') == 1
+        assert all(tx.sha(root/p) == digest for p, digest in m['coexistence']['humanFiles'].items())
+        checks.append('Human files preserved and other plugin loaders isolated')
     tree=tx.inventory(home);public('Restore',id=id);tx.require(tx.inventory(home)==tree,'Restore preview wrote files');checks.append('restore preview zero writes')
     public('Diagnostics',id=id);checks.append('exact diagnostics')
     # LastPlayed must be harmless between operations, while in-flight raw-byte changes remain blocked.
@@ -88,6 +96,20 @@ def run(candidate,digest,faults=False):
     reject('Steam busy',acf,acf.read_text().replace('"4"','"6"'))
     preview=tx.install(*args,fake=True,preserve_human=True)
     changing=[i+1 for i,e in enumerate(preview['entries']) if e['action']!='retained']
+    if m.get('humanOnly'):
+        try: tx.install(*args, apply=True, fake=True, preserve_human=True, fault='isolation')
+        except RuntimeError as exc: assert 'rolled back' in str(exc)
+        else: raise AssertionError('Isolation failure not injected')
+        assert tx.inventory(root) == before
+        checks.append('failed loader isolation rolls back to exact preimage')
+        try: tx.install(*args, apply=True, fake=True, preserve_human=True, fault='gameinfo-interrupt')
+        except KeyboardInterrupt: pass
+        else: raise AssertionError('Startup interruption not injected')
+        active = [p for p in backups.iterdir() if (p/'install-record.json').exists() and tx.read_json(p/'install-record.json')['state']=='installing']
+        assert len(active) == 1
+        tx.restore(active[0], apply=True, fake=True)
+        assert tx.inventory(root) == before
+        checks.append('interrupted startup edit recovers framework and loaders')
     if faults:
         for index in [0,*changing]:
             try:tx.install(*args,apply=True,fake=True,preserve_human=True,fault='write-'+str(index))
@@ -111,13 +133,14 @@ def run(candidate,digest,faults=False):
             except KeyboardInterrupt:pass
             else:raise AssertionError('Restore interruption hook not reached')
             tx.restore(b,True,True);tx.require(tx.inventory(root)==before,'Interrupted restore mismatch');checks.append('recover restore interruption '+str(index))
-    result={'status':'PASS','candidate':str(candidate),'manifestSha256':digest,'payloadFiles':len(m['files']),'profile':m['profile']['difficulty'],'checks':checks,'syntheticRoot':str(root),'actualGameModified':False,'gameplayAcceptance':'pending'}
-    output=tx.REPO/'temp/integration'/('transactions-'+m['profile']['difficulty']+'.json');output.write_bytes(tx.json_bytes(result));print(tx.json_bytes(result).decode())
+    profile = 'Human-only' if m.get('humanOnly') else m['profile']['difficulty']
+    result={'status':'PASS','candidate':str(candidate),'manifestSha256':digest,'payloadFiles':len(m['files']),'profile':profile,'checks':checks,'syntheticRoot':str(root),'actualGameModified':False,'gameplayAcceptance':'pending'}
+    output=tx.REPO/'temp/integration'/('transactions-'+profile+'.json');output.write_bytes(tx.json_bytes(result));print(tx.json_bytes(result).decode())
 
 def switches():
     tx.MARKER=tx.INTEGRATION_MARKER
     catalog=tx.read_json(tx.REPO/'src/CS2LocalKit.App/BotCandidates.json')
-    selected={c['Difficulty']:c for c in catalog if c.get('RuntimeIntegration')}
+    selected={c['Difficulty']:c for c in catalog if c.get('RuntimeIntegration') and not c.get('HumanOnly')}
     releases=Path('E:/CS2MOD/releases/bot-experiment');c=selected[1]
     home,root,package,backups,baseline,expected=fixture(releases/c['Directory'],c['ManifestSha256'])
     bundles={1:(package,expected)}

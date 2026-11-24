@@ -181,5 +181,13 @@
     "MatchSetup": true,
     "RuntimeIntegration": true,
     "DailyPlay": true
+  },
+  {
+    "Difficulty": 1,
+    "Directory": "human-14201-16f2ab4",
+    "ManifestSha256": "bc7955ac6270406048828c7bb6c6ac67e09916073cd021aea7612e62193cf501",
+    "PreservesHuman": true,
+    "RuntimeIntegration": true,
+    "HumanOnly": true
   }
 ]
